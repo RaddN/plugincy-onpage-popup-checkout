@@ -1,0 +1,301 @@
+/* General styles for the cart icon */
+/* .rmenu-cart {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+} */
+
+.cart-button {
+    background-color: #007cba;
+    /* WordPress blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon {
+    font-size: 24px;
+    /* Cart icon size */
+    margin-right: 8px;
+}
+
+.cart-count {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 14px;
+}
+
+/* Styles for the cart drawer */
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    z-index: 999;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.cart-drawer.open {
+    transform: translateX(0);
+    /* Slide into view */
+}
+
+.cart-drawer.left {
+    left: 0;
+    transform: translateX(-100%);
+}
+
+.cart-drawer.right {
+    right: 0;
+}
+
+/* Cart item styles */
+.cart-drawer .cart-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.cart-drawer .cart-item img {
+    width: 150px;
+    /* Image size */
+    height: auto;
+    margin-right: 10px;
+}
+
+.cart-drawer .item-title {
+    flex-grow: 1;
+    /* Allow title to take remaining space */
+}
+
+.remove-item {
+    background: transparent;
+    border: none;
+    color: red;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+.quantity {
+    display: flex;
+    gap:10px;
+}
+.item-title {
+    font-size: 22px;
+    margin: 7px 0;
+}
+.thumnail img {
+    width: 150px;
+    object-fit: cover;
+}
+
+/* Subtotal styles */
+.cart-subtotal {
+    padding: 10px;
+    font-weight: bold;
+}
+
+/* Checkout button styles */
+.checkout-button {
+    background-color: #28a745;
+    /* Green color for checkout */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+.cart-drawer .cart-item {
+    align-items: flex-start;
+    gap: 10px;
+}
+.cart-drawer {
+    width: 450px;
+}
+.checkout-button {
+    background-color: rgba(248, 149, 3, 1) !important;
+}
+.quantity>input {
+    width: 25%;
+    padding: 0 9px;
+    border: 1px solid #eee;
+}
+.cart-drawer {
+    padding-top: 30px;
+}
+.cart-content h2 {
+    font-size: 24px;
+}
+.cart-drawer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+.cart-button {
+    background-color: rgba(248, 149, 3, 1) !important;
+}
+button.cart-button span.cart-icon img {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7488%) hue-rotate(355deg) brightness(103%) contrast(106%);
+}
+/* Popup styles */
+.checkout-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    width: 90%;
+    max-width: 400px;
+    height: 600px;
+    overflow: scroll;
+}
+
+.popup-message {
+    margin-top: 10px;
+    color: green;
+    /* Message color */
+}
+
+/* Close button styles */
+.close-popup {
+    background: transparent;
+    border: none;
+    color: #007cba;
+    /* WordPress blue */
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.overlay {
+    display: none;
+    /* Overlay to cover the rest of the page */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+
+.checkout-popup .row div {
+    width: 100% !important;
+}
+#checkout-form form.checkout.woocommerce-checkout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+
+#checkout-form .col-1 {
+    width: 100% !important;
+}
+
+#checkout-form .woocommerce-billing-fields__field-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: end;
+    padding: 0;
+}
+
+#checkout-form p#billing_first_name_field,
+p#billing_last_name_field {
+    width: 100%;
+}
+.spinner {
+    width: 15px !important;
+    height: 15px;
+    border-radius: 50%;
+    border: 9px solid;
+    border-color: #dbdcef;
+    border-right-color: #474bff;
+    animation: spinner-d3wgkg 1s infinite linear;
+ }
+ 
+ @keyframes spinner-d3wgkg {
+    to {
+       transform: rotate(1turn);
+    }
+ }
+
+.close_button img {
+    width: 25px !important;
+    height: 25px;
+    cursor: pointer;
+}
+
+.cart-drawer .close_button {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+}
+.checkout-popup .close_button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkout-popup ul#shipping_method li {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.checkout-popup ul#shipping_method label {
+    padding: 0 !important;
+}
+.checkout-popup li label:before{
+    display: none !important;
+}
+.checkout-popup #shipping_method li .shipping_method {
+    opacity: 1;
+    display: block;
+}
+.popup-message:has(.Confirm_message) {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.popup-content {
+    height: 95%;
+}
+@media (max-width:781px){
+    .cart-drawer {
+        width: 85vw;
+        padding-top: 0px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .close_button img {
+        width: 20px !important;
+    }
+    .cart-drawer .cart-item {
+        padding: 0;
+        padding-top: 30px;
+    }
+    .quantity input {
+        width: 40%;
+    }
+}
