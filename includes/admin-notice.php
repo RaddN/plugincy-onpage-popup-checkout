@@ -1,4 +1,5 @@
 <?php
+ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // admin-notice.php
 
 // Hook to show admin notice
@@ -7,7 +8,7 @@ function my_custom_plugin_admin_notice() {
     if (!is_plugin_active('woo-checkout-field-editor-pro/checkout-form-designer.php')) {
         ?>
         <div class="notice notice-warning is-dismissible">
-            <p><?php esc_html_e('For better performance, consider installing the <a href="https://wordpress.org/plugins/woo-checkout-field-editor-pro/" target="_blank">Checkout Field Editor Pro</a> plugin.', 'blenddoit-popup-checkout'); ?></p>
+            <p><?php _e('For better performance, consider installing the <a href="https://wordpress.org/plugins/woo-checkout-field-editor-pro/" target="_blank">Checkout Field Editor Pro</a> plugin.', 'blenddoit-popup-checkout'); ?></p>
         </div>
         <?php
     }

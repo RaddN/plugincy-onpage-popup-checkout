@@ -1,48 +1,46 @@
 jQuery(document).ready(function($) {
     // Function to fetch and update cart contents
-    function updateCartContent() {
+    function updateCartContent(isdrawer = true) {
         $.ajax({
             url: wc_cart_params.ajax_url,
             type: 'POST',
             data: { action: 'get_cart_content' },
             success: function(response) {
                 if (response.success) {
-                    // Update cart drawer content and item count
                     $('.rmenu-cart').html(response.data.cart_html);
-                    $('.cart-drawer').addClass('open');
+                    if (isdrawer) {
+                        $('.cart-drawer').addClass('open');
+                    }                    
                 }
             }
         });
     }
-
-    $(document.body).on('added_to_cart removed_from_cart', function () {
+    updateCartContent(false);
+    updateCheckoutForm();
+    // Event handler for adding/removing items from the cart
+    $(document.body).on('added_to_cart removed_from_cart', function() {
         updateCartContent();
-        // $(".cart-drawer").addClass("right open");
+        updateCheckoutForm();
     });
 
-    // on ajax complete checkout form update
-        $(document.body).on('added_to_cart removed_from_cart', function() {
-            // Perform AJAX request
-            $.ajax({
-                url: ajax_object.ajax_url,
-                method: 'POST',
-                data: {
-                    action: 'update_checkout'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        // Update the checkout form with the new content
-                        $('.checkout-popup').html(response.data.checkout_form);
-                    } else {
-                        // Handle errors if necessary
-                        console.error('Error updating checkout:', response.data);
-                    }
-                },
-                error: function() {
-                    console.error('AJAX request failed.');
+    // Function to update the checkout form
+    function updateCheckoutForm() {
+        $.ajax({
+            url: ajax_object.ajax_url,
+            method: 'POST',
+            data: { action: 'update_checkout' },
+            success: function(response) {
+                if (response.success) {
+                    $('.checkout-popup').html(response.data.checkout_form);
+                } else {
+                    console.error('Error updating checkout:', response.data);
                 }
-            });
+            },
+            error: function() {
+                console.error('AJAX request failed.');
+            }
         });
+    }
 
     // Handle quantity change
     $('.rmenu-cart').on('change', '.item-quantity', function() {
@@ -60,7 +58,6 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 if (response.success) {
                     updateCartContent();
-                    // $(".cart-drawer").addClass("right open");
                 }
             }
         });
@@ -81,9 +78,87 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 if (response.success) {
                     updateCartContent();
-                    // $(".cart-drawer").addClass("right open");
                 }
             }
         });
     });
+    // handle quantity change
+     // Handle the plus button click
+     $(document).on('click', '.checkout-qty-plus', function() {
+        var input = $(this).prev('.checkout-qty-input');
+        var val = parseFloat(input.val());
+        var max = parseFloat(input.attr('max'));
+        var step = parseFloat(input.attr('step')) || 1;
+        
+        if (max && (max <= val)) {
+            input.val(max);
+        } else {
+            input.val(val + step);
+        }
+        
+        updateQuantity($(this).data('cart-item'), val + step);
+    });
+    
+    // Handle the minus button click
+    $(document).on('click', '.checkout-qty-minus', function() {
+        var input = $(this).next('.checkout-qty-input');
+        var val = parseFloat(input.val());
+        var min = parseFloat(input.attr('min')) || 1;
+        var step = parseFloat(input.attr('step')) || 1;
+        
+        if (min && (min >= val)) {
+            input.val(min);
+        } else if (val > 0) {
+            input.val(val - step);
+        }
+        
+        updateQuantity($(this).data('cart-item'), Math.max(min, val - step));
+    });
+    
+    // Handle direct input changes
+    $(document).on('change', '.checkout-qty-input', function() {
+        var val = parseFloat($(this).val());
+        var min = parseFloat($(this).attr('min')) || 1;
+        
+        if (val < min) {
+            $(this).val(min);
+            val = min;
+        }
+        
+        updateQuantity($(this).closest('.checkout-qty-btn').data('cart-item'), val);
+    });
+    
+    // Function to update quantity
+    function updateQuantity(cartItemKey, qty) {
+        if (!cartItemKey) {
+            return;
+        }
+        
+        // Block the checkout while updating
+        $('.woocommerce-checkout-review-order-table').block({
+            message: null,
+            overlayCSS: {
+                background: '#fff',
+                opacity: 0.6
+            }
+        });
+        
+        // Update via AJAX
+        $.ajax({
+            type: 'POST',
+            url: wc_checkout_params.ajax_url,
+            data: {
+                action: 'update_cart_item_quantity',
+                cart_item_key: cartItemKey,
+                quantity: qty,
+                security: wc_checkout_params.update_order_review_nonce
+            },
+            success: function() {
+                $('body').trigger('update_checkout');
+            },
+            complete: function() {
+                $('.woocommerce-checkout-review-order-table').unblock();
+            }
+        });
+    }
 });

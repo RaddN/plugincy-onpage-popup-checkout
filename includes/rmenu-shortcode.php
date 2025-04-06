@@ -1,5 +1,6 @@
 <?php
-
+ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+ 
 // Shortcode to display cart icon and drawer
 function rmenu_cart_shortcode($atts) {
     $atts = shortcode_atts(array('drawer' => 'right'), $atts);
@@ -7,12 +8,9 @@ function rmenu_cart_shortcode($atts) {
     ob_start(); ?>
 
 <div class="rmenu-cart">
-    <?php require_once plugin_dir_path(__FILE__) . 'cart-template.php'; ?>
-</div>
-
-
-    <div class="checkout-popup" style="display:none;">
-    <?php require_once plugin_dir_path(__FILE__) . 'popup-template.php'; ?>
+    <?php 
+    rmenu_cart();
+    ?>
 </div>
 
     <?php

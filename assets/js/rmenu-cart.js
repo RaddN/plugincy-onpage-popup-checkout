@@ -1,78 +1,74 @@
 jQuery(document).ready(function($) {
+
+    // Click event to close cart drawer and checkout popup
     $(document).click(function(event) {
-        // Check if the clicked target is not the cart drawer or its descendants
-        if (!$(event.target).closest('.cart-drawer, .cart-button, .checkout-popup').length) {
-            $('.cart-drawer').removeClass('open');
-            $('.checkout-popup').hide();
-            $('.overlay').hide(); // Hide overlay when cart is closed
+        if (!$(event.target).closest('.cart-drawer, .rwc_cart-button, .checkout-popup').length) {
+            closeCartAndCheckout();
         }
     });
-    window.openCartDrawer = function(side) {
-        $('.cart-drawer').removeClass('open');
+
+    $(document).on('click', '.rwc_cart-button', function() {
+        openCartDrawer();
+    });
+
+    // Open the cart drawer
+    window.openCartDrawer = function() {
         $('.cart-drawer').addClass('open');
         $('.overlay').show();
     };
+
+    // Close the checkout popup
     window.closeCheckoutPopup = function() {
-        $('.checkout-popup').hide();
-        $('.popup-message').text(''); // Clear message on close
-        $('.overlay').hide();
-        $('.cart-drawer').removeClass('open');
+        closeCartAndCheckout();
     };
+
+    // Open the checkout popup
     window.openCheckoutPopup = function() {
         $('.checkout-popup').show();
         $('.cart-drawer').removeClass('open');
     };
-    function updateCartContent() {
-        $.ajax({
-            url: wc_cart_params.ajax_url,
-            type: 'POST',
-            data: { action: 'get_cart_content' },
-            success: function(response) {
-                if (response.success) {
-                    // Update cart drawer content and item count
-                    $('.rmenu-cart').html(response.data.cart_html);
-                }
-            }
-        });
+
+    // Function to close the cart drawer and checkout popup
+    function closeCartAndCheckout() {
+        $('.cart-drawer').removeClass('open');
+        $('.checkout-popup').hide();
+        $('.overlay').hide(); // Hide overlay when cart is closed
     }
-    // Intercept the form submission
+
+    // Intercept the form submission for checkout
     $(document).on('submit', 'form.woocommerce-checkout', function(e) {
         e.preventDefault();
-        $('#place_order').text('');
-        $('#place_order').append('<div class="spinner"></div>');
-        var message = rmsgValue.rmsgEditor;
-        var formData = $(this).serialize(); // Collect form data
+        $('#place_order').text('').append('<div class="spinner"></div>');
+        const formData = $(this).serialize();
+
         // AJAX request to process the order
         $.ajax({
             type: 'POST',
             url: woocommerce_params.ajax_url,
-            data: formData + '&action=woocommerce_checkout', // Append action
+            data: formData + '&action=woocommerce_checkout',
             success: function(response) {
-                if (response.result === 'success') {
-                    // Show success message in the popup
-                    $('.popup-message').html('<div class="Confirm_message">' + message + '</div>');
-                    $('#checkout-form').remove();
-                } else {
-                    $('.spinner').remove();
-                    $('.popup-message').append('<p>Error: ' + response.messages + '</p>');
-                    // Show errors in the popup
-                    $('.popup-message').html('<p>' + response.messages + '</p>');
-                    
-                }
-                updateCartContent();
+                handleCheckoutResponse(response);
             },
             error: function(res) {
-                $('.spinner').remove();
-                $('.popup-message').append('<p>test Error'  + res.messages + ' processing your order. Please try again. </p>');
-                $('.popup-message').html('<p>test2 Error ' + res.messages + ' processing your order. Please try again.</p> ');
-                updateCartContent();
+                handleCheckoutError(res);
             }
         });
     });
 
-});
+    // Handle successful checkout response
+    function handleCheckoutResponse(response) {
+        $('.spinner').remove();
+        if (response.result === 'success') {
+            $('.popup-message').html('<div class="Confirm_message">' + rmsgValue.rmsgEditor + '</div>');
+            $('#checkout-form').remove();
+        } else {
+            $('.popup-message').html('<p>' + response.messages + '</p>');
+        }
+    }
 
-// Function to close the popup
-function closeCheckoutPopup() {
-    $('.checkout-popup').fadeOut();
-}
+    // Handle checkout error
+    function handleCheckoutError(res) {
+        $('.spinner').remove();
+        $('.popup-message').html('<p>Error processing your order: <pre>' + JSON.stringify(res) + res.messages + '</pre></p>');
+    }
+});
