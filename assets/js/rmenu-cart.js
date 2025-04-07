@@ -1,42 +1,46 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
+
+    $isonepagewidget = $('.checkout-popup').data('isonepagewidget');
 
     // Click event to close cart drawer and checkout popup
-    $(document).click(function(event) {
+    $(document).click(function (event) {
         if (!$(event.target).closest('.cart-drawer, .rwc_cart-button, .checkout-popup').length) {
             closeCartAndCheckout();
         }
     });
 
-    $(document).on('click', '.rwc_cart-button', function() {
+    $(document).on('click', '.rwc_cart-button', function () {
         openCartDrawer();
     });
 
     // Open the cart drawer
-    window.openCartDrawer = function() {
+    window.openCartDrawer = function () {
         $('.cart-drawer').addClass('open');
         $('.overlay').show();
     };
 
     // Close the checkout popup
-    window.closeCheckoutPopup = function() {
+    window.closeCheckoutPopup = function () {
         closeCartAndCheckout();
     };
 
     // Open the checkout popup
-    window.openCheckoutPopup = function() {
+    window.openCheckoutPopup = function () {
         $('.checkout-popup').show();
         $('.cart-drawer').removeClass('open');
     };
 
     // Function to close the cart drawer and checkout popup
     function closeCartAndCheckout() {
+        if (!$isonepagewidget) {
+            $('.checkout-popup').hide();           
+        }
         $('.cart-drawer').removeClass('open');
-        $('.checkout-popup').hide();
         $('.overlay').hide(); // Hide overlay when cart is closed
     }
 
     // Intercept the form submission for checkout
-    $(document).on('submit', 'form.woocommerce-checkout', function(e) {
+    $(document).on('submit', 'form.woocommerce-checkout', function (e) {
         e.preventDefault();
         $('#place_order').text('').append('<div class="spinner"></div>');
         const formData = $(this).serialize();
@@ -46,10 +50,10 @@ jQuery(document).ready(function($) {
             type: 'POST',
             url: woocommerce_params.ajax_url,
             data: formData + '&action=woocommerce_checkout',
-            success: function(response) {
+            success: function (response) {
                 handleCheckoutResponse(response);
             },
-            error: function(res) {
+            error: function (res) {
                 handleCheckoutError(res);
             }
         });

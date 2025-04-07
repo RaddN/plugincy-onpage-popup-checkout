@@ -15,8 +15,22 @@ function rmenu_cart_admin_styles($hook)
 function rmenu_cart_menu()
 {
 
-    add_menu_page('Onpage Checkout', 'Onpage Checkout', 'manage_options', 'rmenu_cart', 'rmenu_cart_dashboard');
-    add_submenu_page('rmenu_cart', 'API Key', 'API Key', 'manage_options', 'rmenu_cart_settings', 'rmenu_cart_admin_settings');
+    add_menu_page(
+        'Onpage Checkout',
+        'Onpage Checkout',
+        'manage_options',
+        'rmenu_cart',
+        'rmenu_cart_dashboard',
+        'dashicons-cart' // Shopping cart icon
+    );
+    add_submenu_page(
+        'rmenu_cart',
+        'API Key',
+        'API Key',
+        'manage_options',
+        'rmenu_cart_settings',
+        'rmenu_cart_admin_settings'
+    );
     if (get_option('bd_affiliate_validity_days') !== "0") {
         // add_submenu_page('bd-affiliate-marketing', 'Manage Posts', 'Manage Posts', 'manage_options', 'bd-manage-posts', 'bd_affiliate_marketing_manage_posts');
         // add_submenu_page('bd-affiliate-marketing', 'Send Notification', 'Send Notification', 'manage_options', 'bd-send-notification', 'bd_affiliate_marketing_send_notification');
@@ -62,131 +76,6 @@ function rmenu_cart_text_change_form()
 // Dashboard page
 function rmenu_cart_dashboard()
 { ?>
-<!-- add a beautiful Welcome Banner -->
-<style>
-.welcome-banner {
-  background: linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  margin: 20px 0;
-  border-left: 5px solid #2271b1;
-  position: relative;
-  overflow: hidden;
-}
-
-.welcome-banner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(34, 113, 177, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
-  border-radius: 50%;
-}
-
-.welcome-banner h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #1d2327;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-}
-
-.welcome-banner h1::before {
-  content: '';
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-color: #2271b1;
-  margin-right: 12px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.welcome-banner p {
-  font-size: 16px;
-  color: #50575e;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-
-.welcome-banner .button-row {
-  display: flex;
-  gap: 15px;
-  margin-top: 25px;
-  flex-wrap: wrap;
-}
-
-.welcome-banner .button {
-  display: inline-flex;
-  align-items: center;
-  background-color: #2271b1;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.welcome-banner .button:hover {
-  background-color: #135e96;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.welcome-banner .button-secondary {
-  background-color: #f0f0f1;
-  color: #2271b1;
-  border: 1px solid #c5c5c5;
-}
-
-.welcome-banner .button-secondary:hover {
-  background-color: #f6f7f7;
-  color: #135e96;
-}
-
-.welcome-banner .version-tag {
-  display: inline-block;
-  padding: 3px 8px;
-  background-color: #f0f6fc;
-  color: #2271b1;
-  border-radius: 10px;
-  font-size: 12px;
-  margin-left: 10px;
-  vertical-align: middle;
-}
-
-.welcome-banner .feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.welcome-banner .feature-item {
-  background-color: #f6f7f7;
-  padding: 15px;
-  border-radius: 6px;
-  border-left: 3px solid #2271b1;
-}
-
-.welcome-banner .feature-item h3 {
-  font-size: 16px;
-  margin: 0 0 10px 0;
-  color: #1d2327;
-}
-
-.welcome-banner .feature-item p {
-  font-size: 14px;
-  margin: 0;
-}
-</style>
 
 <div class="welcome-banner">
   <h1>Welcome to Onpage Checkout <span class="version-tag">v2.5</span></h1>
@@ -264,7 +153,7 @@ function rmenu_cart_dashboard()
                 </table>
             </div>
             <div class="tab-content" id="tab-2">
-                <h2>One Page Checkout Manage</h2>
+                <h2>One Page Checkout in Single Product Manage</h2>
                 <table class="form-table">
                     <tr valign="top">
                         <th scope="row">Form Position</th>
@@ -299,6 +188,28 @@ function rmenu_cart_dashboard()
                             </label>
                         </td>
                     </tr>
+                </table>
+                <hr />
+                <h2>One Page Checkout widget/shortcode Manage</h2>
+                <table class="form-table">
+                    <tr valign="top">
+                        <th scope="row">Empty Cart On page load</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="onpage_checkout_widget_cart_empty" value="1" <?php checked(1, get_option("onpage_checkout_widget_cart_empty","1"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">Add to Cart On page load</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="onpage_checkout_widget_cart_add" value="1" <?php checked(1, get_option("onpage_checkout_widget_cart_add","1"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>                    
                 </table>
             </div>
             <div class="tab-content" id="tab-3">
@@ -390,16 +301,25 @@ function rmenu_cart_dashboard()
                         <th scope="row">Product Quantity Controller</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="rmenu_quantity_control" value="1" <?php checked(1, get_option("rmenu_quantity_control"), true); ?> />
+                                <input type="checkbox" name="rmenu_quantity_control" value="1" <?php checked(1, get_option("rmenu_quantity_control","1"), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row">Remove product</th>
+                        <th scope="row">Remove product Button</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="rmenu_remove_product" value="1" <?php checked(1, get_option("rmenu_remove_product"), true); ?> />
+                                <input type="checkbox" name="rmenu_remove_product" value="1" <?php checked(1, get_option("rmenu_remove_product","1"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">Add Image Before Product</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="rmenu_add_img_before_product" value="1" <?php checked(1, get_option("rmenu_add_img_before_product","1"), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -474,9 +394,12 @@ function rmenu_cart_settings()
     register_setting('rmenu_cart_settings', "onpage_checkout_position");
     register_setting('rmenu_cart_settings', "onpage_checkout_cart_empty");
     register_setting('rmenu_cart_settings', "onpage_checkout_cart_add");
+    register_setting('rmenu_cart_settings', "onpage_checkout_widget_cart_empty");
+    register_setting('rmenu_cart_settings', "onpage_checkout_widget_cart_add");
     register_setting('rmenu_cart_settings', "onpage_checkout_hide_cart_button");
     register_setting('rmenu_cart_settings', "rmenu_quantity_control");
     register_setting('rmenu_cart_settings', "rmenu_remove_product");
+    register_setting('rmenu_cart_settings', "rmenu_add_img_before_product");
     // form text settings
     $settings = [
         "your_cart",

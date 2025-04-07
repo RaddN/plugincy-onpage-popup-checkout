@@ -223,3 +223,126 @@ table.form-table tbody {
   border-color: #dee2e6;
   transform: translateY(-2px);
 }
+
+.welcome-banner {
+  background: linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  border-left: 5px solid #2271b1;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(34, 113, 177, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+}
+
+.welcome-banner h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #1d2327;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.welcome-banner h1::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-color: #2271b1;
+  margin-right: 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-banner p {
+  font-size: 16px;
+  color: #50575e;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.welcome-banner .button-row {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.welcome-banner .button {
+  display: inline-flex;
+  align-items: center;
+  background-color: #2271b1;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.welcome-banner .button:hover {
+  background-color: #135e96;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.welcome-banner .button-secondary {
+  background-color: #f0f0f1;
+  color: #2271b1;
+  border: 1px solid #c5c5c5;
+}
+
+.welcome-banner .button-secondary:hover {
+  background-color: #f6f7f7;
+  color: #135e96;
+}
+
+.welcome-banner .version-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: #f0f6fc;
+  color: #2271b1;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.welcome-banner .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.welcome-banner .feature-item {
+  background-color: #f6f7f7;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 3px solid #2271b1;
+}
+
+.welcome-banner .feature-item h3 {
+  font-size: 16px;
+  margin: 0 0 10px 0;
+  color: #1d2327;
+}
+
+.welcome-banner .feature-item p {
+  font-size: 14px;
+  margin: 0;
+}
