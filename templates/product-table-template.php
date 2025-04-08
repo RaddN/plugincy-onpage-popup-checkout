@@ -45,5 +45,5 @@
                             } ?>
                         </tbody>
                     </table>
-                <?php rmenu_checkout_popup(true) ?>
+                <?php plugincyopc_rmenu_checkout_popup(true) ?>
             </div>

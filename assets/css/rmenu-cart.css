@@ -5,7 +5,9 @@
     right: 20px;
     z-index: 1000;
 } */
-
+html {
+    scroll-behavior: smooth;
+  }
 .rwc_cart-button {
     /* WordPress blue */
     color: white;
@@ -452,6 +454,19 @@ table.one-page-checkout-product-table td {
 }
 .checkout-popup.onepagecheckoutwidget #checkout-form form.checkout.woocommerce-checkout {
     display: flex;
+}
+.checkout-product-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkout-product-image {
+    margin-right: 10px;
+    min-width: 50px;
+}
+
+.checkout-product-name {
+    flex: 1;
 }
 @media (max-width: 767px) {
     .one-page-checkout-container {

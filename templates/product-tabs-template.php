@@ -89,7 +89,7 @@ if (!defined('ABSPATH')) exit;
         </div>
     </div>
 
-    <?php rmenu_checkout_popup(true); ?>
+    <?php plugincyopc_rmenu_checkout_popup(true); ?>
 </div>
 
 <!-- Tabs Script -->

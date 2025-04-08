@@ -2,7 +2,7 @@
  if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 // Shortcode to display cart icon and drawer
-function rmenu_cart_shortcode($atts) {
+function plugincyopc_cart_shortcode($atts) {
     $atts = shortcode_atts(array('drawer' => 'right'), $atts);
 
     ob_start(); ?>
@@ -17,4 +17,4 @@ function rmenu_cart_shortcode($atts) {
     <?php
     return ob_get_clean();
 }
-add_shortcode('rmenu_cart', 'rmenu_cart_shortcode');
+add_shortcode('plugincy_cart', 'plugincyopc_cart_shortcode');

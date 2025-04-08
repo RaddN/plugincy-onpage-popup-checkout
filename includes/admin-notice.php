@@ -3,7 +3,7 @@
 // admin-notice.php
 
 // Hook to show admin notice
-function my_custom_plugin_admin_notice() {
+function plugincyopc_my_custom_plugin_admin_notice() {
     // Check if the Checkout Field Editor Pro plugin is not active
     if (!is_plugin_active('woo-checkout-field-editor-pro/checkout-form-designer.php')) {
         ?>
@@ -14,7 +14,7 @@ function my_custom_plugin_admin_notice() {
     }
 }
 
-add_action('admin_notices', 'my_custom_plugin_admin_notice');
+add_action('admin_notices', 'plugincyopc_my_custom_plugin_admin_notice');
 
 // Include the function to check plugin activation
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
@@ -22,12 +22,12 @@ include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
 
 // Admin notice for successful installation
-add_action('admin_notices', 'rmenu_cart_notice');
+add_action('admin_notices', 'plugincyopc_cart_notice');
 
-function rmenu_cart_notice()
+function plugincyopc_cart_notice()
 {
-    $page_param = get_page_parameter_from_current_url();
-    if (!get_option('bd_affiliate_api_key') && $page_param !== "rmenu_cart_settings") {
+    $page_param = plugincyopc_get_page_parameter_from_current_url();
+    if (!get_option('bd_affiliate_api_key') && $page_param !== "plugincyopc_cart_settings") {
         echo '<div class="notice notice-success is-dismissible">
             <p>PlugincyOnpage Checkout plugin installed successfully! Please add your API key to activate the plugin. <a href="https://app.blenddoit.top/api/package.php" target="_blank">Get API Key</a></p>
         </div>';
@@ -40,7 +40,7 @@ function rmenu_cart_notice()
 
 
 
-function get_page_parameter_from_current_url() {
+function plugincyopc_get_page_parameter_from_current_url() {
     // Get the full current URL
     $current_url = (is_ssl() ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 

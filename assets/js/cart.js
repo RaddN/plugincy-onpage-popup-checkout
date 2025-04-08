@@ -3,10 +3,20 @@ jQuery(document).ready(function ($) {
     $isonepagewidget = $('.checkout-popup').data('isonepagewidget');
     // Function to fetch and update cart contents
     function updateCartContent(isdrawer = true) {
+        // get data values from the cart button & send them to the server <button class="rwc_cart-button" data-cart-icon="cart" data-product_title_tag="p" data-drawer-position="right" onclick="openCartDrawer('right')"></button>
+        var cartIcon = $('.rwc_cart-button').data('cart-icon');
+        var productTitleTag = $('.rwc_cart-button').data('product_title_tag');
+        var drawerPosition = $('.rwc_cart-button').data('drawer-position');
+
         $.ajax({
             url: wc_cart_params.ajax_url,
             type: 'POST',
-            data: { action: 'get_cart_content' },
+            data: { 
+                action: 'plugincyopc_get_cart_content',
+                cart_icon: cartIcon,
+                product_title_tag: productTitleTag,
+                drawer_position: drawerPosition
+            },
             success: function (response) {
                 if (response.success) {
                     $('.rmenu-cart').html(response.data.cart_html);
@@ -31,11 +41,11 @@ jQuery(document).ready(function ($) {
         $.ajax({
             url: ajax_object.ajax_url,
             method: 'POST',
-            data: { action: 'update_checkout' },
+            data: { action: 'plugincyopc_update_checkout' },
             success: function (response) {
                 if (response.success) {
                     // $('.checkout-popup').html(response.data.checkout_form);
-                    $(document.body).trigger('update_checkout');
+                    $(document.body).trigger('plugincyopc_update_checkout');
                 } else {
                     console.error('Error updating checkout:', response.data);
                 }
@@ -55,7 +65,7 @@ jQuery(document).ready(function ($) {
             url: wc_cart_params.ajax_url,
             type: 'POST',
             data: {
-                action: 'update_cart_item_quantity',
+                action: 'plugincyopc_update_cart_item_quantity',
                 cart_item_key: cartItemKey,
                 quantity: quantity
             },
@@ -76,7 +86,7 @@ jQuery(document).ready(function ($) {
             url: wc_cart_params.ajax_url,
             type: 'POST',
             data: {
-                action: 'remove_cart_item',
+                action: 'plugincyopc_remove_cart_item',
                 cart_item_key: cartItemKey
             },
             success: function (response) {
@@ -152,13 +162,13 @@ jQuery(document).ready(function ($) {
             type: 'POST',
             url: wc_checkout_params.ajax_url,
             data: {
-                action: 'update_cart_item_quantity',
+                action: 'plugincyopc_update_cart_item_quantity',
                 cart_item_key: cartItemKey,
                 quantity: qty,
                 security: wc_checkout_params.update_order_review_nonce
             },
             success: function () {
-                $('body').trigger('update_checkout');
+                $('body').trigger('plugincyopc_update_checkout');
             },
             complete: function () {
                 $('.woocommerce-checkout-review-order-table').unblock();
@@ -175,7 +185,7 @@ jQuery(document).ready(function ($) {
             type: 'POST',
             url: wc_add_to_cart_params.ajax_url,
             data: {
-                action: 'remove_cart_item',
+                action: 'plugincyopc_remove_cart_item',
                 cart_item_key: cartItemKey,
                 security: wc_add_to_cart_params.wc_ajax_nonce
             },
@@ -188,7 +198,7 @@ jQuery(document).ready(function ($) {
                     type: 'POST',
                     url: wc_add_to_cart_params.ajax_url,
                     data: {
-                        action: 'refresh_checkout_product_list',
+                        action: 'plugincyopc_refresh_checkout_product_list',
                         product_ids: product_ids
                     },
                     success: function (html) {
@@ -211,7 +221,7 @@ jQuery(document).ready(function ($) {
                 }
 
                 // Update checkout totals
-                $(document.body).trigger('update_checkout');
+                $(document.body).trigger('plugincyopc_update_checkout');
             }
         });
     });

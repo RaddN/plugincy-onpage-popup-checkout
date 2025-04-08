@@ -76,7 +76,7 @@ if (!defined('ABSPATH')) exit;
         ?>
     </div>
 
-    <?php rmenu_checkout_popup(true); ?>
+    <?php plugincyopc_rmenu_checkout_popup(true); ?>
 </div>
 
 <!-- Accordion Script -->
@@ -104,7 +104,7 @@ if (!defined('ABSPATH')) exit;
             }
         });
         $(document.body).on('added_to_cart', function() {
-            $(document.body).trigger('update_checkout');
+            $(document.body).trigger('plugincyopc_update_checkout');
             $('html, body').animate({
                 scrollTop: $(document).height()
             }, 800);

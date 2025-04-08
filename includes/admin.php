@@ -1,35 +1,35 @@
 <?php
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
 // Admin Menu
-add_action('admin_menu', 'rmenu_cart_menu');
-add_action('admin_enqueue_scripts', 'rmenu_cart_admin_styles');
+add_action('admin_menu', 'plugincyopc_cart_menu');
 
-// Enqueue the admin stylesheet only for this settings page
-function rmenu_cart_admin_styles($hook)
-{
-    if ($hook === 'toplevel_page_rmenu_cart') {
-        wp_enqueue_style('rmenu_cart_admin_css', plugin_dir_url(__FILE__) . '../assets/css/admin-style.css');
-    }
-}
 
-function rmenu_cart_menu()
+function plugincyopc_cart_menu()
 {
 
     add_menu_page(
         'Onpage Checkout',
         'Onpage Checkout',
         'manage_options',
-        'rmenu_cart',
-        'rmenu_cart_dashboard',
+        'plugincyopc_cart',
+        'plugincyopc_cart_dashboard',
         'dashicons-cart' // Shopping cart icon
     );
     add_submenu_page(
-        'rmenu_cart',
+        'plugincyopc_cart',
         'API Key',
         'API Key',
         'manage_options',
-        'rmenu_cart_settings',
-        'rmenu_cart_admin_settings'
+        'plugincyopc_cart_settings',
+        'plugincyopc_cart_admin_settings'
+    );
+    add_submenu_page(
+        'plugincyopc_cart',
+        'Documentation',
+        'Documentation',
+        'manage_options',
+        'plugincyopc_cart_documentation',
+        'plugincyopc_cart_documentation'
     );
     if (get_option('bd_affiliate_validity_days') !== "0") {
         // add_submenu_page('bd-affiliate-marketing', 'Manage Posts', 'Manage Posts', 'manage_options', 'bd-manage-posts', 'bd_affiliate_marketing_manage_posts');
@@ -38,7 +38,7 @@ function rmenu_cart_menu()
 }
 
 // Display the form for Side Cart and PopUp settings
-function rmenu_cart_text_change_form()
+function plugincyopc_cart_text_change_form()
 {
     $fields = [
         "your_cart" => "Your Cart",
@@ -74,7 +74,7 @@ function rmenu_cart_text_change_form()
 }
 
 // Dashboard page
-function rmenu_cart_dashboard()
+function plugincyopc_cart_dashboard()
 { ?>
 
 <div class="welcome-banner">
@@ -98,9 +98,8 @@ function rmenu_cart_dashboard()
   </div>
   
   <div class="button-row">
-    <a href="#settings" class="button">Configure Settings</a>
-    <a href="#documentation" class="button button-secondary">View Documentation</a>
-    <a href="#support" class="button button-secondary">Get Support</a>
+    <a href="/wp-admin/admin.php?page=plugincyopc_cart_documentation" class="button">View Documentation</a>
+    <a href="https://plugincy.com/support" target="_blank" class="button button-secondary">Get Support</a>
   </div>
 </div>
 
@@ -120,11 +119,11 @@ function rmenu_cart_dashboard()
 
         </div>
         <form method="post" action="options.php">
-            <?php settings_fields('rmenu_cart_settings'); ?>
+            <?php settings_fields('plugincyopc_cart_settings'); ?>
             <div class="tab-content active" id="tab-1">
                 <h2>Checkout Form Manage</h2>
                 <table class="form-table">
-                    <?php foreach (rmenu_fields() as $key => $field) : ?>
+                    <?php foreach (plugincyopc_rmenu_fields() as $key => $field) : ?>
                         <tr valign="top">
                             <th scope="row"><?php echo esc_html($field['title']); ?></th>
                             <td>
@@ -139,7 +138,7 @@ function rmenu_cart_dashboard()
                 <hr />
                 <h3>Heading Manage</h3>
                 <table class="form-table">
-                    <?php foreach (onpcheckout_heading() as $key => $field) : ?>
+                    <?php foreach (plugincyopc_onpcheckout_heading() as $key => $field) : ?>
                         <tr valign="top">
                             <th scope="row"><?php echo esc_html($field['title']); ?></th>
                             <td>
@@ -277,7 +276,7 @@ function rmenu_cart_dashboard()
                     }
                 </style>
                 <?php
-                rmenu_cart_text_change_form();
+                plugincyopc_cart_text_change_form();
 
                 ?>
             </div>
@@ -332,7 +331,7 @@ function rmenu_cart_dashboard()
             document.getElementById('reset-defaults').addEventListener('click', function() {
                 if (confirm('Are you sure you want to reset all settings to their default values?')) {
                     // Send AJAX request to reset settings
-                    fetch('<?php echo esc_url(admin_url('admin-ajax.php')); ?>?action=reset_rmenu_cart_settings', {
+                    fetch('<?php echo esc_url(admin_url('admin-ajax.php')); ?>?action=plugincyopc_reset_plugincyopc_cart_settings', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -351,7 +350,8 @@ function rmenu_cart_dashboard()
                 }
             });
         </script>
-        <h4 style="text-align: center;padding-bottom:20px; color:red; font-size: 15px;">To add menu cart to your page, use the shortcode <b>[rmenu_cart]</b> or the Elementor on-page menu cart widget. Block editor support will be available soon.</h4>
+        <p style="text-align: center;font-size: 15px;">To add menu cart to your page, use the shortcode <b>[plugincy_cart]</b> or the Elementor on-page menu cart widget. Block editor support will be available soon.</p>
+        <p style="text-align: center;padding-bottom:20px; font-size: 15px;">[plugincy_one_page_checkout product_ids="152,153,151,142 " template="product-tabs"] <a href="/wp-admin/admin.php?page=plugincyopc_cart_documentation#multiple-products">view documentation</a></p>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -375,31 +375,31 @@ function rmenu_cart_dashboard()
 <?php
     // }
 }
-add_action('admin_init', 'rmenu_cart_settings');
-add_action('wp_head', 'rmenu_cart_custom_css');
+add_action('admin_init', 'plugincyopc_cart_settings');
+add_action('wp_head', 'plugincyopc_cart_custom_css');
 
 
 
 
-function rmenu_cart_settings()
+function plugincyopc_cart_settings()
 {
-    foreach (rmenu_fields() as $key => $field) {
-        register_setting('rmenu_cart_settings', $key);
+    foreach (plugincyopc_rmenu_fields() as $key => $field) {
+        register_setting('plugincyopc_cart_settings', $key);
     }
-    foreach (onpcheckout_heading() as $key => $field) {
-        register_setting('rmenu_cart_settings', $key);
+    foreach (plugincyopc_onpcheckout_heading() as $key => $field) {
+        register_setting('plugincyopc_cart_settings', $key);
     }
 
-    register_setting('rmenu_cart_settings', "rmsg_editor");
-    register_setting('rmenu_cart_settings', "onpage_checkout_position");
-    register_setting('rmenu_cart_settings', "onpage_checkout_cart_empty");
-    register_setting('rmenu_cart_settings', "onpage_checkout_cart_add");
-    register_setting('rmenu_cart_settings', "onpage_checkout_widget_cart_empty");
-    register_setting('rmenu_cart_settings', "onpage_checkout_widget_cart_add");
-    register_setting('rmenu_cart_settings', "onpage_checkout_hide_cart_button");
-    register_setting('rmenu_cart_settings', "rmenu_quantity_control");
-    register_setting('rmenu_cart_settings', "rmenu_remove_product");
-    register_setting('rmenu_cart_settings', "rmenu_add_img_before_product");
+    register_setting('plugincyopc_cart_settings', "rmsg_editor");
+    register_setting('plugincyopc_cart_settings', "onpage_checkout_position");
+    register_setting('plugincyopc_cart_settings', "onpage_checkout_cart_empty");
+    register_setting('plugincyopc_cart_settings', "onpage_checkout_cart_add");
+    register_setting('plugincyopc_cart_settings', "onpage_checkout_widget_cart_empty");
+    register_setting('plugincyopc_cart_settings', "onpage_checkout_widget_cart_add");
+    register_setting('plugincyopc_cart_settings', "onpage_checkout_hide_cart_button");
+    register_setting('plugincyopc_cart_settings', "rmenu_quantity_control");
+    register_setting('plugincyopc_cart_settings', "rmenu_remove_product");
+    register_setting('plugincyopc_cart_settings', "rmenu_add_img_before_product");
     // form text settings
     $settings = [
         "your_cart",
@@ -414,12 +414,12 @@ function rmenu_cart_settings()
     ];
 
     foreach ($settings as $setting) {
-        register_setting('rmenu_cart_settings', $setting);
+        register_setting('plugincyopc_cart_settings', $setting);
     }
 }
 
 // Function to reset the settings to default values
-function reset_rmenu_cart_settings()
+function plugincyopc_reset_plugincyopc_cart_settings()
 {
     // List of settings to reset
     $settings = [
@@ -442,17 +442,17 @@ function reset_rmenu_cart_settings()
     // Send a JSON response back to the client
     wp_send_json_success();
 }
-add_action('wp_ajax_reset_rmenu_cart_settings', 'reset_rmenu_cart_settings');
+add_action('wp_ajax_plugincyopc_reset_plugincyopc_cart_settings', 'plugincyopc_reset_plugincyopc_cart_settings');
 
-function rmenu_cart_custom_css()
+function plugincyopc_cart_custom_css()
 {
     echo '<style>';
-    foreach (rmenu_fields() as $key => $field) {
+    foreach (plugincyopc_rmenu_fields() as $key => $field) {
         if (get_option($key)) {
             echo esc_attr("{$field['selector']} { display: none !important; }");
         }
     }
-    foreach (onpcheckout_heading() as $key => $field) {
+    foreach (plugincyopc_onpcheckout_heading() as $key => $field) {
         if (get_option($key)) {
             echo esc_attr("{$field['selector']} { display: none !important; }");
         }
@@ -461,7 +461,7 @@ function rmenu_cart_custom_css()
     echo '</style>';
 }
 
-function rmenu_fields()
+function plugincyopc_rmenu_fields()
 {
     return [
         'hide_coupon_toggle'          => ['selector' => '#checkout-form .woocommerce-form-coupon-toggle, #checkout-form .col-form-coupon,.one-page-checkout-container .woocommerce-form-coupon-toggle, .one-page-checkout-container .col-form-coupon', 'title' => 'Hide Top Coupon'],
@@ -479,7 +479,7 @@ function rmenu_fields()
     ];
 }
 
-function onpcheckout_heading()
+function plugincyopc_onpcheckout_heading()
 {
     return [
         'hide_billing_details'          => ['selector' => '#checkout-form .woocommerce-billing-fields h3,.one-page-checkout-container .woocommerce-billing-fields h3', 'title' => 'Hide Billing details'],
@@ -490,11 +490,11 @@ function onpcheckout_heading()
 
 
 // if (get_option('bd_affiliate_api_key')) {
-//     rmenu_cart_getapi(get_option('bd_affiliate_api_key'));
+//     plugincyopc_cart_getapi(get_option('bd_affiliate_api_key'));
 // }
 
 
-function rmenu_cart_getapi($Api)
+function plugincyopc_cart_getapi($Api)
 {
     $api_key = $Api;
     $current_domain = home_url();
@@ -541,12 +541,12 @@ function rmenu_cart_getapi($Api)
 }
 
 // API Key settings page
-function rmenu_cart_admin_settings()
+function plugincyopc_cart_admin_settings()
 {
     // Check if 'Save API Key' button was clicked
     // if (isset($_POST['bd_affiliate_api_key_submit'])) {
     $api_key = sanitize_text_field($_POST['bd_affiliate_api_key']);
-    $getapi = rmenu_cart_getapi($api_key);
+    $getapi = plugincyopc_cart_getapi($api_key);
     if ($getapi === "success") {
         echo '<div class="notice notice-success is-dismissible"><p>API Key validated and updated successfully.</p></div>';
         echo '<div class="notice notice-info is-dismissible"><p>Package Type: ' . esc_html(get_option('bd_affiliate_package_type')) . '</p></div>';

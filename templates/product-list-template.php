@@ -26,7 +26,9 @@
                     // Check if product is in cart
                     $in_cart = false;
                     $cart_item_key = '';
-                    
+                    // Check if WooCommerce cart is initialized and not empty
+                    if( WC()->cart && !WC()->cart->is_empty() ) {
+                        // Loop through cart items to check if the product is already in the cart
                     foreach (WC()->cart->get_cart() as $key => $cart_item) {
                         if ($cart_item['product_id'] == $product_id) {
                             $in_cart = true;
@@ -34,6 +36,7 @@
                             break;
                         }
                     }
+                }
                     
                     $checked = $in_cart ? 'checked' : '';
                     ?>
@@ -53,7 +56,7 @@
             ?>
         </ul>
         
-        <?php rmenu_checkout_popup(true); ?>
+        <?php plugincyopc_rmenu_checkout_popup(true); ?>
     </div>
 </div>
 
@@ -157,12 +160,12 @@ jQuery(document).ready(function($) {
             type: 'POST',
             url: wc_add_to_cart_params.ajax_url,
             data: {
-                action: 'remove_cart_item',
+                action: 'plugincyopc_remove_cart_item',
                 cart_item_key: cart_item_key,
                 security: wc_add_to_cart_params.wc_ajax_nonce
             },
             success: function(response) {
-                $(document.body).trigger('update_checkout');
+                $(document.body).trigger('plugincyopc_update_checkout');
             }
         });
     }
