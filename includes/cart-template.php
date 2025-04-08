@@ -70,29 +70,13 @@ function rmenu_cart()
                     <div class="cart-subtotal">
                         <span><?php echo get_option("txt_subtotal") ? esc_attr(get_option("txt_subtotal", 'Subtotal: ')) : "Subtotal: "; ?><?= wp_kses_post(wc_price(WC()->cart->get_subtotal())); ?></span>
                     </div>
-                    <?php
-                    $one_page_checkout = 'no';
-                    if (is_product()) {
-                        $product_id = get_the_ID() ?? 0; // Get the current product ID
-                        $product = wc_get_product($product_id);
-                        if (!$product || !is_a($product, 'WC_Product')) {
-                            $one_page_checkout = 'no';
-                        }
-                        // Check if One Page Checkout is enabled for this product
-                        $one_page_checkout = get_post_meta($product_id, '_one_page_checkout', true) ?? 'no';
-                    }
-
-                    if ($one_page_checkout === 'yes') { ?>
-                        <!-- Display the checkout button -->
-                        <a href="#rmenu-checkout-popup" style="display: flex;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></a><?php
-                                                                                                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                                                                                                        ?>
-                        <button class="checkout-button" onclick="openCheckoutPopup()"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></button>
-            <?php }
-                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                            } ?>
+                    <a href="#checkout-popup" style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></a>
+                    <button class="checkout-button checkout-button-drawer" onclick="openCheckoutPopup()"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></button>
+            <?php }?>
+                                                                                                                                                                                                                                                                                
         </div>
     </div>
     <div class="overlay"></div>
 <?php
+}
 }

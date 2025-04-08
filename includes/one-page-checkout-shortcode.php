@@ -19,38 +19,47 @@ function rmenu_one_page_checkout_shortcode($atts)
         //remove any whitespace from product IDs
         $product_ids = array_map('trim', $product_ids);
 
-        if (!empty($atts['product_ids']) && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_empty","1")==="1") {
+        if (!empty($atts['product_ids']) && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_empty", "1") === "1") {
             WC()->cart->empty_cart();
         }
         // Loop through each product ID and add it to the cart
         foreach ($product_ids as $product_id) {
             $product_id = intval($product_id);
             // check if the product ID is valid & wc initialized & WC is active & WC()cart is initialized
-            if ($product_id > 0 && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_add","1") ==="1") {
+            if ($product_id > 0 && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_add", "1") === "1") {
                 WC()->cart->add_to_cart($product_id);
             }
         }
     }
 ?>
-    <div class="rmenu-one-page-checkout">
+    <style>
+        .checkout-button-drawer {
+            display: none;
+        }
+
+        a.checkout-button-drawer-link {
+            display: flex !important;
+        }
+    </style>
+    <div class="rmenu-one-page-checkout" id="checkout-popup">
         <?php
         // Include the checkout template based on the selected template
-        if ($atts['template'] === 'product-table') { 
-                    include plugin_dir_path(__FILE__) . '../templates/product-table-template.php';
-                } elseif ($atts['template'] === 'product-list') {
-                    include plugin_dir_path(__FILE__) . '../templates/product-list-template.php';
-                } elseif ($atts['template'] === 'product-single') {
-                    include plugin_dir_path(__FILE__) . '../templates/product-single-template.php';
-                } elseif ($atts['template'] === 'product-slider') {
-                    include plugin_dir_path(__FILE__) . '../templates/product-slider-template.php';
-                } elseif ($atts['template'] === 'product-accordion') {
-                    include plugin_dir_path(__FILE__) . '../templates/product-accordion-template.php';
-                } elseif ($atts['template'] === 'product-tabs') {
-                    include plugin_dir_path(__FILE__) . '../templates/product-tabs-template.php';
-                } else {
-                    include plugin_dir_path(__FILE__) . '../templates/pricing-table-template.php';
-                }
-                    ?>
+        if ($atts['template'] === 'product-table') {
+            include plugin_dir_path(__FILE__) . '../templates/product-table-template.php';
+        } elseif ($atts['template'] === 'product-list') {
+            include plugin_dir_path(__FILE__) . '../templates/product-list-template.php';
+        } elseif ($atts['template'] === 'product-single') {
+            include plugin_dir_path(__FILE__) . '../templates/product-single-template.php';
+        } elseif ($atts['template'] === 'product-slider') {
+            include plugin_dir_path(__FILE__) . '../templates/product-slider-template.php';
+        } elseif ($atts['template'] === 'product-accordion') {
+            include plugin_dir_path(__FILE__) . '../templates/product-accordion-template.php';
+        } elseif ($atts['template'] === 'product-tabs') {
+            include plugin_dir_path(__FILE__) . '../templates/product-tabs-template.php';
+        } else {
+            include plugin_dir_path(__FILE__) . '../templates/pricing-table-template.php';
+        }
+        ?>
     </div>
 <?php
     return ob_get_clean();

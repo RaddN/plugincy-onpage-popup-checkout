@@ -233,7 +233,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/popup-template.php';
 function rmenu_checkout_popup($isonepagewidget = false)
 {
 ?>
-    <div class="checkout-popup <?php echo $isonepagewidget?'onepagecheckoutwidget':'';?>" data-isonepagewidget = "<?php echo $isonepagewidget;?>" style="<?php echo $isonepagewidget ? 'display: block; position: unset; transform: unset; box-shadow: none; background: unset; width: 100%; max-width: 100%; height: 100%;':'display:none';?>;">
+    <div class="checkout-popup <?php echo $isonepagewidget ? 'onepagecheckoutwidget' : ''; ?>" data-isonepagewidget="<?php echo $isonepagewidget; ?>" style="<?php echo $isonepagewidget ? 'display: block; position: unset; transform: unset; box-shadow: none; background: unset; width: 100%; max-width: 100%; height: 100%;' : 'display:none'; ?>;">
         <?php
         rmenu_checkout($isonepagewidget);
         ?>
@@ -350,11 +350,22 @@ add_action('wp', 'display_checkout_on_single_product', 10);
  */
 function display_one_page_checkout_form()
 {
-    echo '<div class="one-page-checkout-container" id="rmenu-checkout-popup">';
-    echo '<h2>' . __('Checkout', 'woocommerce') . '</h2>';
-    echo '<p class="one-page-checkout-description">' . __('Complete your purchase using the form below.', 'woocommerce') . '</p>';
-    echo do_shortcode('[woocommerce_checkout]');
-    echo '</div>';
+?>
+    <style>
+        .checkout-button-drawer {
+            display: none;
+        }
+
+        a.checkout-button-drawer-link {
+            display: flex !important;
+        }
+    </style>
+    <div class="one-page-checkout-container" id="checkout-popup">
+        <h2>Checkout</h2>
+        <p class="one-page-checkout-description">Complete your purchase using the form below.</p>
+        <?php echo do_shortcode('[woocommerce_checkout]'); ?>
+    </div>
+    <?php
 }
 
 /**
@@ -395,7 +406,8 @@ add_filter('woocommerce_checkout_cart_item_quantity', 'custom_quantity_input_on_
  */
 add_filter('woocommerce_is_checkout', 'force_woocommerce_checkout_mode', 999);
 
-function force_woocommerce_checkout_mode($is_checkout) {
+function force_woocommerce_checkout_mode($is_checkout)
+{
     return true;
 }
 
@@ -403,29 +415,30 @@ function force_woocommerce_checkout_mode($is_checkout) {
 add_action('wp_ajax_refresh_checkout_product_list', 'refresh_checkout_product_list');
 add_action('wp_ajax_nopriv_refresh_checkout_product_list', 'refresh_checkout_product_list');
 
-function refresh_checkout_product_list() {
+function refresh_checkout_product_list()
+{
     if (!isset($_POST['product_ids'])) {
         wp_die();
     }
-    
+
     $product_ids = explode(',', sanitize_text_field($_POST['product_ids']));
     $product_ids = array_map('trim', $product_ids);
-    
+
     ob_start();
-    
+
     // Loop through each product ID
     foreach ($product_ids as $item_id) {
         $product_id = intval($item_id);
         $product = wc_get_product($product_id);
-        
+
         if ($product) {
             $product_name = $product->get_name();
             $product_image = $product->get_image(array(60, 60), array('class' => 'one-page-checkout-product-image'));
-            
+
             // Check if product is in cart
             $in_cart = false;
             $cart_item_key = '';
-            
+
             foreach (WC()->cart->get_cart() as $key => $cart_item) {
                 if ($cart_item['product_id'] == $product_id) {
                     $in_cart = true;
@@ -433,9 +446,9 @@ function refresh_checkout_product_list() {
                     break;
                 }
             }
-            
+
             $checked = $in_cart ? 'checked' : '';
-            ?>
+    ?>
             <li class="one-page-checkout-product-item" data-product-id="<?php echo esc_attr($product_id); ?>" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
                 <div class="one-page-checkout-product-container">
                     <label class="one-page-checkout-product-label">
@@ -446,10 +459,10 @@ function refresh_checkout_product_list() {
                     </label>
                 </div>
             </li>
-            <?php
+    <?php
         }
     }
-    
+
     $html = ob_get_clean();
     echo $html;
     wp_die();
@@ -459,16 +472,17 @@ function refresh_checkout_product_list() {
 /**
  * Add product image to WooCommerce checkout page cart items
  */
-function add_product_image_to_checkout_cart_items($product_name, $cart_item, $cart_item_key) {
-    if (get_option("rmenu_add_img_before_product")!=="1") {
+function add_product_image_to_checkout_cart_items($product_name, $cart_item, $cart_item_key)
+{
+    if (get_option("rmenu_add_img_before_product") !== "1") {
         return $product_name;
     }
     // Get the product
     $product = $cart_item['data'];
-    
+
     // Get product thumbnail
     $thumbnail = $product->get_image(array(50, 50));
-    
+
     // Return the image followed by the product name
     return '<div class="checkout-product-item"><div class="checkout-product-image">' . $thumbnail . '</div><div class="checkout-product-name">' . $product_name . '</div></div>';
 }
@@ -477,21 +491,24 @@ add_filter('woocommerce_cart_item_name', 'add_product_image_to_checkout_cart_ite
 /**
  * Add some basic CSS to style the checkout cart items
  */
-function checkout_product_image_css() {
+function checkout_product_image_css()
+{
     ?>
     <style>
         .checkout-product-item {
             display: flex;
             align-items: center;
         }
+
         .checkout-product-image {
             margin-right: 10px;
             min-width: 50px;
         }
+
         .checkout-product-name {
             flex: 1;
         }
     </style>
-    <?php
+<?php
 }
 add_action('wp_head', 'checkout_product_image_css');
