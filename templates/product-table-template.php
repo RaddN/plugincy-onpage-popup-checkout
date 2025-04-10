@@ -5,7 +5,7 @@
 <div class="one-page-checkout-container">
                 <!-- products in table format image -- title -- price -- add to cart -->
                 <div class="one-page-checkout-products">
-                    <h2><?php echo esc_html__('Products', 'one-page-checkout-for-woocommerce'); ?></h2>
+                    <h2><?php echo esc_html__('Products', 'one-page-quick-checkout-for-wooCommerce'); ?></h2>
                     <table class="one-page-checkout-product-table" style="border: none;">                        
                         <tbody>
                             <?php

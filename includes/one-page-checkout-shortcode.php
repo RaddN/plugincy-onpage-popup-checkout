@@ -12,7 +12,7 @@ function plugincyopc_one_page_checkout_shortcode($atts)
     // empty cart if no product IDs are provided
     if (empty($atts['product_ids'])) {
         return
-            '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs.', 'one-page-checkout-for-woocommerce') . '</p></div>';
+            '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs.', 'one-page-quick-checkout-for-wooCommerce') . '</p></div>';
     } else {
         // Get the product IDs from the shortcode attribute
         $product_ids = explode(',', $atts['product_ids']);
