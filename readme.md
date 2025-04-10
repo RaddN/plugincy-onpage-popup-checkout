@@ -77,7 +77,7 @@ A: By keeping customers on the same page, the popup checkout minimizes distracti
 
 ## Support
 
-For support, please visit [PlugincySupport](https://www.blenddoit.top/contact-us).
+For support, please visit [PlugincySupport](https://plugincy.com/support).
 
 ---
 
@@ -89,4 +89,4 @@ This plugin is licensed under the GPLv2 or later. See [LICENSE](https://www.gnu.
 
 ## Credits
 
-Developed by **BlenddoIT**.
+Developed by **Plugincy**.

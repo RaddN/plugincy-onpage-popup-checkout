@@ -483,7 +483,7 @@ function plugincyopc_cart_getapi($Api)
     $current_domain = home_url();
     // Validate API key before saving
     $response = wp_remote_get(
-        'https://app.blenddoit.top/api/api.php',
+        'https://plugincy.com/api/api.php',
         [
             'headers' => [
                 'API-Key' => $api_key,
@@ -509,9 +509,9 @@ function plugincyopc_cart_getapi($Api)
         } else {
             if (is_admin()) {
                 if ($body['error'] === "Already connected with another domain.") {
-                    echo '<div class="notice notice-error is-dismissible"><p> Api key already connected with another website, <a href="https://app.blenddoit.top/api/package.php" target="_blank" >Purchase api key</a></p></div>';
+                    echo '<div class="notice notice-error is-dismissible"><p> Api key already connected with another website, <a href="https://plugincy.com/api/package.php" target="_blank" >Purchase api key</a></p></div>';
                 } else {
-                    echo '<div class="notice notice-error is-dismissible"><p>Invalid Api key, Please input correct api key, you don\'t have api key, <a href="https://app.blenddoit.top/api/package.php" target="_blank" >get api</a></p></div>';
+                    echo '<div class="notice notice-error is-dismissible"><p>Invalid Api key, Please input correct api key, you don\'t have api key, <a href="https://plugincy.com/api/package.php" target="_blank" >get api</a></p></div>';
                 }
             }
             update_option('plugincyopc_api_key', "");

@@ -15,12 +15,12 @@ function plugincyopc_cart_notice()
     // $page_param = plugincyopc_get_page_parameter_from_current_url();
     // if (!get_option('plugincyopc_api_key') && $page_param !== "plugincyopc_cart_settings") {
     //     echo '<div class="notice notice-success is-dismissible">
-    //         <p>PlugincyOnpage Checkout plugin installed successfully! Please add your API key to activate the plugin. <a href="https://app.blenddoit.top/api/package.php" target="_blank">Get API Key</a></p>
+    //         <p>PlugincyOnpage Checkout plugin installed successfully! Please add your API key to activate the plugin. <a href="" target="_blank">Get API Key</a></p>
     //     </div>';
     // }
     // elseif (get_option('plugincyopc_validity_days')==="0") {
     //     echo '<div class="notice notice-success is-dismissible">
-    //         <p>Your Onpage Checkout API validity is expired <a href="https://app.blenddoit.top/api/package.php" target="_blank">get new api key</a></p></div>';
+    //         <p>Your Onpage Checkout API validity is expired <a href="" target="_blank">get new api key</a></p></div>';
     // }
 }
 
