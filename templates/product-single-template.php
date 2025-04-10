@@ -40,12 +40,12 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                             echo do_shortcode('[add_to_cart id="' . $product_id . '" style="" show_price="false" quantity="1" class="add-to-order-button"]');
                             ?>
 
-                            <a href="#" class="modify-complete-order"><?php echo esc_html__('Modify & complete order below', 'plugincy-onpage-popup-checkout'); ?></a>
+                            <a href="#" class="modify-complete-order"><?php echo esc_html__('Modify & complete order below', 'one-page-checkout-for-woocommerce'); ?></a>
                         </div>
 
                         <div class="one-page-checkout-product-meta">
-                            <span class="sku-wrapper"><?php echo esc_html__('SKU', 'plugincy-onpage-popup-checkout'); ?>: <?php echo esc_html($product->get_sku()); ?></span>
-                            <span class="category-wrapper"><?php echo esc_html__('Category', 'plugincy-onpage-popup-checkout'); ?>:
+                            <span class="sku-wrapper"><?php echo esc_html__('SKU', 'one-page-checkout-for-woocommerce'); ?>: <?php echo esc_html($product->get_sku()); ?></span>
+                            <span class="category-wrapper"><?php echo esc_html__('Category', 'one-page-checkout-for-woocommerce'); ?>:
                                 <?php echo wp_kses_post(wc_get_product_category_list($product->get_id(), ', ')); ?>
                             </span>
                         </div>

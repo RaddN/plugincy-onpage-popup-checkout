@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) exit;
 ?>
 <div class="product-tabs-template">
 <div class="one-page-checkout-container">
-    <h2><?php echo esc_html__('Products', 'plugincy-onpage-popup-checkout'); ?></h2>
+    <h2><?php echo esc_html__('Products', 'one-page-checkout-for-woocommerce'); ?></h2>
 
     <div class="one-page-checkout-tabs">
         <ul class="opc-tabs-list">

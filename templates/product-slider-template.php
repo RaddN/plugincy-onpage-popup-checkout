@@ -8,7 +8,7 @@ wp_enqueue_style( 'owl-theme', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarous
 
 <div class="product-slider-template">
 <div class="one-page-checkout-container">
-    <h2><?php echo esc_html__('Products', 'plugincy-onpage-popup-checkout'); ?></h2>
+    <h2><?php echo esc_html__('Products', 'one-page-checkout-for-woocommerce'); ?></h2>
 
     <div class="one-page-checkout-slider owl-carousel">
         <?php

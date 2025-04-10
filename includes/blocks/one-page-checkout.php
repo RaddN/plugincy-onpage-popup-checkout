@@ -89,7 +89,7 @@ function plugincyopc_block_categories( $categories, $post ) {
     // Create the new category array
     $new_category = array(
         'slug' => 'plugincy',
-        'title' => __( 'Plugincy', 'plugincy-onpage-popup-checkout' ),
+        'title' => __( 'Plugincy', 'one-page-checkout-for-woocommerce' ),
         'icon'  => 'plugincy',
     );
 
