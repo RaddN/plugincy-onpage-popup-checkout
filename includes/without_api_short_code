@@ -8,9 +8,9 @@ function plugincyopc_cart_shortcode($atts) {
     ob_start(); ?>
 
 <div class="rmenu-cart">
-    <button class="rwc_cart-button" onclick="openCartDrawer('<?= esc_attr($atts['drawer']); ?>')">
+    <button class="rwc_cart-button" onclick="openCartDrawer('<?php echo esc_attr($atts['drawer']); ?>')">
         <span class="cart-icon">🛒</span>
-        <span class="cart-count"><?= WC()->cart->get_cart_contents_count(); ?></span>
+        <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
     </button>
 </div>
 

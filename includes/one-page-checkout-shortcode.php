@@ -12,7 +12,7 @@ function plugincyopc_one_page_checkout_shortcode($atts)
     // empty cart if no product IDs are provided
     if (empty($atts['product_ids'])) {
         return
-            '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs.', 'rmenu') . '</p></div>';
+            '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs.', 'plugincy-onpage-popup-checkout') . '</p></div>';
     } else {
         // Get the product IDs from the shortcode attribute
         $product_ids = explode(',', $atts['product_ids']);
@@ -32,15 +32,6 @@ function plugincyopc_one_page_checkout_shortcode($atts)
         }
     }
 ?>
-    <style>
-        .checkout-button-drawer {
-            display: none;
-        }
-
-        a.checkout-button-drawer-link {
-            display: flex !important;
-        }
-    </style>
     <div class="rmenu-one-page-checkout" id="checkout-popup">
         <?php
         // Include the checkout template based on the selected template
@@ -62,6 +53,7 @@ function plugincyopc_one_page_checkout_shortcode($atts)
         ?>
     </div>
 <?php
+
     return ob_get_clean();
 }
-add_shortcode('plugincy_one_page_checkout', 'plugincyopc_one_page_checkout_shortcode');
+add_shortcode('plugincy_one_page_checkout', 'plugincyopc_one_page_checkout_shortcode', 99999);

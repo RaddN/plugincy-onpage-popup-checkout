@@ -62,3 +62,28 @@ jQuery(document).ready(function($) {
         }, 50);
     });
 });
+
+jQuery(document).ready(function($) {
+    $('.remove_checkout_fields').select2({
+        placeholder: 'Select fields to remove',
+        allowClear: true,
+        width: '100%'
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            // Remove active class from all tabs and tab contents
+            tabs.forEach(t => t.classList.remove("active"));
+            contents.forEach(c => c.classList.remove("active"));
+
+            // Add active class to clicked tab and its corresponding content
+            tab.classList.add("active");
+            const content = document.querySelector(`#tab-${tab.dataset.tab}`);
+            content.classList.add("active");
+        });
+    });
+});

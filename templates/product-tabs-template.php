@@ -2,9 +2,9 @@
 if (!defined('ABSPATH')) exit;
 // Shortcode: [plugincy_one_page_checkout product_ids="" template="product-tabs"]
 ?>
-
+<div class="product-tabs-template">
 <div class="one-page-checkout-container">
-    <h2><?php echo esc_html__('Products', 'rmenu'); ?></h2>
+    <h2><?php echo esc_html__('Products', 'plugincy-onpage-popup-checkout'); ?></h2>
 
     <div class="one-page-checkout-tabs">
         <ul class="opc-tabs-list">
@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) exit;
                 $tags = wc_get_product_tag_list($product_id, ', ');
                 $attributes = $product->get_attributes();
             ?>
-                <li class="opc-tab-link" data-tab="tab-<?php echo $tab_id; ?>"><?php echo esc_html($product->get_name()); ?></li>
+                <li class="opc-tab-link" data-tab="tab-<?php echo esc_attr($tab_id); ?>"><?php echo esc_html($product->get_name()); ?></li>
             <?php } ?>
         </ul>
 
@@ -41,7 +41,7 @@ if (!defined('ABSPATH')) exit;
                 $tags = wc_get_product_tag_list($product_id, ', ');
                 $attributes = $product->get_attributes();
             ?>
-                <div class="opc-tab-pane" id="tab-<?php echo $tab_id; ?>">
+                <div class="opc-tab-pane" id="tab-<?php echo esc_attr($tab_id); ?>">
                     <div class="opc-product-image">
                         <?php echo wp_kses_post($product->get_image('woocommerce_thumbnail')); ?>
                     </div>
@@ -54,7 +54,7 @@ if (!defined('ABSPATH')) exit;
                     </div>
 
                     <div class="opc-product-description">
-                        <?php echo wpautop($product->get_short_description()); ?>
+                        <?php echo wp_kses_post(wpautop($product->get_short_description())); ?>
                     </div>
 
                     <div class="opc-product-meta">
@@ -63,11 +63,11 @@ if (!defined('ABSPATH')) exit;
                         <?php endif; ?>
 
                         <?php if (!empty($categories)) : ?>
-                            <p><strong>Categories:</strong> <?php echo $categories; ?></p>
+                            <p><strong>Categories:</strong> <?php echo wp_kses_post($categories); ?></p>
                         <?php endif; ?>
 
                         <?php if (!empty($tags)) : ?>
-                            <p><strong>Tags:</strong> <?php echo $tags; ?></p>
+                            <p><strong>Tags:</strong> <?php echo wp_kses_post($tags); ?></p>
                         <?php endif; ?>
 
                         <?php if (!empty($attributes)) : ?>
@@ -77,7 +77,7 @@ if (!defined('ABSPATH')) exit;
 
                                         $terms = wc_get_product_terms($product_id, $attribute->get_name(), ['fields' => 'names']);
                                         if (!empty($terms)) {
-                                            echo '<li>' . wc_attribute_label($attribute->get_name()) . ': ' . implode(', ', $terms) . '</li>';
+                                            echo '<li>' . esc_html(wc_attribute_label($attribute->get_name())) . ': ' . esc_html(implode(', ', $terms)) . '</li>';
                                         }
                                     } ?>
                                 </ul>
@@ -91,9 +91,10 @@ if (!defined('ABSPATH')) exit;
 
     <?php plugincyopc_rmenu_checkout_popup(true); ?>
 </div>
+</div>
 
 <!-- Tabs Script -->
-<script>
+<?php $inline_script = "
     jQuery(document).ready(function($) {
         $('.opc-tab-link').on('click', function() {
             var tabId = $(this).data('tab');
@@ -110,92 +111,5 @@ if (!defined('ABSPATH')) exit;
         // Set the first tab to active by default
         $('.opc-tab-link').first().addClass('active');
         $('.opc-tab-pane').first().addClass('active');
-    });
-</script>
-
-<!-- Styles -->
-<style>
-    .opc-product-add-to-cart a {
-        margin: 0 !important;
-    }
-
-    .one-page-checkout-container {
-        padding: 20px;
-    }
-
-    .one-page-checkout-tabs {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .opc-tabs-list {
-        display: flex;
-        gap: 15px;
-        list-style-type: none;
-        padding: 0;
-        margin-bottom: 20px;
-    }
-
-    .opc-tab-link {
-        cursor: pointer;
-        padding: 10px 20px;
-        background-color: #f1f1f1;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
-
-    .opc-tab-link.active {
-        background-color: #007cba;
-        color: white;
-    }
-
-    .opc-tabs-content .opc-tab-pane {
-        display: none;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-
-    .opc-tabs-content .opc-tab-pane.active {
-        display: block;
-    }
-
-    .opc-product-image img {
-        width: 80px;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .opc-product-details {
-        flex-grow: 1;
-        text-align: left;
-    }
-
-    .opc-product-title {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
-
-    .opc-product-price {
-        color: #444;
-        margin-bottom: 5px;
-    }
-
-    .opc-product-add-to-cart {
-        display: inline-block;
-    }
-
-    .opc-product-meta p,
-    .opc-product-attributes ul {
-        margin: 5px 0;
-        font-size: 14px;
-    }
-
-    .opc-product-attributes ul {
-        padding-left: 20px;
-        list-style-type: disc;
-    }
-</style>
+    });";
+wp_add_inline_script('rmenu-cart-script', $inline_script, 'after');

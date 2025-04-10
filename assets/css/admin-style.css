@@ -346,3 +346,62 @@ table.form-table tbody {
   font-size: 14px;
   margin: 0;
 }
+
+.space-between {
+  justify-content: space-between;
+}
+
+/* General container styling */
+.d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  /* Light background */
+  /* max-width: 800px; */
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Each column styling */
+.d-flex>div {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Label styling */
+.d-flex label {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.d-flex p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* Input styling */
+.d-flex input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.d-flex input[type="text"]:focus {
+  border-color: #0073e6;
+  box-shadow: 0 0 4px rgba(0, 115, 230, 0.2);
+  outline: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .d-flex {
+      flex-direction: column;
+  }
+}

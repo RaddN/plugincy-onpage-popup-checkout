@@ -1,12 +1,14 @@
 <?php
 if (!defined('ABSPATH')) exit;
 // Shortcode: [plugincy_one_page_checkout product_ids="" template="product-slider"]
-?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
+wp_enqueue_style( 'owl-carousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css', array(), "1.0.0" );
+wp_enqueue_style( 'owl-theme', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css', array(), "1.0.0" );
+?>
+
+<div class="product-slider-template">
 <div class="one-page-checkout-container">
-    <h2><?php echo esc_html__('Products', 'rmenu'); ?></h2>
+    <h2><?php echo esc_html__('Products', 'plugincy-onpage-popup-checkout'); ?></h2>
 
     <div class="one-page-checkout-slider owl-carousel">
         <?php
@@ -33,11 +35,14 @@ if (!defined('ABSPATH')) exit;
     <?php plugincyopc_rmenu_checkout_popup(true); ?>
 
 </div>
+</div>
 
 <!-- Initialize Owl Carousel -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<script>
+<?php wp_enqueue_script('custom-js', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js', array('jquery'), "1.0.0", true); ?>
+
+<?php wp_enqueue_script('owl-carousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js', array('jquery'), "1.0.0", true); ?>
+<?php
+$inline_script = "
     (function($) {
         $(document).ready(function() {
             var owl = $('.one-page-checkout-slider');
@@ -70,53 +75,5 @@ if (!defined('ABSPATH')) exit;
                 e.preventDefault();
             });
         });
-    })(jQuery);
-</script>
-
-<!-- Optional Styling -->
-<style>
-    .one-page-checkout-container {
-        padding: 20px;
-    }
-
-    .one-page-checkout-product {
-        text-align: center;
-        background: #fff;
-        border: 1px solid #eee;
-        border-radius: 10px;
-        padding: 15px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .one-page-checkout-product-image img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 10px;
-    }
-
-    .one-page-checkout-product-title {
-        font-weight: 600;
-        margin: 10px 0 5px;
-    }
-
-    .one-page-checkout-product-price {
-        margin-bottom: 10px;
-        color: #444;
-    }
-
-    .owl-nav button {
-        position: absolute;
-        top: 40%;
-        background: #ccc !important;
-        border-radius: 50%;
-        padding: 5px 10px !important;
-    }
-
-    .owl-nav .owl-prev {
-        left: -25px;
-    }
-
-    .owl-nav .owl-next {
-        right: -25px;
-    }
-</style>
+    })(jQuery);";
+wp_add_inline_script('owl-carousel', $inline_script, 99);

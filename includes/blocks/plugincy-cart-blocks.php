@@ -12,7 +12,8 @@
         'wc-checkout-block',
         plugins_url('plugincy_cart_block.js', __FILE__),
         array('wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor'),
-        filemtime(plugin_dir_path(__FILE__) . 'plugincy_cart_block.js')
+        filemtime(plugin_dir_path(__FILE__) . 'plugincy_cart_block.js'),
+        true
     );
 
     register_block_type('wc/checkout-block', array(
@@ -156,7 +157,14 @@
         )
     ));
 }
-add_action('init', 'plugincyopc_wc_checkout_block_register');
+add_action('init', 'plugincyopc_wc_checkout_block_register', 10);
+
+ /**
+ * Render the block
+ *
+ * @param array $attributes Block attributes.
+ * @return string Rendered block HTML.
+ */
 
 function plugincyopc_wc_checkout_block_render($attributes = array()) {
     // Extract attributes with defaults
@@ -279,18 +287,23 @@ function plugincyopc_wc_checkout_block_render($attributes = array()) {
         ));
     });
 
-    // Apply custom styles
-    // add_action('wp_head', function() use ($custom_css) {
-    //     echo '//testing custom CSS for cart block
-    //     <style type="text/css">' . $custom_css . '</style>';
-    // });
-
+    // Enqueue the custom CSS
+    wp_register_style(
+        'rmenu-cart-block-style',
+        false, // No actual CSS file
+        array(), // No dependencies
+        '1.0.0' // Version
+    );
+    
+    // Now enqueue it
+    wp_enqueue_style('rmenu-cart-block-style');
+    wp_add_inline_style( 'rmenu-cart-block-style', $custom_css, 999 );
+    
     // Generate a unique ID for this cart instance
     $cart_id = 'plugincy-cart-' . uniqid();
     
     // Output the shortcode with custom wrapper for targeting
     ob_start();
-    echo '<style type="text/css">' . $custom_css . '</style>';
     echo '<div id="' . esc_attr($cart_id) . '" class="plugincy-customized-cart">';
     echo do_shortcode('[plugincy_cart drawer="' . esc_attr($attributes['drawerPosition']) . '" cart_icon="' . esc_attr($attributes['cartIcon']) . '" product_title_tag="' . esc_attr($attributes['productTitleTag']) . '"]');
     echo '</div>';

@@ -4,10 +4,10 @@
  // product list template
  // shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" template="product-list"]
 ?>
-
+<div class = "product-list-template">
 <div class="one-page-checkout-container">
     <div class="one-page-checkout-products">
-        <h2><?php echo esc_html__('Products', 'rmenu'); ?></h2>
+        <h2><?php echo esc_html__('Products', 'plugincy-onpage-popup-checkout'); ?></h2>
         <ul class="one-page-checkout-product-list" data-product-ids="<?php echo esc_attr($atts['product_ids']); ?>">
             <?php
             $product_ids = explode(',', $atts['product_ids']);
@@ -43,7 +43,7 @@
                     <li class="one-page-checkout-product-item" data-product-id="<?php echo esc_attr($product_id); ?>" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
                         <div class="one-page-checkout-product-container">
                             <label class="one-page-checkout-product-label">
-                                <input type="checkbox" class="one-page-checkout-product-checkbox" value="<?php echo esc_attr($product_id); ?>" <?php echo $checked; ?>>
+                                <input type="checkbox" class="one-page-checkout-product-checkbox" value="<?php echo esc_attr($product_id); ?>" <?php echo esc_attr($checked); ?>>
                                 <span class="one-page-checkout-product-image-wrap"><?php echo wp_kses_post($product_image); ?></span>
                                 <span class="one-page-checkout-product-name"><?php echo esc_html($product_name); ?></span>
                                 <span class="one-page-checkout-product-price"><?php echo wp_kses_post($product->get_price_html()); ?></span>
@@ -59,60 +59,13 @@
         <?php plugincyopc_rmenu_checkout_popup(true); ?>
     </div>
 </div>
+</div>
 
-<style>
-    .one-page-checkout-product-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .one-page-checkout-product-item {
-        padding: 10px 0;
-        border-bottom: 1px solid #eee;
-        cursor: pointer;
-        position: relative;
-    }
-    .one-page-checkout-product-item.loading:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255,255,255,0.6);
-        z-index: 1;
-    }
-    .one-page-checkout-product-container {
-        display: flex;
-        align-items: center;
-    }
-    .one-page-checkout-product-label {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        cursor: pointer;
-    }
-    .one-page-checkout-product-image-wrap {
-        margin-right: 15px;
-        margin-left: 10px;
-    }
-    .one-page-checkout-product-name {
-        flex-grow: 1;
-    }
-    .one-page-checkout-product-price {
-        margin-left: 15px;
-        font-weight: bold;
-    }
-    .one-page-checkout-product-checkbox:checked + .one-page-checkout-product-image-wrap + .one-page-checkout-product-name {
-        font-weight: bold;
-    }
-</style>
-
-<script>
+<?php $inline_script = "
 jQuery(document).ready(function($) {
     // Function to add product to cart using WooCommerce AJAX
-    function addProductToCart(product_id, $item) {
-        $item.addClass('loading');
+    function addProductToCart(product_id, item) {
+        item.addClass('loading');
         
         $.ajax({
             type: 'POST',
@@ -128,11 +81,11 @@ jQuery(document).ready(function($) {
                 }
                 
                 // Update checkbox state
-                $item.find('.one-page-checkout-product-checkbox').prop('checked', true);
+                item.find('.one-page-checkout-product-checkbox').prop('checked', true);
                 
                 // Update cart item key after adding to cart
                 if (response && response.cart_item_key) {
-                    $item.attr('data-cart-item-key', response.cart_item_key);
+                    item.attr('data-cart-item-key', response.cart_item_key);
                 }
                 
                 // Update cart fragments
@@ -143,18 +96,18 @@ jQuery(document).ready(function($) {
                 }
                 
                 $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, null]);
-                $item.removeClass('loading');
+                item.removeClass('loading');
             },
             error: function() {
                 console.log('Ajax error: Failed to add product to cart');
-                $item.removeClass('loading');
+                item.removeClass('loading');
             }
         });
     }
     
     // Function to remove product from cart
-    function removeProductFromCart(product_id, cart_item_key, $item) {
-        $item.addClass('loading');
+    function removeProductFromCart(product_id, cart_item_key, item) {
+        item.addClass('loading');
         
         $.ajax({
             type: 'POST',
@@ -162,10 +115,10 @@ jQuery(document).ready(function($) {
             data: {
                 action: 'plugincyopc_remove_cart_item',
                 cart_item_key: cart_item_key,
-                security: wc_add_to_cart_params.wc_ajax_nonce
+                nonce: wc_add_to_cart_params.remove_cart_item
             },
             success: function(response) {
-                $(document.body).trigger('plugincyopc_update_checkout');
+                $(document.body).trigger('update_checkout');
             }
         });
     }
@@ -174,23 +127,23 @@ jQuery(document).ready(function($) {
     $(document).on('change', '.one-page-checkout-product-checkbox', function(e) {
         e.stopPropagation();
         var product_id = $(this).val();
-        var $item = $(this).closest('.one-page-checkout-product-item');
-        var cart_item_key = $item.attr('data-cart-item-key');
+        var item = $(this).closest('.one-page-checkout-product-item');
+        var cart_item_key = item.attr('data-cart-item-key');
         
         if($(this).is(':checked')) {
-            addProductToCart(product_id, $item);
+            addProductToCart(product_id, item);
         } else {
             if (cart_item_key) {
-                removeProductFromCart(product_id, cart_item_key, $item);
+                removeProductFromCart(product_id, cart_item_key, item);
             } else {
                 // Then try again after a short delay
                 setTimeout(function() {
-                    cart_item_key = $item.attr('data-cart-item-key');
+                    cart_item_key = item.attr('data-cart-item-key');
                     if (cart_item_key) {
-                        removeProductFromCart(product_id, cart_item_key, $item);
+                        removeProductFromCart(product_id, cart_item_key, item);
                     } else {
                         console.log('Could not find cart item key for removal');
-                        $item.removeClass('loading');
+                        item.removeClass('loading');
                     }
                 }, 500);
             }
@@ -201,29 +154,29 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.one-page-checkout-product-item', function(e) {
         if(!$(e.target).is('input:checkbox')) {
             var product_id = $(this).data('product-id');
-            var $item = $(this);
-            var $checkbox = $(this).find('.one-page-checkout-product-checkbox');
+            var item = $(this);
+            var checkbox = $(this).find('.one-page-checkout-product-checkbox');
             var cart_item_key = $(this).attr('data-cart-item-key');
             
             // Toggle checkbox visually
-            var newCheckedState = !$checkbox.prop('checked');
-            $checkbox.prop('checked', newCheckedState);
+            var newCheckedState = !checkbox.prop('checked');
+            checkbox.prop('checked', newCheckedState);
             
             // Add or remove from cart based on new checkbox state
             if(newCheckedState) {
-                addProductToCart(product_id, $item);
+                addProductToCart(product_id, item);
             } else {
                 if (cart_item_key) {
-                    removeProductFromCart(product_id, cart_item_key, $item);
+                    removeProductFromCart(product_id, cart_item_key, item);
                 } else {
                     // Then try again after a short delay
                     setTimeout(function() {
-                        cart_item_key = $item.attr('data-cart-item-key');
+                        cart_item_key = item.attr('data-cart-item-key');
                         if (cart_item_key) {
-                            removeProductFromCart(product_id, cart_item_key, $item);
+                            removeProductFromCart(product_id, cart_item_key, item);
                         } else {
                             console.log('Could not find cart item key for removal');
-                            $item.removeClass('loading');
+                            item.removeClass('loading');
                         }
                     }, 500);
                 }
@@ -231,7 +184,7 @@ jQuery(document).ready(function($) {
         }
     });
 
-});
-</script>
+});";
 
-<?php
+    // Enqueue the inline script
+    wp_add_inline_script('rmenu-cart-script', $inline_script,99);

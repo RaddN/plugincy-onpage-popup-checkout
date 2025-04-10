@@ -13,12 +13,34 @@ function plugincyopc_cart($drawer_position = 'right',$cart_icon = 'cart',$produc
     );
 
     // Get selected cart icon or fallback to default
-    $selected_icon = $cart_icons[$cart_icon];
+    $selected_icon = isset($cart_icons[$cart_icon]) ? $cart_icons[$cart_icon] : $cart_icons['cart'];
+
+    $allowed_svg = array(
+        'svg' => array(
+            'xmlns' => array(),
+            'viewBox' => array(),
+            'viewbox' => array(),  // Add lowercase version just in case
+            'width' => array(),
+            'height' => array(),
+            'role' => array(),
+            'aria-hidden' => array(),
+            'aria-label' => array(),
+            'style' => array(),
+            'class' => array(),
+            'fill' => array(),
+        ),
+        'path' => array(
+            'd' => array(),
+            'fill' => array(),
+            'stroke' => array(),
+            'stroke-width' => array(),
+        ),
+    );
     ?>
 
     <button class="rwc_cart-button" data-cart-icon = "<?php echo esc_attr($cart_icon); ?>" data-product_title_tag = "<?php echo esc_attr($product_title_tag); ?>" data-drawer-position = "<?php echo esc_attr($drawer_position); ?>" onclick="openCartDrawer('<?php echo esc_attr($drawer_position); ?>')">
         <span class="cart-icon">
-            <?php echo $selected_icon; ?>
+            <?php echo wp_kses($selected_icon, $allowed_svg); ?>
         </span>
         <span class="cart-count">
             <?php
@@ -32,7 +54,7 @@ function plugincyopc_cart($drawer_position = 'right',$cart_icon = 'cart',$produc
     </button>
     <div class="cart-drawer right">
         <div class="cart-content">
-            <div class="close_button"> <img onclick="closeCheckoutPopup()" src="<?php echo esc_url(plugin_dir_url(__FILE__) . '../assets/image/close.png'); ?>" /> </div>
+            <div class="close_button"> <svg onclick="closeCheckoutPopup()" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 320 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path></svg> </div>
             <h2><?php echo get_option("your_cart") ? esc_attr(get_option("your_cart", 'Your Cart')) : "Your Cart"; ?></h2>
             <div class="cart-items">
                 <?php
@@ -58,11 +80,11 @@ function plugincyopc_cart($drawer_position = 'right',$cart_icon = 'cart',$produc
                                     )); ?>
                                 </div>
                                 <div>
-                                    <<?php echo $product_title_tag; ?> class="item-title"><?= esc_html($_product->get_name()); ?></<?php echo $product_title_tag; ?>>
-                                    <p class="item-price"><?= wp_kses_post(wc_price($_product->get_price())); ?></p>
+                                    <<?php echo esc_attr($product_title_tag); ?> class="item-title"><?php echo esc_html($_product->get_name()); ?></<?php echo esc_attr($product_title_tag); ?>>
+                                    <p class="item-price"><?php echo wp_kses_post(wc_price($_product->get_price())); ?></p>
                                     <div class="quantity">
-                                        <input type="number" class="item-quantity" value="<?= esc_attr($cart_item['quantity']); ?>" min="1">
-                                        <button class="remove-item" data-cart-item-key="<?= esc_attr($cart_item_key); ?>"><?php echo get_option("btn_remove") ? esc_attr(get_option("btn_remove", 'Remove')) : '<svg style="width: 16px; fill: #ff0000;" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM31.1 128H416V448C416 483.3 387.3 512 352 512H95.1C60.65 512 31.1 483.3 31.1 448V128zM111.1 208V432C111.1 440.8 119.2 448 127.1 448C136.8 448 143.1 440.8 143.1 432V208C143.1 199.2 136.8 192 127.1 192C119.2 192 111.1 199.2 111.1 208zM207.1 208V432C207.1 440.8 215.2 448 223.1 448C232.8 448 240 440.8 240 432V208C240 199.2 232.8 192 223.1 192C215.2 192 207.1 199.2 207.1 208zM304 208V432C304 440.8 311.2 448 320 448C328.8 448 336 440.8 336 432V208C336 199.2 328.8 192 320 192C311.2 192 304 199.2 304 208z"></path></svg>'; ?></button>
+                                        <input type="number" class="item-quantity" value="<?php echo esc_attr($cart_item['quantity']); ?>" min="1">
+                                        <button class="remove-item" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>"><?php echo get_option("btn_remove") ? esc_attr(get_option("btn_remove", 'Remove')) : '<svg style="width: 16px; fill: #ff0000;" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM31.1 128H416V448C416 483.3 387.3 512 352 512H95.1C60.65 512 31.1 483.3 31.1 448V128zM111.1 208V432C111.1 440.8 119.2 448 127.1 448C136.8 448 143.1 440.8 143.1 432V208C143.1 199.2 136.8 192 127.1 192C119.2 192 111.1 199.2 111.1 208zM207.1 208V432C207.1 440.8 215.2 448 223.1 448C232.8 448 240 440.8 240 432V208C240 199.2 232.8 192 223.1 192C215.2 192 207.1 199.2 207.1 208zM304 208V432C304 440.8 311.2 448 320 448C328.8 448 336 440.8 336 432V208C336 199.2 328.8 192 320 192C311.2 192 304 199.2 304 208z"></path></svg>'; ?></button>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +101,7 @@ function plugincyopc_cart($drawer_position = 'right',$cart_icon = 'cart',$produc
             <?php if (function_exists('WC') && WC() && WC()->cart) {
                 if (!WC()->cart->is_empty()) { ?>
                     <div class="cart-subtotal">
-                        <span><?php echo get_option("txt_subtotal") ? esc_attr(get_option("txt_subtotal", 'Subtotal: ')) : "Subtotal: "; ?><?= wp_kses_post(wc_price(WC()->cart->get_subtotal())); ?></span>
+                        <span><?php echo get_option("txt_subtotal") ? esc_attr(get_option("txt_subtotal", 'Subtotal: ')) : "Subtotal: "; ?><?php echo wp_kses_post(wc_price(WC()->cart->get_subtotal())); ?></span>
                     </div>
                     <a href="#checkout-popup" style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></a>
                     <button class="checkout-button checkout-button-drawer" onclick="openCheckoutPopup()"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></button>

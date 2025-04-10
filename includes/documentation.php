@@ -9,10 +9,6 @@ if (!defined('ABSPATH')) exit;
  */
 function plugincyopc_cart_documentation()
 {
-    // Ensure only administrators can access
-    if (!current_user_can('manage_options')) {
-        wp_die(__('You do not have sufficient permissions to access this page.'));
-    }
 
     // include the admin header
     include_once(ABSPATH . 'wp-admin/admin-header.php');

@@ -18,7 +18,8 @@ function plugincyopc_register_one_page_checkout_block() {
         'plugincy-one-page-checkout-block',
         plugins_url( 'one-page-checkout-block.js', __FILE__ ),
         array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-i18n' ),
-        filemtime( plugin_dir_path( __FILE__ ) . 'one-page-checkout-block.js' )
+        filemtime( plugin_dir_path( __FILE__ ) . 'one-page-checkout-block.js' ),
+        true
     );
 
     // Register the block
@@ -88,7 +89,7 @@ function plugincyopc_block_categories( $categories, $post ) {
     // Create the new category array
     $new_category = array(
         'slug' => 'plugincy',
-        'title' => __( 'Plugincy', 'plugincy' ),
+        'title' => __( 'Plugincy', 'plugincy-onpage-popup-checkout' ),
         'icon'  => 'plugincy',
     );
 
