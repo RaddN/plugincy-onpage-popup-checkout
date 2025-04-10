@@ -283,15 +283,6 @@ function plugincyopc_cart_dashboard()
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row">Add Image Before Product</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_add_img_before_product" value="1" <?php checked(1, get_option("rmenu_add_img_before_product", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr valign="top">
                         <th scope="row">Add Direct Checkout Button</th>
                         <td>
                             <label class="switch">
