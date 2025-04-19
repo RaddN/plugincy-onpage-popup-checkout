@@ -2,13 +2,13 @@
 if (!defined('ABSPATH')) exit;
 // Shortcode: [plugincy_one_page_checkout product_ids="" template="product-slider"]
 
-wp_enqueue_style( 'owl-carousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css', array(), "1.0.0" );
-wp_enqueue_style( 'owl-theme', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css', array(), "1.0.0" );
+wp_enqueue_style( 'owl-carousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css', array(), "1.0.0");
+wp_enqueue_style( 'owl-theme', plugin_dir_url(__FILE__) . '../assets/css/owl.theme.default.css', array(), "1.0.0" );
 ?>
 
 <div class="product-slider-template">
 <div class="one-page-checkout-container">
-    <h2><?php echo esc_html__('Products', 'one-page-quick-checkout-for-wooCommerce'); ?></h2>
+    <h2><?php echo esc_html__('Products', 'one-page-quick-checkout-for-woocommerce'); ?></h2>
 
     <div class="one-page-checkout-slider owl-carousel">
         <?php
@@ -38,9 +38,8 @@ wp_enqueue_style( 'owl-theme', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarous
 </div>
 
 <!-- Initialize Owl Carousel -->
-<?php wp_enqueue_script('custom-js', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js', array('jquery'), "1.0.0", true); ?>
 
-<?php wp_enqueue_script('owl-carousel', 'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js', array('jquery'), "1.0.0", true); ?>
+<?php wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.min.js', array('jquery'), "1.0.0", true); ?>
 <?php
 $inline_script = "
     (function($) {

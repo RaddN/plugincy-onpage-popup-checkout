@@ -9,12 +9,6 @@ if (!defined('ABSPATH')) exit;
  */
 function plugincyopc_cart_documentation()
 {
-
-    // include the admin header
-    include_once(ABSPATH . 'wp-admin/admin-header.php');
-
-
-    // Add CSS for documentation styling with blue and green colors
 ?>
     <div class="wrap">
         <div class="plugincy-docs">
@@ -237,9 +231,6 @@ function plugincyopc_cart_documentation()
         </div>
     </div>
 <?php
-// End of function plugincyopc_cart_documentation
-// include the admin footer
-// include_once(ABSPATH . 'wp-admin/admin-footer.php');
 }
 
 

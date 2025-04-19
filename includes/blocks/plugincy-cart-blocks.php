@@ -297,7 +297,7 @@ function plugincyopc_wc_checkout_block_render($attributes = array()) {
     
     // Now enqueue it
     wp_enqueue_style('rmenu-cart-block-style');
-    wp_add_inline_style( 'rmenu-cart-block-style', $custom_css, 999 );
+    wp_add_inline_style( 'rmenu-cart-block-style', esc_html($custom_css), 999 );
     
     // Generate a unique ID for this cart instance
     $cart_id = 'plugincy-cart-' . uniqid();

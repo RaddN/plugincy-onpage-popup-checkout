@@ -7,7 +7,7 @@
 <div class = "product-list-template">
 <div class="one-page-checkout-container">
     <div class="one-page-checkout-products">
-        <h2><?php echo esc_html__('Products', 'one-page-quick-checkout-for-wooCommerce'); ?></h2>
+        <h2><?php echo esc_html__('Products', 'one-page-quick-checkout-for-woocommerce'); ?></h2>
         <ul class="one-page-checkout-product-list" data-product-ids="<?php echo esc_attr($atts['product_ids']); ?>">
             <?php
             $product_ids = explode(',', $atts['product_ids']);

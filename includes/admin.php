@@ -19,14 +19,6 @@ function plugincyopc_cart_menu()
     );
     add_submenu_page(
         'plugincyopc_cart',
-        'API Key',
-        'API Key',
-        'manage_options',
-        'plugincyopc_cart_settings',
-        'plugincyopc_cart_admin_settings'
-    );
-    add_submenu_page(
-        'plugincyopc_cart',
         'Documentation',
         'Documentation',
         'manage_options',
@@ -434,7 +426,7 @@ function plugincyopc_cart_custom_css()
     }
 
     // Add the inline styles
-    wp_add_inline_style('rmenu-cart-style', $custom_css);
+    wp_add_inline_style('rmenu-cart-style', esc_html($custom_css));
 }
 
 // Hook to enqueue the styles
@@ -460,111 +452,4 @@ function plugincyopc_onpcheckout_heading()
         'hide_additional_details'          => ['selector' => '.checkout-popup .woocommerce-additional-fields h3,.one-page-checkout-container .woocommerce-additional-fields h3', 'title' => 'Hide Additional Details'],
         'hide_order_review_heading'   => ['selector' => '#checkout-form h3#order_review_heading,.one-page-checkout-container h3#order_review_heading', 'title' => 'Hide Order Review Heading'],
     ];
-}
-
-
-// if (get_option('plugincyopc_api_key')) {
-//     plugincyopc_cart_getapi(get_option('plugincyopc_api_key'));
-// }
-
-
-function plugincyopc_cart_getapi($Api)
-{
-    $api_key = $Api;
-    $current_domain = home_url();
-    // Validate API key before saving
-    $response = wp_remote_get(
-        'https://plugincy.com/api/api.php',
-        [
-            'headers' => [
-                'API-Key' => $api_key,
-                'domain'  => $current_domain,
-            ],
-        ]
-    );
-
-    // Check if the request was successful
-    if (is_wp_error($response)) {
-        $error_message = esc_js($response->get_error_message());
-    } else {
-        $body = json_decode(wp_remote_retrieve_body($response), true);
-
-        // Validate the response API key matches the submitted API key
-        if (isset($body['api_key']) && $body['api_key'] === $api_key) {
-            // Save the API key to the database
-            update_option('plugincyopc_api_key', $api_key);
-            update_option('plugincyopc_package_type', sanitize_text_field($body['package_type']));
-            update_option('plugincyopc_price', sanitize_text_field($body['price']));
-            update_option('plugincyopc_validity_days', intval($body['validity_days']));
-            return "success";
-        } else {
-            if (is_admin()) {
-                if ($body['error'] === "Already connected with another domain.") {
-                    echo '<div class="notice notice-error is-dismissible"><p> Api key already connected with another website, <a href="https://plugincy.com/api/package.php" target="_blank" >Purchase api key</a></p></div>';
-                } else {
-                    echo '<div class="notice notice-error is-dismissible"><p>Invalid Api key, Please input correct api key, you don\'t have api key, <a href="https://plugincy.com/api/package.php" target="_blank" >get api</a></p></div>';
-                }
-            }
-            update_option('plugincyopc_api_key', "");
-            update_option('plugincyopc_package_type', "");
-            update_option('plugincyopc_price', "");
-            update_option('plugincyopc_validity_days', "");
-        }
-    }
-}
-
-// API Key settings page
-function plugincyopc_cart_admin_settings()
-{
-    // check nonece for security
-    if (!isset($_POST['plugincyopc_api_key_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['plugincyopc_api_key_nonce'])), 'plugincyopc_api_key_nonce')) {
-        return;
-    }
-    // Check if 'Save API Key' button was clicked
-    // if (isset($_POST['plugincyopc_api_key_submit'])) {
-    $api_key = isset($_POST['plugincyopc_api_key']) ? sanitize_text_field(wp_unslash($_POST['plugincyopc_api_key'])) : '';
-    $getapi = plugincyopc_cart_getapi($api_key);
-    if ($getapi === "success") {
-        echo '<div class="notice notice-success is-dismissible"><p>API Key validated and updated successfully.</p></div>';
-        echo '<div class="notice notice-info is-dismissible"><p>Package Type: ' . esc_html(get_option('plugincyopc_package_type')) . '</p></div>';
-        echo '<p>Price: ' . esc_html(get_option('plugincyopc_price')) . '</p>';
-        echo '<p>Validity Days: ' . esc_html(get_option('plugincyopc_validity_days')) . '</p></div>';
-    }
-    // }
-
-    // Check if 'Unlink API Key' button was clicked
-    if (isset($_POST['plugincyopc_api_key_unlink'])) {
-        delete_option('plugincyopc_api_key');
-        delete_option('plugincyopc_package_type');
-        delete_option('plugincyopc_price');
-        delete_option('plugincyopc_validity_days');
-        echo '<div class="notice notice-success is-dismissible"><p>API Key unlinked successfully.</p></div>';
-    }
-
-    // Get the current API key and additional information (if any)
-    $current_api_key = get_option('plugincyopc_api_key');
-    $package_type = get_option('plugincyopc_package_type');
-    $price = get_option('plugincyopc_price');
-    $validity_days = get_option('plugincyopc_validity_days');
-?>
-    <div class="wrap">
-        <h1>API Key Settings</h1>
-        <form method="post" class="api-key-form">
-            <?php wp_nonce_field('plugincyopc_api_key_nonce'); ?>
-            <label for="plugincyopc_api_key">API Key:</label>
-            <input type="text" name="plugincyopc_api_key" value="<?php echo esc_attr($current_api_key); ?>" <?php echo $current_api_key ? 'readonly' : ''; ?> required>
-            <br>
-            <div style="padding-top: 20px;">
-                <input type="submit" name="plugincyopc_api_key_submit" class="button button-primary" value="Activate API Key" <?php echo $current_api_key ? 'disabled' : ''; ?>>
-                <input type="submit" name="plugincyopc_api_key_unlink" class="button button-secondary" value="Deactivate API Key">
-            </div>
-        </form>
-        <?php if ($current_api_key) : ?>
-            <h2>Current Package Information</h2>
-            <p><strong>Package Type:</strong> <?php echo esc_html($package_type); ?></p>
-            <p><strong>Price:</strong> <?php echo esc_html($price); ?></p>
-            <p><strong>Validity Days:</strong> <?php echo esc_html($validity_days); ?></p>
-        <?php endif; ?>
-    </div>
-<?php
 }

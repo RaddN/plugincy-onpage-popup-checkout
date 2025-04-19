@@ -7,7 +7,8 @@
  * Author: plugincy
  * Author URI: https://plugincy.com/
  * license: GPL2
- * Text Domain: one-page-quick-checkout-for-wooCommerce
+ * Text Domain: one-page-quick-checkout-for-woocommerce
+ * Requires Plugins: woocommerce
  */
 
 
@@ -107,8 +108,8 @@ function plugincyopc_cart_admin_styles($hook)
 {
     if ($hook === 'toplevel_page_plugincyopc_cart') {
         wp_enqueue_style('plugincyopc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.0.0");
-        wp_enqueue_style('select2-css', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', [], '1.0.5');
-        wp_enqueue_script('select2-js', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', ['jquery'], '1.0.5', true);
+        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.0.0");
+        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.0.0", true);
     }
     wp_enqueue_style('plugincyopc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.0.0");
     wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.0.0", true);
@@ -272,8 +273,8 @@ function plugincyopc_add_one_page_checkout_to_product_type_options($product_type
     $product_type_options['one_page_checkout'] = array(
         'id'            => '_one_page_checkout',
         'wrapper_class' => '',
-        'label'         => __('One Page Checkout', 'one-page-quick-checkout-for-wooCommerce'),
-        'description'   => __('Enable one page checkout for this product', 'one-page-quick-checkout-for-wooCommerce'),
+        'label'         => __('One Page Checkout', 'one-page-quick-checkout-for-woocommerce'),
+        'description'   => __('Enable one page checkout for this product', 'one-page-quick-checkout-for-woocommerce'),
         'default'       => 'no'
     );
 
@@ -392,13 +393,13 @@ function plugincyopc_add_checkout_inline_styles()
 }
 
 // if current page contains the shortcode plugincy_one_page_checkout
-function check_shortcode_and_enqueue_styles()
+function plugincyopc_check_shortcode_and_enqueue_styles()
 {
     if (is_page() && has_shortcode(get_post()->post_content, 'plugincy_one_page_checkout')) {
         add_action('wp_enqueue_scripts', 'plugincyopc_add_checkout_inline_styles', 99);
     }
 }
-add_action('wp', 'check_shortcode_and_enqueue_styles', 99);
+add_action('wp', 'plugincyopc_check_shortcode_and_enqueue_styles', 99);
 
 /**
  * Replace the default quantity display with quantity controls in checkout
@@ -419,7 +420,7 @@ function plugincyopc_custom_quantity_input_on_checkout($html, $cart_item, $cart_
     }
     if (get_option("rmenu_remove_product", "1") === "1") {
         // remove button
-        $remove_button = ' <a class="remove-item-checkout" data-cart-item="' . esc_attr($cart_item_key) . '" aria-label="' . esc_attr__('Remove this item', 'one-page-quick-checkout-for-wooCommerce') . '"><svg style="width: 12px; fill: #ff0000;" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM31.1 128H416V448C416 483.3 387.3 512 352 512H95.1C60.65 512 31.1 483.3 31.1 448V128zM111.1 208V432C111.1 440.8 119.2 448 127.1 448C136.8 448 143.1 440.8 143.1 432V208C143.1 199.2 136.8 192 127.1 192C119.2 192 111.1 199.2 111.1 208zM207.1 208V432C207.1 440.8 215.2 448 223.1 448C232.8 448 240 440.8 240 432V208C240 199.2 232.8 192 223.1 192C215.2 192 207.1 199.2 207.1 208zM304 208V432C304 440.8 311.2 448 320 448C328.8 448 336 440.8 336 432V208C336 199.2 328.8 192 320 192C311.2 192 304 199.2 304 208z"></path></svg></a>';
+        $remove_button = ' <a class="remove-item-checkout" data-cart-item="' . esc_attr($cart_item_key) . '" aria-label="' . esc_attr__('Remove this item', 'one-page-quick-checkout-for-woocommerce') . '"><svg style="width: 12px; fill: #ff0000;" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM31.1 128H416V448C416 483.3 387.3 512 352 512H95.1C60.65 512 31.1 483.3 31.1 448V128zM111.1 208V432C111.1 440.8 119.2 448 127.1 448C136.8 448 143.1 440.8 143.1 432V208C143.1 199.2 136.8 192 127.1 192C119.2 192 111.1 199.2 111.1 208zM207.1 208V432C207.1 440.8 215.2 448 223.1 448C232.8 448 240 440.8 240 432V208C240 199.2 232.8 192 223.1 192C215.2 192 207.1 199.2 207.1 208zM304 208V432C304 440.8 311.2 448 320 448C328.8 448 336 440.8 336 432V208C336 199.2 328.8 192 320 192C311.2 192 304 199.2 304 208z"></path></svg></a>';
         $new_html .= $remove_button;
     }
     return $new_html;
