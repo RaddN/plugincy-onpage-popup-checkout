@@ -9,14 +9,14 @@ jQuery(document).ready(function ($) {
         var drawerPosition = $('.rwc_cart-button').data('drawer-position');
 
         $.ajax({
-            url: wc_cart_params.ajax_url,
+            url: onepaquc_wc_cart_params.ajax_url,
             type: 'POST',
             data: {
-                action: 'plugincyopc_get_cart_content',
+                action: 'onepaquc_get_cart_content',
                 cart_icon: cartIcon,
                 product_title_tag: productTitleTag,
                 drawer_position: drawerPosition,
-                nonce: wc_cart_params.get_cart_content_none
+                nonce: onepaquc_wc_cart_params.get_cart_content_none
             },
             success: function (response) {
                 if (response.success) {
@@ -40,9 +40,9 @@ jQuery(document).ready(function ($) {
     // Function to update the checkout form
     function updateCheckoutForm() {
         $.ajax({
-            url: ajax_object.ajax_url,
+            url: onepaquc_ajax_object.ajax_url,
             method: 'POST',
-            data: { action: 'plugincyopc_update_checkout' },
+            data: { action: 'onepaquc_update_checkout' },
             success: function (response) {
                 if (response.success) {
                     // $('.checkout-popup').html(response.data.checkout_form);
@@ -63,13 +63,13 @@ jQuery(document).ready(function ($) {
         const quantity = $(this).val();
 
         $.ajax({
-            url: wc_cart_params.ajax_url,
+            url: onepaquc_wc_cart_params.ajax_url,
             type: 'POST',
             data: {
-                action: 'plugincyopc_update_cart_item_quantity',
+                action: 'onepaquc_update_cart_item_quantity',
                 cart_item_key: cartItemKey,
                 quantity: quantity,
-                nonce: wc_cart_params.update_cart_item_quantity
+                nonce: onepaquc_wc_cart_params.update_cart_item_quantity
             },
             success: function (response) {
                 if (response.success) {
@@ -85,12 +85,12 @@ jQuery(document).ready(function ($) {
         const cartItemKey = $(this).data('cart-item-key');
 
         $.ajax({
-            url: wc_cart_params.ajax_url,
+            url: onepaquc_wc_cart_params.ajax_url,
             type: 'POST',
             data: {
-                action: 'plugincyopc_remove_cart_item',
+                action: 'onepaquc_remove_cart_item',
                 cart_item_key: cartItemKey,
-                nonce: wc_cart_params.remove_cart_item,
+                nonce: onepaquc_wc_cart_params.remove_cart_item,
             },
             success: function (response) {
                 if (response.success) {
@@ -165,13 +165,13 @@ jQuery(document).ready(function ($) {
             type: 'POST',
             url: wc_checkout_params.ajax_url,
             data: {
-                action: 'plugincyopc_update_cart_item_quantity',
+                action: 'onepaquc_update_cart_item_quantity',
                 cart_item_key: cartItemKey,
                 quantity: qty,
-                nonce: wc_cart_params.update_cart_item_quantity
+                nonce: onepaquc_wc_cart_params.update_cart_item_quantity
             },
             success: function () {
-                $('body').trigger('plugincyopc_update_checkout');
+                $('body').trigger('onepaquc_update_checkout');
             },
             complete: function () {
                 $('.woocommerce-checkout-review-order-table').unblock();
@@ -188,9 +188,9 @@ jQuery(document).ready(function ($) {
             type: 'POST',
             url: wc_add_to_cart_params.ajax_url,
             data: {
-                action: 'plugincyopc_remove_cart_item',
+                action: 'onepaquc_remove_cart_item',
                 cart_item_key: cartItemKey,
-                nonce: wc_cart_params.remove_cart_item
+                nonce: onepaquc_wc_cart_params.remove_cart_item
             },
             success: function (response) {
                 // Get product IDs from data attribute
@@ -201,9 +201,9 @@ jQuery(document).ready(function ($) {
                     type: 'POST',
                     url: wc_add_to_cart_params.ajax_url,
                     data: {
-                        action: 'plugincyopc_refresh_checkout_product_list',
+                        action: 'onepaquc_refresh_checkout_product_list',
                         product_ids: product_ids,
-                        nonce: wc_cart_params.plugincyopc_refresh_checkout_product_list
+                        nonce: onepaquc_wc_cart_params.onepaquc_refresh_checkout_product_list
                     },
                     success: function (html) {
                         $('ul.one-page-checkout-product-list').html(html);

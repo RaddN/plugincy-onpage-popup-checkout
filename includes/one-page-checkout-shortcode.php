@@ -2,7 +2,7 @@
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 // shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" template=""]
-function plugincyopc_one_page_checkout_shortcode($atts)
+function onepaquc_one_page_checkout_shortcode($atts)
 {
     $atts = shortcode_atts(array(
         'product_ids' => '',
@@ -56,4 +56,4 @@ function plugincyopc_one_page_checkout_shortcode($atts)
 
     return ob_get_clean();
 }
-add_shortcode('plugincy_one_page_checkout', 'plugincyopc_one_page_checkout_shortcode', 99999);
+add_shortcode('plugincy_one_page_checkout', 'onepaquc_one_page_checkout_shortcode', 99999);

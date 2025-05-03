@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) exit;
  * @since 1.0.0
  * @return void
  */
-function plugincyopc_cart_documentation()
+function onepaquc_cart_documentation()
 {
 ?>
     <div class="wrap">

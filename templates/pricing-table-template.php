@@ -253,7 +253,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                 ?>
             </table>
         <?php } ?>
-        <?php plugincyopc_rmenu_checkout_popup(true); ?>
+        <?php onepaquc_rmenu_checkout_popup(true); ?>
     </div>
 </div>
 

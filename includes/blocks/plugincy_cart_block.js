@@ -6,7 +6,7 @@
 
     blocks.registerBlockType('wc/checkout-block', {
         title: 'Plugincy Cart',
-        icon: 'plugincyopc_cart',
+        icon: 'onepaquc_cart',
         category: 'plugincy',
         attributes: {
             // General

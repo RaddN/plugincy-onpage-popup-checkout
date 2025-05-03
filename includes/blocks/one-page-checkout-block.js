@@ -6,7 +6,7 @@
     
     blocks.registerBlockType('plugincy/one-page-checkout', {
         title: 'Plugincy One Page Checkout',
-        icon: 'plugincyopc_one_page_cart',
+        icon: 'onepaquc_one_page_cart',
         category: 'plugincy',
         keywords: [
             'Checkout',

@@ -1,6 +1,6 @@
 <?php
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
-function plugincyopc_rmenu_checkout($isonepagewidget=false)
+function onepaquc_rmenu_checkout($isonepagewidget=false)
 {
 ?>
   <div class="popup-content">

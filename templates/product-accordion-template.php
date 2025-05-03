@@ -76,7 +76,7 @@ if (!defined('ABSPATH')) exit;
             ?>
         </div>
 
-        <?php plugincyopc_rmenu_checkout_popup(true); ?>
+        <?php onepaquc_rmenu_checkout_popup(true); ?>
     </div>
 </div>
 

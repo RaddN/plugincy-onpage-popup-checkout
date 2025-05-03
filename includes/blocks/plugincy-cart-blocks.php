@@ -2,7 +2,7 @@
  if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  
 
- function plugincyopc_wc_checkout_block_register() {
+ function onepaquc_wc_checkout_block_register() {
     // Skip block registration if Gutenberg is not available
     if ( !function_exists( 'register_block_type' ) ) {
         return;
@@ -18,7 +18,7 @@
 
     register_block_type('wc/checkout-block', array(
         'editor_script' => 'wc-checkout-block',
-        'render_callback' => 'plugincyopc_wc_checkout_block_render',
+        'render_callback' => 'onepaquc_wc_checkout_block_render',
         'attributes' => array(
             // General
             'cartIcon' => array(
@@ -157,7 +157,7 @@
         )
     ));
 }
-add_action('init', 'plugincyopc_wc_checkout_block_register', 10);
+add_action('init', 'onepaquc_wc_checkout_block_register', 10);
 
  /**
  * Render the block
@@ -166,7 +166,7 @@ add_action('init', 'plugincyopc_wc_checkout_block_register', 10);
  * @return string Rendered block HTML.
  */
 
-function plugincyopc_wc_checkout_block_render($attributes = array()) {
+function onepaquc_wc_checkout_block_render($attributes = array()) {
     // Extract attributes with defaults
     $attributes = wp_parse_args($attributes, array(
         // General
@@ -278,7 +278,7 @@ function plugincyopc_wc_checkout_block_render($attributes = array()) {
     
 
     // Add data attributes to pass to the shortcode
-    add_filter('plugincyopc_cart_data_attributes', function($attributes_array) use ($attributes) {
+    add_filter('onepaquc_cart_data_attributes', function($attributes_array) use ($attributes) {
         return array_merge($attributes_array, array(
             'data-cart-icon' => $attributes['cartIcon'],
             'data-drawer-position' => $attributes['drawerPosition'],

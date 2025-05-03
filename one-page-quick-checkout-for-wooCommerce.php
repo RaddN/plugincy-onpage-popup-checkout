@@ -2,10 +2,11 @@
 /*
 /**
  * Plugin Name: One Page Quick Checkout for WooCommerce
+ * Plugin URI:  https://plugincy.com/one-page-quick-checkout-for-woocommerce/
  * Description: Shows a popup checkout form on button click.
  * Version: 1.0
  * Author: plugincy
- * Author URI: https://plugincy.com/
+ * Author URI: https://plugincy.com
  * license: GPL2
  * Text Domain: one-page-quick-checkout-for-woocommerce
  * Requires Plugins: woocommerce
@@ -24,9 +25,9 @@ require_once plugin_dir_path(__FILE__) . 'includes/admin.php';
 // include one page checkout shortcode
 require_once plugin_dir_path(__FILE__) . 'includes/one-page-checkout-shortcode.php';
 
-global $plugincyopc_checkoutformfields, $plugincyopc_productpageformfields, $plugincyopc_rcheckoutformfields;
+global $onepaquc_checkoutformfields, $onepaquc_productpageformfields, $onepaquc_rcheckoutformfields;
 
-$plugincyopc_checkoutformfields = [
+$onepaquc_checkoutformfields = [
     "your_cart" => "Your Cart",
     "btn_remove" => "Remove Button",
     "txt_subtotal" => "Subtotal",
@@ -55,12 +56,12 @@ $plugincyopc_checkoutformfields = [
 
 // archive & single product page text
 
-$plugincyopc_productpageformfields = [
+$onepaquc_productpageformfields = [
     "txt-add-to-cart" => "Add to cart",
     "txt-direct-checkout" => "Direct Checkout"
 ];
 
-$plugincyopc_rcheckoutformfields = [
+$onepaquc_rcheckoutformfields = [
     'first_name' => ['title' => 'First Name', 'selector' => '#billing_first_name_field, #shipping_first_name_field'],
     'last_name'  => ['title' => 'Last Name', 'selector' => '#billing_last_name_field, #shipping_last_name_field'],
     'country'      => ['title' => 'Country', 'selector' => '#billing_country_field, #shipping_country_field'],
@@ -77,53 +78,53 @@ $plugincyopc_rcheckoutformfields = [
 
 
 // Enqueue scripts and styles
-function plugincyopc_cart_enqueue_scripts()
+function onepaquc_cart_enqueue_scripts()
 {
     wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.0.0");
     wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.0.0", true);
     wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.0.0", true);
     // Localize script for AJAX URL and WooCommerce cart variables
-    wp_localize_script('cart-script', 'wc_cart_params', array(
+    wp_localize_script('cart-script', 'onepaquc_wc_cart_params', array(
         'ajax_url' => admin_url('admin-ajax.php'),
         'get_cart_content_none' => wp_create_nonce('get_cart_content_none'),
         'update_cart_item_quantity' => wp_create_nonce('update_cart_item_quantity'),
         'remove_cart_item' => wp_create_nonce('remove_cart_item'),
-        'plugincyopc_refresh_checkout_product_list' => wp_create_nonce('plugincyopc_refresh_checkout_product_list'),
+        'onepaquc_refresh_checkout_product_list' => wp_create_nonce('onepaquc_refresh_checkout_product_list'),
     ));
     // Retrieve the rmsg_editor value
     $rmsg_editor_value = get_option('rmsg_editor', '');
 
     // Localize the script with the rmsg_editor value
-    wp_localize_script('rmenu-cart-script', 'rmsgValue', array(
+    wp_localize_script('rmenu-cart-script', 'onepaquc_rmsgValue', array(
         'rmsgEditor' => $rmsg_editor_value,
     ));
-    wp_localize_script('rmenu-cart-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+    wp_localize_script('rmenu-cart-script', 'onepaquc_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 }
-add_action('wp_enqueue_scripts', 'plugincyopc_cart_enqueue_scripts', 20);
+add_action('wp_enqueue_scripts', 'onepaquc_cart_enqueue_scripts', 20);
 
-add_action('admin_enqueue_scripts', 'plugincyopc_cart_admin_styles');
+add_action('admin_enqueue_scripts', 'onepaquc_cart_admin_styles');
 
 // Enqueue the admin stylesheet only for this settings page
-function plugincyopc_cart_admin_styles($hook)
+function onepaquc_cart_admin_styles($hook)
 {
-    if ($hook === 'toplevel_page_plugincyopc_cart') {
-        wp_enqueue_style('plugincyopc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.0.0");
+    if ($hook === 'toplevel_page_onepaquc_cart') {
+        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.0.0");
         wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.0.0");
         wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.0.0", true);
     }
-    wp_enqueue_style('plugincyopc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.0.0");
+    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.0.0");
     wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.0.0", true);
 }
 
 // add shortcode
-// if (get_option('plugincyopc_api_key') && get_option('plugincyopc_validity_days')!=="0"){
+// if (get_option('onepaquc_api_key') && get_option('onepaquc_validity_days')!=="0"){
 require_once plugin_dir_path(__FILE__) . 'includes/rmenu-shortcode.php';
 
 // update cart content
 
-add_action('wp_ajax_plugincyopc_get_cart_content', 'plugincyopc_get_cart_content');
-add_action('wp_ajax_nopriv_plugincyopc_get_cart_content', 'plugincyopc_get_cart_content');
-function plugincyopc_get_cart_content()
+add_action('wp_ajax_onepaquc_get_cart_content', 'onepaquc_get_cart_content');
+add_action('wp_ajax_nopriv_onepaquc_get_cart_content', 'onepaquc_get_cart_content');
+function onepaquc_get_cart_content()
 {
     check_ajax_referer('get_cart_content_none', 'nonce');
     //get the values from the ajax request cart_icon: cartIcon, product_title_tag: productTitleTag, drawer_position: drawerPosition
@@ -133,7 +134,7 @@ function plugincyopc_get_cart_content()
     ob_start();
 
     // Use include to load the template from your plugin's directory
-    plugincyopc_cart($drawerPosition, $cartIcon, $productTitleTag);
+    onepaquc_cart($drawerPosition, $cartIcon, $productTitleTag);
 
     $cart_html = ob_get_clean();
 
@@ -146,9 +147,9 @@ function plugincyopc_get_cart_content()
 
 // update quantity
 
-add_action('wp_ajax_plugincyopc_update_cart_item_quantity', 'plugincyopc_update_cart_item_quantity');
-add_action('wp_ajax_nopriv_plugincyopc_update_cart_item_quantity', 'plugincyopc_update_cart_item_quantity');
-function plugincyopc_update_cart_item_quantity()
+add_action('wp_ajax_onepaquc_update_cart_item_quantity', 'onepaquc_update_cart_item_quantity');
+add_action('wp_ajax_nopriv_onepaquc_update_cart_item_quantity', 'onepaquc_update_cart_item_quantity');
+function onepaquc_update_cart_item_quantity()
 {
     check_ajax_referer('update_cart_item_quantity', 'nonce');
     $cart_item_key = isset($_POST['cart_item_key']) ? sanitize_text_field(wp_unslash($_POST['cart_item_key'])) : '';
@@ -163,9 +164,9 @@ function plugincyopc_update_cart_item_quantity()
 
 
 // remove cart item
-add_action('wp_ajax_plugincyopc_remove_cart_item', 'plugincyopc_handle_remove_cart_item');
-add_action('wp_ajax_nopriv_plugincyopc_remove_cart_item', 'plugincyopc_handle_remove_cart_item');
-function plugincyopc_handle_remove_cart_item()
+add_action('wp_ajax_onepaquc_remove_cart_item', 'onepaquc_handle_remove_cart_item');
+add_action('wp_ajax_nopriv_onepaquc_remove_cart_item', 'onepaquc_handle_remove_cart_item');
+function onepaquc_handle_remove_cart_item()
 {
     check_ajax_referer('remove_cart_item', 'nonce');
     $cart_item_key = isset($_POST['cart_item_key']) ? sanitize_text_field(wp_unslash($_POST['cart_item_key'])) : '';
@@ -178,12 +179,12 @@ function plugincyopc_handle_remove_cart_item()
 }
 
 // update checkout form on ajax complete
-function plugincyopc_update_checkout_form()
+function onepaquc_update_checkout_form()
 {
     ob_start();
 
     // Use include to load the template from your plugin's directory
-    plugincyopc_rmenu_checkout();
+    onepaquc_rmenu_checkout();
 
     $checkout_form = ob_get_clean();
 
@@ -191,34 +192,34 @@ function plugincyopc_update_checkout_form()
     wp_send_json_success(array('checkout_form' => $checkout_form));
 }
 
-add_action('wp_ajax_plugincyopc_update_checkout', 'plugincyopc_update_checkout_form');
-add_action('wp_ajax_nopriv_plugincyopc_update_checkout', 'plugincyopc_update_checkout_form');
+add_action('wp_ajax_onepaquc_update_checkout', 'onepaquc_update_checkout_form');
+add_action('wp_ajax_nopriv_onepaquc_update_checkout', 'onepaquc_update_checkout_form');
 
 
 // Customize WooCommerce checkout text labels
-function plugincyopc_custom_woocommerce_checkout_text($translated_text, $text, $domain)
+function onepaquc_custom_woocommerce_checkout_text($translated_text, $text, $domain)
 {
-    global $plugincyopc_checkoutformfields, $plugincyopc_productpageformfields;
-    // convert $plugincyopc_checkoutformfields to array $mapping
-    $mapping = array_merge(array_flip($plugincyopc_checkoutformfields), array_flip($plugincyopc_productpageformfields));
+    global $onepaquc_checkoutformfields, $onepaquc_productpageformfields;
+    // convert $onepaquc_checkoutformfields to array $mapping
+    $mapping = array_merge(array_flip($onepaquc_checkoutformfields), array_flip($onepaquc_productpageformfields));
 
 
     if ($domain === 'woocommerce' && array_key_exists($text, $mapping)) {
         $option_key = $mapping[$text];
-        $translated_text = get_option($option_key) ? esc_attr(get_option($option_key)) : $plugincyopc_checkoutformfields[$option_key] ?? $plugincyopc_productpageformfields[$option_key];
+        $translated_text = get_option($option_key) ? esc_attr(get_option($option_key)) : $onepaquc_checkoutformfields[$option_key] ?? $onepaquc_productpageformfields[$option_key];
     }
 
     return $translated_text;
 }
-add_filter('gettext', 'plugincyopc_custom_woocommerce_checkout_text', 20, 3);
+add_filter('gettext', 'onepaquc_custom_woocommerce_checkout_text', 20, 3);
 
 
 // Change "Shipping" label in WooCommerce shipping totals section
-function plugincyopc_custom_woocommerce_shipping_label($label, $package_name)
+function onepaquc_custom_woocommerce_shipping_label($label, $package_name)
 {
     return get_option("txt_shipping") ? esc_attr(get_option("txt_shipping", 'Shipping')) : "Shipping"; // Change "Shipping" to "Delivery Charges"
 }
-add_filter('woocommerce_shipping_package_name', 'plugincyopc_custom_woocommerce_shipping_label', 10, 2);
+add_filter('woocommerce_shipping_package_name', 'onepaquc_custom_woocommerce_shipping_label', 10, 2);
 
 
 
@@ -226,7 +227,7 @@ add_filter('woocommerce_shipping_package_name', 'plugincyopc_custom_woocommerce_
 //     require_once plugin_dir_path(__FILE__) . 'includes/without_api_short_code';
 // }
 
-function plugincyopc_editor_script()
+function onepaquc_editor_script()
 {
     wp_enqueue_script(
         'plugincy-custom-editor',
@@ -236,7 +237,7 @@ function plugincyopc_editor_script()
         true
     );
 }
-add_action('enqueue_block_editor_assets', 'plugincyopc_editor_script');
+add_action('enqueue_block_editor_assets', 'onepaquc_editor_script');
 
 
 require_once plugin_dir_path(__FILE__) . 'includes/cart-template.php';
@@ -247,12 +248,12 @@ require_once plugin_dir_path(__FILE__) . 'includes/blocks/one-page-checkout.php'
 
 // checkout popup form
 
-function plugincyopc_rmenu_checkout_popup($isonepagewidget = false)
+function onepaquc_rmenu_checkout_popup($isonepagewidget = false)
 {
 ?>
     <div class="checkout-popup <?php echo $isonepagewidget ? 'onepagecheckoutwidget' : ''; ?>" data-isonepagewidget="<?php echo esc_attr($isonepagewidget); ?>" style="<?php echo $isonepagewidget ? 'display: block; position: unset; transform: unset; box-shadow: none; background: unset; width: 100%; max-width: 100%; height: 100%;overflow: hidden;' : 'display:none'; ?>;">
         <?php
-        plugincyopc_rmenu_checkout($isonepagewidget);
+        onepaquc_rmenu_checkout($isonepagewidget);
         ?>
     </div>
 <?php
@@ -268,7 +269,7 @@ function plugincyopc_rmenu_checkout_popup($isonepagewidget = false)
 /**
  * Add One Page Checkout checkbox to product type options
  */
-function plugincyopc_add_one_page_checkout_to_product_type_options($product_type_options)
+function onepaquc_add_one_page_checkout_to_product_type_options($product_type_options)
 {
     $product_type_options['one_page_checkout'] = array(
         'id'            => '_one_page_checkout',
@@ -279,37 +280,37 @@ function plugincyopc_add_one_page_checkout_to_product_type_options($product_type
     );
 
     
-    wp_nonce_field('plugincyopc_save_meta', 'plugincyopc_nonce');
+    wp_nonce_field('onepaquc_save_meta', 'onepaquc_nonce');
 
     return $product_type_options;
 }
-add_filter('product_type_options', 'plugincyopc_add_one_page_checkout_to_product_type_options');
+add_filter('product_type_options', 'onepaquc_add_one_page_checkout_to_product_type_options');
 
 /**
  * Save One Page Checkout option
  */
-function plugincyopc_save_one_page_checkout_option($post_id)
+function onepaquc_save_one_page_checkout_option($post_id)
 {
     // Check if our nonce is set and valid
-    check_ajax_referer('plugincyopc_save_meta', 'plugincyopc_nonce');
+    check_ajax_referer('onepaquc_save_meta', 'onepaquc_nonce');
 
     $is_one_page_checkout = isset($_POST['_one_page_checkout']) ? 'yes' : 'no';
     update_post_meta($post_id, '_one_page_checkout', $is_one_page_checkout);
 }
-add_action('woocommerce_process_product_meta', 'plugincyopc_save_one_page_checkout_option', 10);
+add_action('woocommerce_process_product_meta', 'onepaquc_save_one_page_checkout_option', 10);
 
 
 /**
  * Display checkout form on single product pages when One Page Checkout is enabled
  */
-function plugincyopc_display_checkout_on_single_product()
+function onepaquc_display_checkout_on_single_product()
 {
     // Only run on single product pages
     if (!is_product()) {
         global $post;
-        // if post content is not contains plugincyopc_one_page_checkout shortcode
+        // if post content is not contains onepaquc_one_page_checkout shortcode
         if (strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
-            add_action('wp_head', 'plugincyopc_rmenu_checkout_popup');
+            add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
         }
         return;
     }
@@ -320,9 +321,9 @@ function plugincyopc_display_checkout_on_single_product()
 
     if (!$product || !is_a($product, 'WC_Product')) {
         global $post;
-        // if post content is not contains plugincyopc_one_page_checkout shortcode
+        // if post content is not contains onepaquc_one_page_checkout shortcode
         if (strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
-            add_action('wp_head', 'plugincyopc_rmenu_checkout_popup');
+            add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
         }
         return;
     }
@@ -344,9 +345,9 @@ function plugincyopc_display_checkout_on_single_product()
         if (!$cart_item && get_option("onpage_checkout_cart_add", "1") === "1") {
             WC()->cart->add_to_cart($product_id, 1);
         }
-        add_action('wp_enqueue_scripts', 'plugincyopc_add_checkout_inline_styles', 99);
+        add_action('wp_enqueue_scripts', 'onepaquc_add_checkout_inline_styles', 99);
         // Add checkout form before product tabs
-        add_action('woocommerce_after_single_product_summary', 'plugincyopc_display_one_page_checkout_form',  get_option("onpage_checkout_position", '9'));
+        add_action('woocommerce_after_single_product_summary', 'onepaquc_display_one_page_checkout_form',  get_option("onpage_checkout_position", '9'));
 
         if (get_option("onpage_checkout_hide_cart_button") === "1") {
             // Hide the add to cart button
@@ -361,18 +362,18 @@ function plugincyopc_display_checkout_on_single_product()
         remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
     } else {
         global $post;
-        // if post content is not contains plugincyopc_one_page_checkout shortcode
+        // if post content is not contains onepaquc_one_page_checkout shortcode
         if (strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
-            add_action('wp_head', 'plugincyopc_rmenu_checkout_popup');
+            add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
         }
     }
 }
-add_action('wp', 'plugincyopc_display_checkout_on_single_product', 99);
+add_action('wp', 'onepaquc_display_checkout_on_single_product', 99);
 
 /**
  * Display the checkout form
  */
-function plugincyopc_display_one_page_checkout_form()
+function onepaquc_display_one_page_checkout_form()
 {
 
 ?>
@@ -384,7 +385,7 @@ function plugincyopc_display_one_page_checkout_form()
     <?php
 }
 
-function plugincyopc_add_checkout_inline_styles()
+function onepaquc_add_checkout_inline_styles()
 {
     // Make sure style is enqueued before adding inline styles
     if (wp_style_is('rmenu-cart-style', 'enqueued')) {
@@ -393,18 +394,18 @@ function plugincyopc_add_checkout_inline_styles()
 }
 
 // if current page contains the shortcode plugincy_one_page_checkout
-function plugincyopc_check_shortcode_and_enqueue_styles()
+function onepaquc_check_shortcode_and_enqueue_styles()
 {
     if (is_page() && has_shortcode(get_post()->post_content, 'plugincy_one_page_checkout')) {
-        add_action('wp_enqueue_scripts', 'plugincyopc_add_checkout_inline_styles', 99);
+        add_action('wp_enqueue_scripts', 'onepaquc_add_checkout_inline_styles', 99);
     }
 }
-add_action('wp', 'plugincyopc_check_shortcode_and_enqueue_styles', 99);
+add_action('wp', 'onepaquc_check_shortcode_and_enqueue_styles', 99);
 
 /**
  * Replace the default quantity display with quantity controls in checkout
  */
-function plugincyopc_custom_quantity_input_on_checkout($html, $cart_item, $cart_item_key)
+function onepaquc_custom_quantity_input_on_checkout($html, $cart_item, $cart_item_key)
 {
 
     // Get current quantity
@@ -425,7 +426,7 @@ function plugincyopc_custom_quantity_input_on_checkout($html, $cart_item, $cart_
     }
     return $new_html;
 }
-add_filter('woocommerce_checkout_cart_item_quantity', 'plugincyopc_custom_quantity_input_on_checkout', 10, 3);
+add_filter('woocommerce_checkout_cart_item_quantity', 'onepaquc_custom_quantity_input_on_checkout', 10, 3);
 
 
 /**
@@ -437,21 +438,21 @@ add_filter('woocommerce_checkout_cart_item_quantity', 'plugincyopc_custom_quanti
  * @param bool $is_checkout Original checkout status
  * @return bool Always returns true
  */
-add_filter('woocommerce_is_checkout', 'plugincyopc_force_woocommerce_checkout_mode', 999);
+add_filter('woocommerce_is_checkout', 'onepaquc_force_woocommerce_checkout_mode', 999);
 
-function plugincyopc_force_woocommerce_checkout_mode($is_checkout)
+function onepaquc_force_woocommerce_checkout_mode($is_checkout)
 {
     return true;
 }
 
 // Add AJAX handler for refreshing product list
-add_action('wp_ajax_plugincyopc_refresh_checkout_product_list', 'plugincyopc_refresh_checkout_product_list');
-add_action('wp_ajax_nopriv_plugincyopc_refresh_checkout_product_list', 'plugincyopc_refresh_checkout_product_list');
+add_action('wp_ajax_onepaquc_refresh_checkout_product_list', 'onepaquc_refresh_checkout_product_list');
+add_action('wp_ajax_nopriv_onepaquc_refresh_checkout_product_list', 'onepaquc_refresh_checkout_product_list');
 
-function plugincyopc_refresh_checkout_product_list()
+function onepaquc_refresh_checkout_product_list()
 {
     // Check nonce for security
-    check_ajax_referer('plugincyopc_refresh_checkout_product_list', 'nonce');
+    check_ajax_referer('onepaquc_refresh_checkout_product_list', 'nonce');
     if (!isset($_POST['product_ids'])) {
         wp_die();
     }
@@ -540,7 +541,7 @@ function plugincyopc_refresh_checkout_product_list()
 /**
  * Add product image to WooCommerce checkout page cart items
  */
-function plugincyopc_add_product_image_to_checkout_cart_items($product_name, $cart_item, $cart_item_key)
+function onepaquc_add_product_image_to_checkout_cart_items($product_name, $cart_item, $cart_item_key)
 {
     if (get_option("rmenu_add_img_before_product") !== "1") {
         return $product_name;
@@ -554,10 +555,10 @@ function plugincyopc_add_product_image_to_checkout_cart_items($product_name, $ca
     // Return the image followed by the product name
     return '<div class="checkout-product-item"><div class="checkout-product-image">' . $thumbnail . '</div><div class="checkout-product-name">' . $product_name . '</div></div>';
 }
-add_filter('woocommerce_cart_item_name', 'plugincyopc_add_product_image_to_checkout_cart_items', 10, 3);
+add_filter('woocommerce_cart_item_name', 'onepaquc_add_product_image_to_checkout_cart_items', 10, 3);
 
 
-function plugincyopc_add_checkout_button_after_add_to_cart()
+function onepaquc_add_checkout_button_after_add_to_cart()
 {
     global $product;
     $product_id = $product->get_id();
@@ -569,9 +570,9 @@ function plugincyopc_add_checkout_button_after_add_to_cart()
         echo '<a href="#checkout-popup" class="button single_add_to_cart_button direct-checkout-button button button-secondary" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" style="cursor:pointer;">' . esc_html(get_option('txt-direct-checkout', 'Direct Checkout')) . '</a>';
     }
 }
-add_action('woocommerce_after_add_to_cart_button', 'plugincyopc_add_checkout_button_after_add_to_cart');
+add_action('woocommerce_after_add_to_cart_button', 'onepaquc_add_checkout_button_after_add_to_cart');
 
-function plugincyopc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
+function onepaquc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
 {
     if (get_option("rmenu_add_checkout_button", "1") === "1") {
         $product_id = $product->get_id();
@@ -581,12 +582,12 @@ function plugincyopc_add_checkout_button_to_add_to_cart_shortcode($link, $produc
     }
     return $link;
 }
-add_filter('woocommerce_loop_add_to_cart_link', 'plugincyopc_add_checkout_button_to_add_to_cart_shortcode', 10, 2);
+add_filter('woocommerce_loop_add_to_cart_link', 'onepaquc_add_checkout_button_to_add_to_cart_shortcode', 10, 2);
 
 
-add_action('template_redirect', 'plugincyopc_add_random_product_if_cart_empty');
+add_action('template_redirect', 'onepaquc_add_random_product_if_cart_empty');
 
-function plugincyopc_add_random_product_if_cart_empty()
+function onepaquc_add_random_product_if_cart_empty()
 {
 
     // If cart is empty

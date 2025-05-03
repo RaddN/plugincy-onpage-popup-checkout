@@ -56,7 +56,7 @@
             ?>
         </ul>
         
-        <?php plugincyopc_rmenu_checkout_popup(true); ?>
+        <?php onepaquc_rmenu_checkout_popup(true); ?>
     </div>
 </div>
 </div>
@@ -113,7 +113,7 @@ jQuery(document).ready(function($) {
             type: 'POST',
             url: wc_add_to_cart_params.ajax_url,
             data: {
-                action: 'plugincyopc_remove_cart_item',
+                action: 'onepaquc_remove_cart_item',
                 cart_item_key: cart_item_key,
                 nonce: wc_add_to_cart_params.remove_cart_item
             },

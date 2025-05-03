@@ -3,36 +3,36 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 
 // Admin Menu
-add_action('admin_menu', 'plugincyopc_cart_menu');
+add_action('admin_menu', 'onepaquc_cart_menu');
 
 
-function plugincyopc_cart_menu()
+function onepaquc_cart_menu()
 {
 
     add_menu_page(
         'Onpage Checkout',
         'Onpage Checkout',
         'manage_options',
-        'plugincyopc_cart',
-        'plugincyopc_cart_dashboard',
+        'onepaquc_cart',
+        'onepaquc_cart_dashboard',
         'dashicons-cart' // Shopping cart icon
     );
     add_submenu_page(
-        'plugincyopc_cart',
+        'onepaquc_cart',
         'Documentation',
         'Documentation',
         'manage_options',
-        'plugincyopc_cart_documentation',
-        'plugincyopc_cart_documentation'
+        'onepaquc_cart_documentation',
+        'onepaquc_cart_documentation'
     );
-    if (get_option('plugincyopc_validity_days') !== "0") {
-        // add_submenu_page('bd-affiliate-marketing', 'Manage Posts', 'Manage Posts', 'manage_options', 'bd-manage-posts', 'plugincyopc_marketing_manage_posts');
-        // add_submenu_page('bd-affiliate-marketing', 'Send Notification', 'Send Notification', 'manage_options', 'bd-send-notification', 'plugincyopc_marketing_send_notification');
+    if (get_option('onepaquc_validity_days') !== "0") {
+        // add_submenu_page('bd-affiliate-marketing', 'Manage Posts', 'Manage Posts', 'manage_options', 'bd-manage-posts', 'onepaquc_marketing_manage_posts');
+        // add_submenu_page('bd-affiliate-marketing', 'Send Notification', 'Send Notification', 'manage_options', 'bd-send-notification', 'onepaquc_marketing_send_notification');
     }
 }
 
 // Display the form for Side Cart and PopUp settings
-function plugincyopc_cart_text_change_form($textvariable)
+function onepaquc_cart_text_change_form($textvariable)
 {
 
 
@@ -58,10 +58,10 @@ function plugincyopc_cart_text_change_form($textvariable)
 }
 
 // Dashboard page
-function plugincyopc_cart_dashboard()
+function onepaquc_cart_dashboard()
 {
-    global $plugincyopc_checkoutformfields,
-        $plugincyopc_productpageformfields;
+    global $onepaquc_checkoutformfields,
+        $onepaquc_productpageformfields;
     ?>
 
     <div class="welcome-banner">
@@ -85,14 +85,14 @@ function plugincyopc_cart_dashboard()
         </div>
 
         <div class="button-row">
-            <a href="/wp-admin/admin.php?page=plugincyopc_cart_documentation" class="button">View Documentation</a>
+            <a href="/wp-admin/admin.php?page=onepaquc_cart_documentation" class="button">View Documentation</a>
             <a href="https://plugincy.com/support" target="_blank" class="button button-secondary">Get Support</a>
         </div>
     </div>
 
     <h1 style="padding-top: 3rem;">Dashboard</h1>
     <?php
-    // if (get_option('plugincyopc_validity_days') === "0" || !get_option('plugincyopc_api_key')) {
+    // if (get_option('onepaquc_validity_days') === "0" || !get_option('onepaquc_api_key')) {
     //     echo "<p style='color:red;'>To use the plugin please active your API key first.</p>";
     // } else { 
     ?>
@@ -107,8 +107,8 @@ function plugincyopc_cart_dashboard()
         </div>
         <form method="post" action="options.php">
             <!-- Add nonce field for security -->
-            <?php wp_nonce_field('plugincyopc_cart_settings'); ?>
-            <?php settings_fields('plugincyopc_cart_settings'); ?>
+            <?php wp_nonce_field('onepaquc_cart_settings'); ?>
+            <?php settings_fields('onepaquc_cart_settings'); ?>
             <div class="tab-content active" id="tab-1">
                 <h2>Checkout Form Manage</h2>
                 <table class="form-table">
@@ -116,18 +116,18 @@ function plugincyopc_cart_dashboard()
                         <th scope="row">Remove checkout fields</th>
                         <td>
                             <!-- multiple select options -->
-                            <select class="remove_checkout_fields chosen_select select2-hidden-accessible enhanced" name="plugincyopc_checkout_fields[]" id="qlwcdc_remove_checkout_fields" multiple>
+                            <select class="remove_checkout_fields chosen_select select2-hidden-accessible enhanced" name="onepaquc_checkout_fields[]" id="qlwcdc_remove_checkout_fields" multiple>
                                 <?php
-                                global $plugincyopc_rcheckoutformfields;
-                                $selected_fields = get_option('plugincyopc_checkout_fields', []) ?? [];
-                                foreach ($plugincyopc_rcheckoutformfields as $key => $field) {
+                                global $onepaquc_rcheckoutformfields;
+                                $selected_fields = get_option('onepaquc_checkout_fields', []) ?? [];
+                                foreach ($onepaquc_rcheckoutformfields as $key => $field) {
                                     echo '<option value="' . esc_attr($key) . '" ' . (is_array($selected_fields) && in_array($key, $selected_fields) ? 'selected' : '') . '>' . esc_html($field['title']) . '</option>';
                                 }
                                 ?>
                             </select>
                         </td>
                     </tr>
-                    <?php foreach (plugincyopc_rmenu_fields() as $key => $field) : ?>
+                    <?php foreach (onepaquc_rmenu_fields() as $key => $field) : ?>
                         <tr valign="top">
                             <th scope="row"><?php echo esc_html($field['title']); ?></th>
                             <td>
@@ -142,7 +142,7 @@ function plugincyopc_cart_dashboard()
                 <hr />
                 <h3>Heading Manage</h3>
                 <table class="form-table">
-                    <?php foreach (plugincyopc_onpcheckout_heading() as $key => $field) : ?>
+                    <?php foreach (onepaquc_onpcheckout_heading() as $key => $field) : ?>
                         <tr valign="top">
                             <th scope="row"><?php echo esc_html($field['title']); ?></th>
                             <td>
@@ -220,14 +220,14 @@ function plugincyopc_cart_dashboard()
                     <h2>Checkout Form Text</h2> <button id="reset-defaults" class="button button-primary" style="background:red;">Reset Default</button>
                 </div>
                 <?php
-                plugincyopc_cart_text_change_form($plugincyopc_checkoutformfields);
+                onepaquc_cart_text_change_form($onepaquc_checkoutformfields);
 
                 ?>
                 <div class="d-flex space-between">
                     <h2>Archive & Single Product Page Text</h2>
                 </div>
                 <?php
-                plugincyopc_cart_text_change_form($plugincyopc_productpageformfields);
+                onepaquc_cart_text_change_form($onepaquc_productpageformfields);
 
                 ?>
             </div>
@@ -292,7 +292,7 @@ function plugincyopc_cart_dashboard()
         document.getElementById("reset-defaults").addEventListener("click", function() {
             if (confirm("Are you sure you want to reset all settings to their default values?")) {
                 // Send AJAX request to reset settings
-                fetch("' . esc_url(admin_url('admin-ajax.php')) . '?action=plugincyopc_reset_plugincyopc_cart_settings", {
+                fetch("' . esc_url(admin_url('admin-ajax.php')) . '?action=onepaquc_reset_onepaquc_cart_settings", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
@@ -318,24 +318,24 @@ function plugincyopc_cart_dashboard()
 
         ?>
         <p style="text-align: center;font-size: 15px;">To add menu cart to your page, use the shortcode <b>[plugincy_cart]</b> or the Elementor on-page menu cart widget. Block editor support will be available soon.</p>
-        <p style="text-align: center;padding-bottom:20px; font-size: 15px;">[plugincy_one_page_checkout product_ids="152,153,151,142 " template="product-tabs"] <a href="/wp-admin/admin.php?page=plugincyopc_cart_documentation#multiple-products">view documentation</a></p>
+        <p style="text-align: center;padding-bottom:20px; font-size: 15px;">[plugincy_one_page_checkout product_ids="152,153,151,142 " template="product-tabs"] <a href="/wp-admin/admin.php?page=onepaquc_cart_documentation#multiple-products">view documentation</a></p>
     </div>
 <?php
     // }
 }
-add_action('admin_init', 'plugincyopc_cart_settings');
-// add_action('wp_head', 'plugincyopc_cart_custom_css');
+add_action('admin_init', 'onepaquc_cart_settings');
+// add_action('wp_head', 'onepaquc_cart_custom_css');
 
 
 
 
-function plugincyopc_cart_settings()
+function onepaquc_cart_settings()
 {
-    foreach (plugincyopc_rmenu_fields() as $key => $field) {
-        register_setting('plugincyopc_cart_settings', $key, 'sanitize_text_field');
+    foreach (onepaquc_rmenu_fields() as $key => $field) {
+        register_setting('onepaquc_cart_settings', $key, 'sanitize_text_field');
     }
-    foreach (plugincyopc_onpcheckout_heading() as $key => $field) {
-        register_setting('plugincyopc_cart_settings', $key, 'sanitize_text_field');
+    foreach (onepaquc_onpcheckout_heading() as $key => $field) {
+        register_setting('onepaquc_cart_settings', $key, 'sanitize_text_field');
     }
 
     $string_fields = [
@@ -353,21 +353,21 @@ function plugincyopc_cart_settings()
     ];
 
     foreach ($string_fields as $field) {
-        register_setting('plugincyopc_cart_settings', $field, 'sanitize_text_field');
+        register_setting('onepaquc_cart_settings', $field, 'sanitize_text_field');
     }
 
-    global $plugincyopc_checkoutformfields, $plugincyopc_productpageformfields;
-    $settings = array_merge(array_keys($plugincyopc_checkoutformfields), array_keys($plugincyopc_productpageformfields));
+    global $onepaquc_checkoutformfields, $onepaquc_productpageformfields;
+    $settings = array_merge(array_keys($onepaquc_checkoutformfields), array_keys($onepaquc_productpageformfields));
 
     foreach ($settings as $setting) {
-        register_setting('plugincyopc_cart_settings', $setting, 'sanitize_text_field');
+        register_setting('onepaquc_cart_settings', $setting, 'sanitize_text_field');
     }
     // Register the setting for the checkout fields values of array
-    register_setting('plugincyopc_cart_settings', "plugincyopc_checkout_fields", 'plugincyopc_sanitize_array_of_text');
+    register_setting('onepaquc_cart_settings', "onepaquc_checkout_fields", 'onepaquc_sanitize_array_of_text');
 
 }
 
-function plugincyopc_sanitize_array_of_text($value) {
+function onepaquc_sanitize_array_of_text($value) {
     if (!is_array($value)) {
         return [];
     }
@@ -378,12 +378,12 @@ function plugincyopc_sanitize_array_of_text($value) {
 
 
 // Function to reset the settings to default values
-function plugincyopc_reset_plugincyopc_cart_settings()
+function onepaquc_reset_onepaquc_cart_settings()
 {
-    global $plugincyopc_checkoutformfields,
-        $plugincyopc_productpageformfields;
+    global $onepaquc_checkoutformfields,
+        $onepaquc_productpageformfields;
     // List of settings to reset
-    $settings = array_merge(array_keys($plugincyopc_checkoutformfields), array_keys($plugincyopc_productpageformfields));
+    $settings = array_merge(array_keys($onepaquc_checkoutformfields), array_keys($onepaquc_productpageformfields));
 
     // Reset each setting
     foreach ($settings as $setting) {
@@ -393,33 +393,33 @@ function plugincyopc_reset_plugincyopc_cart_settings()
     // Send a JSON response back to the client
     wp_send_json_success();
 }
-add_action('wp_ajax_plugincyopc_reset_plugincyopc_cart_settings', 'plugincyopc_reset_plugincyopc_cart_settings');
+add_action('wp_ajax_onepaquc_reset_onepaquc_cart_settings', 'onepaquc_reset_onepaquc_cart_settings');
 
-function plugincyopc_cart_custom_css()
+function onepaquc_cart_custom_css()
 {
-    global $plugincyopc_rcheckoutformfields;
+    global $onepaquc_rcheckoutformfields;
 
     // Initialize an empty string for the custom CSS
     $custom_css = '';
 
     // Loop through the fields to generate CSS
-    foreach (plugincyopc_rmenu_fields() as $key => $field) {
+    foreach (onepaquc_rmenu_fields() as $key => $field) {
         if (get_option($key)) {
             $custom_css .= "{$field['selector']} { display: none !important; }\n";
         }
     }
 
-    foreach (plugincyopc_onpcheckout_heading() as $key => $field) {
+    foreach (onepaquc_onpcheckout_heading() as $key => $field) {
         if (get_option($key)) {
             $custom_css .= "{$field['selector']} { display: none !important; }\n";
         }
     }
 
-    if (get_option('plugincyopc_checkout_fields')) {
-        $checkout_fields = get_option('plugincyopc_checkout_fields');
+    if (get_option('onepaquc_checkout_fields')) {
+        $checkout_fields = get_option('onepaquc_checkout_fields');
         foreach ($checkout_fields as $field) {
-            if (isset($plugincyopc_rcheckoutformfields[$field])) {
-                $selector = $plugincyopc_rcheckoutformfields[$field]['selector'];
+            if (isset($onepaquc_rcheckoutformfields[$field])) {
+                $selector = $onepaquc_rcheckoutformfields[$field]['selector'];
                 $custom_css .= "{$selector} { display: none !important; }\n";
             }
         }
@@ -430,9 +430,9 @@ function plugincyopc_cart_custom_css()
 }
 
 // Hook to enqueue the styles
-add_action('wp_enqueue_scripts', 'plugincyopc_cart_custom_css', 9999999);
+add_action('wp_enqueue_scripts', 'onepaquc_cart_custom_css', 9999999);
 
-function plugincyopc_rmenu_fields()
+function onepaquc_rmenu_fields()
 {
     return [
         'hide_coupon_toggle'          => ['selector' => '#checkout-form .woocommerce-form-coupon-toggle, #checkout-form .col-form-coupon,.one-page-checkout-container .woocommerce-form-coupon-toggle, .one-page-checkout-container .col-form-coupon', 'title' => 'Hide Top Coupon'],
@@ -445,7 +445,7 @@ function plugincyopc_rmenu_fields()
     ];
 }
 
-function plugincyopc_onpcheckout_heading()
+function onepaquc_onpcheckout_heading()
 {
     return [
         'hide_billing_details'          => ['selector' => '#checkout-form .woocommerce-billing-fields h3,.one-page-checkout-container .woocommerce-billing-fields h3', 'title' => 'Hide Billing details'],

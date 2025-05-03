@@ -63,7 +63,7 @@ jQuery(document).ready(function ($) {
     function handleCheckoutResponse(response) {
         $('.spinner').remove();
         if (response.result === 'success') {
-            $('.popup-message').html('<div class="Confirm_message">' + rmsgValue.rmsgEditor + '</div>');
+            $('.popup-message').html('<div class="Confirm_message">' + onepaquc_rmsgValue.rmsgEditor + '</div>');
             $('#checkout-form').remove();
         } else {
             $('.popup-message').html('<p>' + response.messages + '</p>');

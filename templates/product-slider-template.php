@@ -32,7 +32,7 @@ wp_enqueue_style( 'owl-theme', plugin_dir_url(__FILE__) . '../assets/css/owl.the
         ?>
     </div>
 
-    <?php plugincyopc_rmenu_checkout_popup(true); ?>
+    <?php onepaquc_rmenu_checkout_popup(true); ?>
 
 </div>
 </div>

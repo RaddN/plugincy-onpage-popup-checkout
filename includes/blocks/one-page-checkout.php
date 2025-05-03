@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 /**
  * Register the Plugincy One Page Checkout Gutenberg Block
  */
-function plugincyopc_register_one_page_checkout_block() {
+function onepaquc_register_one_page_checkout_block() {
     // Skip block registration if Gutenberg is not available
     if ( !function_exists( 'register_block_type' ) ) {
         return;
@@ -26,7 +26,7 @@ function plugincyopc_register_one_page_checkout_block() {
     register_block_type( 'plugincy/one-page-checkout', array(
         'editor_script' => 'plugincy-one-page-checkout-block',
         'editor_style'  => 'plugincy-one-page-checkout-editor',
-        'render_callback' => 'plugincyopc_render_one_page_checkout_block',
+        'render_callback' => 'onepaquc_render_one_page_checkout_block',
         'attributes' => array(
             'product_ids' => array(
                 'type' => 'string',
@@ -63,7 +63,7 @@ function plugincyopc_register_one_page_checkout_block() {
         ),
     ) );
 }
-add_action( 'init', 'plugincyopc_register_one_page_checkout_block' );
+add_action( 'init', 'onepaquc_register_one_page_checkout_block' );
 
 /**
  * Render callback for the Plugincy One Page Checkout block
@@ -71,7 +71,7 @@ add_action( 'init', 'plugincyopc_register_one_page_checkout_block' );
  * @param array $attributes Block attributes.
  * @return string Generated shortcode.
  */
-function plugincyopc_render_one_page_checkout_block( $attributes ) {
+function onepaquc_render_one_page_checkout_block( $attributes ) {
     // Extract attributes
     $product_ids = isset( $attributes['product_ids'] ) ? $attributes['product_ids'] : '';
     $template = isset( $attributes['template'] ) ? $attributes['template'] : 'product-tabs';
@@ -85,7 +85,7 @@ function plugincyopc_render_one_page_checkout_block( $attributes ) {
 /**
  * Add custom category for Plugincy blocks
  */
-function plugincyopc_block_categories( $categories, $post ) {
+function onepaquc_block_categories( $categories, $post ) {
     // Create the new category array
     $new_category = array(
         'slug' => 'plugincy',
@@ -98,4 +98,4 @@ function plugincyopc_block_categories( $categories, $post ) {
 
     return $categories;
 }
-add_filter( 'block_categories_all', 'plugincyopc_block_categories', 0, 2 );
+add_filter( 'block_categories_all', 'onepaquc_block_categories', 0, 2 );
