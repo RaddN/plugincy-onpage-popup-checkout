@@ -4,7 +4,7 @@
  * Plugin Name: One Page Quick Checkout for WooCommerce
  * Plugin URI:  https://plugincy.com/one-page-quick-checkout-for-woocommerce/
  * Description: Shows a popup checkout form on button click.
- * Version: 1.0
+ * Version: 1.0.0
  * Author: plugincy
  * Author URI: https://plugincy.com
  * license: GPL2
@@ -233,7 +233,7 @@ function onepaquc_editor_script()
         'plugincy-custom-editor',
         plugin_dir_url(__FILE__) . 'includes/blocks/editor.js',
         array('wp-blocks', 'wp-element', 'wp-edit-post', 'wp-dom-ready', 'wp-plugins'),
-        '1.0',
+        '1.0.0',
         true
     );
 }
