@@ -15,7 +15,8 @@ function onepaquc_cart_menu()
         'manage_options',
         'onepaquc_cart',
         'onepaquc_cart_dashboard',
-        'dashicons-cart' // Shopping cart icon
+        'dashicons-cart', // Shopping cart icon
+        '55.50'
     );
     add_submenu_page(
         'onepaquc_cart',
