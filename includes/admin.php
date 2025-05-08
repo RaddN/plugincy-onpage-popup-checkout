@@ -921,6 +921,15 @@ function onepaquc_cart_dashboard()
                         </td>
                     </tr>
                     <tr valign="top">
+                        <th scope="row">at least one product in cart</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="rmenu_at_one_product_cart" value="1" <?php checked(1, get_option("rmenu_at_one_product_cart", "1"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
                         <th scope="row">Disable Cart Page (Coming Soon)</th>
                         <td>
                             <label class="switch">
@@ -974,15 +983,7 @@ function onepaquc_cart_dashboard()
                             </label>
                         </td>
                     </tr>
-                    <tr valign="top">
-                        <th scope="row">at least one product in cart (Coming Soon)</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_at_one_product_cart" value="1" <?php checked(1, get_option("rmenu_at_one_product_cart", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                        </td>
-                    </tr>
+                    
                 </table>
             </div>
             <div class="tab-content" id="tab-6">
@@ -1142,6 +1143,7 @@ function onepaquc_cart_settings()
         "onpage_checkout_widget_cart_add",
         "onpage_checkout_hide_cart_button",
         "rmenu_quantity_control",
+        "rmenu_at_one_product_cart",
         "rmenu_remove_product",
         "rmenu_add_img_before_product",
         "rmenu_add_direct_checkout_button",
