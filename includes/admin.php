@@ -66,7 +66,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <h1>Welcome to Onpage Checkout <span class="version-tag">v1.0.0</span></h1>
+        <h1>Welcome to Onpage Checkout <span class="version-tag">v1.0.1</span></h1>
         <p>Thank you for installing Onpage Checkout! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 
@@ -317,21 +317,6 @@ function onepaquc_cart_dashboard()
                             <span class="tooltip">
                                 <span class="question-mark">?</span>
                                 <span class="tooltip-text">Automatically add the first product to cart when the page loads.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Default Template</th>
-                        <td>
-                            <select name="onpage_checkout_widget_default_template">
-                                <option value="product-list" <?php selected(get_option('onpage_checkout_widget_default_template', 'product-list'), 'product-list'); ?>>Product List</option>
-                                <option value="product-tabs" <?php selected(get_option('onpage_checkout_widget_default_template', 'product-list'), 'product-tabs'); ?>>Product Tabs</option>
-                                <option value="product-grid" <?php selected(get_option('onpage_checkout_widget_default_template', 'product-list'), 'product-grid'); ?>>Product Grid</option>
-                                <option value="product-accordion" <?php selected(get_option('onpage_checkout_widget_default_template', 'product-list'), 'product-accordion'); ?>>Product Accordion</option>
-                            </select>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Choose the default template for multi-product checkout when not specified in shortcode.</span>
                             </span>
                         </td>
                     </tr>

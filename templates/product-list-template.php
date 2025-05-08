@@ -99,7 +99,6 @@ jQuery(document).ready(function($) {
                 item.removeClass('loading');
             },
             error: function() {
-                console.log('Ajax error: Failed to add product to cart');
                 item.removeClass('loading');
             }
         });
@@ -142,7 +141,6 @@ jQuery(document).ready(function($) {
                     if (cart_item_key) {
                         removeProductFromCart(product_id, cart_item_key, item);
                     } else {
-                        console.log('Could not find cart item key for removal');
                         item.removeClass('loading');
                     }
                 }, 500);
@@ -175,7 +173,6 @@ jQuery(document).ready(function($) {
                         if (cart_item_key) {
                             removeProductFromCart(product_id, cart_item_key, item);
                         } else {
-                            console.log('Could not find cart item key for removal');
                             item.removeClass('loading');
                         }
                     }, 500);

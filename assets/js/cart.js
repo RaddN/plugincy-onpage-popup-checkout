@@ -242,8 +242,6 @@ jQuery(document).ready(function ($) {
             return;
         }
 
-        console.log($directbehave);
-
         // Handle confirmation if enabled
         if ($directbehave.rmenu_wc_add_confirmation == 1) {
             var methodMap = {
@@ -300,7 +298,7 @@ jQuery(document).ready(function ($) {
                         window.location.href = onepaquc_wc_cart_params.cart_url;
                         return;
                     }
-                    else if(methodKey === 'side_cart'){
+                    else if(methodKey === 'side_cart' && !$isonepagewidget){
                         updateCartContent();
                     }
                     else {
