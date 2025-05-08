@@ -47,7 +47,6 @@ html {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     transform: translateX(100%);
     transition: transform 0.3s ease;
-    overflow-y: auto;
     z-index: 999;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -72,6 +71,11 @@ html {
     display: flex;
     align-items: center;
     padding: 1rem;
+}
+
+.cart-drawer .cart-items {
+    overflow-y: scroll;
+    height: 68vh;
 }
 .cart-drawer .cart-item:not(:last-child) {
     border-bottom: 1px solid #eaeaea;
@@ -174,7 +178,52 @@ button.rwc_cart-button span.cart-icon img {
     width: 90%;
     max-width: 400px;
     height: 600px;
-    overflow: scroll;
+    overflow: hidden;
+}
+.checkout-popup h2{
+    margin: 0 !important;
+}
+
+.checkout-popup .form-row.place-order {
+    position: fixed;
+    top: 86%;
+    height: 80px;
+    width: 95%;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+.checkout-popup.onepagecheckoutwidget .form-row.place-order {
+    position: relative;
+    top: unset;
+    height: unset;
+    width: unset;
+    background: unset;
+    display: unset;
+    justify-content: unset;
+}
+
+.checkout-popup p.order-total-price {
+    display: flex;
+    flex-direction: column;
+}
+.checkout-popup p.order-total-price bdi {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.checkout-popup.onepagecheckoutwidget .form-row.place-order p.order-total-price {
+    display: none;
+}
+
+.checkout-popup .form-row.place-order:before,.checkout-popup .form-row.place-order:after {
+    display: none !important;
+}
+
+.checkout-popup div#checkout-form {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 .popup-message {
@@ -1404,4 +1453,26 @@ table.one-page-checkout-product-table td {
 .product-tabs-template  .opc-product-attributes ul {
     padding-left: 20px;
     list-style-type: disc;
+}
+.direct-checkout-button {
+    position: relative; /* Required for positioning the :after element */
+}
+
+.direct-checkout-button.loading:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px; /* Spinner size */
+    height: 20px; /* Spinner size */
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%); /* Center the spinner */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

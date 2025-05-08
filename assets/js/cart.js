@@ -1,5 +1,4 @@
 jQuery(document).ready(function ($) {
-
     $isonepagewidget = $('.checkout-popup').data('isonepagewidget');
     // Function to fetch and update cart contents
     function updateCartContent(isdrawer = true) {
@@ -229,55 +228,161 @@ jQuery(document).ready(function ($) {
             }
         });
     });
-    function directcheckout(product_id, product_type) {
-        var $variation_id = $('.variation_id').val() || 0; // Get the variation ID
-        console.log('Variation ID:', $variation_id);
-    
-        // Disable button to prevent multiple clicks
+
+    var $directbehave = onepaquc_wc_cart_params.direct_checkout_behave;
+    var methodKey = $directbehave.rmenu_wc_checkout_method;
+
+    function directcheckout(product_id, product_type, $button) {
+        var $variation_id = $('.variation_id').val() || 0;
+
         $('#checkout-button-drawer-link').prop('disabled', true);
-    
-        // Check if the product is a variable product and variation ID is valid
+
         if (product_type === 'variable' && $variation_id === 0) {
-            $('#checkout-button-drawer-link').prop('disabled', false); // Re-enable button
+            $('#checkout-button-drawer-link').prop('disabled', false);
             return;
         }
-    
-        $.ajax({
-            type: 'POST',
-            url: wc_add_to_cart_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart'),
-            data: {
-                product_id: product_id,
-                quantity: 1,
-                variation_id: $variation_id,
-            },
-            success: function (response) {
-                if (response.error && response.product_url) {
-                    window.location = response.product_url; // Redirect to product page if error
-                    return;
-                }
-                updateCartContent(false);
-                updateCheckoutForm();
-                $('.checkout-popup').show();
-                $('.cart-drawer').removeClass('open');
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('Ajax error:', textStatus, errorThrown);
-                alert('Failed to add product to cart. Please try again later.'); // User-friendly message
-            },
-            complete: function () {
-                $('#checkout-button-drawer-link').prop('disabled', false); // Re-enable button
+
+        console.log($directbehave);
+
+        // Handle confirmation if enabled
+        if ($directbehave.rmenu_wc_add_confirmation == 1) {
+            var methodMap = {
+                direct_checkout: "Redirect to Checkout",
+                ajax_add: "AJAX Add to Cart",
+                cart_redirect: "Redirect to Cart Page",
+                popup_checkout: "Popup Checkout",
+                side_cart: "Side Cart Slide-in"
+            };
+
+
+            var methodLabel = methodMap[methodKey] || "Direct Checkout";
+
+            var confirmMessage = `Are you sure you want to proceed with ${methodLabel}?`;
+
+            if ($directbehave.rmenu_wc_clear_cart === "1") {
+                confirmMessage += ` This will clear your current cart.`;
             }
-        });
+
+            var confirmed = confirm(confirmMessage);
+
+            if (!confirmed) {
+                $('#checkout-button-drawer-link').prop('disabled', false);
+                $button.removeClass('loading').prop('disabled', false);
+                return;
+            }
+        }
+
+        // Function to proceed with adding to cart
+        function proceedToAddToCart() {
+            $.ajax({
+                type: 'POST',
+                url: wc_add_to_cart_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart'),
+                data: {
+                    product_id: product_id,
+                    quantity: 1,
+                    variation_id: $variation_id,
+                },
+                success: function (response) {
+                    if (response.error && response.product_url) {
+                        window.location = response.product_url;
+                        return;
+                    }
+                    updateCartContent(false);
+                    updateCheckoutForm();
+                    if (methodKey === 'direct_checkout') {
+                        window.location.href = onepaquc_wc_cart_params.checkout_url;
+                        return;
+                    }
+                    else if(methodKey === 'ajax_add'){
+                        $('.cart-drawer').removeClass('open');
+                    }
+                    else if(methodKey === 'cart_redirect'){
+                        window.location.href = onepaquc_wc_cart_params.cart_url;
+                        return;
+                    }
+                    else if(methodKey === 'side_cart'){
+                        updateCartContent();
+                    }
+                    else {
+                        $('.checkout-popup').show();
+                        $('.cart-drawer').removeClass('open');
+                    }
+                    
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Ajax error:', textStatus, errorThrown);
+                    alert('Failed to add product to cart. Please try again later.');
+                },
+                complete: function () {
+                    $('#checkout-button-drawer-link').prop('disabled', false);
+                    $button.removeClass('loading').prop('disabled', false);
+                    if ($isonepagewidget) {
+                        const element = document.getElementById('checkout-form');
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                }
+            });
+        }
+
+        // If clear cart is enabled, clear the cart before proceeding
+        if ($directbehave.rmenu_wc_clear_cart == 1) {
+            $.ajax({
+                type: 'POST',
+                url: wc_add_to_cart_params.ajax_url,
+                data: {
+                    action: 'woocommerce_clear_cart'
+                },
+                success: function () {
+                    proceedToAddToCart(); // Now add the product
+                },
+                error: function () {
+                    alert('Could not clear cart. Please try again.');
+                    $('#checkout-button-drawer-link').prop('disabled', false);
+                }
+            });
+        } else {
+            proceedToAddToCart();
+        }
     }
+
 
     // Event delegation for better performance
     $(document).on('click', '.direct-checkout-button', function (e) {
         e.preventDefault(); // Prevent the default anchor behavior
 
-        var product_id = $(this).data('product-id');
-        var product_type = $(this).data('product-type');
+        var $button = $(this); // Cache the button reference
+        var product_id = $button.data('product-id');
+        var product_type = $button.data('product-type');
 
-        directcheckout(product_id, product_type);
+        // Add loading class
+        $button.addClass('loading').prop('disabled', true); // Disable the button
+
+        directcheckout(product_id, product_type, $button);
+
+
+
+
+    });
+
+    $(document.body).on('updated_checkout', function () {
+        // Get the full HTML of the order total amount from the specified element
+        var orderTotalHtml = $('.order-total .woocommerce-Price-amount').html().trim();
+
+        // Check if the <p> with the class 'order-total-price' exists
+        var totalPriceElement = $('.checkout-popup .form-row.place-order p.order-total-price');
+
+        if (totalPriceElement.length) {
+            // If it exists, update the HTML
+            totalPriceElement.html('<span>Total: </span>' + orderTotalHtml);
+        } else {
+            // If it doesn't exist, prepend a new <p> with the class
+            var newTotalParagraph = '<p class="order-total-price"><span>Total: </span>' + orderTotalHtml + '</p>';
+            $('.form-row.place-order').prepend(newTotalParagraph);
+        }
     });
 
 });
+
+
