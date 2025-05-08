@@ -100,8 +100,9 @@ function onepaquc_cart_dashboard()
     <div class="tab-container">
         <div class="tabs">
             <div class="tab active" data-tab="1">Checkout Form Manage</div>
-            <div class="tab" data-tab="2">One Page Checkout</div>
             <div class="tab" data-tab="3">Text Manage</div>
+            <div class="tab" data-tab="2">One Page Checkout</div>
+            <div class="tab" data-tab="8">Add To Cart</div>
             <div class="tab" data-tab="4">Direct Checkout Manage</div>
             <div class="tab" data-tab="6">Advanced Settings (Coming Soon)</div>
             <div class="tab" data-tab="7">Quick View (Coming Soon)</div>
@@ -607,7 +608,7 @@ function onepaquc_cart_dashboard()
                         </div>
                     </div>
 
-                    
+
 
                     <div class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
                         <div class="rmenu-settings-field">
@@ -643,7 +644,7 @@ function onepaquc_cart_dashboard()
                                         <option value="right" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'right'); ?>>Right</option>
                                         <option value="top" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'top'); ?>>Top</option>
                                         <option value="bottom" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
-                                    </select>                                    
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -983,7 +984,7 @@ function onepaquc_cart_dashboard()
                             </label>
                         </td>
                     </tr>
-                    
+
                 </table>
             </div>
             <div class="tab-content" id="tab-6">
@@ -1080,6 +1081,1435 @@ function onepaquc_cart_dashboard()
                     </table>
                 </div>
             </div>
+            <div class="tab-content" id="tab-7">
+                <div class="rmenu-settings-header">
+                    <h2>WooCommerce Quick View</h2>
+                    <p class="rmenu-settings-description">Configure how customers can quickly preview products without visiting the product page.</p>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Enable Quick View</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_enable_quick_view" value="1" <?php checked(1, get_option("rmenu_enable_quick_view", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Enable or disable the quick view functionality across your WooCommerce store.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_quick_view_button_text" value="<?php echo esc_attr(get_option('rmenu_quick_view_button_text', 'Quick View')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Customize the text displayed on the quick view button.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Position</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_quick_view_button_position" class="rmenu-select">
+                                    <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_image'); ?>>After Product Image</option>
+                                    <option value="before_title" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_title'); ?>>Before Product Title</option>
+                                    <option value="after_title" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_title'); ?>>After Product Title</option>
+                                    <option value="before_price" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_price'); ?>>Before Product Price</option>
+                                    <option value="after_price" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_price'); ?>>After Product Price</option>
+                                    <option value="before_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_add_to_cart'); ?>>Before Add to Cart Button</option>
+                                    <option value="after_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
+                                    <option value="image_overlay" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'image_overlay'); ?>>Overlay on Product Image</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose where to display the quick view button on product listings.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Display Type</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_quick_view_display_type" class="rmenu-select">
+                                    <option value="button" <?php selected(get_option('rmenu_quick_view_display_type', 'button'), 'button'); ?>>Button</option>
+                                    <option value="icon" <?php selected(get_option('rmenu_quick_view_display_type', 'button'), 'icon'); ?>>Icon Only</option>
+                                    <option value="text_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'button'), 'text_icon'); ?>>Text with Icon</option>
+                                    <option value="hover_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'button'), 'hover_icon'); ?>>Hover Icon</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose how the quick view trigger should appear to customers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-visibility"></span> Quick View Content</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Content Elements</label>
+                            <?php $content_elements_option = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']); ?>
+                            <div class="rmenu-settings-control rmenu-checkbox-group">
+                                <div class="rmenu-checkbox-column">
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="image" <?php checked(in_array('image', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Image</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="gallery" <?php checked(in_array('gallery', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Gallery</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="title" <?php checked(in_array('title', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Title</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="rating" <?php checked(in_array('rating', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Rating</span>
+                                    </label>
+                                </div>
+
+                                <div class="rmenu-checkbox-column">
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="price" <?php checked(in_array('price', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Price</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="excerpt" <?php checked(in_array('excerpt', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Short Description</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="add_to_cart" <?php checked(in_array('add_to_cart', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Add to Cart Button</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="quantity" <?php checked(in_array('quantity', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Quantity Selector</span>
+                                    </label>
+                                </div>
+
+                                <div class="rmenu-checkbox-column">
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="meta" <?php checked(in_array('meta', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Meta</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="sharing" <?php checked(in_array('sharing', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Social Sharing</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="view_details" <?php checked(in_array('view_details', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">View Details Link</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="attributes" <?php checked(in_array('attributes', $content_elements_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Attributes</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="rmenu-field-description">Select which product elements should be displayed in the quick view popup.</p>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Modal Size</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_quick_view_modal_size" class="rmenu-select">
+                                    <option value="small" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'small'); ?>>Small</option>
+                                    <option value="medium" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'medium'); ?>>Medium</option>
+                                    <option value="large" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'large'); ?>>Large</option>
+                                    <option value="full" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'full'); ?>>Full Width</option>
+                                    <option value="custom" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'custom'); ?>>Custom</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose the size of the quick view modal popup.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns rmenu-custom-size-row" id="rmenu-custom-size-row" style="<?php echo (get_option('rmenu_quick_view_modal_size', 'medium') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Custom Width</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_custom_width" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_width', '800')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Custom width in pixels (e.g., 800).</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Custom Height</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_custom_height" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_height', '600')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Custom height in pixels (e.g., 600) or 'auto'.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Enable Lightbox Gallery</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_quick_view_enable_lightbox" value="1" <?php checked(1, get_option("rmenu_quick_view_enable_lightbox", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Enable lightbox image gallery for product images in quick view.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Loading Effect</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_quick_view_loading_effect" class="rmenu-select">
+                                    <option value="fade" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'fade'); ?>>Fade</option>
+                                    <option value="slide" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'slide'); ?>>Slide</option>
+                                    <option value="zoom" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'zoom'); ?>>Zoom</option>
+                                    <option value="none" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'none'); ?>>None</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose the animation effect when opening the quick view modal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-admin-appearance"></span> Button Style</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Style</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_quick_view_button_style" class="rmenu-select" id="rmenu-qv-style-select">
+                                    <option value="default" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
+                                    <option value="alt" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'alt'); ?>>Alternative Style</option>
+                                    <option value="custom" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Button Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_quick_view_button_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_button_color', '#96588a')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Text Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_quick_view_text_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Button Icon</label>
+                                <div class="rmenu-settings-control">
+                                    <select name="rmenu_quick_view_button_icon" class="rmenu-select">
+                                        <option value="none" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'none'); ?>>No Icon</option>
+                                        <option value="eye" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'eye'); ?>>Eye Icon</option>
+                                        <option value="search" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'search'); ?>>Search Icon</option>
+                                        <option value="zoom" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'zoom'); ?>>Zoom Icon</option>
+                                        <option value="preview" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'preview'); ?>>Preview Icon</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Icon Position</label>
+                                <div class="rmenu-settings-control">
+                                    <select name="rmenu_quick_view_icon_position" class="rmenu-select">
+                                        <option value="left" <?php selected(get_option('rmenu_quick_view_icon_position', 'left'), 'left'); ?>>Left</option>
+                                        <option value="right" <?php selected(get_option('rmenu_quick_view_icon_position', 'left'), 'right'); ?>>Right</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-qv-custom-css-row" style="<?php echo (get_option('rmenu_quick_view_button_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Custom CSS</label>
+                            <div class="rmenu-settings-control">
+                                <textarea name="rmenu_quick_view_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_css', '')); ?></textarea>
+                                <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.rmenu-quick-view-btn</code> to target the button and <code>.rmenu-quick-view-modal</code> to target the modal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-layout"></span> Display Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Product Types</label>
+                            <?php $product_types_option = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable']); ?>
+                            <div class="rmenu-settings-control rmenu-checkbox-group">
+                                <label class="rmenu-checkbox-container">
+                                    <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">Simple Products</span>
+                                </label>
+
+                                <label class="rmenu-checkbox-container">
+                                    <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">Variable Products</span>
+                                </label>
+
+                                <label class="rmenu-checkbox-container">
+                                    <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">Grouped Products</span>
+                                </label>
+
+                                <label class="rmenu-checkbox-container">
+                                    <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">External/Affiliate Products</span>
+                                </label>
+                            </div>
+                            <p class="rmenu-field-description">Select which WooCommerce product types should display the quick view button.</p>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <?php $product_pages_option = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'search']); ?>
+                            <div class="rmenu-settings-control rmenu-checkbox-group">
+                                <div class="rmenu-checkbox-column">
+                                    <h4>Archive Pages</h4>
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Main Shop Page</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Category Archives</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Product Tag Archives</span>
+                                    </label>
+                                </div>
+
+                                <div class="rmenu-checkbox-column">
+                                    <h4>Other Pages</h4>
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="search" <?php checked(in_array('search', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Search Results</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Featured Products</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">On-Sale Products</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="recent" <?php checked(in_array('recent', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Recent Products</span>
+                                    </label>
+                                </div>
+
+                                <div class="rmenu-checkbox-column">
+                                    <h4>Widgets & Shortcodes</h4>
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="widgets" <?php checked(in_array('widgets', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Widgets</span>
+                                    </label>
+
+                                    <label class="rmenu-checkbox-container">
+                                        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_pages_option)); ?> />
+                                        <span class="rmenu-checkbox-label">Shortcodes</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-admin-tools"></span> Advanced Options</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">AJAX Add to Cart</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_quick_view_ajax_add_to_cart" value="1" <?php checked(1, get_option("rmenu_quick_view_ajax_add_to_cart", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Enable AJAX add to cart functionality within the quick view popup.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Enable Direct Checkout in Quick View</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_quick_view_direct_checkout" value="1" <?php checked(1, get_option("rmenu_quick_view_direct_checkout", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">When enabled, the direct checkout button will also be displayed in the quick view popup (if Direct Checkout is enabled).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Mobile Optimization</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_quick_view_mobile_optimize" value="1" <?php checked(1, get_option("rmenu_quick_view_mobile_optimize", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">When enabled, the quick view functionality will be optimized for mobile devices.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Close on Add to Cart</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_quick_view_close_on_add" value="1" <?php checked(1, get_option("rmenu_quick_view_close_on_add", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">When enabled, the quick view popup will automatically close after adding a product to cart.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Keyboard Navigation</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_quick_view_keyboard_nav" value="1" <?php checked(1, get_option("rmenu_quick_view_keyboard_nav", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">When enabled, customers can use keyboard arrows to navigate between products in quick view and ESC to close.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-section">
+                        <div class="rmenu-settings-section-header">
+                            <h3><span class="dashicons dashicons-performance"></span> Performance Settings</h3>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Preload Product Data</label>
+                                <div class="rmenu-settings-control">
+                                    <label class="rmenu-toggle-switch">
+                                        <input type="checkbox" name="rmenu_quick_view_preload" value="1" <?php checked(1, get_option("rmenu_quick_view_preload", 0), true); ?> />
+                                        <span class="rmenu-toggle-slider"></span>
+                                    </label>
+                                    <p class="rmenu-field-description">Preload product data to reduce loading time when opening the quick view popup.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Enable Caching</label>
+                                <div class="rmenu-settings-control">
+                                    <label class="rmenu-toggle-switch">
+                                        <input type="checkbox" name="rmenu_quick_view_enable_cache" value="1" <?php checked(1, get_option("rmenu_quick_view_enable_cache", 1), true); ?> />
+                                        <span class="rmenu-toggle-slider"></span>
+                                    </label>
+                                    <p class="rmenu-field-description">Cache quick view content to improve performance. Recommended for sites with many products.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Cache Expiration</label>
+                                <div class="rmenu-settings-control">
+                                    <select name="rmenu_quick_view_cache_expiration" class="rmenu-select">
+                                        <option value="1" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '1'); ?>>1 Hour</option>
+                                        <option value="6" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '6'); ?>>6 Hours</option>
+                                        <option value="12" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '12'); ?>>12 Hours</option>
+                                        <option value="24" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '24'); ?>>24 Hours</option>
+                                        <option value="48" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '48'); ?>>48 Hours</option>
+                                        <option value="168" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '168'); ?>>1 Week</option>
+                                    </select>
+                                    <p class="rmenu-field-description">Set how long quick view data should be cached before refreshing.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Lazy Load Images</label>
+                                <div class="rmenu-settings-control">
+                                    <label class="rmenu-toggle-switch">
+                                        <input type="checkbox" name="rmenu_quick_view_lazy_load" value="1" <?php checked(1, get_option("rmenu_quick_view_lazy_load", 1), true); ?> />
+                                        <span class="rmenu-toggle-slider"></span>
+                                    </label>
+                                    <p class="rmenu-field-description">Enable lazy loading for product images in the quick view popup.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-section">
+                        <div class="rmenu-settings-section-header">
+                            <h3><span class="dashicons dashicons-translation"></span> Translations</h3>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">"View Details" Text</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_details_text" value="<?php echo esc_attr(get_option('rmenu_quick_view_details_text', 'View Full Details')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Customize the text for the "View Full Details" link in the quick view popup.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Close Button Text</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_close_text" value="<?php echo esc_attr(get_option('rmenu_quick_view_close_text', 'Close')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Customize the text for the close button in the quick view popup.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Previous Product Text</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_prev_text" value="<?php echo esc_attr(get_option('rmenu_quick_view_prev_text', 'Previous Product')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Customize the text for the previous product navigation in the quick view popup.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Next Product Text</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_next_text" value="<?php echo esc_attr(get_option('rmenu_quick_view_next_text', 'Next Product')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Customize the text for the next product navigation in the quick view popup.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-section">
+                        <div class="rmenu-settings-section-header">
+                            <h3><span class="dashicons dashicons-analytics"></span> Analytics Integration</h3>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Track Quick View Events</label>
+                                <div class="rmenu-settings-control">
+                                    <label class="rmenu-toggle-switch">
+                                        <input type="checkbox" name="rmenu_quick_view_track_events" value="1" <?php checked(1, get_option("rmenu_quick_view_track_events", 0), true); ?> />
+                                        <span class="rmenu-toggle-slider"></span>
+                                    </label>
+                                    <p class="rmenu-field-description">Track when customers use quick view in Google Analytics or other analytics tools.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Event Category</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'WooCommerce')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">The event category name used for analytics tracking.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Event Action</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_event_action" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_action', 'Quick View')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">The event action name used for analytics tracking.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-section">
+                        <div class="rmenu-settings-section-header">
+                            <h3><span class="dashicons dashicons-admin-generic"></span> Compatibility Settings</h3>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Load Scripts On</label>
+                                <div class="rmenu-settings-control">
+                                    <select name="rmenu_quick_view_load_scripts" class="rmenu-select">
+                                        <option value="all" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'all'); ?>>All Pages</option>
+                                        <option value="wc-only" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'wc-only'); ?>>WooCommerce Pages Only</option>
+                                        <option value="specific" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'specific'); ?>>Specific Pages Only</option>
+                                    </select>
+                                    <p class="rmenu-field-description">Control where quick view scripts are loaded to improve compatibility and performance.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row" id="rmenu-specific-pages-row" style="<?php echo (get_option('rmenu_quick_view_load_scripts', 'wc-only') == 'specific') ? 'display:block;' : 'display:none;'; ?>">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Specific Pages IDs</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_specific_pages" value="<?php echo esc_attr(get_option('rmenu_quick_view_specific_pages', '')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Enter page IDs separated by commas (e.g., 10, 15, 21).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Theme Compatibility Mode</label>
+                                <div class="rmenu-settings-control">
+                                    <label class="rmenu-toggle-switch">
+                                        <input type="checkbox" name="rmenu_quick_view_theme_compat" value="1" <?php checked(1, get_option("rmenu_quick_view_theme_compat", 0), true); ?> />
+                                        <span class="rmenu-toggle-slider"></span>
+                                    </label>
+                                    <p class="rmenu-field-description">Enable this if you experience display issues with your theme.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-section">
+                        <div class="rmenu-settings-section-header">
+                            <h3><span class="dashicons dashicons-code-standards"></span> Developer Options</h3>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Modal Container ID</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_quick_view_container_id" value="<?php echo esc_attr(get_option('rmenu_quick_view_container_id', 'rmenu-quick-view-container')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Custom ID for the quick view modal container (for developers).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Custom JavaScript Hook</label>
+                                <div class="rmenu-settings-control">
+                                    <textarea name="rmenu_quick_view_custom_js" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_js', '')); ?></textarea>
+                                    <p class="rmenu-field-description">Add custom JavaScript code to run after the quick view modal is initialized. Access the modal via the <code>rmenuQuickView</code> object.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Debug Mode</label>
+                                <div class="rmenu-settings-control">
+                                    <label class="rmenu-toggle-switch">
+                                        <input type="checkbox" name="rmenu_quick_view_debug_mode" value="1" <?php checked(1, get_option("rmenu_quick_view_debug_mode", 0), true); ?> />
+                                        <span class="rmenu-toggle-slider"></span>
+                                    </label>
+                                    <p class="rmenu-field-description">Enable debug mode to log quick view errors and performance metrics to the console (for developers).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-section">
+                        <div class="rmenu-settings-section-header">
+                            <h3><span class="dashicons dashicons-info"></span> Documentation & Support</h3>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <div class="rmenu-settings-info-box">
+                                    <h4>Quick View Documentation</h4>
+                                    <p>For detailed instructions on customizing the Quick View feature, please visit our documentation:</p>
+                                    <a href="#" class="button button-secondary">View Documentation</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <div class="rmenu-settings-info-box">
+                                    <h4>Shortcode Reference</h4>
+                                    <p>You can use the following shortcode to display the Quick View button anywhere on your site:</p>
+                                    <code>[rmenu_quick_view product_id="123" button_text="Quick Preview"]</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-row">
+                            <div class="rmenu-settings-field">
+                                <div class="rmenu-settings-info-box">
+                                    <h4>Developer Hooks</h4>
+                                    <p>Developers can use these action and filter hooks:</p>
+                                    <ul>
+                                        <li><code>rmenu_before_quick_view_content</code> - Action before quick view content</li>
+                                        <li><code>rmenu_after_quick_view_content</code> - Action after quick view content</li>
+                                        <li><code>rmenu_quick_view_button_html</code> - Filter to modify button HTML</li>
+                                        <li><code>rmenu_quick_view_allowed_products</code> - Filter to control which products get quick view</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    jQuery(document).ready(function($) {
+                        // Show/hide custom size fields based on modal size selection
+                        $('#rmenu-qv-style-select').on('change', function() {
+                            if ($(this).val() === 'custom') {
+                                $('#rmenu-qv-custom-css-row').show();
+                            } else {
+                                $('#rmenu-qv-custom-css-row').hide();
+                            }
+                        });
+
+                        // Show/hide specific pages field
+                        $('select[name="rmenu_quick_view_load_scripts"]').on('change', function() {
+                            if ($(this).val() === 'specific') {
+                                $('#rmenu-specific-pages-row').show();
+                            } else {
+                                $('#rmenu-specific-pages-row').hide();
+                            }
+                        });
+
+                        // Show/hide custom size fields based on modal size selection
+                        $('select[name="rmenu_quick_view_modal_size"]').on('change', function() {
+                            if ($(this).val() === 'custom') {
+                                $('#rmenu-custom-size-row').show();
+                            } else {
+                                $('#rmenu-custom-size-row').hide();
+                            }
+                        });
+                    });
+                </script>
+            </div>
+            <div class="tab-content" id="tab-8">
+                <div class="rmenu-settings-header">
+                    <h2>WooCommerce Add To Cart</h2>
+                    <p class="rmenu-settings-description">Customize the Add to Cart button appearance and behavior throughout your store.</p>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Enable Custom Add to Cart</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_enable_custom_add_to_cart" value="1" <?php checked(1, get_option("rmenu_enable_custom_add_to_cart", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Enable or disable custom Add to Cart styling and functionality.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text', 'Add to Cart')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for simple products.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Variable Product Button Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_variable_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_variable_add_to_cart_text', 'Select Options')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for variable products.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Grouped Product Button Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', 'View Products')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for grouped products.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Out of Stock Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_out_of_stock_text" value="<?php echo esc_attr(get_option('rmenu_out_of_stock_text', 'Out of Stock')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Customize the text displayed when a product is out of stock.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-admin-appearance"></span> Button Style</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Style</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_style" class="rmenu-select" id="rmenu-atc-style-select">
+                                    <option value="default" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
+                                    <option value="modern" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'modern'); ?>>Modern Style</option>
+                                    <option value="rounded" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'rounded'); ?>>Rounded Style</option>
+                                    <option value="minimal" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'minimal'); ?>>Minimal Style</option>
+                                    <option value="custom" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Button Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_add_to_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_bg_color', '#96588a')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Text Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_add_to_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Hover Background Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_add_to_cart_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Hover Text Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Border Radius</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="number" name="rmenu_add_to_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_border_radius', '3')); ?>" class="small-text" min="0" max="50" step="1" />
+                                    <span class="rmenu-unit">px</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Button Font Size</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="number" name="rmenu_add_to_cart_font_size" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_font_size', '14')); ?>" class="small-text" min="10" max="24" step="1" />
+                                    <span class="rmenu-unit">px</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Width</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_width" class="rmenu-select">
+                                    <option value="auto" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'auto'); ?>>Auto</option>
+                                    <option value="full" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'full'); ?>>Full Width</option>
+                                    <option value="custom" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'custom'); ?>>Custom Width</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row" id="rmenu-atc-custom-width-row" style="<?php echo (get_option('rmenu_add_to_cart_width', 'auto') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Custom Width Value</label>
+                            <div class="rmenu-settings-control">
+                                <input type="number" name="rmenu_add_to_cart_custom_width" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_custom_width', '150')); ?>" class="small-text" min="50" max="500" step="1" />
+                                <span class="rmenu-unit">px</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Icon</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_icon" class="rmenu-select">
+                                    <option value="none" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); ?>>No Icon</option>
+                                    <option value="cart" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); ?>>Cart Icon</option>
+                                    <option value="plus" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); ?>>Plus Icon</option>
+                                    <option value="bag" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); ?>>Shopping Bag Icon</option>
+                                    <option value="basket" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); ?>>Basket Icon</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row" id="rmenu-atc-icon-position-row" style="<?php echo (get_option('rmenu_add_to_cart_icon', 'none') != 'none') ? 'display:block;' : 'display:none;'; ?>">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Icon Position</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_icon_position" class="rmenu-select">
+                                    <option value="left" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); ?>>Left</option>
+                                    <option value="right" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); ?>>Right</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-atc-custom-css-row" style="<?php echo (get_option('rmenu_add_to_cart_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Custom CSS</label>
+                            <div class="rmenu-settings-control">
+                                <textarea name="rmenu_add_to_cart_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_add_to_cart_custom_css', '')); ?></textarea>
+                                <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.rmenu-add-to-cart-btn</code> to target the button.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-layout"></span> Display Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Display on Archive Pages</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_catalog_display" class="rmenu-select">
+                                    <option value="default" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'default'); ?>>Default (WooCommerce Setting)</option>
+                                    <option value="show" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'show'); ?>>Always Show</option>
+                                    <option value="hide" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'hide'); ?>>Always Hide</option>
+                                    <option value="hover" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'hover'); ?>>Show on Hover Only</option>
+                                </select>
+                                <p class="rmenu-field-description">Control how Add to Cart buttons appear on product archive pages.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Button Position</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_position" class="rmenu-select">
+                                    <option value="default" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'default'); ?>>Default Position</option>
+                                    <option value="before_title" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'before_title'); ?>>Before Product Title</option>
+                                    <option value="after_title" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'after_title'); ?>>After Product Title</option>
+                                    <option value="before_price" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'before_price'); ?>>Before Product Price</option>
+                                    <option value="after_price" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'after_price'); ?>>After Product Price</option>
+                                    <option value="image_overlay" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'image_overlay'); ?>>Overlay on Product Image</option>
+                                </select>
+                                <p class="rmenu-field-description">Select the position of the Add to Cart button on product listings.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Product Types</label>
+                            <?php $product_types_option = get_option('rmenu_add_to_cart_by_types', ['simple', 'variable', 'grouped', 'external']); ?>
+                            <div class="rmenu-settings-control rmenu-checkbox-group">
+                                <label class="rmenu-checkbox-container">
+                                    <input type="checkbox" name="rmenu_add_to_cart_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">Simple Products</span>
+                                </label>
+
+                                <label class="rmenu-checkbox-container">
+                                    <input type="checkbox" name="rmenu_add_to_cart_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">Variable Products</span>
+                                </label>
+
+                                <label class="rmenu-checkbox-container">
+                                    <input type="checkbox" name="rmenu_add_to_cart_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">Grouped Products</span>
+                                </label>
+
+                                <label class="rmenu-checkbox-container">
+                                    <input type="checkbox" name="rmenu_add_to_cart_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">External/Affiliate Products</span>
+                                </label>
+                            </div>
+                            <p class="rmenu-field-description">Select which WooCommerce product types should show the custom Add to Cart button.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-cart"></span> Add To Cart Behavior</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Enable AJAX Add to Cart</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_enable_ajax_add_to_cart" value="1" <?php checked(1, get_option("rmenu_enable_ajax_add_to_cart", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Add products to cart without page reload using AJAX.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Default Quantity</label>
+                            <div class="rmenu-settings-control">
+                                <input type="number" name="rmenu_add_to_cart_default_qty" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_default_qty', '1')); ?>" class="small-text" min="1" max="100" step="1" />
+                                <p class="rmenu-field-description">Set the default quantity when adding products to cart from archive pages.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Quantity Selector on Archives</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_show_quantity_archive" value="1" <?php checked(1, get_option("rmenu_show_quantity_archive", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Display quantity selector on shop/archive pages before adding to cart.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Redirect After Add to Cart</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_redirect_after_add" class="rmenu-select">
+                                    <option value="none" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'none'); ?>>No Redirect</option>
+                                    <option value="cart" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'cart'); ?>>Cart Page</option>
+                                    <option value="checkout" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'checkout'); ?>>Checkout Page</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose whether to redirect customers after adding products to cart.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Add to Cart Animation</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_animation" class="rmenu-select">
+                                    <option value="none" <?php selected(get_option('rmenu_add_to_cart_animation', 'slide'), 'none'); ?>>None</option>
+                                    <option value="slide" <?php selected(get_option('rmenu_add_to_cart_animation', 'slide'), 'slide'); ?>>Slide Effect</option>
+                                    <option value="fade" <?php selected(get_option('rmenu_add_to_cart_animation', 'slide'), 'fade'); ?>>Fade Effect</option>
+                                    <option value="fly" <?php selected(get_option('rmenu_add_to_cart_animation', 'slide'), 'fly'); ?>>Fly to Cart Effect</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose the animation effect when products are added to cart.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-megaphone"></span> Notifications</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Notification Style</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_notification_style" class="rmenu-select">
+                                    <option value="default" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'default'); ?>>Default WooCommerce Notices</option>
+                                    <option value="popup" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'popup'); ?>>Popup Message</option>
+                                    <option value="toast" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'toast'); ?>>Toast Notification</option>
+                                    <option value="mini_cart" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'mini_cart'); ?>>Mini Cart Preview</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose how to display notifications when products are added to cart.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Success Message</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_add_to_cart_success_message" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_success_message', '{product} has been added to your cart.')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Customize the success message shown after adding to cart. Use {product} as a placeholder for the product name.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Show View Cart Link</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_show_view_cart_link" value="1" <?php checked(1, get_option("rmenu_show_view_cart_link", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Display a "View Cart" link in the notification message.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Show Checkout Link</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_show_checkout_link" value="1" <?php checked(1, get_option("rmenu_show_checkout_link", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Display a "Checkout" link in the notification message.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Notification Duration</label>
+                            <div class="rmenu-settings-control">
+                                <input type="number" name="rmenu_add_to_cart_notification_duration" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_notification_duration', '3000')); ?>" class="small-text" min="1000" max="10000" step="500" />
+                                <span class="rmenu-unit">ms</span>
+                                <p class="rmenu-field-description">How long to display the notification for (in milliseconds).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-smartphone"></span> Mobile Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Sticky Add to Cart on Mobile</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_sticky_add_to_cart_mobile" value="1" <?php checked(1, get_option("rmenu_sticky_add_to_cart_mobile", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Keep the Add to Cart button visible at the bottom of the screen on mobile devices.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Mobile Button Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_mobile_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_mobile_add_to_cart_text', '')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Set a different button text for mobile devices. Leave empty to use the default text.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Mobile Button Size</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_mobile_button_size" class="rmenu-select">
+                                    <option value="default" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'default'); ?>>Same as Desktop</option>
+                                    <option value="larger" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'larger'); ?>>Larger</option>
+                                    <option value="smaller" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'smaller'); ?>>Smaller</option>
+                                    <option value="full" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'full'); ?>>Full Width</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose button size optimization for mobile devices.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Hide on Mobile</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_hide_on_mobile_options" class="rmenu-select">
+                                    <option value="show_all" <?php selected(get_option('rmenu_hide_on_mobile_options', 'show_all'), 'show_all'); ?>>Show All Elements</option>
+                                    <option value="hide_price" <?php selected(get_option('rmenu_hide_on_mobile_options', 'show_all'), 'hide_price'); ?>>Hide Price</option>
+                                    <option value="hide_qty" <?php selected(get_option('rmenu_hide_on_mobile_options', 'show_all'), 'hide_qty'); ?>>Hide Quantity Selector</option>
+                                    <option value="hide_both" <?php selected(get_option('rmenu_hide_on_mobile_options', 'show_all'), 'hide_both'); ?>>Hide Price and Quantity</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose which elements to hide on mobile devices to save space.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Mobile Button Icon Only</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_mobile_icon_only" value="1" <?php checked(1, get_option("rmenu_mobile_icon_only", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Show only the icon (without text) on mobile devices to save space.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-welcome-widgets-menus"></span> Advanced Options</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">One-Click Purchase</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_enable_one_click_purchase" value="1" <?php checked(1, get_option("rmenu_enable_one_click_purchase", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Add a "Buy Now" button that skips the cart and goes directly to checkout.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Buy Now Button Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_buy_now_text" value="<?php echo esc_attr(get_option('rmenu_buy_now_text', 'Buy Now')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Text for the one-click purchase button.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Buy Now Button Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_buy_now_bg_color" value="<?php echo esc_attr(get_option('rmenu_buy_now_bg_color', '#2ea3f2')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Buy Now Text Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_buy_now_text_color" value="<?php echo esc_attr(get_option('rmenu_buy_now_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Enable Quick View</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_enable_quick_view" value="1" <?php checked(1, get_option("rmenu_enable_quick_view", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Add a "Quick View" button next to Add to Cart that opens a product details popup.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Quick View Button Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_quick_view_text" value="<?php echo esc_attr(get_option('rmenu_quick_view_text', 'Quick View')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Text for the quick view button.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Add to Cart Load Effect</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_add_to_cart_loading_effect" class="rmenu-select">
+                                    <option value="none" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'none'); ?>>None</option>
+                                    <option value="spinner" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'spinner'); ?>>Spinner</option>
+                                    <option value="dots" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'dots'); ?>>Dots</option>
+                                    <option value="pulse" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'pulse'); ?>>Pulse</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose an animation effect while adding to cart is in progress.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Disable Add to Cart on Out of Stock</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_disable_btn_out_of_stock" value="1" <?php checked(1, get_option("rmenu_disable_btn_out_of_stock", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Completely disable the button instead of showing "Out of Stock" text.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-translation"></span> Compatibility Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Theme Compatibility Mode</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_theme_compatibility_mode" value="1" <?php checked(1, get_option("rmenu_theme_compatibility_mode", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Enable this if your theme has conflicts with the custom Add to Cart styling.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Force Button CSS</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_force_button_css" value="1" <?php checked(1, get_option("rmenu_force_button_css", 0), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Use !important CSS rules to override theme styling (use only if needed).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Exclude Categories</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_exclude_categories[]" class="rmenu-select" multiple="multiple" style="width: 100%; max-width: 400px;">
+                                    <?php
+                                    $product_categories = get_terms('product_cat', array('hide_empty' => false));
+                                    $excluded_cats = get_option('rmenu_exclude_categories', array());
+
+                                    if (!empty($product_categories) && !is_wp_error($product_categories)) {
+                                        foreach ($product_categories as $category) {
+                                            echo '<option value="' . esc_attr($category->term_id) . '" ' .
+                                                (in_array($category->term_id, $excluded_cats) ? 'selected="selected"' : '') .
+                                                '>' . esc_html($category->name) . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                                <p class="rmenu-field-description">Select product categories where custom Add to Cart button should not be applied.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Exclude Products</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="rmenu_exclude_products" value="<?php echo esc_attr(get_option('rmenu_exclude_products', '')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Enter product IDs separated by commas to exclude from custom Add to Cart styling.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-update"></span> Reset Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Reset to Defaults</label>
+                            <div class="rmenu-settings-control">
+                                <button type="button" id="rmenu-reset-add-to-cart" class="button button-secondary">Reset Add to Cart Settings</button>
+                                <p class="rmenu-field-description">Reset all Add to Cart button settings to default values.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <?php submit_button(); ?>
         </form>
         <?php $inline_script = '
