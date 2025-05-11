@@ -14,7 +14,7 @@
 
 
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
-
+define("RMENU_VERSION","1.0.1");
 
 // Include the admin notice file
 require_once plugin_dir_path(__FILE__) . 'includes/admin-notice.php';
@@ -24,6 +24,9 @@ require_once plugin_dir_path(__FILE__) . 'includes/admin.php';
 
 // include one page checkout shortcode
 require_once plugin_dir_path(__FILE__) . 'includes/one-page-checkout-shortcode.php';
+require_once plugin_dir_path(__FILE__) . 'includes/add-to-cart-button.php';
+// Initialize the handler
+new RMENU_Add_To_Cart_Handler();
 
 global $onepaquc_checkoutformfields, $onepaquc_productpageformfields, $onepaquc_rcheckoutformfields;
 
@@ -58,8 +61,10 @@ $onepaquc_checkoutformfields = [
 
 $onepaquc_productpageformfields = [
     "txt-add-to-cart" => "Add to cart",
-    "txt-select-options" => "Select Options (Coming Soon)",
-    "txt-read-more" => "Read More (Coming Soon)",
+    "txt-select-options" => "Select options",
+    "txt-read-more" => "Read more",
+    "rmenu_grouped_add_to_cart_text" => "View products",
+    "rmenu_out_of_stock_text" => "Out of stock"
 ];
 
 $onepaquc_rcheckoutformfields = [
@@ -946,19 +951,22 @@ if (get_option('rmenu_add_direct_checkout_button')) {
     add_action('woocommerce_before_single_product', 'onepaquc_modify_add_to_cart_button');
 }
 
+if (get_option('rmenu_add_to_cart_catalog_display') == "hide") {
+    add_action('wp_footer', 'onepaquc_hide_add_to_cart_css');
+}
+
 // Function to hide the original add to cart button when in replace mode
 function onepaquc_hide_add_to_cart_css()
 {
-    if (is_product()) {
     ?>
         <style>
             button.single_add_to_cart_button,
+            a.button.product_type_simple.add_to_cart_button,
             .quantity {
                 display: none !important;
             }
         </style>
 <?php
-    }
 }
 
 // Function to add checkout button to product loops (listings)

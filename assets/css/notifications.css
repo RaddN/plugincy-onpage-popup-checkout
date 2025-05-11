@@ -1,0 +1,237 @@
+/**
+ * Restaurant Menu Add to Cart Notifications CSS
+ * 
+ * Styles for add to cart animations and notifications
+ */
+
+/* General button states */
+.rmenu-ajax-add-to-cart.loading {
+    opacity: 0.7;
+    cursor: wait;
+    position: relative;
+}
+
+.rmenu-ajax-add-to-cart.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #000;
+    animation: rmenu-spin 0.8s infinite linear;
+}
+
+.rmenu-ajax-add-to-cart.rmenu-added {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    color: #fff;
+}
+
+.rmenu-ajax-add-to-cart .rmenu-check {
+    margin-left: 5px;
+    animation: rmenu-check 0.5s ease-in-out;
+}
+
+/* Archive page quantity input */
+.products .product .rmenu-archive-quantity {
+    display: block;
+    width: 80px;
+    margin: 0 auto 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    text-align: center;
+}
+
+/* Fly to cart animation */
+.rmenu-fly-item {
+    position: fixed;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    display: none;
+    text-align: center;
+    pointer-events: none;
+    transition: transform 0.1s;
+}
+
+/* Popup Notification */
+.rmenu-popup-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999999;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.rmenu-popup-notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.rmenu-popup-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+}
+
+.rmenu-popup-notification.show .rmenu-popup-content {
+    transform: scale(1);
+}
+
+.rmenu-popup-message {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.rmenu-popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.rmenu-popup-buttons .button {
+    margin: 0 5px;
+}
+
+.rmenu-popup-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    color: #999;
+}
+
+.rmenu-popup-close:hover {
+    color: #333;
+}
+
+/* Toast Notification */
+.rmenu-toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 99999;
+    background-color: #fff;
+    border-left: 4px solid #4CAF50;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    border-radius: 4px;
+    max-width: 400px;
+    width: calc(100% - 40px);
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.rmenu-toast-notification.rmenu-error {
+    border-left-color: #F44336;
+}
+
+.rmenu-toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.rmenu-toast-message {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.rmenu-toast-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.rmenu-toast-buttons .button {
+    font-size: 12px;
+    padding: 5px 10px;
+    min-height: auto;
+}
+
+/* Mini Cart Notification */
+.rmenu-mini-cart-active {
+    animation: rmenu-highlight-cart 0.5s ease-in-out;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+@keyframes rmenu-highlight-cart {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(76, 175, 80, 0);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+    }
+}
+
+@keyframes rmenu-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rmenu-check {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .rmenu-toast-notification {
+        left: 20px;
+        right: 20px;
+        max-width: none;
+        width: calc(100% - 40px);
+    }
+    
+    .rmenu-popup-content {
+        width: calc(100% - 40px);
+        padding: 20px;
+    }
+    
+    .rmenu-popup-buttons {
+        flex-direction: column;
+    }
+    
+    .rmenu-popup-buttons .button {
+        margin: 5px 0;
+    }
+}

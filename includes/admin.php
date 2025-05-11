@@ -212,6 +212,19 @@ function onepaquc_cart_dashboard()
                 <p class="description">Configure one-page checkout for individual product pages. Enable one-page checkout for specific products from the WooCommerce product edit screen.</p>
                 <table class="form-table">
                     <tr valign="top">
+                        <th scope="row">Enable One Page Checkout</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="onpage_checkout_enable" value="1" <?php checked(1, get_option("onpage_checkout_enable"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="tooltip">
+                                <span class="question-mark">?</span>
+                                <span class="tooltip-text">Enable one-page checkout for all products without individual selection.</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr valign="top">
                         <th scope="row">Form Position</th>
                         <td>
                             <input type="number" name="onpage_checkout_position" value="<?php echo esc_attr(get_option("onpage_checkout_position", '9')); ?>" />
@@ -331,13 +344,6 @@ function onepaquc_cart_dashboard()
                 onepaquc_cart_text_change_form($onepaquc_checkoutformfields);
 
                 ?>
-                <div class="d-flex space-between">
-                    <h2>Archive & Single Product Page Text</h2>
-                </div>
-                <?php
-                onepaquc_cart_text_change_form($onepaquc_productpageformfields);
-
-                ?>
             </div>
             <div class="tab-content" id="tab-4">
                 <div class="rmenu-settings-header">
@@ -402,6 +408,7 @@ function onepaquc_cart_dashboard()
                                     <option value="ajax_add" <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'ajax_add'); ?>>AJAX Add to Cart</option>
                                     <option value="cart_redirect" <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'cart_redirect'); ?>>Redirect to Cart Page</option>
                                     <option value="popup_checkout" <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'popup_checkout'); ?>>Popup Checkout</option>
+                                    <option value="advanced" <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'advanced'); ?>>Advanced Checkout</option>
                                     <option value="side_cart" <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'side_cart'); ?>>Side Cart Slide-in</option>
                                 </select>
                                 <p class="rmenu-field-description">Choose how the quick checkout process should behave when a customer clicks the button.</p>
@@ -984,11 +991,36 @@ function onepaquc_cart_dashboard()
                             </label>
                         </td>
                     </tr>
-
+                    <tr valign="top">
+                        <th scope="row">Force login before checkout (Coming Soon)</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="rmenu_forece_login" value="1" <?php checked(1, get_option("rmenu_forece_login", "1"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">Link product name in checkout page (Coming Soon)</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="rmenu_link_product" value="1" <?php checked(1, get_option("rmenu_link_product", "1"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">Enable captcha on checkout page (Coming Soon)</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="rmenu_enable_captcha" value="1" <?php checked(1, get_option("rmenu_enable_captcha", "1"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="tab-content" id="tab-6">
-                <h2>Advanced Settings</h2>
                 <div class="advanced-settings-content" id="trust-content">
                     <h3>Trust Badges Configuration</h3>
                     <table class="form-table">
@@ -1870,7 +1902,7 @@ function onepaquc_cart_dashboard()
                         <div class="rmenu-settings-field">
                             <label class="rmenu-settings-label">Button Text</label>
                             <div class="rmenu-settings-control">
-                                <input type="text" name="rmenu_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text', 'Add to Cart')); ?>" class="regular-text" />
+                                <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(get_option('txt-add-to-cart', 'Add to Cart')); ?>" class="regular-text" />
                                 <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for simple products.</p>
                             </div>
                         </div>
@@ -1880,7 +1912,17 @@ function onepaquc_cart_dashboard()
                         <div class="rmenu-settings-field">
                             <label class="rmenu-settings-label">Variable Product Button Text</label>
                             <div class="rmenu-settings-control">
-                                <input type="text" name="rmenu_variable_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_variable_add_to_cart_text', 'Select Options')); ?>" class="regular-text" />
+                                <input type="text" name="txt-select-options" value="<?php echo esc_attr(get_option('txt-select-options', 'Select Options')); ?>" class="regular-text" />
+                                <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for variable products.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Read More Button Text</label>
+                            <div class="rmenu-settings-control">
+                                <input type="text" name="txt-read-more" value="<?php echo esc_attr(get_option('txt-read-more', 'Select Options')); ?>" class="regular-text" />
                                 <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for variable products.</p>
                             </div>
                         </div>
@@ -1892,16 +1934,6 @@ function onepaquc_cart_dashboard()
                             <div class="rmenu-settings-control">
                                 <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', 'View Products')); ?>" class="regular-text" />
                                 <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for grouped products.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Out of Stock Text</label>
-                            <div class="rmenu-settings-control">
-                                <input type="text" name="rmenu_out_of_stock_text" value="<?php echo esc_attr(get_option('rmenu_out_of_stock_text', 'Out of Stock')); ?>" class="regular-text" />
-                                <p class="rmenu-field-description">Customize the text displayed when a product is out of stock.</p>
                             </div>
                         </div>
                     </div>
@@ -2012,29 +2044,33 @@ function onepaquc_cart_dashboard()
                         </div>
                     </div>
 
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Button Icon</label>
-                            <div class="rmenu-settings-control">
-                                <select name="rmenu_add_to_cart_icon" class="rmenu-select">
-                                    <option value="none" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); ?>>No Icon</option>
-                                    <option value="cart" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); ?>>Cart Icon</option>
-                                    <option value="plus" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); ?>>Plus Icon</option>
-                                    <option value="bag" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); ?>>Shopping Bag Icon</option>
-                                    <option value="basket" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); ?>>Basket Icon</option>
-                                </select>
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Button Icon</label>
+                                <div class="rmenu-settings-control">
+                                    <select name="rmenu_add_to_cart_icon" class="rmenu-select">
+                                        <option value="none" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); ?>>No Icon</option>
+                                        <option value="cart" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); ?>>Cart Icon</option>
+                                        <option value="plus" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); ?>>Plus Icon</option>
+                                        <option value="bag" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); ?>>Shopping Bag Icon</option>
+                                        <option value="basket" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); ?>>Basket Icon</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="rmenu-settings-row" id="rmenu-atc-icon-position-row" style="<?php echo (get_option('rmenu_add_to_cart_icon', 'none') != 'none') ? 'display:block;' : 'display:none;'; ?>">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Icon Position</label>
-                            <div class="rmenu-settings-control">
-                                <select name="rmenu_add_to_cart_icon_position" class="rmenu-select">
-                                    <option value="left" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); ?>>Left</option>
-                                    <option value="right" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); ?>>Right</option>
-                                </select>
+                        <div class="rmenu-settings-column" id="rmenu-atc-icon-position-row">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Icon Position</label>
+                                <div class="rmenu-settings-control">
+                                    <select name="rmenu_add_to_cart_icon_position" class="rmenu-select">
+                                        <option value="left" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); ?>>Left</option>
+                                        <option value="right" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); ?>>Right</option>
+                                        <option value="top" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'top'); ?>>Top</option>
+                                        <option value="bottom" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2063,61 +2099,14 @@ function onepaquc_cart_dashboard()
                                     <option value="default" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'default'); ?>>Default (WooCommerce Setting)</option>
                                     <option value="show" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'show'); ?>>Always Show</option>
                                     <option value="hide" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'hide'); ?>>Always Hide</option>
-                                    <option value="hover" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'hover'); ?>>Show on Hover Only</option>
                                 </select>
                                 <p class="rmenu-field-description">Control how Add to Cart buttons appear on product archive pages.</p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Button Position</label>
-                            <div class="rmenu-settings-control">
-                                <select name="rmenu_add_to_cart_position" class="rmenu-select">
-                                    <option value="default" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'default'); ?>>Default Position</option>
-                                    <option value="before_title" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'before_title'); ?>>Before Product Title</option>
-                                    <option value="after_title" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'after_title'); ?>>After Product Title</option>
-                                    <option value="before_price" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'before_price'); ?>>Before Product Price</option>
-                                    <option value="after_price" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'after_price'); ?>>After Product Price</option>
-                                    <option value="image_overlay" <?php selected(get_option('rmenu_add_to_cart_position', 'default'), 'image_overlay'); ?>>Overlay on Product Image</option>
-                                </select>
-                                <p class="rmenu-field-description">Select the position of the Add to Cart button on product listings.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Product Types</label>
-                            <?php $product_types_option = get_option('rmenu_add_to_cart_by_types', ['simple', 'variable', 'grouped', 'external']); ?>
-                            <div class="rmenu-settings-control rmenu-checkbox-group">
-                                <label class="rmenu-checkbox-container">
-                                    <input type="checkbox" name="rmenu_add_to_cart_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
-                                    <span class="rmenu-checkbox-label">Simple Products</span>
-                                </label>
-
-                                <label class="rmenu-checkbox-container">
-                                    <input type="checkbox" name="rmenu_add_to_cart_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
-                                    <span class="rmenu-checkbox-label">Variable Products</span>
-                                </label>
-
-                                <label class="rmenu-checkbox-container">
-                                    <input type="checkbox" name="rmenu_add_to_cart_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
-                                    <span class="rmenu-checkbox-label">Grouped Products</span>
-                                </label>
-
-                                <label class="rmenu-checkbox-container">
-                                    <input type="checkbox" name="rmenu_add_to_cart_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
-                                    <span class="rmenu-checkbox-label">External/Affiliate Products</span>
-                                </label>
-                            </div>
-                            <p class="rmenu-field-description">Select which WooCommerce product types should show the custom Add to Cart button.</p>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="rmenu-settings-section">
+                <div class="rmenu-settings-section" id="add_to_cart_behave">
                     <div class="rmenu-settings-section-header">
                         <h3><span class="dashicons dashicons-cart"></span> Add To Cart Behavior</h3>
                     </div>
@@ -2188,7 +2177,7 @@ function onepaquc_cart_dashboard()
                     </div>
                 </div>
 
-                <div class="rmenu-settings-section">
+                <div class="rmenu-settings-section" id="add_to_cart_notification">
                     <div class="rmenu-settings-section-header">
                         <h3><span class="dashicons dashicons-megaphone"></span> Notifications</h3>
                     </div>
@@ -2256,6 +2245,39 @@ function onepaquc_cart_dashboard()
                     </div>
                 </div>
 
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const checkbox = document.querySelector('input[name="rmenu_enable_ajax_add_to_cart"]');
+                        const settingsRows = document.querySelectorAll('#add_to_cart_behave .rmenu-settings-row, #add_to_cart_notification .rmenu-settings-row');
+                        const settingsInputs = document.querySelectorAll('#add_to_cart_behave .rmenu-settings-row input, #add_to_cart_notification .rmenu-settings-row input');
+
+                        function updateSettings() {
+                            for (let i = 1; i < settingsRows.length; i++) { // Start loop at index 1 (second element)
+                                const row = settingsRows[i];
+                                const inputs = row.querySelectorAll('input'); // Get inputs within this row
+
+                                if (checkbox.checked) {
+                                    row.style.opacity = '1';
+                                    inputs.forEach(input => {
+                                        // input.disabled = false;
+                                    });
+                                } else {
+                                    row.style.opacity = '0.5';
+                                    inputs.forEach(input => {
+                                        // input.disabled = true;
+                                    });
+                                }
+                            }
+                        }
+
+                        // Initial update on page load
+                        updateSettings();
+
+                        // Update when the checkbox changes
+                        checkbox.addEventListener('change', updateSettings);
+                    });
+                </script>
+
                 <div class="rmenu-settings-section">
                     <div class="rmenu-settings-section-header">
                         <h3><span class="dashicons dashicons-smartphone"></span> Mobile Settings</h3>
@@ -2301,21 +2323,6 @@ function onepaquc_cart_dashboard()
 
                     <div class="rmenu-settings-row">
                         <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Hide on Mobile</label>
-                            <div class="rmenu-settings-control">
-                                <select name="rmenu_hide_on_mobile_options" class="rmenu-select">
-                                    <option value="show_all" <?php selected(get_option('rmenu_hide_on_mobile_options', 'show_all'), 'show_all'); ?>>Show All Elements</option>
-                                    <option value="hide_price" <?php selected(get_option('rmenu_hide_on_mobile_options', 'show_all'), 'hide_price'); ?>>Hide Price</option>
-                                    <option value="hide_qty" <?php selected(get_option('rmenu_hide_on_mobile_options', 'show_all'), 'hide_qty'); ?>>Hide Quantity Selector</option>
-                                    <option value="hide_both" <?php selected(get_option('rmenu_hide_on_mobile_options', 'show_all'), 'hide_both'); ?>>Hide Price and Quantity</option>
-                                </select>
-                                <p class="rmenu-field-description">Choose which elements to hide on mobile devices to save space.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
                             <label class="rmenu-settings-label">Mobile Button Icon Only</label>
                             <div class="rmenu-settings-control">
                                 <label class="rmenu-toggle-switch">
@@ -2332,73 +2339,6 @@ function onepaquc_cart_dashboard()
                     <div class="rmenu-settings-section-header">
                         <h3><span class="dashicons dashicons-welcome-widgets-menus"></span> Advanced Options</h3>
                     </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">One-Click Purchase</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_enable_one_click_purchase" value="1" <?php checked(1, get_option("rmenu_enable_one_click_purchase", 0), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">Add a "Buy Now" button that skips the cart and goes directly to checkout.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Buy Now Button Text</label>
-                            <div class="rmenu-settings-control">
-                                <input type="text" name="rmenu_buy_now_text" value="<?php echo esc_attr(get_option('rmenu_buy_now_text', 'Buy Now')); ?>" class="regular-text" />
-                                <p class="rmenu-field-description">Text for the one-click purchase button.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row rmenu-settings-row-columns">
-                        <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Buy Now Button Color</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_buy_now_bg_color" value="<?php echo esc_attr(get_option('rmenu_buy_now_bg_color', '#2ea3f2')); ?>" class="rmenu-color-picker" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Buy Now Text Color</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_buy_now_text_color" value="<?php echo esc_attr(get_option('rmenu_buy_now_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Enable Quick View</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_enable_quick_view" value="1" <?php checked(1, get_option("rmenu_enable_quick_view", 0), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">Add a "Quick View" button next to Add to Cart that opens a product details popup.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Quick View Button Text</label>
-                            <div class="rmenu-settings-control">
-                                <input type="text" name="rmenu_quick_view_text" value="<?php echo esc_attr(get_option('rmenu_quick_view_text', 'Quick View')); ?>" class="regular-text" />
-                                <p class="rmenu-field-description">Text for the quick view button.</p>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="rmenu-settings-row">
                         <div class="rmenu-settings-field">
                             <label class="rmenu-settings-label">Add to Cart Load Effect</label>
@@ -2426,24 +2366,23 @@ function onepaquc_cart_dashboard()
                             </div>
                         </div>
                     </div>
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Disable continue shopping button</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_disable_btn_out_of_stock" value="1" <?php checked(1, get_option("rmenu_disable_btn_out_of_stock", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">WooCommerce shows a continue shopping button after a product is added to cart, with this option you can disable that link so user remain on checkout page</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="rmenu-settings-section">
                     <div class="rmenu-settings-section-header">
                         <h3><span class="dashicons dashicons-translation"></span> Compatibility Settings</h3>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Theme Compatibility Mode</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_theme_compatibility_mode" value="1" <?php checked(1, get_option("rmenu_theme_compatibility_mode", 0), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">Enable this if your theme has conflicts with the custom Add to Cart styling.</p>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="rmenu-settings-row">
@@ -2455,55 +2394,6 @@ function onepaquc_cart_dashboard()
                                     <span class="rmenu-toggle-slider"></span>
                                 </label>
                                 <p class="rmenu-field-description">Use !important CSS rules to override theme styling (use only if needed).</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Exclude Categories</label>
-                            <div class="rmenu-settings-control">
-                                <select name="rmenu_exclude_categories[]" class="rmenu-select" multiple="multiple" style="width: 100%; max-width: 400px;">
-                                    <?php
-                                    $product_categories = get_terms('product_cat', array('hide_empty' => false));
-                                    $excluded_cats = get_option('rmenu_exclude_categories', array());
-
-                                    if (!empty($product_categories) && !is_wp_error($product_categories)) {
-                                        foreach ($product_categories as $category) {
-                                            echo '<option value="' . esc_attr($category->term_id) . '" ' .
-                                                (in_array($category->term_id, $excluded_cats) ? 'selected="selected"' : '') .
-                                                '>' . esc_html($category->name) . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                                <p class="rmenu-field-description">Select product categories where custom Add to Cart button should not be applied.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Exclude Products</label>
-                            <div class="rmenu-settings-control">
-                                <input type="text" name="rmenu_exclude_products" value="<?php echo esc_attr(get_option('rmenu_exclude_products', '')); ?>" class="regular-text" />
-                                <p class="rmenu-field-description">Enter product IDs separated by commas to exclude from custom Add to Cart styling.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="rmenu-settings-section">
-                    <div class="rmenu-settings-section-header">
-                        <h3><span class="dashicons dashicons-update"></span> Reset Settings</h3>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Reset to Defaults</label>
-                            <div class="rmenu-settings-control">
-                                <button type="button" id="rmenu-reset-add-to-cart" class="button button-secondary">Reset Add to Cart Settings</button>
-                                <p class="rmenu-field-description">Reset all Add to Cart button settings to default values.</p>
                             </div>
                         </div>
                     </div>
@@ -2577,19 +2467,49 @@ function onepaquc_cart_settings()
         "rmenu_remove_product",
         "rmenu_add_img_before_product",
         "rmenu_add_direct_checkout_button",
+        "rmenu_enable_custom_add_to_cart",
         "rmenu_wc_checkout_guest_enabled",
         "rmenu_wc_checkout_mobile_optimize",
         "rmenu_wc_direct_checkout_position",
         "txt-direct-checkout",
         "rmenu_wc_checkout_color",
+        "rmenu_add_to_cart_bg_color",
         "rmenu_wc_checkout_text_color",
+        "rmenu_add_to_cart_text_color",
+        "rmenu_add_to_cart_hover_bg_color",
+        "rmenu_add_to_cart_hover_text_color",
+        "rmenu_add_to_cart_border_radius",
+        "rmenu_add_to_cart_font_size",
+        "rmenu_add_to_cart_width",
+        "rmenu_add_to_cart_icon",
+        "rmenu_add_to_cart_icon_position",
+        "rmenu_add_to_cart_catalog_display",
         "rmenu_wc_checkout_style",
+        "rmenu_add_to_cart_style",
         "rmenu_wc_checkout_icon",
         "rmenu_wc_checkout_icon_position",
         "rmenu_wc_checkout_method",
         "rmenu_wc_clear_cart",
         "rmenu_wc_one_click_purchase",
         "rmenu_wc_add_confirmation",
+        "rmenu_enable_ajax_add_to_cart",
+        "rmenu_add_to_cart_default_qty",
+        "rmenu_show_quantity_archive",
+        "rmenu_redirect_after_add",
+        "rmenu_add_to_cart_animation",
+        "rmenu_add_to_cart_notification_style",
+        "rmenu_add_to_cart_success_message",
+        "rmenu_show_view_cart_link",
+        "rmenu_add_to_cart_notification_duration",
+        "rmenu_show_checkout_link",
+        "rmenu_sticky_add_to_cart_mobile",
+        "rmenu_mobile_add_to_cart_text",
+        "rmenu_mobile_button_size",
+        "rmenu_hide_on_mobile_options",
+        "rmenu_mobile_icon_only",
+        "rmenu_add_to_cart_loading_effect",
+        "rmenu_disable_btn_out_of_stock",
+        "rmenu_force_button_css",
     ];
 
     foreach ($string_fields as $field) {
@@ -2606,6 +2526,7 @@ function onepaquc_cart_settings()
     register_setting('onepaquc_cart_settings', "onepaquc_checkout_fields", 'onepaquc_sanitize_array_of_text');
     register_setting('onepaquc_cart_settings', "rmenu_show_quick_checkout_by_types", 'onepaquc_sanitize_array_of_text');
     register_setting('onepaquc_cart_settings', "rmenu_show_quick_checkout_by_page", 'onepaquc_sanitize_array_of_text');
+    register_setting('onepaquc_cart_settings', "rmenu_add_to_cart_by_types", 'onepaquc_sanitize_array_of_text');
 }
 
 function onepaquc_sanitize_array_of_text($value)
