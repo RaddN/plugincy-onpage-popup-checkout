@@ -938,7 +938,7 @@ function onepaquc_cart_dashboard()
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row">Disable Cart Page (Coming Soon)</th>
+                        <th scope="row">Disable Cart Page</th>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" name="rmenu_disable_cart_page" value="1" <?php checked(1, get_option("rmenu_disable_cart_page", "1"), true); ?> />
@@ -1001,7 +1001,7 @@ function onepaquc_cart_dashboard()
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row">Link product name in checkout page (Coming Soon)</th>
+                        <th scope="row">Link product name in checkout page</th>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" name="rmenu_link_product" value="1" <?php checked(1, get_option("rmenu_link_product", "1"), true); ?> />
@@ -2464,6 +2464,8 @@ function onepaquc_cart_settings()
         "onpage_checkout_hide_cart_button",
         "rmenu_quantity_control",
         "rmenu_at_one_product_cart",
+        "rmenu_disable_cart_page",
+        "rmenu_link_product",
         "rmenu_remove_product",
         "rmenu_add_img_before_product",
         "rmenu_add_direct_checkout_button",
@@ -2510,6 +2512,18 @@ function onepaquc_cart_settings()
         "rmenu_add_to_cart_loading_effect",
         "rmenu_disable_btn_out_of_stock",
         "rmenu_force_button_css",
+        "rmenu_enable_quick_view",
+        "rmenu_quick_view_button_text",
+        "rmenu_quick_view_button_position",
+        "rmenu_quick_view_display_type",
+        "rmenu_quick_view_modal_size",
+        "rmenu_quick_view_enable_lightbox",
+        "rmenu_quick_view_loading_effect",
+        "rmenu_quick_view_button_style",
+        "rmenu_quick_view_button_color",
+        "rmenu_quick_view_text_color",
+        "rmenu_quick_view_button_icon",
+        "rmenu_quick_view_icon_position",
     ];
 
     foreach ($string_fields as $field) {
@@ -2527,6 +2541,9 @@ function onepaquc_cart_settings()
     register_setting('onepaquc_cart_settings', "rmenu_show_quick_checkout_by_types", 'onepaquc_sanitize_array_of_text');
     register_setting('onepaquc_cart_settings', "rmenu_show_quick_checkout_by_page", 'onepaquc_sanitize_array_of_text');
     register_setting('onepaquc_cart_settings', "rmenu_add_to_cart_by_types", 'onepaquc_sanitize_array_of_text');
+    register_setting('onepaquc_cart_settings', "rmenu_quick_view_content_elements", 'onepaquc_sanitize_array_of_text');
+    register_setting('onepaquc_cart_settings', "rmenu_show_quick_view_by_types", 'onepaquc_sanitize_array_of_text');
+    register_setting('onepaquc_cart_settings', "rmenu_show_quick_view_by_page", 'onepaquc_sanitize_array_of_text');
 }
 
 function onepaquc_sanitize_array_of_text($value)

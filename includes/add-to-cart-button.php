@@ -896,3 +896,6 @@ class RMENU_Add_To_Cart_Handler {
         return $fragments;
     }
 }
+
+// Initialize the handler
+new RMENU_Add_To_Cart_Handler();
