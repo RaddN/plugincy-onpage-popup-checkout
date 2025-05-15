@@ -116,7 +116,7 @@ function onepaquc_refresh_checkout_product_list()
             }
 
             $checked = $in_cart ? 'checked' : '';
-    ?>
+?>
             <li class="one-page-checkout-product-item" data-product-id="<?php echo esc_attr($product_id); ?>" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>">
                 <div class="one-page-checkout-product-container">
                     <label class="one-page-checkout-product-label">
@@ -127,7 +127,7 @@ function onepaquc_refresh_checkout_product_list()
                     </label>
                 </div>
             </li>
-    <?php
+<?php
         }
     }
 
@@ -178,3 +178,86 @@ function onepaquc_clear_cart()
     WC()->cart->empty_cart();
     wp_send_json_success();
 }
+
+
+// add to cart
+
+add_action('wp_ajax_rmenu_ajax_add_to_cart', 'ajax_add_to_cart');
+add_action('wp_ajax_nopriv_rmenu_ajax_add_to_cart', 'ajax_add_to_cart');
+
+
+function ajax_add_to_cart() {
+        check_ajax_referer('rmenu-ajax-nonce', 'nonce');
+        
+        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($_POST['product_id']));
+        
+        // Get default quantity from settings if quantity is not provided
+        $default_qty = get_option('rmenu_add_to_cart_default_qty', '1');
+        
+        // Use posted quantity if available, otherwise use default
+        $quantity = empty($_POST['quantity']) ? $default_qty : wc_stock_amount($_POST['quantity']);
+        
+        $variation_id = empty($_POST['variation_id']) ? 0 : absint($_POST['variation_id']);
+        $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field', $_POST['variations']) : array();
+        
+        $product_status = get_post_status($product_id);
+        
+        $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations);
+        
+        if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variations) && 'publish' === $product_status) {
+            
+            do_action('woocommerce_ajax_added_to_cart', $product_id);
+            
+            // Get product name for the message
+            $product = wc_get_product($product_id);
+            $product_name = $product ? $product->get_name() : '';
+            
+            // Get cart URL
+            $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : WC()->cart->get_cart_url();
+            
+            // Get checkout URL
+            $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : WC()->cart->get_checkout_url();
+            
+            // Get redirect option
+            $redirect_option = get_option('rmenu_redirect_after_add', 'none');
+            $redirect_url = 'none';
+            
+            if ($redirect_option === 'cart') {
+                $redirect_url = $cart_url;
+            } elseif ($redirect_option === 'checkout') {
+                $redirect_url = $checkout_url;
+            }
+            
+            $response = array(
+                'success' => true,
+                'product_name' => $product_name,
+                'cart_url' => $cart_url,
+                'checkout_url' => $checkout_url,
+                'cart_total' => WC()->cart->get_cart_total(),
+                'cart_count' => WC()->cart->get_cart_contents_count(),
+                'redirect' => $redirect_option !== 'none',
+                'redirect_url' => $redirect_url
+            );
+            
+            // Add fragments if Mini Cart Preview is selected
+            if (get_option('rmenu_add_to_cart_notification_style', 'default') === 'mini_cart') {
+                ob_start();
+                woocommerce_mini_cart();
+                $mini_cart = ob_get_clean();
+                
+                $response['fragments']['div.widget_shopping_cart_content'] = '<div class="widget_shopping_cart_content">' . $mini_cart . '</div>';
+                $response['cart_hash'] = WC()->cart->get_cart_hash();
+            }
+            
+            wp_send_json($response);
+        } else {
+            $data = array(
+                'error' => true,
+                'message' => __('Error adding product to cart', 'restaurant-menu')
+            );
+            
+            wp_send_json($data);
+        }
+        
+        wp_die();
+    }

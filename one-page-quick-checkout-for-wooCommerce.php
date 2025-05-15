@@ -14,7 +14,7 @@
 
 
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
-define("RMENU_VERSION","1.0.1");
+define("RMENU_VERSION", "1.0.1");
 
 // Include the admin notice file
 require_once plugin_dir_path(__FILE__) . 'includes/admin-notice.php';
@@ -54,6 +54,7 @@ function onepaquc_cart_enqueue_scripts()
         'direct_checkout_behave' => $direct_checkout_behave,
         'checkout_url' => wc_get_checkout_url(),
         'cart_url'     => wc_get_cart_url(),
+        'nonce' => wp_create_nonce('rmenu-ajax-nonce'),
     ));
     // Retrieve the rmsg_editor value
     $rmsg_editor_value = get_option('rmsg_editor', '');
@@ -127,7 +128,8 @@ function onepaquc_rmenu_checkout_popup($isonepagewidget = false)
 require_once plugin_dir_path(__FILE__) . 'admin/product_edit_page_setup.php';
 
 
-function onepaquc_display_checkout_on_single_product() {
+function onepaquc_display_checkout_on_single_product()
+{
     // Only run on single product pages
     if (!is_product()) {
         global $post;
@@ -191,7 +193,6 @@ function onepaquc_display_checkout_on_single_product() {
         }
 
         remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
-
     } else {
         global $post;
         if (strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
@@ -214,7 +215,7 @@ function onepaquc_display_one_page_checkout_form()
         <p class="one-page-checkout-description"><?php echo get_option('txt-complete_your_purchase') ? esc_attr(get_option('txt-complete_your_purchase')) : 'Complete your purchase using the form below.'; ?></p>
         <?php echo do_shortcode('[woocommerce_checkout]'); ?>
     </div>
-    <?php
+<?php
 }
 
 function onepaquc_add_checkout_inline_styles()
@@ -279,6 +280,7 @@ function onepaquc_force_woocommerce_checkout_mode($is_checkout)
 
 require_once plugin_dir_path(__FILE__) . 'includes/extra_features.php';
 require_once plugin_dir_path(__FILE__) . 'includes/quick_checkout_button.php';
+require_once plugin_dir_path(__FILE__) . 'includes/trusted-badge.php';
 
 
 add_filter('woocommerce_checkout_fields', 'onepaquc_remove_required_checkout_fields');
@@ -311,4 +313,3 @@ function onepaquc_remove_required_checkout_fields($fields)
 //         }
 //     }
 // }
-

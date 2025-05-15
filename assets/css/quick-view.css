@@ -1,0 +1,522 @@
+/**
+ * WooCommerce Quick View Styles
+ */
+
+/* Quick View Button Styles */
+.rmenu-quick-view-btn {
+    padding: 8px 15px;
+    margin: 5px 0;
+    display: inline-block;
+    text-align: center;
+    line-height: 1.5;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: none;
+}
+
+.rmenu-quick-view-btn.button {
+    background-color: #ebe9eb;
+    color: #515151;
+    font-weight: 600;
+}
+
+.rmenu-quick-view-btn.button:hover {
+    background-color: #dad8da;
+    color: #515151;
+}
+
+.rmenu-quick-view-btn.button.alt {
+    background-color: #a46497;
+    color: #fff;
+}
+
+.rmenu-quick-view-btn.button.alt:hover {
+    background-color: #96588a;
+}
+
+/* Icon-only button */
+.rmenu-quick-view-btn.display-icon {
+    padding: 6px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Text with icon button */
+.rmenu-quick-view-btn.display-text_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rmenu-quick-view-btn.display-text_icon .dashicons {
+    margin-right: 5px;
+}
+
+/* Hover effect button */
+.rmenu-quick-view-btn.hover-effect .icon {
+    display: none;
+}
+
+.rmenu-quick-view-btn.hover-effect:hover .text {
+    display: none;
+}
+
+.rmenu-quick-view-btn.hover-effect:hover .icon {
+    display: block;
+}
+
+/* Image overlay button */
+.rmenu-quick-view-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* width: 100%;
+    height: 100%; */
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.products li.product:hover .rmenu-quick-view-overlay {
+    opacity: 1;
+}
+
+/* Modal container */
+.rmenu-quick-view-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 999999;
+}
+
+.rmenu-quick-view-modal-container.active {
+    display: block;
+}
+
+/* Modal overlay */
+.rmenu-quick-view-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+/* Modal content */
+.rmenu-quick-view-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 1000px;
+    width: 90%;
+    max-height: 80vh;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 2;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal content inner */
+.rmenu-quick-view-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Loading spinner */
+.rmenu-quick-view-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.rmenu-loader {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #a46497;
+    animation: rmenu-spin 1s infinite linear;
+}
+
+@keyframes rmenu-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Close button */
+.rmenu-quick-view-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.rmenu-quick-view-close:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.rmenu-quick-view-close .dashicons {
+    color: #fff;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.rmenu-quick-view-close .screen-reader-text {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+/* Navigation buttons */
+.rmenu-quick-view-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rmenu-quick-view-prev,
+.rmenu-quick-view-next {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 15px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: none;
+    color: #fff;
+}
+
+.rmenu-quick-view-prev:hover,
+.rmenu-quick-view-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+.rmenu-quick-view-prev .dashicons,
+.rmenu-quick-view-next .dashicons {
+    color: #fff;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+}
+
+.rmenu-quick-view-prev .screen-reader-text,
+.rmenu-quick-view-next .screen-reader-text {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+/* Product layout */
+.rmenu-quick-view-product-wrap {
+    position: relative;
+    padding: 30px;
+}
+
+.rmenu-quick-view-product {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.rmenu-quick-view-left {
+    width: 45%;
+    padding-right: 20px;
+}
+
+.rmenu-quick-view-right {
+    width: 55%;
+    padding: 30px 20px 20px 10px;
+}
+
+/* Product images */
+.rmenu-quick-view-images {
+    position: relative;
+}
+
+.rmenu-quick-view-main-image {
+    position: relative;
+    text-align: center;
+}
+
+.rmenu-quick-view-main-image img {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.rmenu-quick-view-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.rmenu-quick-view-thumbnail {
+    width: 60px;
+    height: 60px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.rmenu-quick-view-thumbnail.active {
+    border-color: #a46497;
+}
+
+.rmenu-quick-view-thumbnail img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Product details */
+.rmenu-quick-view-right .product_title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.rmenu-quick-view-right .price {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #a46497;
+}
+
+.rmenu-quick-view-right .woocommerce-product-details__short-description {
+    margin-bottom: 20px;
+}
+
+/* Add to cart section */
+.rmenu-quick-view-add-to-cart {
+    margin-bottom: 20px;
+}
+
+.rmenu-quick-view-add-to-cart .variations {
+    margin-bottom: 15px;
+}
+
+.rmenu-quick-view-add-to-cart .variations select {
+    min-width: 50%;
+    padding: 8px;
+}
+
+.rmenu-quick-view-add-to-cart .quantity {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.rmenu-quick-view-add-to-cart .single_add_to_cart_button {
+    margin-top: 10px;
+}
+
+/* Product meta */
+.rmenu-quick-view-right .product_meta {
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+.rmenu-quick-view-right .product_meta > span {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* View details button */
+.rmenu-quick-view-right .button.view-details {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* Attributes */
+.rmenu-quick-view-attributes {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* Animation effects */
+.rmenu-quick-view-modal-container.active.fade-in .rmenu-quick-view-modal {
+    animation: rmenu-fade-in 0.3s;
+}
+
+.rmenu-quick-view-modal-container.active.slide-in .rmenu-quick-view-modal {
+    animation: rmenu-slide-in 0.3s;
+}
+
+.rmenu-quick-view-modal-container.active.zoom-in .rmenu-quick-view-modal {
+    animation: rmenu-zoom-in 0.3s;
+}
+
+@keyframes rmenu-fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes rmenu-slide-in {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes rmenu-zoom-in {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .rmenu-quick-view-product {
+        flex-direction: column;
+    }
+    a.rmenu-quick-view-image img {
+        height: auto !important;
+    }
+    
+    .rmenu-quick-view-left,
+    .rmenu-quick-view-right {
+        width: 100%;
+    }
+    .rmenu-quick-view-right {
+        padding: 10px;
+    }
+    .rmenu-quick-view-left {
+        padding-right: 0;
+    }
+    
+    .rmenu-quick-view-modal {
+        width: 95%;
+    }
+    
+    .rmenu-quick-view-product-wrap {
+        padding: 15px;
+    }
+    
+    .rmenu-quick-view-nav {
+        display: none;
+    }
+    
+    .rmenu-quick-view-right .product_title {
+        font-size: 20px;
+    }
+}
+
+/* Modal sizes */
+.rmenu-quick-view-modal.modal-size-small {
+    max-width: 600px;
+}
+
+.rmenu-quick-view-modal.modal-size-medium {
+    max-width: 800px;
+}
+
+.rmenu-quick-view-modal.modal-size-large {
+    max-width: 1000px;
+}
+
+.rmenu-quick-view-modal.modal-size-full {
+    max-width: 90%;
+}
+
+/* Fix for variable product forms */
+.rmenu-quick-view-modal form.variations_form .woocommerce-variation-add-to-cart {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.rmenu-quick-view-modal .woocommerce-variation-price {
+    margin-bottom: 10px;
+}
+
+/* Fix z-index issues with select dropdowns */
+.rmenu-quick-view-content .select2-container {
+    z-index: 999999;
+}
+
+/* Reset button style */
+.rmenu-quick-view-content .reset_variations {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+a.rmenu-quick-view-image img {
+    height: 426px;
+    display: block !important;
+    object-fit: cover;
+}
+.rmenu-add-to-cart-form {
+    display: flex;
+    gap: 10px;
+}
+a.rmenu-quick-view-btn.button.display-icon {
+    display: flex;
+    color: #fff;
+}

@@ -18,6 +18,10 @@ function onepaquc_should_display_button($product)
         return false;
     }
 
+    if (!$product->is_in_stock()) {
+        return false;
+    }
+
     // Check user login status
     $guest_checkout_enabled = get_option('rmenu_wc_checkout_guest_enabled', '1');
     if ($guest_checkout_enabled !== '1' && !is_user_logged_in()) {

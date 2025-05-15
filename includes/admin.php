@@ -104,10 +104,9 @@ function onepaquc_cart_dashboard()
             <div class="tab" data-tab="2">One Page Checkout</div>
             <div class="tab" data-tab="8">Add To Cart</div>
             <div class="tab" data-tab="4">Direct Checkout Manage</div>
-            <div class="tab" data-tab="6">Advanced Settings (Coming Soon)</div>
-            <div class="tab" data-tab="7">Quick View (Coming Soon)</div>
+            <div class="tab" data-tab="7">Quick View</div>
+            <div class="tab" data-tab="6">Advanced Settings</div>
             <div class="tab" data-tab="5">Features</div>
-
         </div>
         <form method="post" action="options.php">
             <!-- Add nonce field for security -->
@@ -396,6 +395,38 @@ function onepaquc_cart_dashboard()
 
                 <div class="rmenu-settings-section">
                     <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-category"></span>Quick Checkout in Variable Product</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Show Variation Selection in Archive pages</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_variation_show_archive" value="1" <?php checked(1, get_option("rmenu_variation_show_archive", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">When enabled, the variation selection will be shown on archive pages.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Hide Select Option Button</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_wc_hide_select_option" value="1" <?php checked(1, get_option("rmenu_wc_hide_select_option", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">When enabled, the select option button will be hidden on variable product pages.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
                         <h3><span class="dashicons dashicons-cart"></span> Quick Checkout Behavior</h3>
                     </div>
 
@@ -478,8 +509,8 @@ function onepaquc_cart_dashboard()
                                 </label>
 
                                 <label class="rmenu-checkbox-container">
-                                    <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
-                                    <span class="rmenu-checkbox-label">Grouped Products</span>
+                                    <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="coming_grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
+                                    <span class="rmenu-checkbox-label">Grouped Products (Coming Soon)</span>
                                 </label>
 
                                 <label class="rmenu-checkbox-container">
@@ -950,16 +981,7 @@ function onepaquc_cart_dashboard()
                         <th scope="row">Express Checkout options (Coming Soon)</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="rmenu_express_checkout" value="1" <?php checked(1, get_option("rmenu_express_checkout", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Quick View (Coming Soon)</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_quick_view" value="1" <?php checked(1, get_option("rmenu_quick_view", "1"), true); ?> />
+                                <input type="checkbox" name="rmenu_express_checkout" value="1" <?php checked(1, get_option("rmenu_express_checkout", 0), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -968,7 +990,7 @@ function onepaquc_cart_dashboard()
                         <th scope="row">Address Auto-Complete (Coming Soon)</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="rmenu_address_auto_complete" value="1" <?php checked(1, get_option("rmenu_address_auto_complete", "1"), true); ?> />
+                                <input type="checkbox" name="rmenu_address_auto_complete" value="1" <?php checked(1, get_option("rmenu_address_auto_complete", 0), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -977,16 +999,7 @@ function onepaquc_cart_dashboard()
                         <th scope="row">Multi-step checkout (Coming Soon)</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="rmenu_multi_step_checkout" value="1" <?php checked(1, get_option("rmenu_multi_step_checkout", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Trust Badge on checkout (Coming Soon)</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_multi_step_checkout" value="1" <?php checked(1, get_option("rmenu_multi_step_checkout", "1"), true); ?> />
+                                <input type="checkbox" name="rmenu_multi_step_checkout" value="1" <?php checked(1, get_option("rmenu_multi_step_checkout", 0), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -995,7 +1008,7 @@ function onepaquc_cart_dashboard()
                         <th scope="row">Force login before checkout (Coming Soon)</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="rmenu_forece_login" value="1" <?php checked(1, get_option("rmenu_forece_login", "1"), true); ?> />
+                                <input type="checkbox" name="rmenu_force_login" value="1" <?php checked(1, get_option("rmenu_force_login", 0), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -1013,7 +1026,7 @@ function onepaquc_cart_dashboard()
                         <th scope="row">Enable captcha on checkout page (Coming Soon)</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="rmenu_enable_captcha" value="1" <?php checked(1, get_option("rmenu_enable_captcha", "1"), true); ?> />
+                                <input type="checkbox" name="rmenu_enable_captcha" value="1" <?php checked(1, get_option("rmenu_enable_captcha", 0), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -1021,97 +1034,7 @@ function onepaquc_cart_dashboard()
                 </table>
             </div>
             <div class="tab-content" id="tab-6">
-                <div class="advanced-settings-content" id="trust-content">
-                    <h3>Trust Badges Configuration</h3>
-                    <table class="form-table">
-                        <tr valign="top">
-                            <th scope="row">Enable Trust Badges</th>
-                            <td>
-                                <label class="switch">
-                                    <input type="checkbox" name="onepaquc_trust_badges_enabled" value="1"
-                                        <?php checked(1, get_option('onepaquc_trust_badges_enabled', 0), true); ?> />
-                                    <span class="slider round"></span>
-                                </label>
-                                <p class="description">Display trust signals and security badges on the checkout page.</p>
-                            </td>
-                        </tr>
-
-                        <tr valign="top">
-                            <th scope="row">Badge Position</th>
-                            <td>
-                                <select name="onepaquc_trust_badge_position">
-                                    <option value="above_checkout" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'above_checkout'); ?>>Above Checkout Form</option>
-                                    <option value="below_checkout" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'below_checkout'); ?>>Below Checkout Form</option>
-                                    <option value="payment_section" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'payment_section'); ?>>Next to Payment Methods</option>
-                                    <option value="order_summary" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'order_summary'); ?>>Below Order Summary</option>
-                                </select>
-                            </td>
-                        </tr>
-
-                        <tr valign="top">
-                            <th scope="row">Custom Trust Badge HTML</th>
-                            <td>
-                                <textarea name="onepaquc_trust_badge_custom_html" rows="6" class="large-text code"><?php echo esc_textarea(get_option('onepaquc_trust_badge_custom_html', '<div class="trust-badges">
-    <div class="trust-badge"><i class="dashicons dashicons-lock"></i> Secure Checkout</div>
-    <div class="trust-badge"><i class="dashicons dashicons-shield"></i> Money-Back Guarantee</div>
-    <div class="trust-badge"><i class="dashicons dashicons-privacy"></i> Privacy Protected</div>
-</div>')); ?></textarea>
-                                <p class="description">Custom HTML for trust badges. You can use dashicons or include your own images.</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="advanced-settings-content" id="summary-content">
-                    <h3>Order Summary Customization</h3>
-                    <table class="form-table">
-                        <tr valign="top">
-                            <th scope="row">Order Summary Style</th>
-                            <td>
-                                <select name="onepaquc_order_summary_style">
-                                    <option value="default" <?php selected(get_option('onepaquc_order_summary_style', 'default'), 'default'); ?>>Default (Table Style)</option>
-                                    <option value="compact" <?php selected(get_option('onepaquc_order_summary_style', 'default'), 'compact'); ?>>Compact List</option>
-                                    <option value="detailed" <?php selected(get_option('onepaquc_order_summary_style', 'default'), 'detailed'); ?>>Detailed With Images</option>
-                                    <option value="minimal" <?php selected(get_option('onepaquc_order_summary_style', 'default'), 'minimal'); ?>>Minimal</option>
-                                </select>
-                            </td>
-                        </tr>
-
-                        <tr valign="top">
-                            <th scope="row">Collapsible Summary</th>
-                            <td>
-                                <label class="switch">
-                                    <input type="checkbox" name="onepaquc_order_summary_collapsible" value="1"
-                                        <?php checked(1, get_option('onepaquc_order_summary_collapsible', 0), true); ?> />
-                                    <span class="slider round"></span>
-                                </label>
-                                <p class="description">Allow customers to collapse/expand the order summary (useful for mobile).</p>
-                            </td>
-                        </tr>
-
-                        <tr valign="top">
-                            <th scope="row">Show Product Images</th>
-                            <td>
-                                <label class="switch">
-                                    <input type="checkbox" name="onepaquc_show_product_images" value="1"
-                                        <?php checked(1, get_option('onepaquc_show_product_images', 1), true); ?> />
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                        </tr>
-
-                        <tr valign="top">
-                            <th scope="row">Show Product SKU</th>
-                            <td>
-                                <label class="switch">
-                                    <input type="checkbox" name="onepaquc_show_product_sku" value="1"
-                                        <?php checked(1, get_option('onepaquc_show_product_sku', 0), true); ?> />
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <?php onepaquc_trust_badges_settings_content(); ?>
             </div>
             <div class="tab-content" id="tab-7">
                 <div class="rmenu-settings-header">
@@ -1153,11 +1076,11 @@ function onepaquc_cart_dashboard()
                             <div class="rmenu-settings-control">
                                 <select name="rmenu_quick_view_button_position" class="rmenu-select">
                                     <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_image'); ?>>After Product Image</option>
-                                    <option value="before_title" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_title'); ?>>Before Product Title</option>
-                                    <option value="after_title" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_title'); ?>>After Product Title</option>
-                                    <option value="before_price" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_price'); ?>>Before Product Price</option>
-                                    <option value="after_price" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_price'); ?>>After Product Price</option>
-                                    <option value="before_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_add_to_cart'); ?>>Before Add to Cart Button</option>
+                                    <option value="before_title" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_title'); ?>>Before Product Title (Coming Soon)</option>
+                                    <option value="after_title" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_title'); ?>>After Product Title  (Coming Soon)</option>
+                                    <option value="before_price" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_price'); ?>>Before Product Price (Coming Soon)</option>
+                                    <option value="after_price" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_price'); ?>>After Product Price (Coming Soon)</option>
+                                    <option value="before_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'before_add_to_cart'); ?>>Before Add to Cart Button (Coming Soon)</option>
                                     <option value="after_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
                                     <option value="image_overlay" <?php selected(get_option('rmenu_quick_view_button_position', 'after_image'), 'image_overlay'); ?>>Overlay on Product Image</option>
                                 </select>
@@ -1244,7 +1167,7 @@ function onepaquc_cart_dashboard()
 
                                     <label class="rmenu-checkbox-container">
                                         <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="sharing" <?php checked(in_array('sharing', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Social Sharing</span>
+                                        <span class="rmenu-checkbox-label">Social Sharing (Coming Soon)</span>
                                     </label>
 
                                     <label class="rmenu-checkbox-container">
@@ -1254,7 +1177,7 @@ function onepaquc_cart_dashboard()
 
                                     <label class="rmenu-checkbox-container">
                                         <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="attributes" <?php checked(in_array('attributes', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Product Attributes</span>
+                                        <span class="rmenu-checkbox-label">Product Attributes (Coming Soon)</span>
                                     </label>
                                 </div>
                             </div>
@@ -1264,7 +1187,7 @@ function onepaquc_cart_dashboard()
 
                     <div class="rmenu-settings-row">
                         <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Modal Size</label>
+                            <label class="rmenu-settings-label">Modal Size (Coming Soon)</label>
                             <div class="rmenu-settings-control">
                                 <select name="rmenu_quick_view_modal_size" class="rmenu-select">
                                     <option value="small" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'small'); ?>>Small</option>
@@ -1295,19 +1218,6 @@ function onepaquc_cart_dashboard()
                                     <input type="text" name="rmenu_quick_view_custom_height" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_height', '600')); ?>" class="regular-text" />
                                     <p class="rmenu-field-description">Custom height in pixels (e.g., 600) or 'auto'.</p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Enable Lightbox Gallery</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_quick_view_enable_lightbox" value="1" <?php checked(1, get_option("rmenu_quick_view_enable_lightbox", 1), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">Enable lightbox image gallery for product images in quick view.</p>
                             </div>
                         </div>
                     </div>
@@ -1509,33 +1419,7 @@ function onepaquc_cart_dashboard()
 
                     <div class="rmenu-settings-row">
                         <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">AJAX Add to Cart</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_quick_view_ajax_add_to_cart" value="1" <?php checked(1, get_option("rmenu_quick_view_ajax_add_to_cart", 1), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">Enable AJAX add to cart functionality within the quick view popup.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Enable Direct Checkout in Quick View</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_quick_view_direct_checkout" value="1" <?php checked(1, get_option("rmenu_quick_view_direct_checkout", 0), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">When enabled, the direct checkout button will also be displayed in the quick view popup (if Direct Checkout is enabled).</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Mobile Optimization</label>
+                            <label class="rmenu-settings-label">Mobile Optimization (Coming Soon)</label>
                             <div class="rmenu-settings-control">
                                 <label class="rmenu-toggle-switch">
                                     <input type="checkbox" name="rmenu_quick_view_mobile_optimize" value="1" <?php checked(1, get_option("rmenu_quick_view_mobile_optimize", 1), true); ?> />
@@ -1548,7 +1432,7 @@ function onepaquc_cart_dashboard()
 
                     <div class="rmenu-settings-row">
                         <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Close on Add to Cart</label>
+                            <label class="rmenu-settings-label">Close on Add to Cart (Coming Soon)</label>
                             <div class="rmenu-settings-control">
                                 <label class="rmenu-toggle-switch">
                                     <input type="checkbox" name="rmenu_quick_view_close_on_add" value="1" <?php checked(1, get_option("rmenu_quick_view_close_on_add", 0), true); ?> />
@@ -1570,69 +1454,7 @@ function onepaquc_cart_dashboard()
                                 <p class="rmenu-field-description">When enabled, customers can use keyboard arrows to navigate between products in quick view and ESC to close.</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-performance"></span> Performance Settings</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Preload Product Data</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_quick_view_preload" value="1" <?php checked(1, get_option("rmenu_quick_view_preload", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Preload product data to reduce loading time when opening the quick view popup.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Enable Caching</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_quick_view_enable_cache" value="1" <?php checked(1, get_option("rmenu_quick_view_enable_cache", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Cache quick view content to improve performance. Recommended for sites with many products.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Cache Expiration</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_quick_view_cache_expiration" class="rmenu-select">
-                                        <option value="1" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '1'); ?>>1 Hour</option>
-                                        <option value="6" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '6'); ?>>6 Hours</option>
-                                        <option value="12" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '12'); ?>>12 Hours</option>
-                                        <option value="24" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '24'); ?>>24 Hours</option>
-                                        <option value="48" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '48'); ?>>48 Hours</option>
-                                        <option value="168" <?php selected(get_option('rmenu_quick_view_cache_expiration', '24'), '168'); ?>>1 Week</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Set how long quick view data should be cached before refreshing.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Lazy Load Images</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_quick_view_lazy_load" value="1" <?php checked(1, get_option("rmenu_quick_view_lazy_load", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Enable lazy loading for product images in the quick view popup.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </div>                
 
                     <div class="rmenu-settings-section">
                         <div class="rmenu-settings-section-header">
@@ -1761,49 +1583,9 @@ function onepaquc_cart_dashboard()
                             </div>
                         </div>
                     </div>
-
                     <div class="rmenu-settings-section">
                         <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-code-standards"></span> Developer Options</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Modal Container ID</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="text" name="rmenu_quick_view_container_id" value="<?php echo esc_attr(get_option('rmenu_quick_view_container_id', 'rmenu-quick-view-container')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Custom ID for the quick view modal container (for developers).</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Custom JavaScript Hook</label>
-                                <div class="rmenu-settings-control">
-                                    <textarea name="rmenu_quick_view_custom_js" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_js', '')); ?></textarea>
-                                    <p class="rmenu-field-description">Add custom JavaScript code to run after the quick view modal is initialized. Access the modal via the <code>rmenuQuickView</code> object.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Debug Mode</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_quick_view_debug_mode" value="1" <?php checked(1, get_option("rmenu_quick_view_debug_mode", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Enable debug mode to log quick view errors and performance metrics to the console (for developers).</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-info"></span> Documentation & Support</h3>
+                            <h3><span class="dashicons dashicons-info"></span> Documentation & Support (Coming Soon)</h3>
                         </div>
 
                         <div class="rmenu-settings-row">
@@ -1821,22 +1603,7 @@ function onepaquc_cart_dashboard()
                                 <div class="rmenu-settings-info-box">
                                     <h4>Shortcode Reference</h4>
                                     <p>You can use the following shortcode to display the Quick View button anywhere on your site:</p>
-                                    <code>[rmenu_quick_view product_id="123" button_text="Quick Preview"]</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <div class="rmenu-settings-info-box">
-                                    <h4>Developer Hooks</h4>
-                                    <p>Developers can use these action and filter hooks:</p>
-                                    <ul>
-                                        <li><code>rmenu_before_quick_view_content</code> - Action before quick view content</li>
-                                        <li><code>rmenu_after_quick_view_content</code> - Action after quick view content</li>
-                                        <li><code>rmenu_quick_view_button_html</code> - Filter to modify button HTML</li>
-                                        <li><code>rmenu_quick_view_allowed_products</code> - Filter to control which products get quick view</li>
-                                    </ul>
+                                    <code>[plugincy_quick_view product_id="123" button_text="Quick Preview"]</code>
                                 </div>
                             </div>
                         </div>
@@ -2399,39 +2166,8 @@ function onepaquc_cart_dashboard()
                     </div>
                 </div>
             </div>
-
             <?php submit_button(); ?>
         </form>
-        <?php $inline_script = '
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("reset-defaults").addEventListener("click", function() {
-            if (confirm("Are you sure you want to reset all settings to their default values?")) {
-                // Send AJAX request to reset settings
-                fetch("' . esc_url(admin_url('admin-ajax.php')) . '?action=onepaquc_reset_onepaquc_cart_settings", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    credentials: "same-origin"
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert("Settings have been reset to default.");
-                        location.reload(); // Reload to show the reset values
-                    } else {
-                        alert("An error occurred while resetting settings.");
-                    }
-                });
-            }
-        });
-    });
-    ';
-
-        // Add the inline script
-        wp_add_inline_script('rmenu-admin-script', $inline_script);
-
-        ?>
         <p style="text-align: center;font-size: 15px;">To add menu cart to your page, use the shortcode <b>[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4"]</b> or use Plugincy Cart Widget/Block</p>
         <p style="text-align: center;padding-bottom:20px; font-size: 15px;">[plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"] or use <b>Plugincy One Page Checkout</b> widget/block <a href="/wp-admin/admin.php?page=onepaquc_cart_documentation#multiple-products">view documentation</a></p>
     </div>
@@ -2473,6 +2209,8 @@ function onepaquc_cart_settings()
         "rmenu_wc_checkout_guest_enabled",
         "rmenu_wc_checkout_mobile_optimize",
         "rmenu_wc_direct_checkout_position",
+        "rmenu_variation_show_archive",
+        "rmenu_wc_hide_select_option",
         "txt-direct-checkout",
         "rmenu_wc_checkout_color",
         "rmenu_add_to_cart_bg_color",
@@ -2524,6 +2262,28 @@ function onepaquc_cart_settings()
         "rmenu_quick_view_text_color",
         "rmenu_quick_view_button_icon",
         "rmenu_quick_view_icon_position",
+        "rmenu_quick_view_ajax_add_to_cart",
+        "rmenu_quick_view_direct_checkout",
+        "rmenu_quick_view_mobile_optimize",
+        "rmenu_quick_view_close_on_add",
+        "rmenu_quick_view_keyboard_nav",
+        "rmenu_quick_view_preload",
+        "rmenu_quick_view_enable_cache",
+        "rmenu_quick_view_cache_expiration",
+        "rmenu_quick_view_lazy_load",
+        "rmenu_quick_view_details_text",
+        "rmenu_quick_view_close_text",
+        "rmenu_quick_view_prev_text",
+        "rmenu_quick_view_next_text",
+        "rmenu_quick_view_track_events",
+        "rmenu_quick_view_event_category",
+        "rmenu_quick_view_event_action",
+        "rmenu_quick_view_load_scripts",
+        "rmenu_quick_view_theme_compat",
+        "onepaquc_trust_badges_enabled",
+        "onepaquc_trust_badge_position",
+        "onepaquc_trust_badge_style",
+        "show_custom_html",
     ];
 
     foreach ($string_fields as $field) {
@@ -2544,6 +2304,64 @@ function onepaquc_cart_settings()
     register_setting('onepaquc_cart_settings', "rmenu_quick_view_content_elements", 'onepaquc_sanitize_array_of_text');
     register_setting('onepaquc_cart_settings', "rmenu_show_quick_view_by_types", 'onepaquc_sanitize_array_of_text');
     register_setting('onepaquc_cart_settings', "rmenu_show_quick_view_by_page", 'onepaquc_sanitize_array_of_text');
+    register_setting('onepaquc_cart_settings', "onepaquc_my_trust_badges_items", 'onepaquc_sanitize_trust_badges_items');
+    register_setting('onepaquc_cart_settings', 'onepaquc_trust_badge_custom_html', [
+        'type' => 'string',
+        'sanitize_callback' => function($value) {
+            // Allow HTML, CSS, JS (no sanitization)
+            return $value;
+        },
+        'show_in_rest' => false,
+        'default' => '<!-- Custom Trust Badges HTML with CSS --> <div class="custom-trust-badges"> <!-- Payment Security Badge --> <div class="trust-badge payment-badge"> <div class="badge-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect> <path d="M7 11V7a5 5 0 0 1 10 0v4"></path> </svg> </div> <div class="badge-content"> <h4>Secure Payment</h4> <p>Your payment information is encrypted</p> </div> </div> <!-- Money Back Guarantee Badge --> <div class="trust-badge guarantee-badge"> <div class="badge-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"></circle> <path d="M8 14s1.5 2 4 2 4-2 4-2"></path> <line x1="9" y1="9" x2="9.01" y2="9"></line> <line x1="15" y1="9" x2="15.01" y2="9"></line> </svg> </div> <div class="badge-content"> <h4>30-Day Guarantee</h4> <p>Not satisfied? Get a full refund</p> </div> </div> <!-- Fast Shipping Badge --> <div class="trust-badge shipping-badge"> <div class="badge-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="1" y="3" width="15" height="13"></rect> <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon> <circle cx="5.5" cy="18.5" r="2.5"></circle> <circle cx="18.5" cy="18.5" r="2.5"></circle> </svg> </div> <div class="badge-content"> <h4>Fast Shipping</h4> <p>Delivery within 2-4 business days</p> </div> </div> <!-- Privacy Badge --> <div class="trust-badge privacy-badge"> <div class="badge-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path> </svg> </div> <div class="badge-content"> <h4>Privacy Protected</h4> <p>Your data is never shared with third parties</p> </div> </div> </div> <style> .custom-trust-badges { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; margin: 30px 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; } .custom-trust-badges .trust-badge { flex: 1; min-width: 200px; display: flex; align-items: center; padding: 15px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; position: relative; overflow: hidden; } .custom-trust-badges .trust-badge::before { content: \'\'; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: currentColor; opacity: 0.8; } .custom-trust-badges .trust-badge:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); } .custom-trust-badges .badge-icon { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; flex-shrink: 0; } .custom-trust-badges .badge-icon svg { width: 28px; height: 28px; } .custom-trust-badges .badge-content { flex-grow: 1; } .custom-trust-badges .badge-content h4 { margin: 0 0 4px 0; font-size: 16px; font-weight: 600; } .custom-trust-badges .badge-content p { margin: 0; font-size: 13px; opacity: 0.7; line-height: 1.4; } ge specific colors */ .custom-trust-badges .payment-badge { color: #3498db; } .custom-trust-badges .payment-badge .badge-icon { background-color: rgba(52, 152, 219, 0.1); } .custom-trust-badges .guarantee-badge { color: #2ecc71; } .custom-trust-badges .guarantee-badge .badge-icon { background-color: rgba(46, 204, 113, 0.1); } .custom-trust-badges .shipping-badge { color: #e67e22; } .custom-trust-badges .shipping-badge .badge-icon { background-color: rgba(230, 126, 34, 0.1); } .custom-trust-badges .privacy-badge { color: #9b59b6; } .custom-trust-badges .privacy-badge .badge-icon { background-color: rgba(155, 89, 182, 0.1); } ponsive design */ @media (max-width: 768px) { .custom-trust-badges { flex-direction: column; gap: 15px; } .custom-trust-badges .trust-badge { width: 100%; } } </style>'
+    ]);
+
+}
+
+function onepaquc_sanitize_trust_badges_items($items) {
+    // Only accept an array
+    if (!is_array($items)) {
+        return [];
+    }
+
+    // Remove empty items and sanitize
+    $sanitized = [];
+    foreach ($items as $item) {
+        // Only accept arrays with at least 'icon' or 'text'
+        if (!is_array($item)) {
+            continue;
+        }
+        // Remove empty trust badge rows (all fields empty)
+        $has_content = false;
+        foreach ($item as $value) {
+            if (trim($value) !== '') {
+                $has_content = true;
+                break;
+            }
+        }
+        if (!$has_content) {
+            continue;
+        }
+        // Remove if text is "New Badge"
+        if (isset($item['text']) && trim($item['text']) === 'New Badge') {
+            continue;
+        }
+        // Sanitize each field
+        $sanitized_item = [];
+        foreach ($item as $key => $value) {
+            $sanitized_item[$key] = sanitize_text_field($value);
+        }
+        $sanitized[] = $sanitized_item;
+    }
+
+    // Remove duplicates (same icon and text)
+    $unique = [];
+    foreach ($sanitized as $item) {
+        $hash = md5($item['icon'] . '|' . $item['text']);
+        $unique[$hash] = $item;
+    }
+
+    // Re-index array
+    return array_values($unique);
 }
 
 function onepaquc_sanitize_array_of_text($value)
@@ -2555,25 +2373,6 @@ function onepaquc_sanitize_array_of_text($value)
     return array_map('sanitize_text_field', $value);
 }
 
-
-
-// Function to reset the settings to default values
-function onepaquc_reset_onepaquc_cart_settings()
-{
-    global $onepaquc_checkoutformfields,
-        $onepaquc_productpageformfields;
-    // List of settings to reset
-    $settings = array_merge(array_keys($onepaquc_checkoutformfields), array_keys($onepaquc_productpageformfields));
-
-    // Reset each setting
-    foreach ($settings as $setting) {
-        update_option($setting, ''); // Reset each option to an empty string, or set a default value here
-    }
-
-    // Send a JSON response back to the client
-    wp_send_json_success();
-}
-add_action('wp_ajax_onepaquc_reset_onepaquc_cart_settings', 'onepaquc_reset_onepaquc_cart_settings');
 
 function onepaquc_cart_custom_css()
 {

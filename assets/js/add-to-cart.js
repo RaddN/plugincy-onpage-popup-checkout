@@ -1,6 +1,6 @@
 /**
  * Restaurant Menu Add to Cart JavaScript
- * 
+ * add-to-cart.js
  * Handles AJAX add to cart functionality, animations, and notifications
  */
 

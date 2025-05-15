@@ -74,16 +74,60 @@ document.addEventListener("DOMContentLoaded", function() {
     const tabs = document.querySelectorAll(".tab");
     const contents = document.querySelectorAll(".tab-content");
 
+    // Function to activate a specific tab
+    function activateTab(tabIndex) {
+        // Remove active class from all tabs and tab contents
+        tabs.forEach(t => t.classList.remove("active"));
+        contents.forEach(c => c.classList.remove("active"));
+
+        // Add active class to the tab with the matching data-tab attribute
+        const targetTab = document.querySelector(`.tab[data-tab="${tabIndex}"]`);
+        if (targetTab) {
+            targetTab.classList.add("active");
+            const content = document.querySelector(`#tab-${tabIndex}`);
+            if (content) {
+                content.classList.add("active");
+            }
+        }
+    }
+
+    // Add click event listeners to tabs
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
-            // Remove active class from all tabs and tab contents
-            tabs.forEach(t => t.classList.remove("active"));
-            contents.forEach(c => c.classList.remove("active"));
-
-            // Add active class to clicked tab and its corresponding content
-            tab.classList.add("active");
-            const content = document.querySelector(`#tab-${tab.dataset.tab}`);
-            content.classList.add("active");
+            const tabIndex = tab.dataset.tab;
+            
+            // Update URL with the tab parameter
+            const url = new URL(window.location.href);
+            url.searchParams.set('tab', tabIndex);
+            
+            // Use history.pushState to update URL without reloading the page
+            window.history.pushState({tabIndex: tabIndex}, '', url);
+            
+            // Activate the selected tab
+            activateTab(tabIndex);
         });
     });
+
+    // Handle browser back/forward navigation
+    window.addEventListener('popstate', function(event) {
+        if (event.state && event.state.tabIndex) {
+            activateTab(event.state.tabIndex);
+        }
+    });
+
+    // Check URL parameters on page load and activate the corresponding tab
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    
+    if (tabParam) {
+        // If a tab parameter exists in the URL, activate that tab
+        activateTab(tabParam);
+    } else {
+        // If no tab parameter, activate the first tab (which seems to be default in your code)
+        const firstTab = document.querySelector('.tab');
+        if (firstTab) {
+            const firstTabIndex = firstTab.dataset.tab;
+            activateTab(firstTabIndex);
+        }
+    }
 });

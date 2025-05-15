@@ -234,11 +234,14 @@ jQuery(document).ready(function ($) {
 
     function directcheckout(product_id, product_type, $button) {
         var $variation_id = $('.variation_id').val() || 0;
+        console.log("your variation id is : " + $variation_id);
 
         $('#checkout-button-drawer-link').prop('disabled', true);
 
         if (product_type === 'variable' && $variation_id === 0) {
             $('#checkout-button-drawer-link').prop('disabled', false);
+            $button.removeClass('loading').prop('disabled', false);
+            alert("Please Select a variation first");
             return;
         }
 
@@ -270,50 +273,67 @@ jQuery(document).ready(function ($) {
             }
         }
 
-        // Function to proceed with adding to cart
+        // Function to proceed with adding to cart        
         function proceedToAddToCart() {
             $.ajax({
                 type: 'POST',
-                url: wc_add_to_cart_params.wc_ajax_url.toString().replace('%%endpoint%%', 'add_to_cart'),
+                url: onepaquc_wc_cart_params.ajax_url,
                 data: {
+                    action: 'rmenu_ajax_add_to_cart',
                     product_id: product_id,
                     quantity: 1,
                     variation_id: $variation_id,
+                    nonce: onepaquc_wc_cart_params.nonce || '', // Fallback if needed
                 },
                 success: function (response) {
-                    if (response.error && response.product_url) {
-                        window.location = response.product_url;
-                        return;
+                    if (response.success) {
+                        // Handle WooCommerce fragments
+                        if (response.fragments) {
+                            $.each(response.fragments, function (key, value) {
+                                $(key).replaceWith(value);
+                            });
+
+                            if (typeof sessionStorage !== 'undefined') {
+                                sessionStorage.setItem('wc_fragments', JSON.stringify(response.fragments));
+                                sessionStorage.setItem('wc_cart_hash', response.cart_hash);
+                            }
+                        }
+
+                        // Update UI
+                        updateCartContent(false);
+                        updateCheckoutForm();
+
+                        // Trigger WooCommerce hook
+                        // $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);
+
+                        // Redirect or UI handling
+                        if (methodKey === 'direct_checkout') {
+                            window.location.href = onepaquc_wc_cart_params.checkout_url;
+                        } else if (methodKey === 'ajax_add') {
+                            $('.cart-drawer').removeClass('open');
+                        } else if (methodKey === 'cart_redirect') {
+                            window.location.href = onepaquc_wc_cart_params.cart_url;
+                        } else if (methodKey === 'side_cart' && !$isonepagewidget) {
+                            updateCartContent();
+                        } else {
+                            $('.checkout-popup').show();
+                            $('.cart-drawer').removeClass('open');
+                        }
+
+
+
+                    } else {
+                        alert(response.message || 'Could not add the product to cart.');
                     }
-                    updateCartContent(false);
-                    updateCheckoutForm();
-                    if (methodKey === 'direct_checkout') {
-                        window.location.href = onepaquc_wc_cart_params.checkout_url;
-                        return;
-                    }
-                    else if(methodKey === 'ajax_add'){
-                        $('.cart-drawer').removeClass('open');
-                    }
-                    else if(methodKey === 'cart_redirect'){
-                        window.location.href = onepaquc_wc_cart_params.cart_url;
-                        return;
-                    }
-                    else if(methodKey === 'side_cart' && !$isonepagewidget){
-                        updateCartContent();
-                    }
-                    else {
-                        $('.checkout-popup').show();
-                        $('.cart-drawer').removeClass('open');
-                    }
-                    
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.error('Ajax error:', textStatus, errorThrown);
+                    console.error('AJAX error:', textStatus, errorThrown);
                     alert('Failed to add product to cart. Please try again later.');
                 },
                 complete: function () {
                     $('#checkout-button-drawer-link').prop('disabled', false);
                     $button.removeClass('loading').prop('disabled', false);
+
                     if ($isonepagewidget) {
                         const element = document.getElementById('checkout-form');
                         if (element) {
@@ -323,6 +343,7 @@ jQuery(document).ready(function ($) {
                 }
             });
         }
+
 
         // If clear cart is enabled, clear the cart before proceeding
         if ($directbehave.rmenu_wc_clear_cart == 1) {
@@ -342,6 +363,50 @@ jQuery(document).ready(function ($) {
             });
         } else {
             proceedToAddToCart();
+        }
+        function showVariationSelectionPopup(product_id) {
+            // Fetch the product's variation HTML using AJAX
+            $.ajax({
+                type: 'GET',
+                url: onepaquc_wc_cart_params.ajax_url,
+                data: {
+                    action: 'rmenu_get_product_variations', // Define this action in your PHP
+                    product_id: product_id
+                },
+                success: function (response) {
+                    if (response.success) {
+                        // Create the popup
+                        var popupHtml = `
+                        <div class="variation-popup-overlay">
+                            <div class="variation-popup">
+                                <span class="variation-popup-close">&times;</span>
+                                <h3>Select Product Options</h3>
+                                ${response.data}
+                            </div>
+                        </div>
+                    `;
+
+                        // Append the popup to the body
+                        $('body').append(popupHtml);
+
+                        // Close the popup when the close button or overlay is clicked
+                        $('.variation-popup-close, .variation-popup-overlay').on('click', function () {
+                            $('.variation-popup-overlay').remove();
+                        });
+
+                        // Prevent clicks inside the popup from closing it
+                        $('.variation-popup').on('click', function (event) {
+                            event.stopPropagation();
+                        });
+                    } else {
+                        alert(response.message || 'Could not load variations. Please try again.');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error:', textStatus, errorThrown);
+                    alert('Failed to load variations. Please try again later.');
+                }
+            });
         }
     }
 
@@ -382,5 +447,10 @@ jQuery(document).ready(function ($) {
     });
 
 });
+
+
+
+
+
 
 
