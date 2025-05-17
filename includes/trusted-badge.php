@@ -33,65 +33,65 @@ function onepaquc_trust_badges_settings_content() {
     
     // Get available dashicons for selection
     $dashicons = array(
-        'dashicons-lock' => __('Lock', 'onepaquc'),
-        'dashicons-shield' => __('Shield', 'onepaquc'),
-        'dashicons-privacy' => __('Privacy', 'onepaquc'),
-        'dashicons-cart' => __('Cart', 'onepaquc'),
-        'dashicons-credit-card' => __('Credit Card', 'onepaquc'),
-        'dashicons-yes' => __('Checkmark', 'onepaquc'),
-        'dashicons-thumbs-up' => __('Thumbs Up', 'onepaquc'),
-        'dashicons-awards' => __('Award', 'onepaquc'),
-        'dashicons-star-filled' => __('Star', 'onepaquc'),
-        'dashicons-businessman' => __('Customer', 'onepaquc'),
-        'dashicons-calculator' => __('Calculator', 'onepaquc'),
-        'dashicons-clock' => __('Clock', 'onepaquc'),
-        'dashicons-phone' => __('Phone', 'onepaquc'),
-        'dashicons-email' => __('Email', 'onepaquc'),
-        'dashicons-admin-site' => __('Website', 'onepaquc'),
+        'dashicons-lock' => __('Lock', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-shield' => __('Shield', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-privacy' => __('Privacy', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-cart' => __('Cart', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-credit-card' => __('Credit Card', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-yes' => __('Checkmark', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-thumbs-up' => __('Thumbs Up', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-awards' => __('Award', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-star-filled' => __('Star', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-businessman' => __('Customer', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-calculator' => __('Calculator', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-clock' => __('Clock', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-phone' => __('Phone', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-email' => __('Email', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-admin-site' => __('Website', 'one-page-quick-checkout-for-woocommerce'),
     );
     
     ?>
     <div class="trust-badges-settings-wrapper">
-        <h3><?php _e('Trust Badges Configuration', 'onepaquc'); ?></h3>
+        <h3><?php esc_html_e('Trust Badges Configuration', 'one-page-quick-checkout-for-woocommerce'); ?></h3>
         
         <table class="form-table">
             <tr valign="top">
-                <th scope="row"><?php _e('Enable Trust Badges', 'onepaquc'); ?></th>
+                <th scope="row"><?php esc_html_e('Enable Trust Badges', 'one-page-quick-checkout-for-woocommerce'); ?></th>
                 <td>
                     <label class="switch">
                         <input type="checkbox" name="onepaquc_trust_badges_enabled" value="1"
                             <?php checked(1, get_option('onepaquc_trust_badges_enabled', 0), true); ?> />
                         <span class="slider round"></span>
                     </label>
-                    <p class="description"><?php _e('Display trust signals and security badges on the checkout page.', 'onepaquc'); ?></p>
+                    <p class="description"><?php esc_html_e('Display trust signals and security badges on the checkout page.', 'one-page-quick-checkout-for-woocommerce'); ?></p>
                 </td>
             </tr>
 
             <tr valign="top">
-                <th scope="row"><?php _e('Badge Position', 'onepaquc'); ?></th>
+                <th scope="row"><?php esc_html_e('Badge Position', 'one-page-quick-checkout-for-woocommerce'); ?></th>
                 <td>
                     <select name="onepaquc_trust_badge_position">
-                        <option value="above_checkout" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'above_checkout'); ?>><?php _e('Above Checkout Form', 'onepaquc'); ?></option>
-                        <option value="below_checkout" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'below_checkout'); ?>><?php _e('Below Checkout Form', 'onepaquc'); ?></option>
-                        <option value="payment_section" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'payment_section'); ?>><?php _e('Next to Payment Methods', 'onepaquc'); ?></option>
-                        <option value="order_summary" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'order_summary'); ?>><?php _e('Below Order Summary', 'onepaquc'); ?></option>
+                        <option value="above_checkout" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'above_checkout'); ?>><?php esc_html_e('Above Checkout Form', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                        <option value="below_checkout" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'below_checkout'); ?>><?php esc_html_e('Below Checkout Form', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                        <option value="payment_section" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'payment_section'); ?>><?php esc_html_e('Next to Payment Methods', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                        <option value="order_summary" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'order_summary'); ?>><?php esc_html_e('Below Order Summary', 'one-page-quick-checkout-for-woocommerce'); ?></option>
                     </select>
                 </td>
             </tr>
             
             <tr valign="top">
-                <th scope="row"><?php _e('Badge Style', 'onepaquc'); ?></th>
+                <th scope="row"><?php esc_html_e('Badge Style', 'one-page-quick-checkout-for-woocommerce'); ?></th>
                 <td>
                     <select name="onepaquc_trust_badge_style">
-                        <option value="horizontal" <?php selected(get_option('onepaquc_trust_badge_style', 'horizontal'), 'horizontal'); ?>><?php _e('Horizontal Row', 'onepaquc'); ?></option>
-                        <option value="grid" <?php selected(get_option('onepaquc_trust_badge_style', 'horizontal'), 'grid'); ?>><?php _e('Grid (2 columns)', 'onepaquc'); ?></option>
-                        <option value="vertical" <?php selected(get_option('onepaquc_trust_badge_style', 'horizontal'), 'vertical'); ?>><?php _e('Vertical List', 'onepaquc'); ?></option>
+                        <option value="horizontal" <?php selected(get_option('onepaquc_trust_badge_style', 'horizontal'), 'horizontal'); ?>><?php esc_html_e('Horizontal Row', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                        <option value="grid" <?php selected(get_option('onepaquc_trust_badge_style', 'horizontal'), 'grid'); ?>><?php esc_html_e('Grid (2 columns)', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                        <option value="vertical" <?php selected(get_option('onepaquc_trust_badge_style', 'horizontal'), 'vertical'); ?>><?php esc_html_e('Vertical List', 'one-page-quick-checkout-for-woocommerce'); ?></option>
                     </select>
                 </td>
             </tr>
             <?php if (!empty($badges)) : ?>
             <tr valign="top">
-                <th scope="row"><?php _e('Trust Badge Items', 'onepaquc'); ?></th>
+                <th scope="row"><?php esc_html_e('Trust Badge Items', 'one-page-quick-checkout-for-woocommerce'); ?></th>
                 <td>
                     <div class="trust-badges-container">
                         <div class="badge-items-wrapper">
@@ -105,12 +105,12 @@ function onepaquc_trust_badges_settings_content() {
                                     </span>
                                 </div>
                                 <div class="badge-content">
-                                    <input type="hidden" name="onepaquc_my_trust_badges_items[<?php echo $index; ?>][enabled]" 
+                                    <input type="hidden" name="onepaquc_my_trust_badges_items[<?php echo esc_attr($index); ?>][enabled]" 
                                            value="<?php echo !empty($badge['enabled']) ? '1' : '0'; ?>" />
                                     
                                     <p>
-                                        <label><?php _e('Icon:', 'onepaquc'); ?></label>
-                                        <select name="onepaquc_my_trust_badges_items[<?php echo $index; ?>][icon]" class="badge-icon-select">
+                                        <label><?php esc_html_e('Icon:', 'one-page-quick-checkout-for-woocommerce'); ?></label>
+                                        <select name="onepaquc_my_trust_badges_items[<?php echo esc_attr($index); ?>][icon]" class="badge-icon-select">
                                             <?php foreach ($dashicons as $icon => $name) : ?>
                                                 <option value="<?php echo esc_attr($icon); ?>" <?php selected($badge['icon'], $icon); ?>>
                                                     <?php echo esc_html($name); ?>
@@ -123,8 +123,8 @@ function onepaquc_trust_badges_settings_content() {
                                     </p>
                                     
                                     <p>
-                                        <label><?php _e('Text:', 'onepaquc'); ?></label>
-                                        <input type="text" name="onepaquc_my_trust_badges_items[<?php echo $index; ?>][text]" 
+                                        <label><?php esc_html_e('Text:', 'one-page-quick-checkout-for-woocommerce'); ?></label>
+                                        <input type="text" name="onepaquc_my_trust_badges_items[<?php echo esc_attr($index); ?>][text]" 
                                                value="<?php echo esc_attr($badge['text']); ?>" class="regular-text" />
                                     </p>
                                 </div>
@@ -133,7 +133,7 @@ function onepaquc_trust_badges_settings_content() {
                         </div>
                         
                         <button type="button" class="button button-secondary add-new-badge">
-                            <?php _e('Add New Badge', 'onepaquc'); ?>
+                            <?php esc_html_e('Add New Badge', 'one-page-quick-checkout-for-woocommerce'); ?>
                         </button>
                     </div>
                 </td>
@@ -141,19 +141,19 @@ function onepaquc_trust_badges_settings_content() {
             <?php endif; ?>
             
             <tr valign="top" class="custom-html-section">
-                <th scope="row"><?php _e('Advanced: Custom HTML', 'onepaquc'); ?></th>
+                <th scope="row"><?php esc_html_e('Advanced: Custom HTML', 'one-page-quick-checkout-for-woocommerce'); ?></th>
                 <td>
                     <p>
                         <label>
                             <input type="checkbox" id="show-custom-html" name="show_custom_html" value="1" 
                                    <?php checked(1, !empty(get_option('onepaquc_trust_badge_custom_html')), true); ?> />
-                            <?php _e('I want to use custom HTML instead', 'onepaquc'); ?>
+                            <?php esc_html_e('I want to use custom HTML instead', 'one-page-quick-checkout-for-woocommerce'); ?>
                         </label>
                     </p>
                     
                     <div id="custom-html-editor" style="<?php echo empty(get_option('onepaquc_trust_badge_custom_html')) ? 'display:none;' : ''; ?>">
                         <textarea name="onepaquc_trust_badge_custom_html" rows="6" class="large-text code"><?php echo esc_textarea(get_option('onepaquc_trust_badge_custom_html', '')); ?></textarea>
-                        <p class="description"><?php _e('Custom HTML for trust badges. You can use dashicons or include your own images.', 'onepaquc'); ?></p>
+                        <p class="description"><?php esc_html_e('Custom HTML for trust badges. You can use dashicons or include your own images.', 'one-page-quick-checkout-for-woocommerce'); ?></p>
                     </div>
                 </td>
             </tr>
@@ -162,7 +162,7 @@ function onepaquc_trust_badges_settings_content() {
         <div id="badge-template" style="display:none;">
             <div class="badge-item" data-index="{{index}}">
                 <div class="badge-header">
-                    <span class="badge-title"><?php _e('New Badge', 'onepaquc'); ?></span>
+                    <span class="badge-title"><?php esc_html_e('New Badge', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                     <span class="badge-controls">
                         <a href="#" class="badge-toggle">👁️</a>
                         <a href="#" class="badge-remove">❌</a>
@@ -172,7 +172,7 @@ function onepaquc_trust_badges_settings_content() {
                     <input type="hidden" name="onepaquc_my_trust_badges_items[{{index}}][enabled]" value="1" />
                     
                     <p>
-                        <label><?php _e('Icon:', 'onepaquc'); ?></label>
+                        <label><?php esc_html_e('Icon:', 'one-page-quick-checkout-for-woocommerce'); ?></label>
                         <select name="onepaquc_my_trust_badges_items[{{index}}][icon]" class="badge-icon-select">
                             <?php foreach ($dashicons as $icon => $name) : ?>
                                 <option value="<?php echo esc_attr($icon); ?>">
@@ -186,9 +186,9 @@ function onepaquc_trust_badges_settings_content() {
                     </p>
                     
                     <p>
-                        <label><?php _e('Text:', 'onepaquc'); ?></label>
+                        <label><?php esc_html_e('Text:', 'one-page-quick-checkout-for-woocommerce'); ?></label>
                         <input type="text" name="onepaquc_my_trust_badges_items[{{index}}][text]" 
-                               value="<?php _e('New Badge', 'onepaquc'); ?>" class="regular-text" />
+                               value="<?php esc_html_e('New Badge', 'one-page-quick-checkout-for-woocommerce'); ?>" class="regular-text" />
                     </p>
                 </div>
             </div>

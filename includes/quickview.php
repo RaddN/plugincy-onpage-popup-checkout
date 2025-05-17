@@ -229,8 +229,8 @@ class RMENU_Quick_View {
             'stock_quantity' => $product->get_stock_quantity(),
             'min_purchase_quantity' => $product->get_min_purchase_quantity(),
             'max_purchase_quantity' => $product->get_max_purchase_quantity(),
-            'categories' => strip_tags(wc_get_product_category_list($product->get_id())),
-            'tags' => strip_tags(wc_get_product_tag_list($product->get_id())),
+            'categories' => wp_strip_all_tags(wc_get_product_category_list($product->get_id())),
+            'tags' => wp_strip_all_tags(wc_get_product_tag_list($product->get_id())),
         );
         
         // Add rating if available
@@ -378,10 +378,10 @@ class RMENU_Quick_View {
                 'close' => get_option('rmenu_quick_view_close_text', 'Close'),
                 'prev' => get_option('rmenu_quick_view_prev_text', 'Previous Product'),
                 'next' => get_option('rmenu_quick_view_next_text', 'Next Product'),
-                'add_to_cart' => esc_html__('Add to cart', 'woocommerce'),
-                'select_options' => esc_html__('Select options', 'woocommerce'),
+                'add_to_cart' => esc_html__('Add to cart', 'one-page-quick-checkout-for-woocommerce'),
+                'select_options' => esc_html__('Select options', 'one-page-quick-checkout-for-woocommerce'),
                 'view_details' => get_option('rmenu_quick_view_details_text', 'View Full Details'),
-                'out_of_stock' => esc_html__('Out of stock', 'woocommerce'),
+                'out_of_stock' => esc_html__('Out of stock', 'one-page-quick-checkout-for-woocommerce'),
             )
         ));
         

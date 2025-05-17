@@ -352,7 +352,7 @@ function rmenu_add_icons_to_buttons()
         document.addEventListener('DOMContentLoaded', function() {
             const addToCartButtons = document.querySelectorAll('.add_to_cart_button:not(.product_type_variable), .single_add_to_cart_button:not(.product_type_variable)');
             const svgIcon = `<?php echo $svg_icon; ?>`;
-            const iconPosition = '<?php echo $icon_position; ?>';
+            const iconPosition = '<?php echo esc_attr( $icon_position ); ?>';
             const mobileIconOnly = <?php echo $mobile_icon_only ? 'true' : 'false'; ?>;
 
             addToCartButtons.forEach(function(button) {
@@ -685,8 +685,8 @@ class RMENU_Add_To_Cart_Handler
             'notification_duration' => intval(get_option('rmenu_add_to_cart_notification_duration', 3000)),
             'i18n' => array(
                 'success' => get_option('rmenu_add_to_cart_success_message', '{product} has been added to your cart.'),
-                'view_cart' => get_option('rmenu_show_view_cart_link', 1) ? __('View Cart', 'restaurant-menu') : '',
-                'checkout' => get_option('rmenu_show_checkout_link', 0) ? __('Checkout', 'restaurant-menu') : '',
+                'view_cart' => get_option('rmenu_show_view_cart_link', 1) ? __('View Cart', 'one-page-quick-checkout-for-woocommerce') : '',
+                'checkout' => get_option('rmenu_show_checkout_link', 0) ? __('Checkout', 'one-page-quick-checkout-for-woocommerce') : '',
             )
         ));
     }
@@ -698,16 +698,18 @@ class RMENU_Add_To_Cart_Handler
     {
         check_ajax_referer('rmenu-ajax-nonce', 'nonce');
 
-        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($_POST['product_id']));
+        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint( isset($_POST['product_id']) ? $_POST['product_id'] : 0));
 
         // Get default quantity from settings if quantity is not provided
         $default_qty = get_option('rmenu_add_to_cart_default_qty', '1');
 
         // Use posted quantity if available, otherwise use default
-        $quantity = empty($_POST['quantity']) ? $default_qty : wc_stock_amount($_POST['quantity']);
+        // $quantity = empty($_POST['quantity']) ? $default_qty : wc_stock_amount($_POST['quantity']);
+
+        $quantity = empty($_POST['quantity']) ? $default_qty : (int) sanitize_text_field(wp_unslash($_POST['quantity']));
 
         $variation_id = empty($_POST['variation_id']) ? 0 : absint($_POST['variation_id']);
-        $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field', $_POST['variations']) : array();
+        $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field',  wp_unslash($_POST['variations'])) : array();
 
         $product_status = get_post_status($product_id);
 
@@ -762,7 +764,7 @@ class RMENU_Add_To_Cart_Handler
         } else {
             $data = array(
                 'error' => true,
-                'message' => __('Error adding product to cart', 'restaurant-menu')
+                'message' => __('Error adding product to cart', 'one-page-quick-checkout-for-woocommerce')
             );
 
             wp_send_json($data);
@@ -849,11 +851,11 @@ class RMENU_Add_To_Cart_Handler
         $message = '<div>' . esc_html($custom_message);
 
         if ($show_view_cart) {
-            $message .= ' <a href="' . esc_url(wc_get_cart_url()) . '" class="button wc-forward">' . esc_html__('View cart', 'woocommerce') . '</a>';
+            $message .= ' <a href="' . esc_url(wc_get_cart_url()) . '" class="button wc-forward">' . esc_html__('View cart', 'one-page-quick-checkout-for-woocommerce') . '</a>';
         }
 
         if ($show_checkout) {
-            $message .= ' <a href="' . esc_url(wc_get_checkout_url()) . '" class="button checkout wc-forward">' . esc_html__('Checkout', 'woocommerce') . '</a>';
+            $message .= ' <a href="' . esc_url(wc_get_checkout_url()) . '" class="button checkout wc-forward">' . esc_html__('Checkout', 'one-page-quick-checkout-for-woocommerce') . '</a>';
         }
 
         $message .= '</div>';

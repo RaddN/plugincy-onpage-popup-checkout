@@ -188,18 +188,18 @@ add_action('wp_ajax_nopriv_rmenu_ajax_add_to_cart', 'ajax_add_to_cart');
 
 function ajax_add_to_cart() {
         check_ajax_referer('rmenu-ajax-nonce', 'nonce');
-        
-        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($_POST['product_id']));
-        
+
+        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint(isset($_POST['product_id']) ? $_POST['product_id'] : 0));
+
         // Get default quantity from settings if quantity is not provided
         $default_qty = get_option('rmenu_add_to_cart_default_qty', '1');
         
         // Use posted quantity if available, otherwise use default
-        $quantity = empty($_POST['quantity']) ? $default_qty : wc_stock_amount($_POST['quantity']);
+        $quantity = empty($_POST['quantity']) ? $default_qty : (int) sanitize_text_field(wp_unslash($_POST['quantity']));
         
         $variation_id = empty($_POST['variation_id']) ? 0 : absint($_POST['variation_id']);
-        $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field', $_POST['variations']) : array();
-        
+        $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field', wp_unslash($_POST['variations'])) : array();
+
         $product_status = get_post_status($product_id);
         
         $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations);
@@ -253,7 +253,7 @@ function ajax_add_to_cart() {
         } else {
             $data = array(
                 'error' => true,
-                'message' => __('Error adding product to cart', 'restaurant-menu')
+                'message' => __('Error adding product to cart', 'one-page-quick-checkout-for-woocommerce')
             );
             
             wp_send_json($data);

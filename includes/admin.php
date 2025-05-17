@@ -66,7 +66,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <h1>Welcome to Onpage Checkout <span class="version-tag">v1.0.1</span></h1>
+        <h1>Welcome to Onpage Checkout <span class="version-tag">v1.0.2</span></h1>
         <p>Thank you for installing Onpage Checkout! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 
@@ -1524,7 +1524,7 @@ function onepaquc_cart_dashboard()
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Event Category</label>
                                 <div class="rmenu-settings-control">
-                                    <input type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'WooCommerce')); ?>" class="regular-text" />
+                                    <input type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'one-page-quick-checkout-for-woocommerce')); ?>" class="regular-text" />
                                     <p class="rmenu-field-description">The event category name used for analytics tracking.</p>
                                 </div>
                             </div>
@@ -1601,7 +1601,7 @@ function onepaquc_cart_dashboard()
                         <div class="rmenu-settings-row">
                             <div class="rmenu-settings-field">
                                 <div class="rmenu-settings-info-box">
-                                    <h4>Shortcode Reference</h4>
+                                    <h4>Shortcode Reference (Coming Soon)</h4>
                                     <p>You can use the following shortcode to display the Quick View button anywhere on your site:</p>
                                     <code>[plugincy_quick_view product_id="123" button_text="Quick Preview"]</code>
                                 </div>
