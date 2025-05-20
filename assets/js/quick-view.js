@@ -33,7 +33,6 @@
             this.prevBtn = this.modal.find('.rmenu-quick-view-prev');
             this.nextBtn = this.modal.find('.rmenu-quick-view-next');
 
-            console.log('Quick View initialized:', this.modal, this.overlay, this.content, this.closeBtn, this.loading, this.prevBtn, this.nextBtn);
 
             // Bind events
             this.bindEvents();
@@ -41,11 +40,6 @@
             // Mobile optimization
             if (this.settings.mobile_optimize) {
                 this.mobileOptimize();
-            }
-
-            // Debug mode
-            if (this.settings.debug) {
-                console.log('RMenu Quick View initialized with settings:', this.settings);
             }
 
             // Trigger init event
@@ -93,8 +87,6 @@
                 self.navigateProduct('next');
                 return false;
             });
-
-            console.log('your settings', this.settings);
 
             // Keyboard navigation
             if (this.settings.keyboard_nav) {
@@ -171,8 +163,6 @@
         openQuickView: function (productId) {
             var self = this;
 
-            console.log('Opening Quick View for product ID:', productId);
-
             if (self.isLoading) {
                 return;
             }
@@ -192,12 +182,10 @@
             }).first();
 
             if ($productElement.length) {
-                console.log('Product data found in DOM:', $productElement.data('product-info'));
                 // Use the embedded product data
                 var productData = $productElement.data('product-info');
                 self.renderProductContent(productData);
             } else {
-                console.log('Product data not found in DOM, loading via AJAX:', productId);
                 // Fallback to AJAX load if we don't have the data
                 self.loadProductContent(productId);
             }
@@ -210,12 +198,8 @@
             var self = this;
             var html = '';
 
-            console.log('Rendering product content:', productData);
-
             // Get the elements to display
             var elements = self.settings.elements_in_popup || ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta'];
-
-            console.log('Elements to display:', elements);
 
             // Start building the HTML
             html += '<div class="rmenu-quick-view-product">';
@@ -356,8 +340,6 @@
 
             html += '</div>'; // End right column
             html += '</div>'; // End product container
-
-            console.log('Rendered HTML:', html);
 
             // Render the content
             self.content.html(html);

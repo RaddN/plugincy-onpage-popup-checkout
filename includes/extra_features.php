@@ -138,7 +138,6 @@ function add_variation_buttons_to_loop($link, $product)
                     var variation_id = $(this).data('id');
                     $(this).closest('.archive-variations-container').find('.variation_id').val(variation_id);
                     $(this).addClass('selected').siblings().removeClass('selected');
-                    console.log('Selected variation ID: ' + variation_id);
                 });
             });
         </script>

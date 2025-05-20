@@ -171,9 +171,13 @@ jQuery(document).ready(function ($) {
             },
             success: function () {
                 $('body').trigger('onepaquc_update_checkout');
+                $(document.body).trigger('update_checkout');
+                updateCartContent(false);
             },
             complete: function () {
                 $('.woocommerce-checkout-review-order-table').unblock();
+                $(document.body).trigger('update_checkout');
+                updateCartContent(false);
             }
         });
     }
@@ -234,7 +238,6 @@ jQuery(document).ready(function ($) {
 
     function directcheckout(product_id, product_type, $button) {
         var $variation_id = $('.variation_id').val() || 0;
-        console.log("your variation id is : " + $variation_id);
 
         $('#checkout-button-drawer-link').prop('disabled', true);
 

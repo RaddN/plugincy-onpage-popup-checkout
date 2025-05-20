@@ -1520,3 +1520,7 @@ table.one-page-checkout-product-table td {
         width: 95%;
     }
 }
+
+.checkout-popup .woocommerce {
+    padding-bottom: 70px;
+}

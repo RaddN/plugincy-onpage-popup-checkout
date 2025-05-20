@@ -29,7 +29,6 @@
             var $thisButton = $(this);
             var $form = $thisButton.closest('form.cart');
             var productId = $thisButton.data('product_id') || $thisButton.val() || $('input[name="product_id"]').val();
-            console.log(productId);
             
             // Get default quantity from button data attribute
             var defaultQty = $thisButton.data('default_qty') || 1;
