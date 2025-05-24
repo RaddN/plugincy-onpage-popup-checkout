@@ -37,9 +37,9 @@ function onepaquc_cart_enqueue_scripts()
     wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.0.3", true);
     wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.0.3", true);
     $direct_checkout_behave = [
-        'rmenu_wc_checkout_method' => get_option('rmenu_wc_checkout_method', 'popup_checkout'),
+        'rmenu_wc_checkout_method' => get_option('rmenu_wc_checkout_method', 'direct_checkout'),
         'rmenu_wc_clear_cart' => get_option('rmenu_wc_clear_cart', 0),
-        'rmenu_wc_one_click_purchase' => get_option('rmenu_wc_one_click_purchase', 0),
+        'rmenu_wc_one_click_purchase' => 0,
         'rmenu_wc_add_confirmation' => get_option('rmenu_wc_add_confirmation', 0),
     ];
     // Localize script for AJAX URL and WooCommerce cart variables

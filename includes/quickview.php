@@ -314,27 +314,6 @@ class RMENU_Quick_View {
      * Enqueue scripts and styles
      */
     public function enqueue_scripts() {
-        // Load scripts based on setting
-        $load_scripts = get_option('rmenu_quick_view_load_scripts', 'wc-only');
-        
-        $load = false;
-        
-        if ($load_scripts === 'all') {
-            $load = true;
-        } elseif ($load_scripts === 'wc-only' && (is_shop() || is_product_category() || is_product_tag() || is_product() || is_cart() || is_checkout())) {
-            $load = true;
-        } elseif ($load_scripts === 'specific') {
-            $specific_pages = get_option('rmenu_quick_view_specific_pages', '');
-            $specific_page_ids = array_map('trim', explode(',', $specific_pages));
-            
-            if (is_page($specific_page_ids)) {
-                $load = true;
-            }
-        }
-        
-        if (!$load) {
-            return;
-        }
         
         // Register and enqueue styles
         wp_register_style(
@@ -356,10 +335,10 @@ class RMENU_Quick_View {
         
         // Get settings for JS
         $ajax_add_to_cart = get_option('rmenu_quick_view_ajax_add_to_cart', 1);
-        $close_on_add = get_option('rmenu_quick_view_close_on_add', 0);
+        $close_on_add = false;
         $keyboard_nav = get_option('rmenu_quick_view_keyboard_nav', 1);
-        $effect = get_option('rmenu_quick_view_loading_effect', 'fade');
-        $mobile_optimize = get_option('rmenu_quick_view_mobile_optimize', 1);
+        $effect =  'fade';
+        $mobile_optimize = false;
         $debug_mode = get_option('rmenu_quick_view_debug_mode', 0);
         $lightbox = get_option('rmenu_quick_view_enable_lightbox', 1);
         $elements_in_popup = get_option('rmenu_quick_view_content_elements', array('image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta', 'title','quantity','sharing', 'view_details', 'attributes'));

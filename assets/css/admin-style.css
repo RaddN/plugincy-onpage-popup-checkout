@@ -405,3 +405,36 @@ table.form-table tbody {
       flex-direction: column;
   }
 }
+
+
+.pro-only{
+    position: relative;
+    cursor: text;
+    overflow: hidden;
+    opacity: 0.5;
+}
+
+.pro-only:hover:before
+ {
+    content: "Pro Features only -- Coming Soon --";
+    background: red;
+    color: #fff;
+    position: absolute;
+    z-index: 999;
+    width: 82%;
+    text-align: center;
+    padding: 6px;
+    border-radius: 5px;
+}
+label.rmenu-checkbox-container.pro-only:before {
+    padding: 0;
+}
+table.form-table.pro-only:before{
+    top: 50%;
+}
+.top-50:before {
+    top: 30%;
+}
+li.rmenu-settings-tab-item.active {
+    color: #0092ff;
+}

@@ -33,14 +33,7 @@ function rmenu_apply_add_to_cart_styles()
     $icon_position = get_option('rmenu_add_to_cart_icon_position', 'left');
     $custom_css = get_option('rmenu_add_to_cart_custom_css', '');
 
-    // Mobile-specific settings
-    $sticky_mobile = get_option('rmenu_sticky_add_to_cart_mobile', 0);
-    $mobile_text = get_option('rmenu_mobile_add_to_cart_text', '');
-    $mobile_button_size = get_option('rmenu_mobile_button_size', 'default');
-    $mobile_icon_only = get_option('rmenu_mobile_icon_only', 0);
-
     // Advanced options
-    $loading_effect = get_option('rmenu_add_to_cart_loading_effect', 'spinner');
     $disable_out_of_stock = get_option('rmenu_disable_btn_out_of_stock', 1);
 
     // Compatibility settings
@@ -83,27 +76,9 @@ function rmenu_apply_add_to_cart_styles()
 
         // Additional styles per button type
         switch ($button_style) {
-            case 'modern':
-                $css .= "padding: 12px 20px{$important};";
-                $css .= "text-transform: uppercase{$important};";
-                $css .= "letter-spacing: 1px{$important};";
-                $css .= "font-weight: 600{$important};";
-                $css .= "transition: all 0.3s ease{$important};";
-                $css .= "box-shadow: 0 2px 5px rgba(0,0,0,0.2){$important};";
-                break;
-
             case 'rounded':
                 $css .= "border-radius: 30px{$important};";
                 $css .= "padding: 10px 25px{$important};";
-                $css .= "font-weight: 500{$important};";
-                $css .= "transition: all 0.3s ease{$important};";
-                break;
-
-            case 'minimal':
-                $css .= "background-color: transparent{$important};";
-                $css .= "border: 2px solid {$bg_color}{$important};";
-                $css .= "color: {$bg_color}{$important};";
-                $css .= "padding: 8px 18px{$important};";
                 $css .= "font-weight: 500{$important};";
                 $css .= "transition: all 0.3s ease{$important};";
                 break;
@@ -148,145 +123,6 @@ function rmenu_apply_add_to_cart_styles()
             $css .= '}';
         }
     }
-
-    // Mobile-specific styles
-    if ($mobile_button_size != 'default' || $mobile_icon_only || $sticky_mobile || !empty($mobile_text)) {
-        $css .= '@media (max-width: 768px) {';
-
-        // Mobile button text if set
-        if (!empty($mobile_text)) {
-            $css .= '.woocommerce a.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text, .woocommerce button.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text, .woocommerce input.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text, .single_add_to_cart_button .rmenu-btn-text {';
-            $css .= "font-size: 0{$important};";
-            $css .= "visibility: hidden{$important};";
-            $css .= '}';
-
-            $css .= '.woocommerce a.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text:after, .woocommerce button.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text:after, .woocommerce input.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text:after, .single_add_to_cart_button .rmenu-btn-text:after {';
-            $css .= "content: '{$mobile_text}'{$important};";
-            $css .= "font-size: {$font_size}px{$important};";
-            $css .= "visibility: visible{$important};";
-            $css .= '}';
-        }
-
-        // Mobile icon only
-        if ($mobile_icon_only && $button_icon != 'none') {
-            $css .= '.woocommerce a.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text, .woocommerce button.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text, .woocommerce input.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-text, .single_add_to_cart_button .rmenu-btn-text {';
-            $css .= "display: none{$important};";
-            $css .= '}';
-
-            $css .= '.woocommerce a.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-icon, .woocommerce button.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-icon, .woocommerce input.button.add_to_cart_button:not(.product_type_variable) .rmenu-btn-icon, .single_add_to_cart_button .rmenu-btn-icon {';
-            $css .= "margin: 0{$important};";
-            $css .= '}';
-        }
-
-        // Mobile button size adjustments
-        if ($mobile_button_size != 'default') {
-            $css .= '.woocommerce a.button.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit, .woocommerce a.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit.alt, .single_add_to_cart_button {';
-
-            switch ($mobile_button_size) {
-                case 'larger':
-                    $css .= "font-size: " . ($font_size * 1.25) . "px{$important};";
-                    $css .= "padding: 14px 24px{$important};";
-                    break;
-                case 'smaller':
-                    $css .= "font-size: " . ($font_size * 0.85) . "px{$important};";
-                    $css .= "padding: 8px 14px{$important};";
-                    break;
-                case 'full':
-                    $css .= "width: 100%{$important};";
-                    $css .= "text-align: center{$important};";
-                    $css .= "display: block{$important};";
-                    break;
-            }
-            $css .= '}';
-        }
-
-        // Sticky add to cart on mobile
-        if ($sticky_mobile) {
-            $css .= '.rmenu-mobile-sticky-cart {';
-            $css .= "position: fixed{$important};";
-            $css .= "bottom: 0{$important};";
-            $css .= "left: 0{$important};";
-            $css .= "right: 0{$important};";
-            $css .= "z-index: 999{$important};";
-            $css .= "background-color: #ffffff{$important};";
-            $css .= "padding: 10px{$important};";
-            $css .= "box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1){$important};";
-            $css .= "display: flex{$important};";
-            $css .= "justify-content: center{$important};";
-            $css .= "align-items: center{$important};";
-            $css .= '}';
-
-            $css .= '.rmenu-mobile-sticky-cart .single_add_to_cart_button {';
-            $css .= "width: 100%{$important};";
-            $css .= "margin: 0{$important};";
-            $css .= '}';
-        }
-
-        $css .= '}';
-    }
-
-    // Loading effect styles
-    if ($loading_effect != 'none') {
-        $css .= '.woocommerce a.button.add_to_cart_button.loading:not(.product_type_variable), .woocommerce button.button.add_to_cart_button.loading:not(.product_type_variable), .single_add_to_cart_button.loading {';
-
-        switch ($loading_effect) {
-            case 'spinner':
-                $css .= "position: relative{$important};";
-                $css .= "color: transparent{$important};";
-                $css .= '}';
-
-                $css .= '.woocommerce a.button.add_to_cart_button.loading:not(.product_type_variable):after, .woocommerce button.button.add_to_cart_button.loading:not(.product_type_variable):after, .single_add_to_cart_button.loading:after {';
-                $css .= "content: ''{$important};";
-                $css .= "position: absolute{$important};";
-                $css .= "top: 50%{$important};";
-                $css .= "left: 50%{$important};";
-                $css .= "margin: -0.5em 0 0 -0.5em{$important};";
-                $css .= "width: 1em{$important};";
-                $css .= "height: 1em{$important};";
-                $css .= "border-radius: 50%{$important};";
-                $css .= "border: 2px solid rgba(255, 255, 255, 0.3){$important};";
-                $css .= "border-top-color: {$text_color}{$important};";
-                $css .= "animation: rmenu-spin 0.8s infinite linear{$important};";
-                break;
-
-            case 'dots':
-                $css .= "position: relative{$important};";
-                $css .= "color: transparent{$important};";
-                $css .= '}';
-
-                $css .= '.woocommerce a.button.add_to_cart_button.loading:not(.product_type_variable):after, .woocommerce button.button.add_to_cart_button.loading:not(.product_type_variable):after, .single_add_to_cart_button.loading:after {';
-                $css .= "content: '...'{$important};";
-                $css .= "position: absolute{$important};";
-                $css .= "top: 50%{$important};";
-                $css .= "left: 50%{$important};";
-                $css .= "transform: translate(-50%, -50%){$important};";
-                $css .= "color: {$text_color}{$important};";
-                $css .= "font-size: 18px{$important};";
-                $css .= "letter-spacing: 2px{$important};";
-                break;
-
-            case 'pulse':
-                $css .= "animation: rmenu-pulse 1s infinite{$important};";
-                break;
-        }
-
-        $css .= '}';
-
-        // Add keyframes for animations
-        if ($loading_effect == 'spinner') {
-            $css .= '@keyframes rmenu-spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }';
-        } elseif ($loading_effect == 'pulse') {
-            $css .= '@keyframes rmenu-pulse {
-                0% { opacity: 1; }
-                50% { opacity: 0.5; }
-                100% { opacity: 1; }
-            }';
-        }
-    }
-
     // Add any custom CSS provided by the user
     if ($button_style == 'custom' && !empty($custom_css)) {
         $css .= $custom_css;
@@ -301,11 +137,6 @@ function rmenu_apply_add_to_cart_styles()
     if ($button_icon != 'none') {
         // Add icon with proper positioning through JavaScript
         add_action('wp_footer', 'rmenu_add_icons_to_buttons');
-    }
-
-    // Add sticky mobile cart if enabled
-    if ($sticky_mobile) {
-        add_action('wp_footer', 'rmenu_add_sticky_mobile_cart');
     }
 }
 
@@ -449,111 +280,6 @@ function rmenu_add_icons_to_buttons()
 <?php
 }
 
-
-/**
- * Add sticky add to cart button on mobile
- */
-function rmenu_add_sticky_mobile_cart()
-{
-    // Only run on product pages
-    if (!is_product()) {
-        return;
-    }
-
-    $mobile_text = get_option('rmenu_mobile_add_to_cart_text', '');
-
-?>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButton = document.querySelector('.single_add_to_cart_button');
-
-            // Only proceed if we found the add to cart button
-            if (!addToCartButton) {
-                return;
-            }
-
-            // Create the sticky container
-            const stickyContainer = document.createElement('div');
-            stickyContainer.className = 'rmenu-mobile-sticky-cart';
-
-            // Clone the add to cart button and any related fields
-            const productForm = document.querySelector('form.cart');
-            const clonedForm = productForm.cloneNode(true);
-
-            // Set custom text if provided
-            const mobileText = '<?php echo esc_js($mobile_text); ?>';
-            if (mobileText) {
-                const buttonText = clonedForm.querySelector('.single_add_to_cart_button');
-                if (buttonText) {
-                    buttonText.textContent = mobileText;
-                }
-            }
-
-            // Add the cloned form to the sticky container
-            stickyContainer.appendChild(clonedForm);
-
-            // Initially hide the sticky container
-            stickyContainer.style.display = 'none';
-
-            // Add to page
-            document.body.appendChild(stickyContainer);
-
-            // Only show on mobile screens
-            const mediaQuery = window.matchMedia('(max-width: 768px)');
-
-            // Handle visibility based on scroll position and screen size
-            function handleStickyVisibility() {
-                if (mediaQuery.matches) {
-                    // On mobile
-                    const scrollPosition = window.scrollY || window.pageYOffset;
-                    const originalButtonPosition = addToCartButton.getBoundingClientRect().top + window.scrollY;
-
-                    // Show sticky button when original is out of view
-                    if (scrollPosition > originalButtonPosition + 100) {
-                        stickyContainer.style.display = 'flex';
-                    } else {
-                        stickyContainer.style.display = 'none';
-                    }
-                } else {
-                    // On desktop, always hide
-                    stickyContainer.style.display = 'none';
-                }
-            }
-
-            // Initial check
-            handleStickyVisibility();
-
-            // Listen for scroll events
-            window.addEventListener('scroll', handleStickyVisibility);
-
-            // Listen for screen size changes
-            mediaQuery.addListener(handleStickyVisibility);
-
-            // Forward events from sticky button to original form
-            const stickyAddToCartBtn = clonedForm.querySelector('.single_add_to_cart_button');
-            if (stickyAddToCartBtn) {
-                stickyAddToCartBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-
-                    // Get form values from sticky form
-                    const stickyQuantity = clonedForm.querySelector('input.qty') ?
-                        clonedForm.querySelector('input.qty').value : 1;
-
-                    // Update original form quantity
-                    const originalQuantity = productForm.querySelector('input.qty');
-                    if (originalQuantity) {
-                        originalQuantity.value = stickyQuantity;
-                    }
-
-                    // Trigger click on original button
-                    addToCartButton.click();
-                });
-            }
-        });
-    </script>
-<?php
-}
-
 /**
  * Add jQuery to handle visibility of custom width field
  */
@@ -638,11 +364,6 @@ class RMENU_Add_To_Cart_Handler
             add_filter('woocommerce_add_to_cart_fragments', array($this, 'add_to_cart_fragments'));
         }
 
-        // Add quantity selector to archive pages if enabled
-        if (get_option('rmenu_show_quantity_archive', 0)) {
-            add_action('woocommerce_after_shop_loop_item', array($this, 'add_quantity_field'), 9);
-        }
-
         // Set default quantity
         add_filter('woocommerce_quantity_input_args', array($this, 'set_default_quantity'), 10, 2);
 
@@ -681,12 +402,12 @@ class RMENU_Add_To_Cart_Handler
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('rmenu-ajax-nonce'),
             'animation' => get_option('rmenu_add_to_cart_animation', 'slide'),
-            'notification_style' => get_option('rmenu_add_to_cart_notification_style', 'default'),
-            'notification_duration' => intval(get_option('rmenu_add_to_cart_notification_duration', 3000)),
+            'notification_style' => 'default',
+            'notification_duration' => 3000,
             'i18n' => array(
-                'success' => get_option('rmenu_add_to_cart_success_message', '{product} has been added to your cart.'),
-                'view_cart' => get_option('rmenu_show_view_cart_link', 1) ? __('View Cart', 'one-page-quick-checkout-for-woocommerce') : '',
-                'checkout' => get_option('rmenu_show_checkout_link', 0) ? __('Checkout', 'one-page-quick-checkout-for-woocommerce') : '',
+                'success' => '{product} has been added to your cart.',
+                'view_cart' => '',
+                'checkout' => '',
             )
         ));
     }
@@ -701,7 +422,7 @@ class RMENU_Add_To_Cart_Handler
         $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint( isset($_POST['product_id']) ? $_POST['product_id'] : 0));
 
         // Get default quantity from settings if quantity is not provided
-        $default_qty = get_option('rmenu_add_to_cart_default_qty', '1');
+        $default_qty = 1;
 
         // Use posted quantity if available, otherwise use default
         // $quantity = empty($_POST['quantity']) ? $default_qty : wc_stock_amount($_POST['quantity']);
@@ -750,16 +471,6 @@ class RMENU_Add_To_Cart_Handler
                 'redirect_url' => $redirect_url
             );
 
-            // Add fragments if Mini Cart Preview is selected
-            if (get_option('rmenu_add_to_cart_notification_style', 'default') === 'mini_cart') {
-                ob_start();
-                woocommerce_mini_cart();
-                $mini_cart = ob_get_clean();
-
-                $response['fragments']['div.widget_shopping_cart_content'] = '<div class="widget_shopping_cart_content">' . $mini_cart . '</div>';
-                $response['cart_hash'] = WC()->cart->get_cart_hash();
-            }
-
             wp_send_json($response);
         } else {
             $data = array(
@@ -774,36 +485,11 @@ class RMENU_Add_To_Cart_Handler
     }
 
     /**
-     * Add quantity field before add to cart button on archive pages
-     */
-    public function add_quantity_field()
-    {
-        global $product;
-
-        if ($product && $product->is_type('simple') && $product->is_purchasable() && $product->is_in_stock()) {
-            $default_qty = get_option('rmenu_add_to_cart_default_qty', '1');
-
-            // Add a unique class to help identify which product this quantity belongs to
-            echo '<div class="rmenu-quantity-wrapper" data-product_id="' . esc_attr($product->get_id()) . '">';
-
-            woocommerce_quantity_input(array(
-                'min_value' => 1,
-                'max_value' => $product->get_max_purchase_quantity(),
-                'input_value' => $default_qty,
-                'classes' => 'rmenu-archive-quantity',
-                'input_id' => 'quantity_' . $product->get_id(), // Add a unique ID
-            ));
-
-            echo '</div>';
-        }
-    }
-
-    /**
      * Set default quantity for products
      */
     public function set_default_quantity($args, $product)
     {
-        $default_qty = get_option('rmenu_add_to_cart_default_qty', '1');
+        $default_qty = 1;
 
         if (is_numeric($default_qty) && $default_qty > 0) {
             $args['input_value'] = $default_qty;
@@ -833,9 +519,9 @@ class RMENU_Add_To_Cart_Handler
      */
     public function customize_add_to_cart_message($message, $products)
     {
-        $custom_message = get_option('rmenu_add_to_cart_success_message', '{product} has been added to your cart.');
-        $show_view_cart = get_option('rmenu_show_view_cart_link', 1);
-        $show_checkout = get_option('rmenu_show_checkout_link', 0);
+        $custom_message = '{product} has been added to your cart.';
+        $show_view_cart = false;
+        $show_checkout = false;
 
         $titles = array();
         $count = 0;
@@ -849,14 +535,6 @@ class RMENU_Add_To_Cart_Handler
         $custom_message = str_replace('{product}', $product_name, $custom_message);
 
         $message = '<div>' . esc_html($custom_message);
-
-        if ($show_view_cart) {
-            $message .= ' <a href="' . esc_url(wc_get_cart_url()) . '" class="button wc-forward">' . esc_html__('View cart', 'one-page-quick-checkout-for-woocommerce') . '</a>';
-        }
-
-        if ($show_checkout) {
-            $message .= ' <a href="' . esc_url(wc_get_checkout_url()) . '" class="button checkout wc-forward">' . esc_html__('Checkout', 'one-page-quick-checkout-for-woocommerce') . '</a>';
-        }
 
         $message .= '</div>';
 
@@ -883,7 +561,7 @@ class RMENU_Add_To_Cart_Handler
     {
         if ($product && $product->is_type('simple') && $product->is_purchasable() && $product->is_in_stock()) {
             // Get default quantity from settings
-            $default_qty = get_option('rmenu_add_to_cart_default_qty', '1');
+            $default_qty = 1;
 
             $html = sprintf(
                 '<a href="%s" data-quantity="%s" class="%s" %s data-product_id="%d" data-product_sku="%s" data-default_qty="%s" aria-label="%s" rel="nofollow">%s</a>',

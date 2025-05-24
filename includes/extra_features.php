@@ -177,18 +177,3 @@ function add_variation_buttons_to_loop($link, $product)
 
     return $link; // Return the original link for non-variable products
 }
-
-if (get_option('rmenu_wc_hide_select_option', 1)) {
-    // Add custom CSS for .product_type_variable in the footer
-    add_action('wp_footer', 'add_custom_css_for_variable_products');
-    function add_custom_css_for_variable_products()
-    {
-        if (is_product() || is_shop() || is_product_category() || is_product_tag()) {
-            echo '<style>
-            .product_type_variable {
-                display: none !important;
-            }
-        </style>';
-        }
-    }
-}

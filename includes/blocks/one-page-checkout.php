@@ -99,3 +99,4 @@ function onepaquc_block_categories( $categories, $post ) {
     return $categories;
 }
 add_filter( 'block_categories_all', 'onepaquc_block_categories', 0, 2 );
+

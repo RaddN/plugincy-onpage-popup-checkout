@@ -192,7 +192,7 @@ function ajax_add_to_cart() {
         $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint(isset($_POST['product_id']) ? $_POST['product_id'] : 0));
 
         // Get default quantity from settings if quantity is not provided
-        $default_qty = get_option('rmenu_add_to_cart_default_qty', '1');
+        $default_qty = 1;
         
         // Use posted quantity if available, otherwise use default
         $quantity = empty($_POST['quantity']) ? $default_qty : (int) sanitize_text_field(wp_unslash($_POST['quantity']));
@@ -238,16 +238,6 @@ function ajax_add_to_cart() {
                 'redirect' => $redirect_option !== 'none',
                 'redirect_url' => $redirect_url
             );
-            
-            // Add fragments if Mini Cart Preview is selected
-            if (get_option('rmenu_add_to_cart_notification_style', 'default') === 'mini_cart') {
-                ob_start();
-                woocommerce_mini_cart();
-                $mini_cart = ob_get_clean();
-                
-                $response['fragments']['div.widget_shopping_cart_content'] = '<div class="widget_shopping_cart_content">' . $mini_cart . '</div>';
-                $response['cart_hash'] = WC()->cart->get_cart_hash();
-            }
             
             wp_send_json($response);
         } else {

@@ -133,13 +133,6 @@ function onepaquc_get_button_styling()
         $style .= "background-color:{$bg_color}!important;color:{$text_color}!important;border-color:{$bg_color}!important;";
     }
 
-    // Add mobile optimization if enabled
-    $mobile_optimize = get_option('rmenu_wc_checkout_mobile_optimize', '0');
-    if ($mobile_optimize === '1') {
-        $style .= "display:inline-block;";
-        $classes .= " mobile-optimized-checkout";
-    }
-
     // Handle button icon
     $icon_type = get_option('rmenu_wc_checkout_icon', 'none');
     $icon_position = get_option('rmenu_wc_checkout_icon_position', 'left');
@@ -238,32 +231,6 @@ function onepaquc_add_button_css()
         .rmenu-direct-checkout-btn.icon-position-top,
         .rmenu-direct-checkout-btn.icon-position-bottom {
             text-align: center;
-        }
-
-        /* Mobile-optimized styles for direct checkout button */
-        @media only screen and (max-width: 768px) {
-            .mobile-optimized-checkout {
-                width: 100%;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                padding: 12px 15px;
-                font-size: 16px;
-                text-align: center;
-                box-sizing: border-box;
-            }
-
-            /* Make button more visible on mobile */
-            body.single-product .mobile-optimized-checkout {
-                display: block;
-                clear: both;
-            }
-
-            /* Fix display in product loops on mobile */
-            .woocommerce-loop-product__link+.button+.mobile-optimized-checkout,
-            .woocommerce-loop-product__link+.mobile-optimized-checkout {
-                display: block;
-                margin-top: 5px;
-            }
         }
 
         <?php echo $additional_css; ?>
