@@ -10,7 +10,6 @@
         <h2><?php echo esc_html__('Products', 'one-page-quick-checkout-for-woocommerce'); ?></h2>
         <ul class="one-page-checkout-product-list" data-product-ids="<?php echo esc_attr($atts['product_ids']); ?>">
             <?php
-            $product_ids = explode(',', $atts['product_ids']);
             // Remove any whitespace from product IDs
             $product_ids = array_map('trim', $product_ids);
             

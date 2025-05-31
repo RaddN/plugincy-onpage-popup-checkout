@@ -8,7 +8,6 @@ if (!defined('ABSPATH')) exit;
 
         <div class="one-page-checkout-accordion">
             <?php
-            $product_ids = explode(',', $atts['product_ids']);
             $product_ids = array_map('trim', $product_ids);
 
             foreach ($product_ids as $item_id) {

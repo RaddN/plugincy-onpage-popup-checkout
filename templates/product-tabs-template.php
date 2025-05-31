@@ -9,7 +9,6 @@ if (!defined('ABSPATH')) exit;
     <div class="one-page-checkout-tabs">
         <ul class="opc-tabs-list">
             <?php
-            $product_ids = explode(',', $atts['product_ids']);
             $product_ids = array_map('trim', $product_ids);
             $tab_id = 0; // For unique tab IDs
             foreach ($product_ids as $item_id) {

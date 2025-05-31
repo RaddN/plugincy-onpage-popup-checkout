@@ -7,7 +7,6 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 <div class="one-page-checkout-container">
     <div class="one-page-checkout-products">
         <?php
-        $product_ids = explode(',', $atts['product_ids']);
         //remove any whitespace from product IDs
         $product_ids = array_map('trim', $product_ids);
 

@@ -9,7 +9,6 @@
                     <table class="one-page-checkout-product-table" style="border: none;">                        
                         <tbody>
                             <?php
-                            $product_ids = explode(',', $atts['product_ids']);
                             //remove any whitespace from product IDs
                             $product_ids = array_map('trim', $product_ids);
                             // Loop through each product ID and add it to the cart
@@ -37,7 +36,7 @@
                                 echo '<div class="one-page-checkout-product-add-to-cart">';
                                 if ($product) {
                                     $add_to_cart = do_shortcode('[add_to_cart id="' . $product_id . '" style=""]');
-                                    echo wp_kses_post($add_to_cart);
+                                    echo $add_to_cart;
                                 }
                                 echo '</div>';
                                 echo '</td>';

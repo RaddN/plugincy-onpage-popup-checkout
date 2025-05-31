@@ -28,7 +28,6 @@ jQuery(document).ready(function ($) {
         });
     }
     updateCartContent(false);
-    updateCheckoutForm();
     // Event handler for adding/removing items from the cart
     $(document.body).on('added_to_cart removed_from_cart', function () {
 

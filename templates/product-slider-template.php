@@ -12,7 +12,6 @@ wp_enqueue_style( 'owl-theme', plugin_dir_url(__FILE__) . '../assets/css/owl.the
 
     <div class="one-page-checkout-slider owl-carousel">
         <?php
-        $product_ids = explode(',', $atts['product_ids']);
         $product_ids = array_map('trim', $product_ids);
 
         foreach ($product_ids as $item_id) {

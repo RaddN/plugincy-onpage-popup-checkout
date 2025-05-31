@@ -280,6 +280,8 @@ function onepaquc_force_woocommerce_checkout_mode($is_checkout)
 require_once plugin_dir_path(__FILE__) . 'includes/extra_features.php';
 require_once plugin_dir_path(__FILE__) . 'includes/quick_checkout_button.php';
 require_once plugin_dir_path(__FILE__) . 'includes/trusted-badge.php';
+require_once plugin_dir_path(__FILE__) . 'includes/elementor/one-page-checkout.php';
+require_once plugin_dir_path(__FILE__) . 'includes/elementor/elementor-category.php';
 
 
 add_filter('woocommerce_checkout_fields', 'onepaquc_remove_required_checkout_fields');

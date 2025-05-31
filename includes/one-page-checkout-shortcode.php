@@ -1,33 +1,94 @@
 <?php
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
-// shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" template=""]
+// shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" category="" tags="" attribute="" terms="" template=""]
 function onepaquc_one_page_checkout_shortcode($atts)
 {
     $atts = shortcode_atts(array(
         'product_ids' => '',
-        'template' => 'product-table'
+        'category'    => '',
+        'tags'        => '',
+        'attribute'   => '',
+        'terms'       => '',
+        'template'    => 'product-table'
     ), $atts);
-    ob_start();
-    // empty cart if no product IDs are provided
-    if (empty($atts['product_ids'])) {
-        return
-            '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs.', 'one-page-quick-checkout-for-woocommerce') . '</p></div>';
-    } else {
-        // Get the product IDs from the shortcode attribute
-        $product_ids = explode(',', $atts['product_ids']);
-        //remove any whitespace from product IDs
-        $product_ids = array_map('trim', $product_ids);
 
-        if (!empty($atts['product_ids']) && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_empty", "1") === "1") {
-            WC()->cart->empty_cart();
+    ob_start();
+
+    // Collect product IDs from attributes if product_ids is empty
+    $product_ids = array();
+
+    if (!empty($atts['product_ids'])) {
+        $product_ids = explode(',', $atts['product_ids']);
+        $product_ids = array_map('trim', $product_ids);
+    } else {
+        $args = array(
+            'post_type'      => 'product',
+            'posts_per_page' => -1,
+            'fields'         => 'ids',
+            'post_status'    => 'publish',
+        );
+
+        $tax_query = array();
+
+        if (!empty($atts['category'])) {
+            $tax_query[] = array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'slug',
+                'terms'    => array_map('trim', explode(',', $atts['category'])),
+            );
         }
-        // Loop through each product ID and add it to the cart
-        foreach ($product_ids as $product_id) {
-            $product_id = intval($product_id);
-            // check if the product ID is valid & wc initialized & WC is active & WC()cart is initialized
-            if ($product_id > 0 && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_add", "1") === "1") {
-                WC()->cart->add_to_cart($product_id);
+
+        if (!empty($atts['tags'])) {
+            $tax_query[] = array(
+                'taxonomy' => 'product_tag',
+                'field'    => 'slug',
+                'terms'    => array_map('trim', explode(',', $atts['tags'])),
+            );
+        }
+
+        if (!empty($atts['attribute']) && !empty($atts['terms'])) {
+            $tax_query[] = array(
+                'taxonomy' => 'pa_' . wc_sanitize_taxonomy_name($atts['attribute']),
+                'field'    => 'slug',
+                'terms'    => array_map('trim', explode(',', $atts['terms'])),
+            );
+        }
+
+        if (!empty($tax_query)) {
+            $args['tax_query'] = $tax_query;
+        }
+
+        $query = new WP_Query($args);
+        $product_ids = $query->posts;
+    }
+
+    if (empty($product_ids)) {
+        return '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs, category, tags, or attribute terms.', 'one-page-quick-checkout-for-woocommerce') . '</p></div>';
+    }
+
+    if (class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_empty", "1") === "1") {
+        WC()->cart->empty_cart();
+    }
+
+    foreach ($product_ids as $product_id) {
+        $product_id = intval($product_id);
+        if ($product_id > 0 && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_add", "1") === "1") {
+            $product = wc_get_product($product_id);
+            if ($product && $product->is_type('variable')) {
+                $available_variations = $product->get_available_variations();
+                if (!empty($available_variations)) {
+                    $variation_id = $available_variations[0]['variation_id'];
+                    $variation = wc_get_product($variation_id);
+                    if ($variation && $variation->is_purchasable()) {
+                        WC()->cart->add_to_cart($product_id, 1, $variation_id);
+                    }
+                }
+            } else {
+                // Check if the product is purchasable before adding to cart
+                if ($product && $product->is_purchasable()) {
+                    WC()->cart->add_to_cart($product_id);
+                }
             }
         }
     }
