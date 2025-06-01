@@ -224,7 +224,7 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
             background-color: {$attributes['drawerBackground']} !important;
         }
         
-        .rmenu-cart .cart-drawer .cart-content {
+        .rmenu-cart .cart-drawer {
             padding: {$attributes['drawerPadding']}px !important;
             margin: {$attributes['drawerMargin']}px !important;
         }
@@ -292,7 +292,7 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
         'rmenu-cart-block-style',
         false, // No actual CSS file
         array(), // No dependencies
-        '1.0.3' // Version
+        '1.0.4' // Version
     );
     
     // Now enqueue it

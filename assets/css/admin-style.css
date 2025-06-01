@@ -438,3 +438,7 @@ table.form-table.pro-only:before{
 li.rmenu-settings-tab-item.active {
     color: #0092ff;
 }
+input:disabled,
+input:disabled + span {
+    opacity: 0.4 !important;
+}

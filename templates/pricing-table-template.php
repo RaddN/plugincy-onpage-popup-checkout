@@ -37,220 +37,260 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                 }
             }
         ?>
-            <table class="comparison-table">
-                <!-- Product Headers -->
-                <tr class="product-header-row">
-                    <th class="feature-column"></th>
-                    <?php foreach ($products as $product) : ?>
-                        <th class="product-column">
-                            <div class="product-image-container">
-                                <?php echo wp_kses_post($product->get_image('thumbnail')); ?>
-                                <?php if ($product->is_on_sale()) : ?>
-                                    <span class="new-badge">NEW</span>
-                                <?php endif; ?>
-                            </div>
-                            <h3 class="product-title"><?php echo esc_html($product->get_name()); ?></h3>
-                            <div class="product-price"><?php echo wp_kses_post($product->get_price_html()); ?></div>
+            <style>
+                .feature-column {
+                    width: 20%;
+                    /* Fixed width for feature column */
+                    min-width: 120px;
+                    position: sticky;
+                    left: 0;
+                    background: #fff;
+                    z-index: 10;
+                    border-right: 2px solid #ddd;
+                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                    padding: 10px 8px;
+                    vertical-align: top;
+                }
 
-                            <?php
-                            // Display color/variation options if available
-                            $attributes = $product->get_attributes();
-                            foreach ($attributes as $attribute_name => $attribute) {
-                                if ($attribute->get_visible() && $attribute->is_taxonomy()) {
-                                    $taxonomy = str_replace('pa_', '', $attribute_name);
+                .feature-name {
+                    font-weight: bold;
+                    background-color: #f8f9fa;
+                    position: sticky;
+                    left: 0;
+                    z-index: 5;
+                    border-right: 2px solid #ddd;
+                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                }
 
-                                    // If this is a color-type attribute, display as color dots
-                                    if (in_array($taxonomy, array('color', 'colours', 'colors', 'color-family'))) {
-                                        echo '<div class="product-variations">';
-                                        $terms = wc_get_product_terms($product->get_id(), $attribute_name, array('fields' => 'all'));
-                                        foreach ($terms as $term) {
-                                            echo '<span class="variation-option ' . esc_attr($term->slug) . '" title="' . esc_attr($term->name) . '"></span>';
+                tr.feature-row:hover {
+                    background: #eee;
+                }
+
+                /* Hide scrollbar but keep functionality */
+                #tableContainer {
+                    scrollbar-width: none;
+                    scrollbar-color: #c1c1c1 #f1f1f1;
+                }
+            </style>
+            <div style="overflow: scroll; width: 100%; height: 100vh; position: relative;" id="tableContainer">
+                <table class="comparison-table">
+                    <!-- Product Headers -->
+                    <tr class="product-header-row">
+                        <th class="feature-column"></th>
+                        <?php foreach ($products as $product) : ?>
+                            <th class="product-column">
+                                <div class="product-image-container">
+                                    <?php echo wp_kses_post($product->get_image('thumbnail')); ?>
+                                    <?php if ($product->is_on_sale()) : ?>
+                                        <span class="new-badge">NEW</span>
+                                    <?php endif; ?>
+                                </div>
+                                <h3 class="product-title"><?php echo esc_html($product->get_name()); ?></h3>
+                                <div class="product-price"><?php echo wp_kses_post($product->get_price_html()); ?></div>
+
+                                <?php
+                                // Display color/variation options if available
+                                $attributes = $product->get_attributes();
+                                foreach ($attributes as $attribute_name => $attribute) {
+                                    if ($attribute->get_visible() && $attribute->is_taxonomy()) {
+                                        $taxonomy = str_replace('pa_', '', $attribute_name);
+
+                                        // If this is a color-type attribute, display as color dots
+                                        if (in_array($taxonomy, array('color', 'colours', 'colors', 'color-family'))) {
+                                            echo '<div class="product-variations">';
+                                            $terms = wc_get_product_terms($product->get_id(), $attribute_name, array('fields' => 'all'));
+                                            foreach ($terms as $term) {
+                                                echo '<span class="variation-option ' . esc_attr($term->slug) . '" title="' . esc_attr($term->name) . '"></span>';
+                                            }
+                                            echo '</div>';
                                         }
-                                        echo '</div>';
                                     }
                                 }
-                            }
-                            ?>
-
-                            <div class="add-to-cart-container">
-                                <?php
-                                echo do_shortcode('[add_to_cart id="' . $product->get_id() . '" style="" show_price="false" quantity="1" class="add-to-cart-button"]');
                                 ?>
-                            </div>
-                        </th>
-                    <?php endforeach; ?>
-                </tr>
 
-                <?php
-                // Create attribute sections for comparison
-                // Get basic product data first
-                ?>
-                <tr class="section-header">
-                    <td colspan="<?php echo count($products) + 1; ?>">PRODUCT DETAILS</td>
-                </tr>
-
-                <!-- SKU Row -->
-                <tr class="feature-row">
-                    <td class="feature-name">SKU</td>
-                    <?php foreach ($products as $product) : ?>
-                        <td class="feature-value"><?php echo $product->get_sku() ? esc_html($product->get_sku()) : '—'; ?></td>
-                    <?php endforeach; ?>
-                </tr>
-
-                <!-- Stock Status Row -->
-                <tr class="feature-row">
-                    <td class="feature-name">Stock Status</td>
-                    <?php foreach ($products as $product) : ?>
-                        <td class="feature-value">
-                            <?php
-                            if ($product->is_in_stock()) {
-                                echo '<span class="in-stock">In Stock</span>';
-                            } else {
-                                echo '<span class="out-of-stock">Out of Stock</span>';
-                            }
-                            ?>
-                        </td>
-                    <?php endforeach; ?>
-                </tr>
-
-                <!-- Weight Row (if applicable) -->
-                <?php if (array_reduce($products, function ($carry, $product) {
-                    return $carry || $product->get_weight();
-                }, false)) : ?>
-                    <tr class="feature-row">
-                        <td class="feature-name">Weight</td>
-                        <?php foreach ($products as $product) : ?>
-                            <td class="feature-value">
-                                <?php echo $product->get_weight() ? esc_html($product->get_weight() . ' ' . get_option('woocommerce_weight_unit')) : '—'; ?>
-                            </td>
+                                <div class="add-to-cart-container">
+                                    <?php
+                                    echo do_shortcode('[add_to_cart id="' . $product->get_id() . '" style="" show_price="false" quantity="1" class="add-to-cart-button"]');
+                                    ?>
+                                </div>
+                            </th>
                         <?php endforeach; ?>
                     </tr>
-                <?php endif; ?>
 
-                <!-- Dimensions Row (if applicable) -->
-                <?php if (array_reduce($products, function ($carry, $product) {
-                    return $carry || ($product->get_length() || $product->get_width() || $product->get_height());
-                }, false)) : ?>
+                    <?php
+                    // Create attribute sections for comparison
+                    // Get basic product data first
+                    ?>
+                    <tr class="section-header" style="position: sticky; top: 0;">
+                        <td class="feature-name">PRODUCT Name</td>
+                        <?php foreach ($products as $product) : ?>
+                            <td class="feature-value" style="font-size: 12px;"><?php echo $product->get_name() ? esc_html($product->get_name()) : '—'; ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+
+                    <!-- SKU Row -->
                     <tr class="feature-row">
-                        <td class="feature-name">Dimensions</td>
+                        <td class="feature-name">SKU</td>
+                        <?php foreach ($products as $product) : ?>
+                            <td class="feature-value"><?php echo $product->get_sku() ? esc_html($product->get_sku()) : '—'; ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+
+                    <!-- Stock Status Row -->
+                    <tr class="feature-row">
+                        <td class="feature-name">Stock Status</td>
                         <?php foreach ($products as $product) : ?>
                             <td class="feature-value">
                                 <?php
-                                if ($product->get_length() || $product->get_width() || $product->get_height()) {
-                                    $dimensions = array(
-                                        wc_format_localized_decimal($product->get_length()),
-                                        wc_format_localized_decimal($product->get_width()),
-                                        wc_format_localized_decimal($product->get_height())
-                                    );
-                                    echo esc_html(implode(' × ', array_filter($dimensions)) . ' ' . get_option('woocommerce_dimension_unit'));
+                                if ($product->is_in_stock()) {
+                                    echo '<span class="in-stock">In Stock</span>';
                                 } else {
-                                    echo '—';
+                                    echo '<span class="out-of-stock">Out of Stock</span>';
                                 }
                                 ?>
                             </td>
                         <?php endforeach; ?>
                     </tr>
-                <?php endif; ?>
 
-                <?php
-                // Display each standard taxonomy attribute
-                foreach ($attribute_taxonomies as $taxonomy_slug => $taxonomy_obj) {
-                    if (!$taxonomy_obj) continue;
+                    <!-- Weight Row (if applicable) -->
+                    <?php if (array_reduce($products, function ($carry, $product) {
+                        return $carry || $product->get_weight();
+                    }, false)) : ?>
+                        <tr class="feature-row">
+                            <td class="feature-name">Weight</td>
+                            <?php foreach ($products as $product) : ?>
+                                <td class="feature-value">
+                                    <?php echo $product->get_weight() ? esc_html($product->get_weight() . ' ' . get_option('woocommerce_weight_unit')) : '—'; ?>
+                                </td>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endif; ?>
 
-                    $taxonomy_name = $taxonomy_obj->name ? $taxonomy_obj->name : $taxonomy_slug;
-                    $taxonomy_label = isset($taxonomy_obj->label) ? $taxonomy_obj->label : ucfirst($taxonomy_slug);
+                    <!-- Dimensions Row (if applicable) -->
+                    <?php if (array_reduce($products, function ($carry, $product) {
+                        return $carry || ($product->get_length() || $product->get_width() || $product->get_height());
+                    }, false)) : ?>
+                        <tr class="feature-row">
+                            <td class="feature-name">Dimensions</td>
+                            <?php foreach ($products as $product) : ?>
+                                <td class="feature-value">
+                                    <?php
+                                    if ($product->get_length() || $product->get_width() || $product->get_height()) {
+                                        $dimensions = array(
+                                            wc_format_localized_decimal($product->get_length()),
+                                            wc_format_localized_decimal($product->get_width()),
+                                            wc_format_localized_decimal($product->get_height())
+                                        );
+                                        echo esc_html(implode(' × ', array_filter($dimensions)) . ' ' . get_option('woocommerce_dimension_unit'));
+                                    } else {
+                                        echo '—';
+                                    }
+                                    ?>
+                                </td>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endif; ?>
 
-                    echo '<tr class="feature-row">';
-                    echo '<td class="feature-name">' . esc_html($taxonomy_label ?? "") . '</td>';
+                    <?php
+                    // Display each standard taxonomy attribute
+                    foreach ($attribute_taxonomies as $taxonomy_slug => $taxonomy_obj) {
+                        if (!$taxonomy_obj) continue;
 
-                    foreach ($products as $product) {
-                        echo '<td class="feature-value">';
-                        $attribute_slug = 'pa_' . $taxonomy_slug;
-                        if ($product->get_attribute($attribute_slug)) {
-                            echo esc_html($product->get_attribute($attribute_slug));
-                        } else {
-                            echo '—';
+                        $taxonomy_name = $taxonomy_obj->name ? $taxonomy_obj->name : $taxonomy_slug;
+                        $taxonomy_label = isset($taxonomy_obj->label) ? $taxonomy_obj->label : ucfirst($taxonomy_slug);
+
+                        echo '<tr class="feature-row">';
+                        echo '<td class="feature-name">' . esc_html($taxonomy_label ?? "") . '</td>';
+
+                        foreach ($products as $product) {
+                            echo '<td class="feature-value">';
+                            $attribute_slug = 'pa_' . $taxonomy_slug;
+                            if ($product->get_attribute($attribute_slug)) {
+                                echo esc_html($product->get_attribute($attribute_slug));
+                            } else {
+                                echo '—';
+                            }
+                            echo '</td>';
                         }
-                        echo '</td>';
+
+                        echo '</tr>';
                     }
 
-                    echo '</tr>';
-                }
-
-                // Get all custom product attributes (non-taxonomy)
-                $custom_attributes = array();
-                foreach ($products as $product) {
-                    foreach ($product->get_attributes() as $attribute_name => $attribute) {
-                        if (!$attribute->is_taxonomy()) {
-                            $custom_attributes[$attribute_name] = true;
+                    // Get all custom product attributes (non-taxonomy)
+                    $custom_attributes = array();
+                    foreach ($products as $product) {
+                        foreach ($product->get_attributes() as $attribute_name => $attribute) {
+                            if (!$attribute->is_taxonomy()) {
+                                $custom_attributes[$attribute_name] = true;
+                            }
                         }
                     }
-                }
 
-                // Display custom product attributes
-                foreach (array_keys($custom_attributes) as $attribute_name) {
-                    echo '<tr class="feature-row">';
-                    echo '<td class="feature-name">' . esc_html(wc_attribute_label($attribute_name)) . '</td>';
+                    // Display custom product attributes
+                    foreach (array_keys($custom_attributes) as $attribute_name) {
+                        echo '<tr class="feature-row">';
+                        echo '<td class="feature-name">' . esc_html(wc_attribute_label($attribute_name)) . '</td>';
 
-                    foreach ($products as $product) {
-                        echo '<td class="feature-value">';
-                        $attributes = $product->get_attributes();
-                        if (isset($attributes[$attribute_name])) {
-                            echo esc_html($product->get_attribute($attribute_name));
-                        } else {
-                            echo '—';
+                        foreach ($products as $product) {
+                            echo '<td class="feature-value">';
+                            $attributes = $product->get_attributes();
+                            if (isset($attributes[$attribute_name])) {
+                                echo esc_html($product->get_attribute($attribute_name));
+                            } else {
+                                echo '—';
+                            }
+                            echo '</td>';
                         }
-                        echo '</td>';
+
+                        echo '</tr>';
                     }
 
-                    echo '</tr>';
-                }
-
-                // Check if products have categories
-                $has_categories = false;
-                foreach ($products as $product) {
-                    if (!empty($product->get_category_ids())) {
-                        $has_categories = true;
-                        break;
-                    }
-                }
-
-                if ($has_categories) {
-                    echo '<tr class="feature-row">';
-                    echo '<td class="feature-name">Categories</td>';
-
+                    // Check if products have categories
+                    $has_categories = false;
                     foreach ($products as $product) {
-                        echo '<td class="feature-value">';
-                        echo wp_kses_post(wc_get_product_category_list($product->get_id(), ', ') ?: '—');
-                        echo '</td>';
+                        if (!empty($product->get_category_ids())) {
+                            $has_categories = true;
+                            break;
+                        }
                     }
 
-                    echo '</tr>';
-                }
+                    if ($has_categories) {
+                        echo '<tr class="feature-row">';
+                        echo '<td class="feature-name">Categories</td>';
 
-                // Check if products have tags
-                $has_tags = false;
-                foreach ($products as $product) {
-                    if (!empty($product->get_tag_ids())) {
-                        $has_tags = true;
-                        break;
+                        foreach ($products as $product) {
+                            echo '<td class="feature-value">';
+                            echo wp_kses_post(wc_get_product_category_list($product->get_id(), ', ') ?: '—');
+                            echo '</td>';
+                        }
+
+                        echo '</tr>';
                     }
-                }
 
-                if ($has_tags) {
-                    echo '<tr class="feature-row">';
-                    echo '<td class="feature-name">Tags</td>';
-
+                    // Check if products have tags
+                    $has_tags = false;
                     foreach ($products as $product) {
-                        echo '<td class="feature-value">';
-                        echo wp_kses_post(wc_get_product_tag_list($product->get_id(), ', ') ?: '—');
-                        echo '</td>';
+                        if (!empty($product->get_tag_ids())) {
+                            $has_tags = true;
+                            break;
+                        }
                     }
 
-                    echo '</tr>';
-                }
-                ?>
-            </table>
+                    if ($has_tags) {
+                        echo '<tr class="feature-row">';
+                        echo '<td class="feature-name">Tags</td>';
+
+                        foreach ($products as $product) {
+                            echo '<td class="feature-value">';
+                            echo wp_kses_post(wc_get_product_tag_list($product->get_id(), ', ') ?: '—');
+                            echo '</td>';
+                        }
+
+                        echo '</tr>';
+                    }
+                    ?>
+                </table>
+            </div>
         <?php } ?>
         <?php onepaquc_rmenu_checkout_popup(true); ?>
     </div>
@@ -269,7 +309,40 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                 }, 800);
             }, 300);
         });
+
+        const $tableContainer = $("#tableContainer");
+
+        // Allow horizontal scrolling with mouse wheel
+        // $tableContainer.on("wheel", function(event) {
+        //     event.preventDefault();
+        //     this.scrollLeft += event.originalEvent.deltaY;
+        // });
+
+        // Allow click-and-drag scrolling
+        let isDown = false;
+        let startX, scrollLeft;
+
+        $tableContainer.mousedown(function(e) {
+            isDown = true;
+            startX = e.pageX - $(this).offset().left;
+            scrollLeft = this.scrollLeft;
+        });
+
+        $tableContainer.mouseleave(function() {
+            isDown = false;
+        });
+
+        $tableContainer.mouseup(function() {
+            isDown = false;
+        });
+
+        $tableContainer.mousemove(function(e) {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - $(this).offset().left;
+            const walk = (x - startX) * 2; // Adjust scroll speed
+            this.scrollLeft = scrollLeft - walk;
+        });
     });';
-    // Enqueue the script
-    wp_add_inline_script('rmenu-cart-script', $inline_script, 99);
-    
+// Enqueue the script
+wp_add_inline_script('rmenu-cart-script', $inline_script, 99);

@@ -1390,6 +1390,7 @@ table.one-page-checkout-product-table td {
     list-style-type: none;
     padding: 0;
     margin-bottom: 20px;
+    overflow: scroll;
 }
 
 .product-tabs-template  .opc-tab-link {
@@ -1523,4 +1524,8 @@ table.one-page-checkout-product-table td {
 
 .checkout-popup .woocommerce {
     padding-bottom: 70px;
+}
+
+.checkout-popup.onepagecheckoutwidget {
+    display: block !important;
 }
