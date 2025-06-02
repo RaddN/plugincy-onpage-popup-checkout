@@ -44,6 +44,27 @@ function onepaquc_add_random_product_if_cart_empty()
         if (!empty($random_product)) {
             WC()->cart->add_to_cart($random_product[0], 1);
         }
+        
+        // Set a flag in local storage via JavaScript to indicate a random product was added
+        add_action('wp_footer', function () {
+            ?>
+            <script>
+                try {
+                    localStorage.setItem('random_product_added', '1');
+                } catch (e) {}
+            </script>
+            <?php
+        });
+    }else{
+        add_action('wp_footer', function () {
+            ?>
+            <script>
+                try {
+                    localStorage.removeItem('random_product_added');
+                } catch (e) {}
+            </script>
+            <?php
+        });
     }
 }
 
@@ -157,10 +178,12 @@ function add_variation_buttons_to_loop($link, $product)
                 border-radius: 3px;
                 cursor: pointer;
                 transition: all 0.2s;
+                color: #000;
             }
 
             .variation-button:hover {
                 background-color: #eaeaea;
+                color: #000;
             }
 
             .variation-button.selected {

@@ -442,3 +442,6 @@ input:disabled,
 input:disabled + span {
     opacity: 0.4 !important;
 }
+div#tab-1 span.select2.select2-container.select2-container--default.select2-container--below {
+    min-width: 150px;
+}

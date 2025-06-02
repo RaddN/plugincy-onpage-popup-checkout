@@ -66,7 +66,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <h1>Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.4</span></h1>
+        <h1>Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.4.9</span></h1>
         <p>Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 
@@ -2454,6 +2454,24 @@ function onepaquc_cart_dashboard()
                 </script>
 
             </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
+                    const enableCheckout = document.querySelector('div#tab-8 input[name="rmenu_enable_custom_add_to_cart"]');
+
+                    const allinputFields = Array.from(document.querySelectorAll('div#tab-8 input, div#tab-8 select')).filter(
+                        el => !(el.name === "rmenu_enable_custom_add_to_cart")
+                    );
+                    allinputFields.forEach(field => {
+                        field.disabled = !enableCheckout.checked;
+                    });
+                    enableCheckout.addEventListener('change', function() {
+                        allinputFields.forEach(field => {
+                            field.disabled = !this.checked;
+                        });
+                    });
+                });
+            </script>
             <?php submit_button(); ?>
         </form>
         <p style="text-align: center;font-size: 15px;">To add menu cart to your page, use the shortcode <b>[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4"]</b> or use Plugincy Cart Widget/Block</p>
