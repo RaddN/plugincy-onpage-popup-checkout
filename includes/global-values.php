@@ -44,7 +44,7 @@ $onepaquc_rcheckoutformfields = [
     'country'      => ['title' => 'Country', 'selector' => '#billing_country_field, #shipping_country_field'],
     'state'      => ['title' => 'State / District', 'selector' => '#billing_state_field, #shipping_state_field'],
     'city'       => ['title' => 'City', 'selector' => '#billing_city_field, #shipping_city_field'],
-    'postcode'   => ['title' => 'Postcode', 'selector' => '#billing_postcode_field, #shipping_postcode_field'],
+    'postcode'   => ['title' => 'Zip Code', 'selector' => '#billing_postcode_field, #shipping_postcode_field'],
     'address_1'  => ['title' => 'Address 1', 'selector' => '#billing_address_1_field, #shipping_address_1_field'],
     'address_2'  => ['title' => 'Address 2', 'selector' => '#billing_address_2_field, #shipping_address_2_field'],
     'phone'      => ['title' => 'Phone', 'selector' => '#billing_phone_field'],

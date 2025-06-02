@@ -66,7 +66,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <h1>Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.4.9</span></h1>
+        <h1>Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.4.10</span></h1>
         <p>Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 
@@ -2686,7 +2686,7 @@ function onepaquc_cart_custom_css()
     global $onepaquc_rcheckoutformfields;
 
     // Initialize an empty string for the custom CSS
-    $custom_css = '';
+    $custom_css = '.checkout-popup .woocommerce-privacy-policy-text { display: none !important; }.onepagecheckoutwidget .woocommerce-privacy-policy-text { display: block !important; }';
 
     // Loop through the fields to generate CSS
     foreach (onepaquc_rmenu_fields() as $key => $field) {
