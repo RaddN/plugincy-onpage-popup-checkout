@@ -70,9 +70,11 @@ jQuery(document).ready(function($) {
         width: '100%'
     });
 });
+
 document.addEventListener("DOMContentLoaded", function() {
     const tabs = document.querySelectorAll(".tab");
     const contents = document.querySelectorAll(".tab-content");
+    const STORAGE_KEY = 'active_tab'; // Key for localStorage
 
     // Function to activate a specific tab
     function activateTab(tabIndex) {
@@ -91,43 +93,69 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // Function to save active tab to localStorage
+    function saveActiveTab(tabIndex) {
+        try {
+            localStorage.setItem(STORAGE_KEY, tabIndex);
+        } catch (error) {
+            console.warn('Failed to save tab to localStorage:', error);
+        }
+    }
+
+    // Function to get active tab from localStorage
+    function getActiveTab() {
+        try {
+            return localStorage.getItem(STORAGE_KEY);
+        } catch (error) {
+            console.warn('Failed to retrieve tab from localStorage:', error);
+            return null;
+        }
+    }
+
     // Add click event listeners to tabs
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
             const tabIndex = tab.dataset.tab;
             
-            // Update URL with the tab parameter
-            const url = new URL(window.location.href);
-            url.searchParams.set('tab', tabIndex);
-            
-            // Use history.pushState to update URL without reloading the page
-            window.history.pushState({tabIndex: tabIndex}, '', url);
+            // Save the selected tab to localStorage
+            saveActiveTab(tabIndex);
             
             // Activate the selected tab
             activateTab(tabIndex);
         });
     });
 
-    // Handle browser back/forward navigation
-    window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.tabIndex) {
-            activateTab(event.state.tabIndex);
+    // Initialize the active tab on page load
+    function initializeActiveTab() {
+        // Check URL parameters first (for backwards compatibility or direct links)
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get('tab');
+        
+        let activeTabIndex = null;
+        
+        if (tabParam) {
+            // If a tab parameter exists in the URL, use that and save it to localStorage
+            activeTabIndex = tabParam;
+            saveActiveTab(activeTabIndex);
+        } else {
+            // Otherwise, check localStorage for the previously active tab
+            activeTabIndex = getActiveTab();
         }
-    });
-
-    // Check URL parameters on page load and activate the corresponding tab
-    const urlParams = new URLSearchParams(window.location.search);
-    const tabParam = urlParams.get('tab');
-    
-    if (tabParam) {
-        // If a tab parameter exists in the URL, activate that tab
-        activateTab(tabParam);
-    } else {
-        // If no tab parameter, activate the first tab (which seems to be default in your code)
-        const firstTab = document.querySelector('.tab');
-        if (firstTab) {
-            const firstTabIndex = firstTab.dataset.tab;
-            activateTab(firstTabIndex);
+        
+        if (activeTabIndex) {
+            // If we have a stored tab index, activate that tab
+            activateTab(activeTabIndex);
+        } else {
+            // If no stored tab, activate the first tab as default
+            const firstTab = document.querySelector('.tab');
+            if (firstTab) {
+                const firstTabIndex = firstTab.dataset.tab;
+                activateTab(firstTabIndex);
+                saveActiveTab(firstTabIndex);
+            }
         }
     }
+
+    // Initialize the active tab
+    initializeActiveTab();
 });

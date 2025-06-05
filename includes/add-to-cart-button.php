@@ -134,7 +134,7 @@ function rmenu_apply_add_to_cart_styles()
     }
 
     // Add Button icon
-    if ($button_icon != 'none') {
+    if ($button_icon != 'none'  && $button_style != 'default') {
         // Add icon with proper positioning through JavaScript
         add_action('wp_footer', 'rmenu_add_icons_to_buttons');
     }
