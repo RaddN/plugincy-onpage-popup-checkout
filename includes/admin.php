@@ -226,7 +226,14 @@ function onepaquc_cart_dashboard()
                     <tr valign="top">
                         <th scope="row">Form Position</th>
                         <td>
-                            <input type="number" name="onpage_checkout_position" value="<?php echo esc_attr(get_option("onpage_checkout_position", '9')); ?>" />
+                            <?php
+                                // Get the saved value or default to 9 if not set or empty
+                                $onpage_checkout_position = get_option("onpage_checkout_position", '');
+                                if ($onpage_checkout_position === '' || $onpage_checkout_position === false) {
+                                    $onpage_checkout_position = 9;
+                                }
+                            ?>
+                            <input type="number" name="onpage_checkout_position" value="<?php echo esc_attr($onpage_checkout_position); ?>" />
                             <span class="tooltip">
                                 <span class="question-mark">?</span>
                                 <span class="tooltip-text">Set the priority of the one-page checkout form hook (lower numbers = earlier appearance).</span>
@@ -996,10 +1003,116 @@ function onepaquc_cart_dashboard()
                     });
                 </script>
                 <script>
+                    function showDirectCheckoutWarning(highlightSection, message) {
+                            let popup = document.getElementById('rmenu-enable-atc-popup');
+                            if (highlightSection) {
+                                highlightSection.style.border = '2px solid #dc3545';
+                                highlightSection.style.padding = '10px';
+                            }
+                            if (!popup) {
+                                popup = document.createElement('div');
+                                popup.id = 'rmenu-enable-atc-popup';
+                                popup.innerHTML = `
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 10px;
+                                        background: #dc3545;
+                                        color: #fff;
+                                        padding: 16px 28px 16px 16px;
+                                        border-radius: 6px;
+                                        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+                                        font-size: 15px;
+                                        position: fixed;
+                                        top: 30px;
+                                        right: 30px;
+                                        z-index: 99999;
+                                    ">
+                                        <span style="font-size:18px;vertical-align:middle;" class="dashicons dashicons-warning"></span>
+                                        <span>
+                                            <b>${message}</b>
+                                        </span>
+                                        <span id="rmenu-enable-atc-popup-close" style="margin-left:12px;cursor:pointer;font-size:18px;">&times;</span>
+                                    </div>
+                                `;
+                                document.body.appendChild(popup);
+                                document.getElementById('rmenu-enable-atc-popup-close').onclick = function() {
+                                    popup.remove();
+                                };
+                                // Only remove the popup if it's not being hovered
+                                let isHovered = false;
+                                popup.addEventListener('mouseenter', function() {
+                                    isHovered = true;
+                                });
+                                popup.addEventListener('mouseleave', function() {
+                                    isHovered = false;
+                                });
+                                setTimeout(function() {
+                                    if (popup && !isHovered) popup.remove();
+                                }, 3500);
+                            }
+                        }
+                        // Reusable function to remove warning popup and highlight
+                        function removeDirectCheckoutWarning(highlightSection) {
+                            if (highlightSection) {
+                                highlightSection.style.border = '';
+                                highlightSection.style.padding = '';
+                            }
+                            const existingPopup = document.getElementById('rmenu-enable-atc-popup');
+                            if (existingPopup) {
+                                existingPopup.remove();
+                            }
+                        }
                     document.addEventListener('DOMContentLoaded', function() {
-                        // Tab click handler for Add To Cart settings tabs
+                        // Tab click handler for direct checkout settings tabs
                         const tabItems = document.querySelectorAll('#tab-4 .rmenu-settings-tab-item');
                         const tabContents = document.querySelectorAll('#tab-4 .tab-content');
+                        const enableDirectCheckout = document.querySelector('input[name="rmenu_add_direct_checkout_button"]');
+                        const typeCheckboxes = document.querySelectorAll('input[name="rmenu_show_quick_checkout_by_types[]"]');
+                        const highlightSection = document.getElementById('rmenu-direct-button-display-section');
+                        const highlight_enableSection = document.getElementById('rmenu-direct-checkout-enable-field');
+                        // rmenu_show_quick_checkout_by_page[]
+                        const pageCheckboxes = document.querySelectorAll('input[name="rmenu_show_quick_checkout_by_page[]"]');
+
+                        enableDirectCheckout.addEventListener('change', function() {
+                            if (enableDirectCheckout.checked) {
+                                removeDirectCheckoutWarning(highlight_enableSection);
+                                const allTypeUnchecked = Array.from(typeCheckboxes).every(checkbox => !checkbox.checked);
+                                const allPageUnchecked = Array.from(pageCheckboxes).every(checkbox => !checkbox.checked);
+                                if (allTypeUnchecked || allPageUnchecked) {
+                                    showDirectCheckoutWarning(
+                                        highlightSection,
+                                        'Please select at least one product type and one page to show changes.'
+                                    );
+                                }
+                            }
+                        });
+
+                        // On change pageCheckboxes & typeCheckboxes & if at least one of them is checked, remove highlight and popup
+                        function handleDirectCheckoutCheckboxChange() {
+                            const allChecked = Array.from(typeCheckboxes).some(checkbox => checkbox.checked);
+                            const allPageChecked = Array.from(pageCheckboxes).some(checkbox => checkbox.checked);
+                            if (allChecked && allPageChecked) {
+                                removeDirectCheckoutWarning(highlightSection);
+                            } else {
+                                if (enableDirectCheckout.checked) {
+                                    const allTypeUnchecked = Array.from(typeCheckboxes).every(checkbox => !checkbox.checked);
+                                    const allPageUnchecked = Array.from(pageCheckboxes).every(checkbox => !checkbox.checked);
+                                    if (allTypeUnchecked || allPageUnchecked) {
+                                        showDirectCheckoutWarning(
+                                            highlightSection,
+                                            'Please select at least one product type and one page to show changes.'
+                                        );
+                                    }
+                                }
+                            }
+                        }
+                        typeCheckboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', handleDirectCheckoutCheckboxChange);
+                        });
+                        pageCheckboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', handleDirectCheckoutCheckboxChange);
+                        });
 
                         tabItems.forEach(function(tab) {
                             tab.addEventListener('click', function() {
@@ -1016,6 +1129,30 @@ function onepaquc_cart_dashboard()
                                 tab.classList.add('active');
                                 // Show the corresponding tab content
                                 const tabId = tab.getAttribute('data-tab');
+
+                                if (tabId !== "direct-general-settings" && enableDirectCheckout && !enableDirectCheckout.checked) {
+                                    
+                                    showDirectCheckoutWarning(
+                                        highlight_enableSection,
+                                        '<b>Enable Direct Checkout</b> in the general settings tab to access these options.'
+                                    );
+                                } else {
+                                    // Hide any existing popup
+                                    const existingPopup = document.getElementById('rmenu-enable-atc-popup');
+                                    if (existingPopup) {
+                                        existingPopup.remove();
+                                    }
+                                }
+                                if (enableDirectCheckout.checked) {
+                                    const allTypeUnchecked = Array.from(typeCheckboxes).every(checkbox => !checkbox.checked);
+                                    const allPageUnchecked = Array.from(pageCheckboxes).every(checkbox => !checkbox.checked);
+                                    if (allTypeUnchecked || allPageUnchecked) {
+                                        showDirectCheckoutWarning(
+                                            highlightSection,
+                                            'Please select at least one product type and one page to show changes.'
+                                        );
+                                    }
+                                }
                                 const content = document.getElementById(tabId);
                                 if (content) {
                                     content.style.display = 'block';
@@ -1803,6 +1940,12 @@ function onepaquc_cart_dashboard()
                         // Tab click handler for Add To Cart settings tabs
                         const tabItems = document.querySelectorAll('#tab-7 .rmenu-settings-tab-item');
                         const tabContents = document.querySelectorAll('#tab-7 > .tab-content');
+                        const enableCustomQuickView = document.querySelector('input[name="rmenu_enable_quick_view"]');
+                        const highlight_quick_view_enable_Section = document.querySelector('#rmenu-quick-view-enable-field');
+                        const highlight_popup_content_element_Section = document.querySelector('#rmenu-quick-view-content-elements');
+                        const highlight_quick_view_display_Section = document.querySelector('#rmenu-quick-view-display-settings');
+                        const productTypes = document.querySelectorAll('input[name="rmenu_show_quick_view_by_types[]"]');
+                        const productPages = document.querySelectorAll('input[name="rmenu_show_quick_view_by_page[]"]');
 
                         tabItems.forEach(function(tab) {
                             tab.addEventListener('click', function() {
@@ -1819,9 +1962,147 @@ function onepaquc_cart_dashboard()
                                 tab.classList.add('active');
                                 // Show the corresponding tab content
                                 const tabId = tab.getAttribute('data-tab');
+                                if (tabId !== "quick-general-settings" && enableCustomQuickView && !enableCustomQuickView.checked) {
+                                    showDirectCheckoutWarning(
+                                        highlight_quick_view_enable_Section,
+                                        '<b>Enable Custom Quick View</b> in the general settings tab to access these options.'
+                                    );
+                                }
                                 const content = document.getElementById(tabId);
                                 if (content) {
                                     content.style.display = 'block';
+                                }
+                            });
+                        });
+
+                        enableCustomQuickView.addEventListener('change', function() {
+                            if (this.checked) {
+                                removeDirectCheckoutWarning(highlight_quick_view_enable_Section);
+                                // in rmenu_quick_view_content_elements[] if no checkbox is checked. show a warning
+                                const contentElements = document.querySelectorAll('input[name="rmenu_quick_view_content_elements[]"]');
+                                let isAnyChecked = false;
+                                contentElements.forEach(function(element) {
+                                    if (element.checked) {
+                                        isAnyChecked = true;
+                                    }
+                                });
+                                if (!isAnyChecked) {
+                                    showDirectCheckoutWarning(
+                                        highlight_popup_content_element_Section,
+                                        '<b>Select at least one content element</b> in the Popup Manage tab to view the changes.'
+                                    );
+                                }
+
+                                // if rmenu_show_quick_view_by_types[] & rmenu_show_quick_view_by_page[] are empty, show a warning
+                                let isAnyTypeChecked = false;
+                                let isAnyPageChecked = false;
+                                productTypes.forEach(function(element) {
+                                    if (element.checked) {
+                                        isAnyTypeChecked = true;
+                                    }
+                                });
+                                productPages.forEach(function(element) {
+                                    if (element.checked) {
+                                        isAnyPageChecked = true;
+                                    }
+                                });
+                                if (!isAnyTypeChecked && !isAnyPageChecked) {
+                                    showDirectCheckoutWarning(
+                                        highlight_quick_view_display_Section,
+                                        '<b>Select at least one product type</b> and <b>one product page</b> in the Display tab to view the changes.'
+                                    );
+                                }
+                            }
+                        });
+
+                        // on changes in each productPages & productTypes. if productPages & productTypes  are empty show warning
+                        productTypes.forEach(function(element) {
+                            element.addEventListener('change', function() {
+                                let isAnyTypeChecked = false;
+                                let isAnyPageChecked = false;
+                                productTypes.forEach(function(el) {
+                                    if (el.checked) {
+                                        isAnyTypeChecked = true;
+                                    }
+                                });
+                                productPages.forEach(function(el) {
+                                    if (el.checked) {
+                                        isAnyPageChecked = true;
+                                    }
+                                });
+                                if (!isAnyTypeChecked || !isAnyPageChecked) {
+                                    showDirectCheckoutWarning(
+                                        highlight_quick_view_display_Section,
+                                        '<b>Select at least one product type</b> and <b>one product page</b> in the Display tab to view the changes.'
+                                    );
+                                } else {
+                                    removeDirectCheckoutWarning(highlight_quick_view_display_Section);
+                                }
+                            });
+                        });
+                        productPages.forEach(function(element) {
+                            element.addEventListener('change', function() {
+                                let isAnyTypeChecked = false;
+                                let isAnyPageChecked = false;
+                                productTypes.forEach(function(el) {
+                                    if (el.checked) {
+                                        isAnyTypeChecked = true;
+                                    }
+                                });
+                                productPages.forEach(function(el) {
+                                    if (el.checked) {
+                                        isAnyPageChecked = true;
+                                    }
+                                });
+                                if (!isAnyTypeChecked || !isAnyPageChecked) {
+                                    showDirectCheckoutWarning(
+                                        highlight_quick_view_display_Section,
+                                        '<b>Select at least one product type</b> and <b>one product page</b> in the Display tab to view the changes.'
+                                    );
+                                } else {
+                                    removeDirectCheckoutWarning(highlight_quick_view_display_Section);
+                                }
+                            });
+                        });
+
+
+
+                        // on changes in rmenu_quick_view_content_elements[] if no checkbox is checked. show a warning
+                        const contentElements = document.querySelectorAll('input[name="rmenu_quick_view_content_elements[]"]');
+                        contentElements.forEach(function(element) {
+                            element.addEventListener('change', function() {
+                                let isAnyChecked = false;
+                                contentElements.forEach(function(el) {
+                                    if (el.checked) {
+                                        isAnyChecked = true;
+                                        removeDirectCheckoutWarning(highlight_popup_content_element_Section);
+                                    }
+                                });
+                                if (!isAnyChecked) {
+                                    showDirectCheckoutWarning(
+                                        highlight_popup_content_element_Section,
+                                        '<b>Select at least one content element</b> in the Popup Manage tab to view the changes.'
+                                    );
+                                }
+
+                                // if rmenu_show_quick_view_by_types[] & rmenu_show_quick_view_by_page[] are empty, show a warning                                
+                                let isAnyTypeChecked = false;
+                                let isAnyPageChecked = false;
+                                productTypes.forEach(function(element) {
+                                    if (element.checked) {
+                                        isAnyTypeChecked = true;
+                                    }
+                                });
+                                productPages.forEach(function(element) {
+                                    if (element.checked) {
+                                        isAnyPageChecked = true;
+                                    }
+                                });
+                                if (!isAnyTypeChecked && !isAnyPageChecked) {
+                                    showDirectCheckoutWarning(
+                                        highlight_quick_view_display_Section,
+                                        '<b>Select at least one product type</b> and <b>one product page</b> in the Display tab to view the changes.'
+                                    );
                                 }
                             });
                         });
@@ -2272,16 +2553,23 @@ function onepaquc_cart_dashboard()
                                 for (let i = 1; i < settingsRows.length; i++) { // Start loop at index 1 (second element)
                                     const row = settingsRows[i];
                                     const inputs = row.querySelectorAll('input'); // Get inputs within this row
+                                    const selects = row.querySelectorAll('select'); // Get selects within this row
 
                                     if (checkbox.checked) {
                                         row.style.opacity = '1';
                                         inputs.forEach(input => {
-                                            // input.disabled = false;
+                                            input.disabled = false;
+                                        });
+                                        selects.forEach(select => {
+                                            select.disabled = false;
                                         });
                                     } else {
                                         row.style.opacity = '0.5';
                                         inputs.forEach(input => {
-                                            // input.disabled = true;
+                                            input.disabled = true;
+                                        });
+                                        selects.forEach(select => {
+                                            select.disabled = true;
                                         });
                                     }
                                 }
@@ -2423,6 +2711,29 @@ function onepaquc_cart_dashboard()
                         // Tab click handler for Add To Cart settings tabs
                         const tabItems = document.querySelectorAll('#tab-8 .rmenu-settings-tab-item');
                         const tabContents = document.querySelectorAll('#tab-8  .tab-content');
+                        const btn_display = document.querySelector('select[name="rmenu_add_to_cart_catalog_display"]');
+
+                        btn_display.addEventListener('change', function() {
+                            if (this.value === 'hide') {
+                                // disable all inputs in the tab except btn_display
+                                tabContents.forEach(function(content) {
+                                    const inputs = content.querySelectorAll('input, select, textarea');
+                                    inputs.forEach(function(input) {
+                                        if (input !== btn_display) {
+                                            input.disabled = true;
+                                        }
+                                    });
+                                });
+                            } else {
+                                // enable all inputs in the tab
+                                tabContents.forEach(function(content) {
+                                    const inputs = content.querySelectorAll('input, select, textarea');
+                                    inputs.forEach(function(input) {
+                                        input.disabled = false;
+                                    });
+                                });
+                            }
+                        });
 
                         tabItems.forEach(function(tab) {
                             tab.addEventListener('click', function() {
@@ -2439,6 +2750,36 @@ function onepaquc_cart_dashboard()
                                 tab.classList.add('active');
                                 // Show the corresponding tab content
                                 const tabId = tab.getAttribute('data-tab');
+                                const highlight_add_to_cart_enable_Section = document.querySelector('#rmenu-enable-custom-add-to-cart');
+                                // If "Enable Custom Add to Cart" is not enabled, show a popup message and prevent tab switching
+                                const enableCustomAddToCart = document.querySelector('input[name="rmenu_enable_custom_add_to_cart"]');
+                                if (tabId !== "general-settings" && enableCustomAddToCart && !enableCustomAddToCart.checked) {
+                                    showDirectCheckoutWarning(
+                                        highlight_add_to_cart_enable_Section,
+                                        '<b>Enable Custom Add to Cart</b> in the general settings tab to access these options.'
+                                    );
+                                }
+                                enableCustomAddToCart.addEventListener('change', function() {
+                                    if (this.checked) {
+                                        removeDirectCheckoutWarning(highlight_add_to_cart_enable_Section);
+                                    }
+                                });
+
+                                const highlight_rmenu_add_to_cart_archive_display_Section = document.querySelector('#rmenu-add-to-cart-archive-display');
+
+                                // If the tab is not "button-behavior" and the button display is set to hide, show a popup message
+                                if (tabId !== "button-behavior" && btn_display && btn_display.value === 'hide') {
+                                    showDirectCheckoutWarning(
+                                        highlight_rmenu_add_to_cart_archive_display_Section,
+                                        '<b>Button Display is set to Hide</b>. You can change this in the Button Behavior -> Display Settings.'
+                                    );
+                                }
+                                btn_display.addEventListener('change', function() {
+                                    if (this.value !== 'hide') {
+                                        removeDirectCheckoutWarning(highlight_rmenu_add_to_cart_archive_display_Section);
+                                    }
+                                });
+
                                 const content = document.getElementById(tabId);
                                 if (content) {
                                     content.style.display = 'block';
