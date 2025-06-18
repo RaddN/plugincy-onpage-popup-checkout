@@ -129,7 +129,10 @@ class RMENU_Quick_View {
      * Render the actual quick view button HTML
      */
     private function render_quick_view_button($product) {
-        $button_text = get_option('rmenu_quick_view_button_text', 'Quick View');
+        $button_text = get_option('rmenu_quick_view_button_text', '');
+        if (empty($button_text)) {
+            $button_text = 'Quick View';
+        }
         $display_type = get_option('rmenu_quick_view_display_type', 'button');
         $button_icon = get_option('rmenu_quick_view_button_icon', 'eye');
         $icon_position = get_option('rmenu_quick_view_icon_position', 'left');
@@ -354,12 +357,12 @@ class RMENU_Quick_View {
             'lightbox' => (bool) $lightbox,
             'elements_in_popup' => $elements_in_popup,
             'i18n' => array(
-                'close' => get_option('rmenu_quick_view_close_text', 'Close'),
-                'prev' => get_option('rmenu_quick_view_prev_text', 'Previous Product'),
-                'next' => get_option('rmenu_quick_view_next_text', 'Next Product'),
+                'close' => get_option('rmenu_quick_view_close_text') !== '' ? get_option('rmenu_quick_view_close_text') : 'Close',
+                'prev' => get_option('rmenu_quick_view_prev_text') !== '' ? get_option('rmenu_quick_view_prev_text') : 'Previous Product',
+                'next' => get_option('rmenu_quick_view_next_text') !== '' ? get_option('rmenu_quick_view_next_text') : 'Next Product',
                 'add_to_cart' => esc_html__('Add to cart', 'one-page-quick-checkout-for-woocommerce'),
                 'select_options' => esc_html__('Select options', 'one-page-quick-checkout-for-woocommerce'),
-                'view_details' => get_option('rmenu_quick_view_details_text', 'View Full Details'),
+                'view_details' => get_option('rmenu_quick_view_details_text') !== '' ? get_option('rmenu_quick_view_details_text') : 'View Full Details',
                 'out_of_stock' => esc_html__('Out of stock', 'one-page-quick-checkout-for-woocommerce'),
             )
         ));

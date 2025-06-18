@@ -1588,3 +1588,8 @@ table.one-page-checkout-product-table td {
     margin-left: 3px !important;
   }
 }
+a.rmenu-quick-view-btn.display-text_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

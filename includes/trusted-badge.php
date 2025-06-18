@@ -237,6 +237,28 @@ function onepaquc_trust_badges_settings_content() {
 
     <script>
     jQuery(document).ready(function($) {
+
+        
+        // Toggle custom HTML editor visibility
+        $('#show-custom-html').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('.badge-items-wrapper').closest('tr').hide();
+                $('#custom-html-editor').slideDown();
+            } else {
+                $('#custom-html-editor').slideUp();
+                $('.badge-items-wrapper').closest('tr').show();
+            }
+        });
+
+        // initialilly trigger on change to set visibility
+        $('#show-custom-html').trigger('change');
+
+        // if onepaquc_trust_badges_enabled is not checked, disable all fields use on change
+        $('input[name="onepaquc_trust_badges_enabled"]').on('change', function() {
+            var isChecked = $(this).is(':checked');
+            $('div#tab-6 table:first').find('input, select, textarea').not('[name="onepaquc_trust_badges_enabled"]').prop('disabled', !isChecked);
+        }).trigger('change');
+
         // Toggle badge content
         $('.badge-items-wrapper').on('click', '.badge-header', function(e) {
             if (!$(e.target).hasClass('badge-toggle') && !$(e.target).hasClass('badge-remove')) {

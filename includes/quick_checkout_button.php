@@ -40,10 +40,7 @@ function onepaquc_should_display_button($product)
     $allowed_pages = get_option('rmenu_show_quick_checkout_by_page', ['single']);
 
     // Check current page type
-    if (is_product() && in_array('single', $allowed_pages)) {
-        return true;
-    }
-
+    
     if (is_shop() && in_array('shop-page', $allowed_pages)) {
         return true;
     }
@@ -56,10 +53,13 @@ function onepaquc_should_display_button($product)
         return true;
     }
 
-    if (is_search() && in_array('search', $allowed_pages)) {
+    if (is_product() && in_array('single', $allowed_pages)) {
         return true;
     }
 
+    if (is_cart() && in_array('cross-sells', $allowed_pages)) {
+        return true;
+    }
     // Check for related products
     global $woocommerce_loop;
     if (isset($woocommerce_loop['name'])) {
@@ -75,19 +75,19 @@ function onepaquc_should_display_button($product)
             return true;
         }
     }
-
+    
     // Check for featured products
     if (isset($woocommerce_loop['featured']) && $woocommerce_loop['featured'] && in_array('featured-products', $allowed_pages)) {
         return true;
     }
 
     // Check for on-sale products
-    if (isset($woocommerce_loop['on_sale']) && $woocommerce_loop['on_sale'] && in_array('on-sale', $allowed_pages)) {
+    if (isset($woocommerce_loop['name']) && $woocommerce_loop['name'] === 'sale_products' && in_array('on-sale', $allowed_pages)) {
         return true;
     }
 
     // Check for recent products
-    if (isset($woocommerce_loop['recent']) && $woocommerce_loop['recent'] && in_array('recent', $allowed_pages)) {
+    if (isset($woocommerce_loop['name']) && $woocommerce_loop['name'] === 'recent_products' && in_array('recent', $allowed_pages)) {
         return true;
     }
 
@@ -98,7 +98,7 @@ function onepaquc_should_display_button($product)
         if (isset($trace['function']) && (
             (strpos($trace['function'], 'widget') !== false && in_array('widgets', $allowed_pages)) ||
             (strpos($trace['function'], 'shortcode') !== false && in_array('shortcodes', $allowed_pages))
-        )) {
+        ) && !is_shop() && !is_product_category() && !is_product_tag() && !is_product()) {
             $is_widget_or_shortcode = true;
             break;
         }

@@ -37,7 +37,7 @@ function onepaquc_cart_enqueue_scripts()
     $checkout_page_id = wc_get_page_id('checkout');
 
     // Check if checkout page exists and has [woocommerce_checkout] shortcode
-    if ($checkout_page_id === -1){
+    if ($checkout_page_id === -1) {
         // Create a new checkout page if it doesn't exist
         $new_checkout_id = wp_insert_post([
             'post_title'   => __('Checkout'),
@@ -207,9 +207,17 @@ function onepaquc_display_checkout_on_single_product()
         }
         if (get_option("onpage_checkout_hide_cart_button") === "1") {
             remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
-            add_filter('woocommerce_is_purchasable', function ($is_purchasable, $product) {
-                return false;
-            }, 10, 2);
+            // add_filter('woocommerce_is_purchasable', function ($is_purchasable, $product) {
+            //     return false;
+            // }, 10, 2);
+            add_action('wp_head', function () {
+                echo '<style>
+                    .quantity, 
+                    button.single_add_to_cart_button.button {
+                        display: none !important;
+                    }
+                </style>';
+            });
         }
 
         remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
@@ -230,14 +238,17 @@ add_action('wp', 'onepaquc_display_checkout_on_single_product', 99);
  */
 function onepaquc_display_one_page_checkout_form()
 {
-
+    // check if cart is empty
+    if (WC()->cart->is_empty()) {
+        return;
+    }
 ?>
     <div class="one-page-checkout-container" id="checkout-popup">
         <h2>Checkout</h2>
         <p class="one-page-checkout-description"><?php echo get_option('txt-complete_your_purchase') ? esc_attr(get_option('txt-complete_your_purchase')) : 'Complete your purchase using the form below.'; ?></p>
         <?php echo do_shortcode('[woocommerce_checkout]'); ?>
     </div>
-<?php
+    <?php
 }
 
 function onepaquc_add_checkout_inline_styles()

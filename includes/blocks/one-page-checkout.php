@@ -97,52 +97,92 @@ add_action( 'init', 'onepaquc_register_one_page_checkout_block' );
  * @param array $attributes Block attributes.
  * @return string Generated shortcode.
  */
-function onepaquc_render_one_page_checkout_block( $attributes ) {
+function onepaquc_render_one_page_checkout_block($attributes)
+{
     // Extract and sanitize attributes
-    $product_ids = isset( $attributes['product_ids'] ) ? sanitize_text_field( $attributes['product_ids'] ) : '';
-    $category = isset( $attributes['category'] ) ? sanitize_text_field( $attributes['category'] ) : '';
-    $tags = isset( $attributes['tags'] ) ? sanitize_text_field( $attributes['tags'] ) : '';
-    $attribute = isset( $attributes['attribute'] ) ? sanitize_text_field( $attributes['attribute'] ) : '';
-    $terms = isset( $attributes['terms'] ) ? sanitize_text_field( $attributes['terms'] ) : '';
-    $template = isset( $attributes['template'] ) ? sanitize_text_field( $attributes['template'] ) : 'product-tabs';
-    
+    $product_ids = isset($attributes['product_ids']) ? sanitize_text_field($attributes['product_ids']) : '';
+    $category = isset($attributes['category']) ? sanitize_text_field($attributes['category']) : '';
+    $tags = isset($attributes['tags']) ? sanitize_text_field($attributes['tags']) : '';
+    $attribute = isset($attributes['attribute']) ? sanitize_text_field($attributes['attribute']) : '';
+    $terms = isset($attributes['terms']) ? sanitize_text_field($attributes['terms']) : '';
+    $template = isset($attributes['template']) ? sanitize_text_field($attributes['template']) : 'product-tabs';
+    $borderRadius = isset($attributes['borderRadius']) ? intval($attributes['borderRadius']) : 4;
+    $boxShadow = isset($attributes['boxShadow']) ? (bool) $attributes['boxShadow'] : false;
+    $primaryColor = isset($attributes['primaryColor']) ? sanitize_hex_color($attributes['primaryColor']) : '#4CAF50';
+    $secondaryColor = isset($attributes['secondaryColor']) ? sanitize_hex_color($attributes['secondaryColor']) : '#2196F3';
+    $buttonStyle = isset($attributes['buttonStyle']) ? sanitize_text_field($attributes['buttonStyle']) : 'filled';
+    $spacing = isset($attributes['spacing']) ? intval($attributes['spacing']) : 15;
+
+    $custom_styles = '<style>
+        .one-page-checkout-container {
+            border-radius: ' . esc_attr($borderRadius) . 'px;
+            box-shadow: ' . ($boxShadow ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none') . ';
+        }
+        .one-page-checkout-container .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: ' . esc_attr($spacing) . 'px;
+        }
+        .one-page-checkout-container button#place_order {
+            border-radius: ' . esc_attr($borderRadius) . 'px;
+            padding: 10px 20px;
+            margin-bottom: ' . esc_attr($spacing) . 'px;
+            ' . (
+            $buttonStyle === 'outlined' ? '
+                background-color: transparent;
+                color: ' . esc_attr($primaryColor) . ';
+                border: 2px solid ' . esc_attr($primaryColor) . ';
+            ' : (
+                $buttonStyle === 'text' ? '
+                background-color: transparent;
+                color: ' . esc_attr($primaryColor) . ';
+                border: none;
+                ' : '
+                background-color: ' . esc_attr($primaryColor) . ';
+                color: ' . esc_attr($secondaryColor) . ';
+                border: none;
+                '
+            )
+            ) . '
+        }
+        </style>';
+
     // Build shortcode attributes array
     $shortcode_atts = array();
-    
-    if ( !empty( $product_ids ) ) {
-        $shortcode_atts[] = 'product_ids="' . esc_attr( $product_ids ) . '"';
+
+    if (!empty($product_ids)) {
+        $shortcode_atts[] = 'product_ids="' . esc_attr($product_ids) . '"';
     }
-    
-    if ( !empty( $category ) ) {
-        $shortcode_atts[] = 'category="' . esc_attr( $category ) . '"';
+
+    if (!empty($category)) {
+        $shortcode_atts[] = 'category="' . esc_attr($category) . '"';
     }
-    
-    if ( !empty( $tags ) ) {
-        $shortcode_atts[] = 'tags="' . esc_attr( $tags ) . '"';
+
+    if (!empty($tags)) {
+        $shortcode_atts[] = 'tags="' . esc_attr($tags) . '"';
     }
-    
-    if ( !empty( $attribute ) ) {
-        $shortcode_atts[] = 'attribute="' . esc_attr( $attribute ) . '"';
+
+    if (!empty($attribute)) {
+        $shortcode_atts[] = 'attribute="' . esc_attr($attribute) . '"';
     }
-    
-    if ( !empty( $terms ) ) {
-        $shortcode_atts[] = 'terms="' . esc_attr( $terms ) . '"';
+
+    if (!empty($terms)) {
+        $shortcode_atts[] = 'terms="' . esc_attr($terms) . '"';
     }
-    
-    if ( !empty( $template ) ) {
-        $shortcode_atts[] = 'template="' . esc_attr( $template ) . '"';
+
+    if (!empty($template)) {
+        $shortcode_atts[] = 'template="' . esc_attr($template) . '"';
     }
-    
+
     // Generate the shortcode
     $shortcode = '[plugincy_one_page_checkout';
-    if ( !empty( $shortcode_atts ) ) {
-        $shortcode .= ' ' . implode( ' ', $shortcode_atts );
+    if (!empty($shortcode_atts)) {
+        $shortcode .= ' ' . implode(' ', $shortcode_atts);
     }
     $shortcode .= ']';
-    
-    return $shortcode;
-}
 
+    return $custom_styles . $shortcode;
+}
 /**
  * Add custom block category for Plugincy blocks
  */
