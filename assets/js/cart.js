@@ -82,6 +82,9 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         const cartItemKey = $(this).data('cart-item-key');
 
+        $(this).closest('.cart-item').css('transition', 'opacity 0.5s ease'); // Optional: add transition for smooth effect
+        $(this).closest('.cart-item').css('opacity', '0.5'); // Optional: fade out the item
+
         $.ajax({
             url: onepaquc_wc_cart_params.ajax_url,
             type: 'POST',
@@ -186,6 +189,9 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         var cartItemKey = $(this).data('cart-item');
 
+        $(this).closest('.cart_item').css('transition', 'opacity 0.5s ease'); // Optional: add transition for smooth effect
+        $(this).closest('.cart_item').css('opacity', '0.5'); // Optional: fade out the item
+
         $.ajax({
             type: 'POST',
             url: wc_add_to_cart_params.ajax_url,
@@ -228,6 +234,7 @@ jQuery(document).ready(function ($) {
 
                 // Update checkout totals
                 $(document.body).trigger('update_checkout');
+                updateCartContent(false);
             }
         });
     });
@@ -236,7 +243,7 @@ jQuery(document).ready(function ($) {
     var methodKey = $directbehave.rmenu_wc_checkout_method;
 
     function directcheckout(product_id, product_type, $button) {
-        var $variation_id = $('.variation_id').val() || 0;
+        var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() || 0;
 
         $('#checkout-button-drawer-link').prop('disabled', true);
 

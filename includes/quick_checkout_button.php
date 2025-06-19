@@ -40,7 +40,7 @@ function onepaquc_should_display_button($product)
     $allowed_pages = get_option('rmenu_show_quick_checkout_by_page', ['single']);
 
     // Check current page type
-    
+
     if (is_shop() && in_array('shop-page', $allowed_pages)) {
         return true;
     }
@@ -75,7 +75,7 @@ function onepaquc_should_display_button($product)
             return true;
         }
     }
-    
+
     // Check for featured products
     if (isset($woocommerce_loop['featured']) && $woocommerce_loop['featured'] && in_array('featured-products', $allowed_pages)) {
         return true;
@@ -189,7 +189,7 @@ function onepaquc_add_button_css()
     ob_start();
 
     // Basic styles for the button
-    ?>
+?>
     <style>
         /* Base styling for direct checkout button */
         .rmenu-direct-checkout-btn {
@@ -235,7 +235,7 @@ function onepaquc_add_button_css()
 
         <?php echo $additional_css; ?>
     </style>
-    <?php
+<?php
 
     // Output the CSS
     echo ob_get_clean();
@@ -318,8 +318,18 @@ function onepaquc_add_checkout_button()
             break;
     }
 
-    // Output the button
-    echo '<a href="#checkout-popup" class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" style="' . esc_attr($button_styling['style']) . '">' . $button_inner . '</a>';
+    $one_page_checkout = get_post_meta($product_id, '_one_page_checkout', true);
+    $onpage_checkout_cart_add = get_option('onpage_checkout_cart_add', "1");
+
+    if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1") {
+        // Remove 'single_add_to_cart_button' and 'direct-checkout-button' from classes
+        $button_classes = preg_replace('/\b(single_add_to_cart_button|direct-checkout-button)\b/', '', $button_styling['classes']);
+        $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
+        echo '<a href="#checkout-popup" class="' . esc_attr($button_classes) . '" style="' . esc_attr($button_styling['style']) . '">' . $button_inner . '</a>';
+    } else {
+        // Output the button
+        echo '<a href="#checkout-popup" class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" style="' . esc_attr($button_styling['style']) . '">' . $button_inner . '</a>';
+    }
 }
 
 
@@ -356,14 +366,14 @@ if (get_option('rmenu_add_to_cart_catalog_display') == "hide") {
 // Function to hide the original add to cart button when in replace mode
 function onepaquc_hide_add_to_cart_css()
 {
-    ?>
-        <style>
-            button.single_add_to_cart_button,
-            a.button.product_type_simple.add_to_cart_button,
-            .quantity {
-                display: none !important;
-            }
-        </style>
+?>
+    <style>
+        button.single_add_to_cart_button,
+        a.button.product_type_simple.add_to_cart_button,
+        .quantity {
+            display: none !important;
+        }
+    </style>
 <?php
 }
 
@@ -430,6 +440,3 @@ function onepaquc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
 if (get_option('rmenu_add_direct_checkout_button')) {
     add_filter('woocommerce_loop_add_to_cart_link', 'onepaquc_add_checkout_button_to_add_to_cart_shortcode', 10, 2);
 }
-
-
-

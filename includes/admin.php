@@ -49,7 +49,7 @@ function onepaquc_cart_text_change_form($textvariable)
                 <p style="display: inline;"><?php echo esc_html($label); ?></p>
                 <span class="tooltip" style="display: inline;">
                     <span class="question-mark">?</span>
-                    <span class="tooltip-text">You can find "<?php echo esc_html($label); ?>" in the checkout form & drawer<?php echo $name==="txt-complete_your_purchase" ? " on single product pages." : "." ; ?></span>
+                    <span class="tooltip-text">You can find "<?php echo esc_html($label); ?>" in the checkout form & drawer<?php echo $name === "txt-complete_your_purchase" ? " on single product pages." : "."; ?></span>
                 </span>
                 <input type="text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>" />
             </label>
@@ -140,6 +140,25 @@ function onepaquc_cart_dashboard()
 
                 // Color is dark if luminance is less than 0.5
                 return luminance < 0.5;
+            }
+            function checkColors(checkoutColor, checkoutTextColor) {
+                const bgColor = checkoutColor.value;
+                const textColor = checkoutTextColor.value;
+
+                if (isColorDark(bgColor) && isColorDark(textColor)) {
+                    showDirectCheckoutWarning(
+                        checkoutColor.closest('.rmenu-settings-row'),
+                        'Warning: Both background and text colors are dark. This may affect readability.'
+                    );
+                } else if (!isColorDark(bgColor) && !isColorDark(textColor)) {
+                    showDirectCheckoutWarning(
+                        checkoutTextColor.closest('.rmenu-settings-row'),
+                        'Warning: Both background and text colors are light. This may affect readability.'
+                    );
+                } else {
+                    removeDirectCheckoutWarning(checkoutColor.closest('.rmenu-settings-row'));
+                    removeDirectCheckoutWarning(checkoutTextColor.closest('.rmenu-settings-row'));
+                }
             }
         </script>
         <form method="post" action="options.php">
@@ -261,11 +280,11 @@ function onepaquc_cart_dashboard()
                         <th scope="row">Form Position</th>
                         <td>
                             <?php
-                                // Get the saved value or default to 9 if not set or empty
-                                $onpage_checkout_position = get_option("onpage_checkout_position", '');
-                                if ($onpage_checkout_position === '' || $onpage_checkout_position === false) {
-                                    $onpage_checkout_position = 9;
-                                }
+                            // Get the saved value or default to 9 if not set or empty
+                            $onpage_checkout_position = get_option("onpage_checkout_position", '');
+                            if ($onpage_checkout_position === '' || $onpage_checkout_position === false) {
+                                $onpage_checkout_position = 9;
+                            }
                             ?>
                             <input type="number" name="onpage_checkout_position" value="<?php echo esc_attr($onpage_checkout_position); ?>" />
                             <span class="tooltip">
@@ -446,7 +465,7 @@ function onepaquc_cart_dashboard()
                                     if (empty($direct_checkout_text)) {
                                         $direct_checkout_text = 'Quick Checkout';
                                     }
-                                    ?>                                    
+                                    ?>
                                     <input type="text" name="txt-direct-checkout" value="<?php echo esc_attr($direct_checkout_text); ?>" class="regular-text" />
                                     <p class="rmenu-field-description">Customize the text displayed on the direct checkout button.</p>
                                 </div>
@@ -706,31 +725,15 @@ function onepaquc_cart_dashboard()
                             const checkoutColor = document.querySelector('input[name="rmenu_wc_checkout_color"]');
                             const checkoutTextColor = document.querySelector('input[name="rmenu_wc_checkout_text_color"]');
                             if (checkoutColor && checkoutTextColor) {
-                                function checkColors() {
-                                    const bgColor = checkoutColor.value;
-                                    const textColor = checkoutTextColor.value;
-
-                                    if (isColorDark(bgColor) && isColorDark(textColor)) {
-                                        showDirectCheckoutWarning(
-                                            checkoutColor.closest('.rmenu-settings-row'),
-                                            'Warning: Both background and text colors are dark. This may affect readability.'
-                                        );
-                                    } else if (!isColorDark(bgColor) && !isColorDark(textColor)) {
-                                        showDirectCheckoutWarning(
-                                            checkoutTextColor.closest('.rmenu-settings-row'),
-                                            'Warning: Both background and text colors are light. This may affect readability.'
-                                        );
-                                    } else {
-                                        removeDirectCheckoutWarning(checkoutColor.closest('.rmenu-settings-row'));
-                                        removeDirectCheckoutWarning(checkoutTextColor.closest('.rmenu-settings-row'));
-                                    }
-                                }
-
-                                checkoutColor.addEventListener('change', checkColors);
-                                checkoutTextColor.addEventListener('change', checkColors);
+                                checkoutColor.addEventListener('change', function() {
+                                    checkColors(checkoutColor, checkoutTextColor);
+                                });
+                                checkoutTextColor.addEventListener('change', function() {
+                                    checkColors(checkoutColor, checkoutTextColor);
+                                });
 
                                 // Initial check on page load
-                                checkColors();
+                                checkColors(checkoutColor, checkoutTextColor);
                             }
 
                         });
@@ -749,7 +752,15 @@ function onepaquc_cart_dashboard()
                                 <select name="rmenu_wc_checkout_method" class="rmenu-select" id="rmenu-checkout-method">
                                     <option value="direct_checkout" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'direct_checkout'); ?>>Redirect to Checkout</option>
                                     <option value="ajax_add" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'ajax_add'); ?>>AJAX Add to Cart</option>
-                                    <option value="cart_redirect" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'cart_redirect'); ?>>Redirect to Cart Page</option>
+                                    <!-- rmenu_disable_cart_page is it's on disable below option & show cart page is disabled -->
+                                    <?php
+                                    $disable_cart_page = get_option('rmenu_disable_cart_page', '0');
+                                    ?>
+                                    <?php if (!$disable_cart_page) : ?>
+                                        <option value="cart_redirect" <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'cart_redirect'); ?>>Redirect to Cart Page</option>
+                                    <?php else : ?>
+                                        <option value="cart_redirect" disabled <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'cart_redirect'); ?>>Redirect to Cart Page (Disabled)</option>
+                                    <?php endif; ?>
                                     <option disabled value="popup_checkout_pro" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'popup_checkout_pro'); ?>>Popup Checkout (Pro Features)</option>
                                     <option disabled value="advanced_pro" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'advanced_pro'); ?>>Advanced Checkout (Pro Features)</option>
                                     <option value="side_cart" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'side_cart'); ?>>Side Cart Slide-in</option>
@@ -1087,15 +1098,15 @@ function onepaquc_cart_dashboard()
                 </script>
                 <script>
                     function showDirectCheckoutWarning(highlightSection, message) {
-                            let popup = document.getElementById('rmenu-enable-atc-popup');
-                            if (highlightSection) {
-                                highlightSection.style.border = '2px solid #dc3545';
-                                highlightSection.style.padding = '10px';
-                            }
-                            if (!popup) {
-                                popup = document.createElement('div');
-                                popup.id = 'rmenu-enable-atc-popup';
-                                popup.innerHTML = `
+                        let popup = document.getElementById('rmenu-enable-atc-popup');
+                        if (highlightSection) {
+                            highlightSection.style.border = '2px solid #dc3545';
+                            highlightSection.style.padding = '10px';
+                        }
+                        if (!popup) {
+                            popup = document.createElement('div');
+                            popup.id = 'rmenu-enable-atc-popup';
+                            popup.innerHTML = `
                                     <div style="
                                         display: flex;
                                         align-items: center;
@@ -1118,34 +1129,34 @@ function onepaquc_cart_dashboard()
                                         <span id="rmenu-enable-atc-popup-close" style="margin-left:12px;cursor:pointer;font-size:18px;">&times;</span>
                                     </div>
                                 `;
-                                document.body.appendChild(popup);
-                                document.getElementById('rmenu-enable-atc-popup-close').onclick = function() {
-                                    popup.remove();
-                                };
-                                // Only remove the popup if it's not being hovered
-                                let isHovered = false;
-                                popup.addEventListener('mouseenter', function() {
-                                    isHovered = true;
-                                });
-                                popup.addEventListener('mouseleave', function() {
-                                    isHovered = false;
-                                });
-                                setTimeout(function() {
-                                    if (popup && !isHovered) popup.remove();
-                                }, 3500);
-                            }
+                            document.body.appendChild(popup);
+                            document.getElementById('rmenu-enable-atc-popup-close').onclick = function() {
+                                popup.remove();
+                            };
+                            // Only remove the popup if it's not being hovered
+                            let isHovered = false;
+                            popup.addEventListener('mouseenter', function() {
+                                isHovered = true;
+                            });
+                            popup.addEventListener('mouseleave', function() {
+                                isHovered = false;
+                            });
+                            setTimeout(function() {
+                                if (popup && !isHovered) popup.remove();
+                            }, 3500);
                         }
-                        // Reusable function to remove warning popup and highlight
-                        function removeDirectCheckoutWarning(highlightSection) {
-                            if (highlightSection) {
-                                highlightSection.style.border = '';
-                                highlightSection.style.padding = '';
-                            }
-                            const existingPopup = document.getElementById('rmenu-enable-atc-popup');
-                            if (existingPopup) {
-                                existingPopup.remove();
-                            }
+                    }
+                    // Reusable function to remove warning popup and highlight
+                    function removeDirectCheckoutWarning(highlightSection) {
+                        if (highlightSection) {
+                            highlightSection.style.border = '';
+                            highlightSection.style.padding = '';
                         }
+                        const existingPopup = document.getElementById('rmenu-enable-atc-popup');
+                        if (existingPopup) {
+                            existingPopup.remove();
+                        }
+                    }
                     document.addEventListener('DOMContentLoaded', function() {
                         // Tab click handler for direct checkout settings tabs
                         const tabItems = document.querySelectorAll('#tab-4 .rmenu-settings-tab-item');
@@ -1214,7 +1225,7 @@ function onepaquc_cart_dashboard()
                                 const tabId = tab.getAttribute('data-tab');
 
                                 if (tabId !== "direct-general-settings" && enableDirectCheckout && !enableDirectCheckout.checked) {
-                                    
+
                                     showDirectCheckoutWarning(
                                         highlight_enableSection,
                                         '<b>Enable Direct Checkout</b> in the general settings tab to access these options.'
@@ -1319,7 +1330,7 @@ function onepaquc_cart_dashboard()
                             </label>
                             <span class="tooltip">
                                 <span class="question-mark">?</span>
-                                 <span class="tooltip-text">Enable "At least one product in cart" to add at least one product in the cart.</span>
+                                <span class="tooltip-text">Enable "At least one product in cart" to add at least one product in the cart.</span>
                             </span>
                         </td>
                     </tr>
@@ -1601,6 +1612,21 @@ function onepaquc_cart_dashboard()
                                 // Trigger change event on page load to set initial visibility
                                 button_style.dispatchEvent(new Event('change'));
 
+                            }
+
+                            // if rmenu_quick_view_button_color (which is bg color) & rmenu_quick_view_text_color (which is text color) both are dark or light, show a warning message
+                            const checkoutColor = document.querySelector('input[name="rmenu_quick_view_button_color"]');
+                            const checkoutTextColor = document.querySelector('input[name="rmenu_quick_view_text_color"]');
+                            if (checkoutColor && checkoutTextColor) {
+                                checkoutColor.addEventListener('change', function() {
+                                    checkColors(checkoutColor, checkoutTextColor);
+                                });
+                                checkoutTextColor.addEventListener('change', function() {
+                                    checkColors(checkoutColor, checkoutTextColor);
+                                });
+
+                                // Initial check on page load
+                                checkColors(checkoutColor, checkoutTextColor);
                             }
                         });
                     </script>
@@ -2223,7 +2249,7 @@ function onepaquc_cart_dashboard()
                     });
                 </script>
             </div>
-           <script>
+            <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
                     const enableCheckout = document.querySelector('div#tab-7 input[name="rmenu_enable_quick_view"]');
@@ -2240,14 +2266,14 @@ function onepaquc_cart_dashboard()
                             quickViewButtonText.disabled = false;
                         }
 
-                        if (this.value !== 'button'){
+                        if (this.value !== 'button') {
                             if (quickViewButtonIcon.value === 'none') {
                                 showDirectCheckoutWarning(
-                                        heighlight_quick_view_button_style,
-                                        'Please select an icon for the Quick View button.'
-                                    );
+                                    heighlight_quick_view_button_style,
+                                    'Please select an icon for the Quick View button.'
+                                );
                             }
-                        }else{
+                        } else {
                             removeDirectCheckoutWarning(heighlight_quick_view_button_style);
                         }
                     });
@@ -2302,7 +2328,7 @@ function onepaquc_cart_dashboard()
 
                     // Add change event listener
                     styleSelect.addEventListener('change', updateCustomCssRowVisibility);
-                    
+
                     updateQuickViewDisplayType();
                     quickViewDisplayType.addEventListener('change', updateQuickViewDisplayType);
                 });
@@ -2678,7 +2704,11 @@ function onepaquc_cart_dashboard()
                                 <div class="rmenu-settings-control">
                                     <select name="rmenu_redirect_after_add" class="rmenu-select">
                                         <option value="none" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'none'); ?>>No Redirect</option>
-                                        <option value="cart" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'cart'); ?>>Cart Page</option>
+                                        <!-- rmenu_disable_cart_page is it's on disable below option & show cart page is disabled -->
+                                        <?php
+                                        $disable_cart_page = get_option('rmenu_disable_cart_page', '0');
+                                        ?>
+                                        <option value="cart" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'cart'); ?> <?php echo ($disable_cart_page == '1') ? 'disabled' : ''; ?>>Cart Page <?php echo ($disable_cart_page == '1') ? '(Disabled)' : ''; ?></option>
                                         <option value="checkout" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'checkout'); ?>>Checkout Page</option>
                                     </select>
                                     <p class="rmenu-field-description">Choose whether to redirect customers after adding products to cart.</p>
