@@ -18,7 +18,7 @@ function onepaquc_plugincy_cart_elementor_widget()
     if (! onepaquc_is_elementor_active() || ! class_exists('WooCommerce') || ! function_exists('wc_get_attribute_taxonomies')) {
         return;
     }
-    class Plugincy_Cart_Widget extends \Elementor\Widget_Base
+    class onepaquc_Cart_Widget extends \Elementor\Widget_Base
     {
 
         /**
@@ -850,7 +850,7 @@ function onepaquc_plugincy_cart_elementor_widget()
         }
     }
     // Register the widget
-    \Elementor\Plugin::instance()->widgets_manager->register(new Plugincy_Cart_Widget());
+    \Elementor\Plugin::instance()->widgets_manager->register(new onepaquc_Cart_Widget());
 
 }
 

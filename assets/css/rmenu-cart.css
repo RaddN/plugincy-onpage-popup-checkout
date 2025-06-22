@@ -1269,7 +1269,7 @@ table.one-page-checkout-product-table td {
 
 .product-single-template
   .one-page-checkout-product-single
-  a.button.product_type_simple.add_to_cart_button.ajax_add_to_cart {
+  a.button.product_type_simple.add_to_cart_button.onepaquc_ajax_add_to_cart {
   margin: 0;
 }
 

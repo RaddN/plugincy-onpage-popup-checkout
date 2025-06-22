@@ -25,7 +25,7 @@ function onepaquc_plugincy_one_page_checkout_widget()
     if (! onepaquc_is_elementor_active() || ! class_exists('WooCommerce') || ! function_exists('wc_get_attribute_taxonomies')) {
         return;
     }
-class Plugincy_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
+class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
 
     /**
      * Get widget name.
@@ -567,7 +567,7 @@ class Plugincy_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
 }
 
 // Register the widget
-\Elementor\Plugin::instance()->widgets_manager->register(new Plugincy_One_Page_Checkout_Widget());
+\Elementor\Plugin::instance()->widgets_manager->register(new onepaquc_One_Page_Checkout_Widget());
 }
 
 add_action('elementor/init', 'onepaquc_plugincy_one_page_checkout_widget');

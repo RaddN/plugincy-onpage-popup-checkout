@@ -90,6 +90,14 @@ document.addEventListener("DOMContentLoaded", function() {
             if (content) {
                 content.classList.add("active");
             }
+        }else{
+            // activate the first tab as default
+            const firstTab = document.querySelector('.tab');
+            if (firstTab) {
+                const firstTabIndex = firstTab.dataset.tab;
+                activateTab(firstTabIndex);
+                saveActiveTab(firstTabIndex);
+            }
         }
     }
 

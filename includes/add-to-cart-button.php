@@ -359,8 +359,8 @@ class RMENU_Add_To_Cart_Handler
         // Setup AJAX add to cart if enabled
         if (get_option('rmenu_enable_ajax_add_to_cart', 1)) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_ajax_scripts'));
-            add_action('wp_ajax_rmenu_ajax_add_to_cart', array($this, 'ajax_add_to_cart'));
-            add_action('wp_ajax_nopriv_rmenu_ajax_add_to_cart', array($this, 'ajax_add_to_cart'));
+            add_action('wp_ajax_onepaquc_ajax_add_to_cart', array($this, 'onepaquc_ajax_add_to_cart'));
+            add_action('wp_ajax_nopriv_onepaquc_ajax_add_to_cart', array($this, 'onepaquc_ajax_add_to_cart'));
             add_filter('woocommerce_add_to_cart_fragments', array($this, 'add_to_cart_fragments'));
         }
 
@@ -415,7 +415,7 @@ class RMENU_Add_To_Cart_Handler
     /**
      * AJAX add to cart handler
      */
-    public function ajax_add_to_cart()
+    public function onepaquc_ajax_add_to_cart()
     {
         check_ajax_referer('rmenu-ajax-nonce', 'nonce');
 
@@ -567,7 +567,7 @@ class RMENU_Add_To_Cart_Handler
                 '<a href="%s" data-quantity="%s" class="%s" %s data-product_id="%d" data-product_sku="%s" data-default_qty="%s" aria-label="%s" rel="nofollow">%s</a>',
                 esc_url($product->add_to_cart_url()),
                 esc_attr($default_qty), // Set default quantity here
-                esc_attr('button product_type_simple add_to_cart_button ajax_add_to_cart rmenu-ajax-add-to-cart'),
+                esc_attr('button product_type_simple add_to_cart_button onepaquc_ajax_add_to_cart rmenu-ajax-add-to-cart'),
                 '',
                 esc_attr($product->get_id()),
                 esc_attr($product->get_sku()),

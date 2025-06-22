@@ -283,7 +283,7 @@
                     if (productData.is_in_stock && productData.is_purchasable) {
                         html += '<a href="?add-to-cart=' + productData.id + '" ' +
                             'data-quantity="1" ' +
-                            'class="button product_type_simple add_to_cart_button ajax_add_to_cart rmenu-ajax-add-to-cart" ' +
+                            'class="button product_type_simple add_to_cart_button onepaquc_ajax_add_to_cart rmenu-ajax-add-to-cart" ' +
                             'data-product_id="' + productData.id + '" ' +
                             'data-product_sku="' + (productData.sku || '') + '" ' +
                             'data-default_qty="1" ' +

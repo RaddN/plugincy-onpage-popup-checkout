@@ -288,7 +288,7 @@ jQuery(document).ready(function ($) {
                 type: 'POST',
                 url: onepaquc_wc_cart_params.ajax_url,
                 data: {
-                    action: 'rmenu_ajax_add_to_cart',
+                    action: 'onepaquc_ajax_add_to_cart',
                     product_id: product_id,
                     quantity: 1,
                     variation_id: $variation_id,

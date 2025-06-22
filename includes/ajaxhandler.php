@@ -182,11 +182,11 @@ function onepaquc_clear_cart()
 
 // add to cart
 
-add_action('wp_ajax_rmenu_ajax_add_to_cart', 'ajax_add_to_cart');
-add_action('wp_ajax_nopriv_rmenu_ajax_add_to_cart', 'ajax_add_to_cart');
+add_action('wp_ajax_onepaquc_ajax_add_to_cart', 'onepaquc_ajax_add_to_cart');
+add_action('wp_ajax_nopriv_onepaquc_ajax_add_to_cart', 'onepaquc_ajax_add_to_cart');
 
 
-function ajax_add_to_cart() {
+function onepaquc_ajax_add_to_cart() {
         check_ajax_referer('rmenu-ajax-nonce', 'nonce');
 
         $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint(isset($_POST['product_id']) ? $_POST['product_id'] : 0));

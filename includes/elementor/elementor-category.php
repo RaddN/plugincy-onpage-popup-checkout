@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-class Plugincy_Elementor_Category_Alternative
+class onepaquc_Elementor_Category_Alternative
 {
 
     public function __construct()
@@ -109,4 +109,4 @@ class Plugincy_Elementor_Category_Alternative
 }
 
 // Use the alternative if the main one doesn't work
-new Plugincy_Elementor_Category_Alternative();
+new onepaquc_Elementor_Category_Alternative();

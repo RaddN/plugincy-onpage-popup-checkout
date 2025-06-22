@@ -90,7 +90,7 @@ function onepaquc_cart_dashboard()
         </div>
 
         <div class="button-row">
-            <a href="/wp-admin/admin.php?page=onepaquc_cart_documentation" class="button">View Documentation</a>
+            <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button">View Documentation</a>
             <a href="https://plugincy.com/support" target="_blank" class="button button-secondary">Get Support</a>
         </div>
     </div>
@@ -142,23 +142,27 @@ function onepaquc_cart_dashboard()
                 // Color is dark if luminance is less than 0.5
                 return luminance < 0.5;
             }
-            function checkColors(checkoutColor, checkoutTextColor) {
+            function checkColors(checkoutColor, checkoutTextColor, is_warn_show = true) {
                 const bgColor = checkoutColor.value;
                 const textColor = checkoutTextColor.value;
 
+                if (!is_warn_show) {
+                    return;
+                }
+
                 if (isColorDark(bgColor) && isColorDark(textColor)) {
                     showDirectCheckoutWarning(
-                        checkoutColor.closest('.rmenu-settings-row'),
+                        checkoutColor.closest('.rmenupro-settings-row'),
                         'Warning: Both background and text colors are dark. This may affect readability.'
                     );
                 } else if (!isColorDark(bgColor) && !isColorDark(textColor)) {
                     showDirectCheckoutWarning(
-                        checkoutTextColor.closest('.rmenu-settings-row'),
+                        checkoutTextColor.closest('.rmenupro-settings-row'),
                         'Warning: Both background and text colors are light. This may affect readability.'
                     );
                 } else {
-                    removeDirectCheckoutWarning(checkoutColor.closest('.rmenu-settings-row'));
-                    removeDirectCheckoutWarning(checkoutTextColor.closest('.rmenu-settings-row'));
+                    removeDirectCheckoutWarning(checkoutColor.closest('.rmenupro-settings-row'));
+                    removeDirectCheckoutWarning(checkoutTextColor.closest('.rmenupro-settings-row'));
                 }
             }
         </script>
@@ -733,14 +737,14 @@ function onepaquc_cart_dashboard()
                             const checkoutTextColor = document.querySelector('input[name="rmenu_wc_checkout_text_color"]');
                             if (checkoutColor && checkoutTextColor) {
                                 checkoutColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor);
+                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                                 });
                                 checkoutTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor);
+                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                                 });
 
                                 // Initial check on page load
-                                checkColors(checkoutColor, checkoutTextColor);
+                                checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                             }
 
                         });
@@ -1626,14 +1630,14 @@ function onepaquc_cart_dashboard()
                             const checkoutTextColor = document.querySelector('input[name="rmenu_quick_view_text_color"]');
                             if (checkoutColor && checkoutTextColor) {
                                 checkoutColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor);
+                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                                 });
                                 checkoutTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor);
+                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                                 });
 
                                 // Initial check on page load
-                                checkColors(checkoutColor, checkoutTextColor);
+                                checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                             }
                         });
                     </script>
@@ -2030,7 +2034,7 @@ function onepaquc_cart_dashboard()
                                 <div class="rmenu-settings-info-box">
                                     <h4>Quick View Documentation</h4>
                                     <p>For detailed instructions on customizing the Quick View feature, please visit our documentation:</p>
-                                    <a href="#" class="button button-secondary">View Documentation</a>
+                                    <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/quick-view/woocommerce-quick-view-general-settings/" class="button button-secondary">View Documentation</a>
                                 </div>
                             </div>
                         </div>
@@ -2616,14 +2620,14 @@ function onepaquc_cart_dashboard()
                             const checkoutTextColor = document.querySelector('input[name="rmenu_add_to_cart_text_color"]');
                             if (checkoutColor && checkoutTextColor) {
                                 checkoutColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor);
+                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                                 });
                                 checkoutTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor);
+                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                                 });
 
                                 // Initial check on page load
-                                checkColors(checkoutColor, checkoutTextColor);
+                                checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
                             }
 
                             // if rmenu_add_to_cart_hover_bg_color (which is bg color) & rmenu_add_to_cart_hover_text_color (which is text color) both are dark or light, show a warning message
@@ -2631,14 +2635,14 @@ function onepaquc_cart_dashboard()
                             const checkoutHoverTextColor = document.querySelector('input[name="rmenu_add_to_cart_hover_text_color"]');
                             if (checkoutHoverColor && checkoutHoverTextColor) {
                                 checkoutHoverColor.addEventListener('change', function() {
-                                    checkColors(checkoutHoverColor, checkoutHoverTextColor);
+                                    checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
                                 });
                                 checkoutHoverTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutHoverColor, checkoutHoverTextColor);
+                                    checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
                                 });
 
                                 // Initial check on page load
-                                checkColors(checkoutHoverColor, checkoutHoverTextColor);
+                                checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
                             }
                         });
                     </script>
@@ -3067,7 +3071,7 @@ function onepaquc_cart_dashboard()
             <?php submit_button(); ?>
         </form>
         <p style="text-align: center;font-size: 15px;">To add menu cart to your page, use the shortcode <b>[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4"]</b> or use Plugincy Cart Widget/Block</p>
-        <p style="text-align: center;padding-bottom:20px; font-size: 15px;">[plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"] or use <b>Plugincy One Page Checkout</b> widget/block <a href="/wp-admin/admin.php?page=onepaquc_cart_documentation#multiple-products">view documentation</a></p>
+        <p style="text-align: center;padding-bottom:20px; font-size: 15px;">[plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"] or use <b>Plugincy One Page Checkout</b> widget/block <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/one-page-checkout/multi-product-one-page-checkout/">view documentation</a></p>
     </div>
 <?php
     // }

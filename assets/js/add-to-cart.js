@@ -89,7 +89,7 @@
                 type: 'POST',
                 url: rmenu_ajax_object.ajax_url,
                 data: {
-                    action: 'rmenu_ajax_add_to_cart',
+                    action: 'onepaquc_ajax_add_to_cart',
                     product_id: productId,
                     quantity: quantity,
                     variation_id: variationId,

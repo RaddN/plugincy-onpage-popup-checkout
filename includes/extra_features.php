@@ -103,10 +103,10 @@ if (get_option('rmenu_link_product', 0)) {
  * Add variation selection buttons to product archive pages using woocommerce_loop_add_to_cart_link
  */
 if (get_option('rmenu_variation_show_archive', 1)) {
-    add_filter('woocommerce_loop_add_to_cart_link', 'add_variation_buttons_to_loop', 10, 2);
+    add_filter('woocommerce_loop_add_to_cart_link', 'onepaquc_add_variation_buttons_to_loop', 10, 2);
 }
 
-function add_variation_buttons_to_loop($link, $product)
+function onepaquc_add_variation_buttons_to_loop($link, $product)
 {
     // Only proceed if this is a variable product
     if ($product->is_type('variable')) {

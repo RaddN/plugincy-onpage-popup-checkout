@@ -337,7 +337,7 @@ class RMENU_Quick_View {
         );
         
         // Get settings for JS
-        $ajax_add_to_cart = get_option('rmenu_quick_view_ajax_add_to_cart', 1);
+        $onepaquc_ajax_add_to_cart = get_option('rmenu_quick_view_ajax_add_to_cart', 1);
         $close_on_add = false;
         $keyboard_nav = get_option('rmenu_quick_view_keyboard_nav', 1);
         $effect =  'fade';
@@ -348,7 +348,7 @@ class RMENU_Quick_View {
 
         // Localize script with settings
         wp_localize_script('rmenu-quick-view-scripts', 'rmenu_quick_view_params', array(
-            'ajax_add_to_cart' => (bool) $ajax_add_to_cart,
+            'onepaquc_ajax_add_to_cart' => (bool) $onepaquc_ajax_add_to_cart,
             'close_on_add' => (bool) $close_on_add,
             'keyboard_nav' => (bool) $keyboard_nav,
             'effect' => $effect,
