@@ -34,7 +34,7 @@ function onepaquc_plugincy_cart_elementor_widget()
          */
         public function get_title()
         {
-            return esc_html__('Plugincy Cart', 'plugincy');
+            return esc_html__('Plugincy Cart', 'one-page-quick-checkout-for-woocommerce');
         }
 
         /**
@@ -79,7 +79,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'general_section',
                 [
-                    'label' => esc_html__('General Settings', 'plugincy'),
+                    'label' => esc_html__('General Settings', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
                 ]
             );
@@ -87,13 +87,13 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'cart_icon',
                 [
-                    'label' => esc_html__('Cart Icon', 'plugincy'),
+                    'label' => esc_html__('Cart Icon', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'default' => 'cart',
                     'options' => [
-                        'cart' => esc_html__('Cart', 'plugincy'),
-                        'shopping-bag' => esc_html__('Shopping Bag', 'plugincy'),
-                        'basket' => esc_html__('Basket', 'plugincy'),
+                        'cart' => esc_html__('Cart', 'one-page-quick-checkout-for-woocommerce'),
+                        'shopping-bag' => esc_html__('Shopping Bag', 'one-page-quick-checkout-for-woocommerce'),
+                        'basket' => esc_html__('Basket', 'one-page-quick-checkout-for-woocommerce'),
                     ],
                 ]
             );
@@ -101,12 +101,12 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'drawer_position',
                 [
-                    'label' => esc_html__('Drawer Position', 'plugincy'),
+                    'label' => esc_html__('Drawer Position', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'default' => 'right',
                     'options' => [
-                        'left' => esc_html__('Left', 'plugincy'),
-                        'right' => esc_html__('Right', 'plugincy'),
+                        'left' => esc_html__('Left', 'one-page-quick-checkout-for-woocommerce'),
+                        'right' => esc_html__('Right', 'one-page-quick-checkout-for-woocommerce'),
                     ],
                 ]
             );
@@ -114,18 +114,18 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_title_tag',
                 [
-                    'label' => esc_html__('Product Title Tag', 'plugincy'),
+                    'label' => esc_html__('Product Title Tag', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'default' => 'h4',
                     'options' => [
-                        'h1' => esc_html__('H1', 'plugincy'),
-                        'h2' => esc_html__('H2', 'plugincy'),
-                        'h3' => esc_html__('H3', 'plugincy'),
-                        'h4' => esc_html__('H4', 'plugincy'),
-                        'h5' => esc_html__('H5', 'plugincy'),
-                        'h6' => esc_html__('H6', 'plugincy'),
-                        'p' => esc_html__('P', 'plugincy'),
-                        'div' => esc_html__('DIV', 'plugincy'),
+                        'h1' => esc_html__('H1', 'one-page-quick-checkout-for-woocommerce'),
+                        'h2' => esc_html__('H2', 'one-page-quick-checkout-for-woocommerce'),
+                        'h3' => esc_html__('H3', 'one-page-quick-checkout-for-woocommerce'),
+                        'h4' => esc_html__('H4', 'one-page-quick-checkout-for-woocommerce'),
+                        'h5' => esc_html__('H5', 'one-page-quick-checkout-for-woocommerce'),
+                        'h6' => esc_html__('H6', 'one-page-quick-checkout-for-woocommerce'),
+                        'p' => esc_html__('P', 'one-page-quick-checkout-for-woocommerce'),
+                        'div' => esc_html__('DIV', 'one-page-quick-checkout-for-woocommerce'),
                     ],
                 ]
             );
@@ -136,7 +136,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'cart_icon_style_section',
                 [
-                    'label' => esc_html__('Cart Icon', 'plugincy'),
+                    'label' => esc_html__('Cart Icon', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -144,7 +144,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'cart_icon_size',
                 [
-                    'label' => esc_html__('Icon Size', 'plugincy'),
+                    'label' => esc_html__('Icon Size', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -164,7 +164,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'cart_icon_color',
                 [
-                    'label' => esc_html__('Color', 'plugincy'),
+                    'label' => esc_html__('Color', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'default' => '#000000',
                 ]
@@ -176,7 +176,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'drawer_style_section',
                 [
-                    'label' => esc_html__('Drawer', 'plugincy'),
+                    'label' => esc_html__('Drawer', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -184,7 +184,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'drawer_width',
                 [
-                    'label' => esc_html__('Width', 'plugincy'),
+                    'label' => esc_html__('Width', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -204,7 +204,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'drawer_background',
                 [
-                    'label' => esc_html__('Background Color', 'plugincy'),
+                    'label' => esc_html__('Background Color', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'default' => '#ffffff',
                 ]
@@ -213,7 +213,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'drawer_padding',
                 [
-                    'label' => esc_html__('Padding', 'plugincy'),
+                    'label' => esc_html__('Padding', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -233,7 +233,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'drawer_margin',
                 [
-                    'label' => esc_html__('Margin', 'plugincy'),
+                    'label' => esc_html__('Margin', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -256,7 +256,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'product_image_style_section',
                 [
-                    'label' => esc_html__('Product Image', 'plugincy'),
+                    'label' => esc_html__('Product Image', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -264,7 +264,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_image_width',
                 [
-                    'label' => esc_html__('Width', 'plugincy'),
+                    'label' => esc_html__('Width', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -284,7 +284,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_image_height',
                 [
-                    'label' => esc_html__('Height', 'plugincy'),
+                    'label' => esc_html__('Height', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -307,7 +307,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'product_title_style_section',
                 [
-                    'label' => esc_html__('Product Title', 'plugincy'),
+                    'label' => esc_html__('Product Title', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -315,7 +315,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_title_font_size',
                 [
-                    'label' => esc_html__('Font Size', 'plugincy'),
+                    'label' => esc_html__('Font Size', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -335,7 +335,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_title_line_height',
                 [
-                    'label' => esc_html__('Line Height', 'plugincy'),
+                    'label' => esc_html__('Line Height', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'range' => [
                         'px' => [
@@ -353,7 +353,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_title_color',
                 [
-                    'label' => esc_html__('Color', 'plugincy'),
+                    'label' => esc_html__('Color', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'default' => '#333333',
                 ]
@@ -365,7 +365,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'product_price_style_section',
                 [
-                    'label' => esc_html__('Product Price', 'plugincy'),
+                    'label' => esc_html__('Product Price', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -373,7 +373,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_price_font_size',
                 [
-                    'label' => esc_html__('Font Size', 'plugincy'),
+                    'label' => esc_html__('Font Size', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -393,7 +393,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_price_line_height',
                 [
-                    'label' => esc_html__('Line Height', 'plugincy'),
+                    'label' => esc_html__('Line Height', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'range' => [
                         'px' => [
@@ -411,7 +411,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'product_price_color',
                 [
-                    'label' => esc_html__('Color', 'plugincy'),
+                    'label' => esc_html__('Color', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'default' => '#666666',
                 ]
@@ -423,7 +423,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'quantity_style_section',
                 [
-                    'label' => esc_html__('Quantity', 'plugincy'),
+                    'label' => esc_html__('Quantity', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -431,7 +431,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'quantity_width',
                 [
-                    'label' => esc_html__('Width', 'plugincy'),
+                    'label' => esc_html__('Width', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -451,7 +451,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'quantity_height',
                 [
-                    'label' => esc_html__('Height', 'plugincy'),
+                    'label' => esc_html__('Height', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -471,7 +471,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'quantity_padding',
                 [
-                    'label' => esc_html__('Padding', 'plugincy'),
+                    'label' => esc_html__('Padding', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -494,7 +494,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'remove_button_style_section',
                 [
-                    'label' => esc_html__('Remove Button', 'plugincy'),
+                    'label' => esc_html__('Remove Button', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -502,7 +502,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'remove_button_size',
                 [
-                    'label' => esc_html__('Size', 'plugincy'),
+                    'label' => esc_html__('Size', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -522,7 +522,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'remove_button_padding',
                 [
-                    'label' => esc_html__('Padding', 'plugincy'),
+                    'label' => esc_html__('Padding', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -545,7 +545,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'subtotal_style_section',
                 [
-                    'label' => esc_html__('Subtotal', 'plugincy'),
+                    'label' => esc_html__('Subtotal', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -553,7 +553,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'subtotal_font_size',
                 [
-                    'label' => esc_html__('Font Size', 'plugincy'),
+                    'label' => esc_html__('Font Size', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -573,7 +573,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'subtotal_line_height',
                 [
-                    'label' => esc_html__('Line Height', 'plugincy'),
+                    'label' => esc_html__('Line Height', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'range' => [
                         'px' => [
@@ -591,7 +591,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'subtotal_color',
                 [
-                    'label' => esc_html__('Color', 'plugincy'),
+                    'label' => esc_html__('Color', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'default' => '#333333',
                 ]
@@ -600,7 +600,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'subtotal_padding',
                 [
-                    'label' => esc_html__('Padding', 'plugincy'),
+                    'label' => esc_html__('Padding', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -620,7 +620,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'subtotal_margin',
                 [
-                    'label' => esc_html__('Margin', 'plugincy'),
+                    'label' => esc_html__('Margin', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -643,7 +643,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->start_controls_section(
                 'checkout_button_style_section',
                 [
-                    'label' => esc_html__('Checkout Button', 'plugincy'),
+                    'label' => esc_html__('Checkout Button', 'one-page-quick-checkout-for-woocommerce'),
                     'tab' => \Elementor\Controls_Manager::TAB_STYLE,
                 ]
             );
@@ -651,7 +651,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'checkout_btn_background',
                 [
-                    'label' => esc_html__('Background Color', 'plugincy'),
+                    'label' => esc_html__('Background Color', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'default' => '#333333',
                 ]
@@ -660,7 +660,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'checkout_btn_font_size',
                 [
-                    'label' => esc_html__('Font Size', 'plugincy'),
+                    'label' => esc_html__('Font Size', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'size_units' => ['px'],
                     'range' => [
@@ -680,7 +680,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'checkout_btn_line_height',
                 [
-                    'label' => esc_html__('Line Height', 'plugincy'),
+                    'label' => esc_html__('Line Height', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::SLIDER,
                     'range' => [
                         'px' => [
@@ -698,7 +698,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             $this->add_control(
                 'checkout_btn_color',
                 [
-                    'label' => esc_html__('Text Color', 'plugincy'),
+                    'label' => esc_html__('Text Color', 'one-page-quick-checkout-for-woocommerce'),
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'default' => '#ffffff',
                 ]
@@ -846,7 +846,7 @@ function onepaquc_plugincy_cart_elementor_widget()
 
             $css .= '</style>';
 
-            echo $css;
+            echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         }
     }
     // Register the widget

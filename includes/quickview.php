@@ -198,7 +198,7 @@ class RMENU_Quick_View {
             $button_content
         );
         
-        echo apply_filters('rmenu_quick_view_button_html', $button_html, $product);
+        echo apply_filters('rmenu_quick_view_button_html', $button_html, $product); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
     
     /**

@@ -72,7 +72,7 @@ class onepaquc_Elementor_Category_Alternative
         $elements_manager->add_category(
             'plugincy',
             [
-                'title' => esc_html__('Plugincy', 'plugincy') . $this->get_svg_icon(),
+                'title' => esc_html__('Plugincy', 'one-page-quick-checkout-for-woocommerce') . $this->get_svg_icon(),
                 'icon' => 'plugincy-icon',
             ]
         );

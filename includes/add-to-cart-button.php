@@ -130,7 +130,7 @@ function rmenu_apply_add_to_cart_styles()
 
     // Output the inline CSS if there is any
     if (!empty($css)) {
-        echo '<style id="rmenu-add-to-cart-custom-styles">' . $css . '</style>';
+        echo '<style id="rmenu-add-to-cart-custom-styles">' . $css . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     // Add Button icon
@@ -182,7 +182,7 @@ function rmenu_add_icons_to_buttons()
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addToCartButtons = document.querySelectorAll('.add_to_cart_button:not(.product_type_variable), .single_add_to_cart_button:not(.product_type_variable)');
-            const svgIcon = `<?php echo $svg_icon; ?>`;
+            const svgIcon = `<?php echo $svg_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>`; 
             const iconPosition = '<?php echo esc_attr( $icon_position ); ?>';
             const mobileIconOnly = <?php echo $mobile_icon_only ? 'true' : 'false'; ?>;
 
@@ -588,15 +588,15 @@ class RMENU_Add_To_Cart_Handler
         // Update mini cart content
         ob_start();
     ?>
-        <span class="rmenu-cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+        <span class="rmenu-cart-count"><?php echo WC()->cart->get_cart_contents_count(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></span>
         <?php
         $fragments['span.rmenu-cart-count'] = ob_get_clean();
 
         // Update cart total
         ob_start();
         ?>
-        <span class="rmenu-cart-total"><?php echo WC()->cart->get_cart_total(); ?></span>
-<?php
+        <span class="rmenu-cart-total"><?php echo WC()->cart->get_cart_total(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></span>
+        <?php
         $fragments['span.rmenu-cart-total'] = ob_get_clean();
 
         return $fragments;

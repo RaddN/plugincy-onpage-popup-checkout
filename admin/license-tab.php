@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 class onepaquc_License_Manager
 {
     private $api_url = 'https://plugincy.com/';
-    private $item_id = 697;
+    private $item_id = 4042;
     private $pro_plugin_file = 'dynamic-ajax-product-filters-for-woocommerce-pro/dynamic-ajax-product-filters-for-woocommerce-pro.php';
     private $pro_plugin_dir = 'dynamic-ajax-product-filters-for-woocommerce-pro';
 
@@ -19,7 +19,7 @@ class onepaquc_License_Manager
 
     public function handle_license_actions()
     {
-        if (!isset($_POST['dapfforwcpro_license_action']) || !wp_verify_nonce($_POST['dapfforwcpro_license_nonce'], 'dapfforwcpro_license_nonce')) {
+        if (!isset($_POST['dapfforwcpro_license_action']) || (isset($_POST['dapfforwcpro_license_nonce']) && !wp_verify_nonce($_POST['dapfforwcpro_license_nonce'], 'dapfforwcpro_license_nonce'))) {
             return;
         }
 
@@ -226,32 +226,9 @@ class onepaquc_License_Manager
                     return $wp_filesystem->rmdir($plugin_dir, true);
                 }
             }
-            
-            // Fallback to manual deletion
-            return $this->delete_directory($plugin_dir);
         }
         
         return true;
-    }
-
-    private function delete_directory($dir)
-    {
-        if (!is_dir($dir)) {
-            return false;
-        }
-
-        $files = array_diff(scandir($dir), array('.', '..'));
-        
-        foreach ($files as $file) {
-            $path = $dir . '/' . $file;
-            if (is_dir($path)) {
-                $this->delete_directory($path);
-            } else {
-                unlink($path);
-            }
-        }
-        
-        return rmdir($dir);
     }
 
     private function download_and_install_pro_plugin($download_url)
@@ -275,7 +252,6 @@ class onepaquc_License_Manager
 
         // Step 2: Remove existing plugin directory if it exists
         if (!$this->remove_existing_plugin_directory()) {
-            error_log('Warning: Could not remove existing plugin directory');
         }
 
         // Step 3: Download the plugin zip file

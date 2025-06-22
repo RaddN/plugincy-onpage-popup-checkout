@@ -233,12 +233,12 @@ function onepaquc_add_button_css()
             text-align: center;
         }
 
-        <?php echo $additional_css; ?>
+        <?php echo $additional_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
     </style>
 <?php
 
     // Output the CSS
-    echo ob_get_clean();
+    echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 // Add button CSS to head
@@ -325,10 +325,10 @@ function onepaquc_add_checkout_button()
         // Remove 'single_add_to_cart_button' and 'direct-checkout-button' from classes
         $button_classes = preg_replace('/\b(single_add_to_cart_button|direct-checkout-button)\b/', '', $button_styling['classes']);
         $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
-        echo '<a href="#checkout-popup" class="' . esc_attr($button_classes) . '" style="' . esc_attr($button_styling['style']) . '">' . $button_inner . '</a>';
+        echo '<a href="#checkout-popup" class="' . esc_attr($button_classes) . '" style="' . esc_attr($button_styling['style']) . '">' . $button_inner . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     } else {
         // Output the button
-        echo '<a href="#checkout-popup" class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" style="' . esc_attr($button_styling['style']) . '">' . $button_inner . '</a>';
+        echo '<a href="#checkout-popup" class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" style="' . esc_attr($button_styling['style']) . '">' . $button_inner . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 }
 

@@ -454,7 +454,7 @@ function onepaquc_cart_dashboard()
                             <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
                         </div>
 
-                        <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-row" id="rmenu-direct-checkout-enable-field">
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Enable Direct Checkout</label>
                                 <div class="rmenu-settings-control">
@@ -497,7 +497,7 @@ function onepaquc_cart_dashboard()
                             </div>
                         </div>
                     </div>
-                    <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section" id="rmenu-direct-button-display-section">
                         <div class="rmenu-settings-section-header">
                             <h3><span class="dashicons dashicons-visibility"></span> Display Settings</h3>
                         </div>
@@ -1460,7 +1460,7 @@ function onepaquc_cart_dashboard()
                             <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
                         </div>
 
-                        <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-row" id="rmenu-quick-view-enable-field">
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Enable Quick View</label>
                                 <div class="rmenu-settings-control">
@@ -1648,7 +1648,7 @@ function onepaquc_cart_dashboard()
                         <h3><span class="dashicons dashicons-visibility"></span> Quick View Content</h3>
                     </div>
 
-                    <div class="rmenu-settings-row">
+                    <div class="rmenu-settings-row" id="rmenu-quick-view-content-elements">
                         <div class="rmenu-settings-field">
                             <label class="rmenu-settings-label">Content Elements</label>
                             <?php $content_elements_option = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']); ?>
@@ -1776,13 +1776,13 @@ function onepaquc_cart_dashboard()
                     </div>
                 </div>
 
-                <div class="tab-content" id="quick-display" style="padding: 0;">
+                <div class="tab-content" id="quick-display" style="padding: 0px;">
                     <div class="rmenu-settings-section">
                         <div class="rmenu-settings-section-header">
                             <h3><span class="dashicons dashicons-layout"></span> Display Settings</h3>
                         </div>
 
-                        <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-row" >
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Product Types</label>
                                 <?php $product_types_option = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable']); ?>
@@ -2089,7 +2089,7 @@ function onepaquc_cart_dashboard()
                         const enableCustomQuickView = document.querySelector('input[name="rmenu_enable_quick_view"]');
                         const highlight_quick_view_enable_Section = document.querySelector('#rmenu-quick-view-enable-field');
                         const highlight_popup_content_element_Section = document.querySelector('#rmenu-quick-view-content-elements');
-                        const highlight_quick_view_display_Section = document.querySelector('#rmenu-quick-view-display-settings');
+                        const highlight_quick_view_display_Section = document.querySelector('#quick-display');
                         const productTypes = document.querySelectorAll('input[name="rmenu_show_quick_view_by_types[]"]');
                         const productPages = document.querySelectorAll('input[name="rmenu_show_quick_view_by_page[]"]');
 
@@ -2364,7 +2364,7 @@ function onepaquc_cart_dashboard()
                             <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
                         </div>
 
-                        <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-row" id="rmenu-enable-custom-add-to-cart">
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Enable Custom Add to Cart</label>
                                 <div class="rmenu-settings-control">

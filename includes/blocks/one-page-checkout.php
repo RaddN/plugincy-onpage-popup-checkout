@@ -199,7 +199,7 @@ function onepaquc_add_block_category( $categories ) {
         array(
             array(
                 'slug'  => 'plugincy',
-                'title' => __( 'Plugincy', 'plugincy-one-page-checkout' ),
+                'title' => __( 'Plugincy', 'one-page-quick-checkout-for-woocommerce' ),
                 'icon'  => 'cart',
             ),
         ),
