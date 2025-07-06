@@ -26,10 +26,123 @@ function onepaquc_cart_menu()
         'onepaquc_cart_documentation',
         'onepaquc_cart_documentation'
     );
-    if (get_option('onepaquc_validity_days') !== "0") {
-        // add_submenu_page('bd-affiliate-marketing', 'Manage Posts', 'Manage Posts', 'manage_options', 'bd-manage-posts', 'onepaquc_marketing_manage_posts');
-        // add_submenu_page('bd-affiliate-marketing', 'Send Notification', 'Send Notification', 'manage_options', 'bd-send-notification', 'onepaquc_marketing_send_notification');
-    }
+
+    add_submenu_page(
+        'onepaquc_cart',
+        'Get Pro',
+        'Get Pro',
+        'manage_options',
+        'onepaquc_cart_get_pro',
+        'onepaquc_cart_get_pro'
+    );
+    
+}
+
+
+// Callback function for Get Pro page
+function onepaquc_cart_get_pro() {
+    ?>
+    <div class="wrap">
+        <h1>Upgrade to Onepage Checkout Pro</h1>
+        
+        <div class="onepaquc-pro-banner" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin: 20px 0;">
+            <h2 style="color: white; margin-top: 0;">🚀 Unlock Premium Features</h2>
+            <p style="font-size: 18px; margin-bottom: 30px;">Take your checkout experience to the next level with our premium features designed to boost conversions and enhance user experience.</p>
+            <a target="_blank" href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button button-primary button-hero" style="background: #ff6b6b; border-color: #ff6b6b; text-shadow: none; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);">Get Pro Version</a>
+        </div>
+
+        <div class="onepaquc-features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 30px 0;">
+            
+            <div class="feature-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #667eea;">
+                <h3 style="color: #333; margin-top: 0;">🎨 Advanced Customization</h3>
+                <ul style="color: #666; line-height: 1.6;">
+                    <li>Customizable checkout layout</li>
+                    <li>Advanced customizable checkout form</li>
+                    <li>Quick view popup modal size customization</li>
+                    <li>Customizable notifications on add to cart</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #764ba2;">
+                <h3 style="color: #333; margin-top: 0;">⚡ Enhanced Checkout</h3>
+                <ul style="color: #666; line-height: 1.6;">
+                    <li>Direct checkout for grouped products</li>
+                    <li>Popup checkout</li>
+                    <li>One click purchase</li>
+                    <li>Single checkout without clear cart</li>
+                    <li>Advanced checkout options</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #ff6b6b;">
+                <h3 style="color: #333; margin-top: 0;">🛒 Smart Shopping Features</h3>
+                <ul style="color: #666; line-height: 1.6;">
+                    <li>Express checkout options</li>
+                    <li>Multi-step checkout</li>
+                    <li>Address auto complete</li>
+                    <li>Default quantity change</li>
+                    <li>Quantity selector in archives</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #51cf66;">
+                <h3 style="color: #333; margin-top: 0;">📱 Mobile & UX Optimization</h3>
+                <ul style="color: #666; line-height: 1.6;">
+                    <li>Quick view mobile optimization</li>
+                    <li>Add to cart mobile optimization</li>
+                    <li>Quick view loading effects</li>
+                    <li>Quick view close on add to cart</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #ffd93d;">
+                <h3 style="color: #333; margin-top: 0;">🔐 Security & Control</h3>
+                <ul style="color: #666; line-height: 1.6;">
+                    <li>Force login before checkout</li>
+                    <li>Enable captcha on checkout</li>
+                    <li>Remove product button in checkout form</li>
+                    <li>Trusted badge in checkout form</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #ff8cc8;">
+                <h3 style="color: #333; margin-top: 0;">📊 Analytics & Sharing</h3>
+                <ul style="color: #666; line-height: 1.6;">
+                    <li>Quick view analytics</li>
+                    <li>Quick view shortcode</li>
+                    <li>Social share in quick view popup</li>
+                    <li>Product attributes in quick view</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="onepaquc-cta-section" style="text-align: center; margin: 40px 0; padding: 30px; background: #f8f9fa; border-radius: 10px;">
+            <h2 style="color: #333;">Ready to Boost Your Sales?</h2>
+            <p style="font-size: 16px; color: #666; margin-bottom: 25px;">Join thousands of store owners who have increased their conversion rates with our pro features.</p>
+            <a target="_blank" href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button button-primary button-hero" style="background: #667eea; border-color: #667eea; margin-right: 15px;">Upgrade Now</a>
+            <a target="_blank" href="https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button button-secondary button-hero">View Demo</a>
+        </div>
+
+        <div class="onepaquc-testimonials" style="background: white; padding: 30px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="text-align: center; color: #333; margin-bottom: 30px;">What Our Customers Say</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <p style="font-style: italic; color: #666;">"The one-click purchase feature increased our conversion rate by 35%!"</p>
+                    <strong style="color: #333;">- Sarah M.</strong>
+                </div>
+                <div style="padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #764ba2;">
+                    <p style="font-style: italic; color: #666;">"Mobile optimization is fantastic. Our mobile sales doubled!"</p>
+                    <strong style="color: #333;">- John D.</strong>
+                </div>
+                <div style="padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #ff6b6b;">
+                    <p style="font-style: italic; color: #666;">"The customizable checkout layout perfectly matches our brand."</p>
+                    <strong style="color: #333;">- Maria L.</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
 }
 
 // Display the form for Side Cart and PopUp settings
