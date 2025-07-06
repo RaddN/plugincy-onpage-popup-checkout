@@ -446,7 +446,7 @@ table.form-table tbody {
 
 .pro-only:hover:before
  {
-    content: "Pro Features only -- Coming Soon --";
+    content: "Pro Features only";
     background: red;
     color: #fff;
     position: absolute;
