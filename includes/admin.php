@@ -70,7 +70,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <h1>Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.5</span></h1>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.6</span></div>
         <p>Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 
@@ -90,8 +90,10 @@ function onepaquc_cart_dashboard()
         </div>
 
         <div class="button-row">
-            <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button">View Documentation</a>
-            <a href="https://plugincy.com/support" target="_blank" class="button button-secondary">Get Support</a>
+            <a target="_blank" href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ff5a36;color: white;"><span class="dashicons dashicons-visibility" style=" margin-right: 5px; "></span> Get Pro</a>
+            <a target="_blank" href="https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ed8936;color: white;"><span class="dashicons dashicons-visibility" style=" margin-right: 5px; "></span> View Demo</a>
+            <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button"><span class="dashicons dashicons-book" style=" margin-right: 5px; "></span> View Documentation</a>
+            <a href="https://plugincy.com/support" target="_blank" class="button button-secondary"><span class="dashicons dashicons-sos" style=" margin-right: 5px; "></span> Get Support</a>
         </div>
     </div>
 
@@ -103,15 +105,42 @@ function onepaquc_cart_dashboard()
     ?>
     <div class="tab-container">
         <div class="tabs">
-            <div class="tab active" data-tab="1">Checkout Form Manage</div>
-            <div class="tab" data-tab="3">Text Manage</div>
-            <div class="tab" data-tab="2">One Page Checkout</div>
-            <div class="tab" data-tab="8">Add To Cart</div>
-            <div class="tab" data-tab="4">Direct Checkout Manage</div>
-            <div class="tab" data-tab="7">Quick View</div>
-            <div class="tab" data-tab="5">Features</div>
-            <div class="tab" data-tab="6">Advanced Settings</div>
-            <div class="tab" data-tab="100">Plugin License</div>
+            <div class="tab" data-tab="2">
+                <span class="dashicons dashicons-admin-page"></span>
+                One Page Checkout
+            </div>
+            <div class="tab" data-tab="4">
+                <span class="dashicons dashicons-cart"></span>
+                Direct Checkout
+            </div>
+            <div class="tab" data-tab="7">
+                <span class="dashicons dashicons-visibility"></span>
+                Quick View
+            </div>
+            <div class="tab" data-tab="5">
+                <span class="dashicons dashicons-star-filled"></span>
+                Features
+            </div>
+            <div class="tab" data-tab="8">
+                <span class="dashicons dashicons-plus-alt"></span>
+                Add To Cart
+            </div>
+            <div class="tab active" data-tab="1">
+                <span class="dashicons dashicons-forms"></span>
+                Checkout Form
+            </div>
+            <div class="tab" data-tab="3">
+                <span class="dashicons dashicons-edit"></span>
+                Text Manage
+            </div>
+            <div class="tab" data-tab="6">
+                <span class="dashicons dashicons-admin-settings"></span>
+                Advanced Settings
+            </div>
+            <div class="tab" data-tab="100">
+                <span class="dashicons dashicons-admin-network"></span>
+                Plugin License
+            </div>
         </div>
         <script>
             function isColorDark(color) {

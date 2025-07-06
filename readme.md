@@ -4,7 +4,7 @@
 **Tags:** WooCommerce, Popup Checkout, Quick Checkout, One-Page Checkout, Cart Drawer  
 **Requires at least:** 5.0  
 **Tested up to:** 6.8  
-**Stable tag:** 1.0.5  
+**Stable tag:** 1.0.6  
 **Requires PHP:** 7.2  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
@@ -157,7 +157,7 @@ A: The plugin is translation-ready and compatible with popular translation plugi
 
 ## Changelog
 
-### 1.0.5
+### 1.0.6
 - Initial release with complete feature set including popup checkout, menu cart drawer, product templates, and AJAX checkout processing
 
 ---
