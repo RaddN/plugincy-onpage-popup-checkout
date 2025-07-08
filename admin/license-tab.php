@@ -19,18 +19,18 @@ class onepaquc_License_Manager
 
     public function handle_license_actions()
     {
-        if (!isset($_POST['dapfforwcpro_license_action']) || (isset($_POST['dapfforwcpro_license_nonce']) && !wp_verify_nonce($_POST['dapfforwcpro_license_nonce'], 'dapfforwcpro_license_nonce'))) {
+        if (!isset($_POST['onepaquc_license_action']) || (isset($_POST['onepaquc_license_nonce']) && !wp_verify_nonce($_POST['onepaquc_license_nonce'], 'onepaquc_license_nonce'))) {
             return;
         }
 
-        $action = sanitize_text_field($_POST['dapfforwcpro_license_action']);
+        $action = sanitize_text_field($_POST['onepaquc_license_action']);
 
         // Start output buffering to prevent header issues
         ob_start();
 
         try {
             if ($action === 'activate') {
-                $license_key = sanitize_text_field($_POST['dapfforwcpro_license_key']);
+                $license_key = sanitize_text_field($_POST['onepaquc_license_key']);
                 
                 if (empty($license_key)) {
                     $this->set_transient_notice('Please enter a valid license key.', 'error');
@@ -57,7 +57,7 @@ class onepaquc_License_Manager
 
     private function set_transient_notice($message, $type = 'success')
     {
-        set_transient('dapfforwcpro_admin_notice', array(
+        set_transient('onepaquc_admin_notice', array(
             'message' => $message,
             'type' => $type
         ), 30);
@@ -65,13 +65,13 @@ class onepaquc_License_Manager
 
     public function show_admin_notices()
     {
-        $notice = get_transient('dapfforwcpro_admin_notice');
+        $notice = get_transient('onepaquc_admin_notice');
         if ($notice) {
             $class = $notice['type'] === 'error' ? 'notice-error' : 'notice-success';
             echo '<div class="notice ' . esc_attr($class) . ' is-dismissible">';
             echo '<p>' . esc_html($notice['message']) . '</p>';
             echo '</div>';
-            delete_transient('dapfforwcpro_admin_notice');
+            delete_transient('onepaquc_admin_notice');
         }
     }
 
@@ -107,8 +107,8 @@ class onepaquc_License_Manager
                 $install_result = $this->download_and_install_pro_plugin($version_info->download_link);
                 
                 if ($install_result) {
-                    update_option('dapfforwcpro_license_key', $license_key);
-                    update_option('dapfforwcpro_license_status', 'valid');
+                    update_option('onepaquc_license_key', $license_key);
+                    update_option('onepaquc_license_status', 'valid');
                     $this->set_transient_notice('License activated and Pro plugin installed successfully!', 'success');
                 } else {
                     $this->set_transient_notice('License activated but failed to install Pro plugin. Please try again.', 'error');
@@ -124,7 +124,7 @@ class onepaquc_License_Manager
 
     private function reinstall_pro_plugin()
     {
-        $license_key = get_option('dapfforwcpro_license_key', '');
+        $license_key = get_option('onepaquc_license_key', '');
         
         if (empty($license_key)) {
             $this->set_transient_notice('No valid license found. Please activate your license first.', 'error');
@@ -150,7 +150,7 @@ class onepaquc_License_Manager
 
     private function deactivate_license()
     {
-        $license_key = get_option('dapfforwcpro_license_key', '');
+        $license_key = get_option('onepaquc_license_key', '');
         
         if (empty($license_key)) {
             $this->set_transient_notice('No license key found to deactivate.', 'error');
@@ -177,8 +177,8 @@ class onepaquc_License_Manager
         }
 
         // Step 3: Remove local license data
-        delete_option('dapfforwcpro_license_key');
-        delete_option('dapfforwcpro_license_status');
+        delete_option('onepaquc_license_key');
+        delete_option('onepaquc_license_status');
 
         if (is_wp_error($response)) {
             $this->set_transient_notice('License removed locally but unable to connect to server. License may still be active on server.', 'error');
@@ -328,8 +328,8 @@ class onepaquc_License_Manager
 
     public function render_license_form()
     {
-        $license_key = get_option('dapfforwcpro_license_key', '');
-        $license_status = get_option('dapfforwcpro_license_status', '');
+        $license_key = get_option('onepaquc_license_key', '');
+        $license_status = get_option('onepaquc_license_status', '');
         $is_pro_active = $this->is_pro_version_active();
         ?>
         <div style="background: #fff; padding: 1rem;">
@@ -340,7 +340,7 @@ class onepaquc_License_Manager
                     <p><strong>✓ Pro Version Activated!</strong> Your license is active and the Pro plugin is running.</p>
                 </div>
                 <form method="post" action="">
-                    <?php wp_nonce_field('dapfforwcpro_license_nonce', 'dapfforwcpro_license_nonce'); ?>
+                    <?php wp_nonce_field('onepaquc_license_nonce', 'onepaquc_license_nonce'); ?>
                     <table class="form-table">
                         <tbody style="display: block;box-shadow:none;">
                             <tr>
@@ -354,7 +354,7 @@ class onepaquc_License_Manager
                             </tr>
                         </tbody>
                     </table>
-                    <input type="hidden" name="dapfforwcpro_license_action" value="deactivate" />
+                    <input type="hidden" name="onepaquc_license_action" value="deactivate" />
                     <input type="submit" class="button button-secondary" value="Deactivate License" onclick="return confirm('Are you sure you want to deactivate your license? This will deactivate the Pro plugin.');" />
                 </form>
             <?php elseif ($license_status === 'valid' && !$is_pro_active): ?>
@@ -377,34 +377,34 @@ class onepaquc_License_Manager
                 
                 <!-- Reinstall Form -->
                 <form method="post" action="" style="display: inline-block; padding: 10px 0; border: none;">
-                    <?php wp_nonce_field('dapfforwcpro_license_nonce', 'dapfforwcpro_license_nonce'); ?>
-                    <input type="hidden" name="dapfforwcpro_license_action" value="reinstall" />
+                    <?php wp_nonce_field('onepaquc_license_nonce', 'onepaquc_license_nonce'); ?>
+                    <input type="hidden" name="onepaquc_license_action" value="reinstall" />
                     <input type="submit" class="button button-primary" value="Reinstall & Activate Pro Plugin" />
                 </form>
                 
                 <!-- Deactivate Form -->
                 <form method="post" action="" style="display: inline-block; margin-left: 10px; padding: 0; border: none;">
-                    <?php wp_nonce_field('dapfforwcpro_license_nonce', 'dapfforwcpro_license_nonce'); ?>
-                    <input type="hidden" name="dapfforwcpro_license_action" value="deactivate" />
+                    <?php wp_nonce_field('onepaquc_license_nonce', 'onepaquc_license_nonce'); ?>
+                    <input type="hidden" name="onepaquc_license_action" value="deactivate" />
                     <input type="submit" class="button button-secondary" value="Deactivate License" onclick="return confirm('Are you sure you want to deactivate your license?');" />
                 </form>
             <?php else: ?>
                 <form method="post" action="">
-                    <?php wp_nonce_field('dapfforwcpro_license_nonce', 'dapfforwcpro_license_nonce'); ?>
+                    <?php wp_nonce_field('onepaquc_license_nonce', 'onepaquc_license_nonce'); ?>
                     <table class="form-table">
                         <tbody>
                             <tr>
                                 <th scope="row">
-                                    <label for="dapfforwcpro_license_key">License Key</label>
+                                    <label for="onepaquc_license_key">License Key</label>
                                 </th>
                                 <td>
-                                    <input type="text" id="dapfforwcpro_license_key" name="dapfforwcpro_license_key" value="<?php echo esc_attr($license_key); ?>" class="regular-text" placeholder="Enter your license key" />
+                                    <input type="text" id="onepaquc_license_key" name="onepaquc_license_key" value="<?php echo esc_attr($license_key); ?>" class="regular-text" placeholder="Enter your license key" />
                                     <p class="description">Enter your license key to download and activate the Pro version.</p>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <input type="hidden" name="dapfforwcpro_license_action" value="activate" />
+                    <input type="hidden" name="onepaquc_license_action" value="activate" />
                     <input type="submit" class="button button-primary" value="Activate License & Install Pro" />
                 </form>
             <?php endif; ?>

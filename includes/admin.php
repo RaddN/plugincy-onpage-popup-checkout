@@ -35,16 +35,16 @@ function onepaquc_cart_menu()
         'onepaquc_cart_get_pro',
         'onepaquc_cart_get_pro'
     );
-    
 }
 
 
 // Callback function for Get Pro page
-function onepaquc_cart_get_pro() {
-    ?>
+function onepaquc_cart_get_pro()
+{
+?>
     <div class="wrap">
         <h1>Upgrade to Onepage Checkout Pro</h1>
-        
+
         <div class="onepaquc-pro-banner" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin: 20px 0;">
             <h2 style="color: white; margin-top: 0;">🚀 Unlock Premium Features</h2>
             <p style="font-size: 18px; margin-bottom: 30px;">Take your checkout experience to the next level with our premium features designed to boost conversions and enhance user experience.</p>
@@ -52,7 +52,7 @@ function onepaquc_cart_get_pro() {
         </div>
 
         <div class="onepaquc-features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 30px 0;">
-            
+
             <div class="feature-card" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #667eea;">
                 <h3 style="color: #333; margin-top: 0;">🎨 Advanced Customization</h3>
                 <ul style="color: #666; line-height: 1.6;">
@@ -157,7 +157,7 @@ function onepaquc_cart_text_change_form($textvariable)
 
         foreach ($column as $name => $label) {
             $value = esc_attr(get_option($name, ''));
-?>
+    ?>
             <label>
                 <p style="display: inline;"><?php echo esc_html($label); ?></p>
                 <span class="tooltip" style="display: inline;">
@@ -183,7 +183,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.6</span></div>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.7</span></div>
         <p>Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 
@@ -284,6 +284,7 @@ function onepaquc_cart_dashboard()
                 // Color is dark if luminance is less than 0.5
                 return luminance < 0.5;
             }
+
             function checkColors(checkoutColor, checkoutTextColor, is_warn_show = true) {
                 const bgColor = checkoutColor.value;
                 const textColor = checkoutTextColor.value;
@@ -308,10 +309,10 @@ function onepaquc_cart_dashboard()
                 }
             }
         </script>
-         <div class="tab-content active" id="tab-100">
+        <div class="tab-content active" id="tab-100">
             <?php
             $license_manager = new onepaquc_License_Manager();
-                    $license_manager->render_license_form();
+            $license_manager->render_license_form();
             ?>
         </div>
         <form method="post" action="options.php">
@@ -1582,6 +1583,21 @@ function onepaquc_cart_dashboard()
             </div>
             <div class="tab-content" id="tab-6">
                 <?php onepaquc_trust_badges_settings_content(); ?>
+                <table style="padding-top: 1rem;">
+                    <tr valign="top">
+                        <th scope="row">Allow Analytics Data Collection</th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="rmenu_allow_analytics" value="1" <?php checked(1, get_option("rmenu_allow_analytics", "1"), true); ?> />
+                                <span class="slider round"></span>
+                            </label>
+                            <span class="tooltip">
+                                <span class="question-mark">?</span>
+                                <span class="tooltip-text">Enable this option to allow sharing your usage data with our analytics system. When enabled, we will collect data to improve our services. When disabled, no data will be shared.</span>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="tab-content" id="tab-7">
                 <div class="rmenu-settings-header">
@@ -1924,7 +1940,7 @@ function onepaquc_cart_dashboard()
                             <h3><span class="dashicons dashicons-layout"></span> Display Settings</h3>
                         </div>
 
-                        <div class="rmenu-settings-row" >
+                        <div class="rmenu-settings-row">
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Product Types</label>
                                 <?php $product_types_option = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable']); ?>
@@ -3247,6 +3263,7 @@ function onepaquc_cart_settings()
         "rmenu_at_one_product_cart",
         "rmenu_disable_cart_page",
         "rmenu_link_product",
+        "rmenu_allow_analytics",
         "rmenu_remove_product",
         "rmenu_add_img_before_product",
         "rmenu_add_direct_checkout_button",

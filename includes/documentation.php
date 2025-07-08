@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) exit;
 /**
  * Renders the Plugincy Cart documentation page
  * 
- * @since 1.0.6
+ * @since 1.0.7
  * @return void
  */
 function onepaquc_cart_documentation()
