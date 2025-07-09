@@ -1585,7 +1585,7 @@ function onepaquc_cart_dashboard()
                 <?php onepaquc_trust_badges_settings_content(); ?>
                 <table style="padding-top: 1rem;">
                     <tr valign="top">
-                        <th scope="row">Allow Analytics Data Collection</th>
+                        <th scope="row">Contribute to Plugincy</th>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" name="rmenu_allow_analytics" value="1" <?php checked(1, get_option("rmenu_allow_analytics", "1"), true); ?> />
@@ -1593,7 +1593,7 @@ function onepaquc_cart_dashboard()
                             </label>
                             <span class="tooltip">
                                 <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable this option to allow sharing your usage data with our analytics system. When enabled, we will collect data to improve our services. When disabled, no data will be shared.</span>
+                                <span class="tooltip-text">We collect non-sensitive technical details from your website, like the PHP version and features usage, to help us troubleshoot issues faster, make informed development decisions, and build features that truly benefit you. <a href='https://plugincy.com/usage-tracking/' target='_blank' style="color:#fff;">Learn more…</a></span>
                             </span>
                         </td>
                     </tr>

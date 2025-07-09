@@ -33,8 +33,6 @@ jQuery(document).ready(function ($) {
             $('.cart-drawer').removeClass('open');
             $('.checkout-popup').show();
 
-            console.log(onepaquc_rmsgValue.checkout_url);
-
             // Create iframe for checkout
             var iframe = $('<iframe>', {
                 src: onepaquc_rmsgValue.checkout_url+'?hide_header_footer=1',

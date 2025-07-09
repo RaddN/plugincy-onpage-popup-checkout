@@ -7,6 +7,10 @@
  * for your WordPress plugin using the Product Analytics Pro API.
  */
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class onepaquc_cart_anaylytics
 {
 
@@ -90,13 +94,11 @@ class onepaquc_cart_anaylytics
         ));
 
         if (is_wp_error($response)) {
-            error_log('Analytics tracking failed: ' . $response->get_error_message());
             return false;
         }
 
         $response_code = wp_remote_retrieve_response_code($response);
         if ($response_code !== 200) {
-            error_log('Analytics tracking failed with status: ' . $response_code);
             return false;
         }
 
@@ -113,8 +115,6 @@ class onepaquc_cart_anaylytics
             'reason' => $reason,
         );
 
-        error_log(json_encode($data));
-
         $response = wp_remote_post($this->analytics_api_url . '/deactivate/' . $this->product_id, array(
             'headers' => array(
                 'Content-Type' => 'application/json',
@@ -124,7 +124,6 @@ class onepaquc_cart_anaylytics
         ));
 
         if (is_wp_error($response)) {
-            error_log('Deactivation tracking failed: ' . $response->get_error_message());
             return false;
         }
 
@@ -601,10 +600,6 @@ class onepaquc_cart_anaylytics
                     var pluginSlug = '<?php echo esc_js($plugin_slug); ?>';
                     var deactivateUrl = '';
 
-                    // Debug logging
-                    console.log('Plugin basename:', pluginBasename);
-                    console.log('Plugin slug:', pluginSlug);
-
                     // Multiple selectors to catch the deactivation link
                     var selectors = [
                         'tr[data-slug="' + pluginSlug + '"] .deactivate a',
@@ -618,7 +613,6 @@ class onepaquc_cart_anaylytics
                             e.preventDefault();
                             deactivateUrl = $(this).attr('href');
                             $('#plugin-deactivation-feedback').show();
-                            console.log('Deactivation intercepted via selector:', selector);
                         });
                     });
 
@@ -630,7 +624,6 @@ class onepaquc_cart_anaylytics
                                 e.preventDefault();
                                 deactivateUrl = $(this).attr('href');
                                 $('#plugin-deactivation-feedback').show();
-                                console.log('Deactivation intercepted via fallback');
                             });
                         }
                     });
@@ -646,6 +639,8 @@ class onepaquc_cart_anaylytics
                             reason = otherReason;
                         }
 
+                        $(this).find("button.btn.btn-primary").text("deactivating...");
+
                         // Send deactivation data
                         $.ajax({
                             url: '<?php echo admin_url('admin-ajax.php'); ?>',
@@ -656,6 +651,7 @@ class onepaquc_cart_anaylytics
                                 nonce: '<?php echo wp_create_nonce('deactivation_feedback'); ?>'
                             },
                             complete: function() {
+                                $(this).find("button.btn.btn-primary").text("deactivated");
                                 // Proceed with deactivation
                                 window.location.href = deactivateUrl;
                             }
