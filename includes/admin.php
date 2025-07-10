@@ -183,7 +183,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.7</span></div>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.8</span></div>
         <p>Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 

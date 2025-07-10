@@ -148,7 +148,7 @@ class onepaquc_cart_anaylytics
             'plugin_version' => $this->plugin_version,
             'other_plugins' => $this->get_other_plugins(),
             'active_theme' => get_option('stylesheet'),
-            'using_pro' => $this->is_pro_version(),
+            'using_pro' => "0",
             'license_key' => $this->get_license_key(),
         );
     }
@@ -190,16 +190,6 @@ class onepaquc_cart_anaylytics
     }
 
     /**
-     * Check if this is a pro version
-     * Override this method based on your plugin's pro detection logic
-     */
-    private function is_pro_version()
-    {
-        // Example: Check for pro features, license, or specific constants
-        return defined('YOUR_PLUGIN_PRO') && YOUR_PLUGIN_PRO;
-    }
-
-    /**
      * Get license key if available
      * Override this method based on your plugin's license system
      */
@@ -225,69 +215,74 @@ class onepaquc_cart_anaylytics
                 <div class="feedback-overlay">
                     <div class="feedback-modal">
                         <div class="modal-header">
-                            <h3>We'd Love Your Feedback</h3>
+                            <div style="display: flex; gap:10px;align-items: center;">
+                                <div class="plugincy_icon" style=" line-height: 1; "><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M0 0h24v24H0z" fill="#7409B9" />
+                                        <path d="m12.246 6.163 0.611 -0.001 0.643 0.002 0.643 -0.002 0.611 0.001 0.565 0.001C15.75 6.188 15.75 6.188 15.938 6.375c0.044 0.284 0.077 0.57 0.106 0.856l0.047 0.469L16.125 8.063h-1.5v2.063h2.438v-1.125h0.188q0.011 0.656 0 1.313c-0.188 0.188 -0.188 0.188 -0.762 0.199L15.938 10.5v0.75h1.688c-0.086 1.019 -0.322 1.645 -0.902 2.484l-0.391 0.577c-0.51 0.647 -0.838 1.027 -1.677 1.127l-0.607 -0.009 -0.659 -0.006c-0.226 -0.005 -0.452 -0.009 -0.685 -0.014l-0.694 -0.007Q11.161 15.392 10.313 15.375v0.563h5.625v0.563h-0.563l-0.07 0.445C15.188 17.438 15.188 17.438 14.813 17.813c-0.469 0.047 -0.469 0.047 -0.938 0 -0.375 -0.375 -0.375 -0.375 -0.398 -0.867L13.5 16.5h-1.5l-0.07 0.445C11.813 17.438 11.813 17.438 11.438 17.813c-0.469 0.047 -0.469 0.047 -0.938 0 -0.516 -0.516 -0.594 -0.982 -0.75 -1.688 0.056 -0.471 0.171 -0.883 0.306 -1.337 0.094 -0.729 -0.047 -1.382 -0.193 -2.093 -0.029 -0.148 -0.058 -0.295 -0.088 -0.447a179.063 179.063 0 0 0 -0.186 -0.932c-0.097 -0.476 -0.191 -0.953 -0.284 -1.429l-0.18 -0.906 -0.086 -0.433C8.896 7.816 8.896 7.816 8.625 7.125l-0.375 0.375c-0.529 0.037 -0.529 0.037 -1.148 0.023l-0.622 -0.01L6 7.5c-0.117 -0.352 -0.117 -0.352 -0.188 -0.75 0.375 -0.375 0.375 -0.375 0.973 -0.418l0.715 0.008 0.715 0.004C8.813 6.375 8.813 6.375 9.188 6.563a25.125 25.125 0 0 1 0.398 1.617c0.034 0.149 0.068 0.298 0.103 0.452C9.884 9.525 9.974 10.336 9.938 11.25h1.125l-0.003 -0.444q-0.005 -0.991 -0.009 -1.982l-0.005 -0.7 -0.002 -0.665 -0.003 -0.616c0.039 -0.851 0.454 -0.68 1.205 -0.681" fill="#FBF8FD" />
+                                        <path d="M10.125 11.625h7.125c-0.323 0.807 -0.654 1.398 -1.137 2.109l-0.405 0.601C15.375 14.813 15.375 14.813 15.188 15c-0.334 0.016 -0.668 0.02 -1.003 0.018l-0.613 -0.002 -0.646 -0.005 -0.648 -0.003A517.875 517.875 0 0 1 10.688 15q-0.142 -0.685 -0.281 -1.371l-0.081 -0.392C10.214 12.689 10.125 12.185 10.125 11.625" fill="#7A11BC" />
+                                        <path d="M11.438 6.563h4.125v1.313l-1.125 0.188 -0.188 2.25h1.313v0.938H11.438z" fill="#8E34C5" />
+                                        <path d="M10.313 13.125h0.188c0.042 0.292 0.08 0.586 0.117 0.879l0.066 0.494C10.688 15 10.688 15 10.313 15.938h5.625v0.563h-0.563l-0.07 0.445C15.188 17.438 15.188 17.438 14.813 17.813c-0.469 0.047 -0.469 0.047 -0.938 0 -0.375 -0.375 -0.375 -0.375 -0.398 -0.867L13.5 16.5h-1.5l-0.07 0.445C11.813 17.438 11.813 17.438 11.438 17.813c-0.469 0.047 -0.469 0.047 -0.938 0 -0.516 -0.516 -0.594 -0.982 -0.75 -1.688 0.059 -0.492 0.059 -0.492 0.188 -0.938 0.141 -0.685 0.262 -1.372 0.375 -2.063" fill="#EDE0F6" />
+                                        <path d="M17.32 6.703C17.813 6.75 17.813 6.75 18.152 6.961c0.322 0.508 0.285 0.888 0.223 1.477l-0.375 0.375h-0.563v1.313H14.625V8.063l0.715 -0.035C15.751 7.989 15.751 7.989 16.125 7.875c0.377 -0.445 0.377 -0.445 0.563 -0.938 0.188 -0.188 0.188 -0.188 0.633 -0.234" fill="#DDC0ED" />
+                                        <path d="m6.785 6.332 0.715 0.008 0.715 0.004C8.813 6.375 8.813 6.375 9.188 6.563c0.152 0.544 0.282 1.077 0.398 1.629l0.103 0.457c0.177 0.812 0.328 1.579 0.248 2.414l-0.375 0.375 -0.066 -0.355q-0.148 -0.795 -0.298 -1.59l-0.104 -0.559 -0.101 -0.535 -0.092 -0.494c-0.075 -0.411 -0.075 -0.411 -0.278 -0.779l-0.375 0.375c-0.529 0.037 -0.529 0.037 -1.148 0.023l-0.622 -0.01L6 7.5c-0.117 -0.352 -0.117 -0.352 -0.188 -0.75 0.375 -0.375 0.375 -0.375 0.973 -0.418" fill="#EADBF4" />
+                                        <path d="m14.625 8.25 0.809 -0.035 0.455 -0.02C16.313 8.25 16.313 8.25 16.649 8.463 16.875 8.813 16.875 8.813 16.875 9.938H14.625z" fill="#B66565" />
+                                        <path d="M15.938 16.125v0.375h-0.563l-0.07 0.445C15.188 17.438 15.188 17.438 14.813 17.813c-0.469 0.047 -0.469 0.047 -0.938 0 -0.375 -0.375 -0.375 -0.375 -0.398 -0.867L13.5 16.5h-1.5l-0.188 0.75v-0.938c1.38 -0.171 2.736 -0.209 4.125 -0.188" fill="#E9D8F4" />
+                                        <path d="m11.684 6.166 0.568 0.003 0.613 0.002 0.646 0.005 0.648 0.003Q14.955 6.182 15.75 6.188l-0.188 0.375H11.438v4.688h-0.188c-0.037 -0.808 -0.071 -1.617 -0.105 -2.426l-0.032 -0.7 -0.028 -0.665 -0.027 -0.616c0.005 -0.612 0.018 -0.648 0.626 -0.678" fill="#E8D7F4" />
+                                        <path d="M6.188 6.375c0.447 0.045 0.447 0.045 0.961 0.164l0.517 0.116L8.063 6.75l0.188 0.75H6l-0.188 -0.75z" fill="#C79FE3" />
+                                        <path d="M14.625 8.25h1.688l0.188 0.375h-1.5v0.563l0.375 0.188h-0.375v0.375l1.875 -0.188v0.375H14.625z" fill="#7A0DB7" />
+                                        <path d="m17.063 12 0.563 0.188 -1.688 2.625 -0.375 -0.188c0.249 -0.679 0.552 -1.244 0.961 -1.84l0.306 -0.449z" fill="#EBDAF5" />
+                                        <path d="M17.063 7.125c0.398 0.07 0.398 0.07 0.75 0.188a16.5 16.5 0 0 1 0.188 0.938c-0.188 0.188 -0.188 0.188 -0.668 0.199L16.875 8.438c-0.117 -0.445 -0.117 -0.445 -0.188 -0.938z" fill="#9E439C" />
+                                        <path d="M10.313 13.125h0.188c0.296 2.063 0.296 2.063 -0.188 2.813l-0.563 0.188c0.188 -0.938 0.188 -0.938 0.281 -1.394 0.104 -0.534 0.194 -1.069 0.281 -1.606" fill="#E7D5F3" />
+                                        <path d="M6.563 6.375h2.25v0.375h-0.375v0.563h-0.375v-0.563h-1.688z" fill="#FBF9FD" />
+                                        <path d="M12 7.125h0.938v0.938h-0.938z" fill="#DD9E2D" />
+                                        <path d="m14.063 16.5 0.938 0.188 -0.375 0.75 -0.75 -0.188z" fill="#821FC0" />
+                                        <path d="m10.688 16.5 0.938 0.188 -0.375 0.75 -0.75 -0.188z" fill="#7E1DBF" />
+                                        <path d="M12 12.375h0.375l-0.188 1.875h-0.375z" fill="#E4D0F1" />
+                                        <path d="M13.313 12.375h0.375l-0.188 1.875h-0.375c-0.023 -1.242 -0.023 -1.242 0.188 -1.875" fill="#DFC6EF" />
+                                        <path d="m16.313 9.188 0.188 0.563h-1.5v-0.375c0.462 -0.231 0.802 -0.201 1.313 -0.188" fill="#BF7258" />
+                                        <path d="M9.938 15.563c0.509 0.302 1.008 0.609 1.5 0.938l-1.313 0.375z" fill="#F0E5F7" />
+                                        <path d="M14.625 12.375h0.188c0.023 1.453 0.023 1.453 -0.188 1.875h-0.375q0.04 -0.416 0.082 -0.832c0.015 -0.154 0.03 -0.309 0.046 -0.468C14.438 12.563 14.438 12.563 14.625 12.375" fill="#E6D3F2" />
+                                        <path d="M18 7.313h0.375c0.023 0.539 0.023 0.539 0 1.125l-0.375 0.375c-0.398 -0.07 -0.398 -0.07 -0.75 -0.188l0.563 -0.375c0.137 -0.481 0.137 -0.481 0.188 -0.938" fill="#F4EBF9" />
+                                    </svg></div>
+                                <h3>Quick Feedback</h3>
+                            </div>
                             <button type="button" class="close-button" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Help us improve <?php echo esc_html($this->plugin_name); ?>. What's the main reason for deactivating?</p>
+                            <p>If you have a moment, please share why you are deactivating <?php echo esc_html($this->plugin_name); ?>:</p>
                             <form id="deactivation-feedback-form">
                                 <div class="feedback-options">
                                     <label class="feedback-option">
                                         <input type="radio" name="reason" value="temporary">
-                                        <span class="checkmark"></span>
-                                        <div class="option-content">
-                                            <strong>Temporary deactivation</strong>
-                                            <small>I'll be back soon</small>
-                                        </div>
+                                        <span class="radio-button"></span>
+                                        It's a temporary deactivation.
                                     </label>
                                     <label class="feedback-option">
                                         <input type="radio" name="reason" value="not-working">
-                                        <span class="checkmark"></span>
-                                        <div class="option-content">
-                                            <strong>Plugin not working</strong>
-                                            <small>Experiencing technical issues</small>
-                                        </div>
+                                        <span class="radio-button"></span>
+                                        The plugin isn't working properly.
                                     </label>
                                     <label class="feedback-option">
                                         <input type="radio" name="reason" value="better-plugin">
-                                        <span class="checkmark"></span>
-                                        <div class="option-content">
-                                            <strong>Found a better plugin</strong>
-                                            <small>Switching to an alternative</small>
-                                        </div>
+                                        <span class="radio-button"></span>
+                                        I found a better alternative plugin.
                                     </label>
                                     <label class="feedback-option">
-                                        <input type="radio" name="reason" value="no-longer-needed">
-                                        <span class="checkmark"></span>
-                                        <div class="option-content">
-                                            <strong>No longer needed</strong>
-                                            <small>Don't need this functionality anymore</small>
-                                        </div>
-                                    </label>
-                                    <label class="feedback-option">
-                                        <input type="radio" name="reason" value="too-complicated">
-                                        <span class="checkmark"></span>
-                                        <div class="option-content">
-                                            <strong>Too complicated</strong>
-                                            <small>Hard to use or configure</small>
-                                        </div>
+                                        <input type="radio" name="reason" value="missing-feature">
+                                        <span class="radio-button"></span>
+                                        It's missing a specific feature.
                                     </label>
                                     <label class="feedback-option">
                                         <input type="radio" name="reason" value="other">
-                                        <span class="checkmark"></span>
-                                        <div class="option-content">
-                                            <strong>Other reason</strong>
-                                            <small>Please specify below</small>
-                                        </div>
+                                        <span class="radio-button"></span>
+                                        Other
                                     </label>
                                 </div>
                                 <div class="other-reason-container" style="display:none;">
-                                    <textarea name="other_reason" placeholder="Please tell us more about your reason..." rows="3"></textarea>
+                                    <textarea name="other_reason" placeholder="Please tell us more..." rows="3"></textarea>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary feedback-cancel">Cancel</button>
                                     <button type="submit" class="btn btn-primary">Submit & Deactivate</button>
                                 </div>
                             </form>
@@ -303,52 +298,26 @@ class onepaquc_cart_anaylytics
                     left: 0;
                     width: 100%;
                     height: 100%;
-                    background: rgba(0, 0, 0, 0.6);
-                    backdrop-filter: blur(2px);
+                    background: rgba(0, 0, 0, 0.5);
                     z-index: 999999;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    animation: fadeIn 0.2s ease-out;
-                }
-
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                    }
-
-                    to {
-                        opacity: 1;
-                    }
-                }
-
-                @keyframes slideIn {
-                    from {
-                        opacity: 0;
-                        transform: translateY(-20px) scale(0.95);
-                    }
-
-                    to {
-                        opacity: 1;
-                        transform: translateY(0) scale(1);
-                    }
                 }
 
                 .feedback-modal {
                     background: #ffffff;
-                    border-radius: 12px;
-                    max-width: 480px;
+                    border-radius: 8px;
+                    max-width: 500px;
                     width: 90%;
                     max-height: 90vh;
                     overflow-y: auto;
-                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-                    animation: slideIn 0.3s ease-out;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                 }
 
                 .modal-header {
-                    padding: 24px 24px 16px;
-                    border-bottom: 1px solid #e5e7eb;
+                    padding: 24px 24px 8px;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
@@ -356,60 +325,54 @@ class onepaquc_cart_anaylytics
 
                 .modal-header h3 {
                     margin: 0;
-                    font-size: 20px;
+                    font-size: 18px;
                     font-weight: 600;
-                    color: #1f2937;
-                    line-height: 1.2;
+                    color: #1a1a1a;
                 }
 
                 .close-button {
                     background: none;
                     border: none;
-                    font-size: 24px;
-                    color: #6b7280;
+                    font-size: 20px;
+                    color: #666;
                     cursor: pointer;
                     padding: 4px;
-                    border-radius: 6px;
-                    transition: all 0.2s ease;
-                    line-height: 1;
+                    border-radius: 4px;
+                    transition: background-color 0.2s ease;
                 }
 
                 .close-button:hover {
-                    background: #f3f4f6;
-                    color: #374151;
+                    background: #f5f5f5;
                 }
 
                 .modal-body {
-                    padding: 20px 24px 24px;
+                    padding: 16px 24px 24px;
                 }
 
                 .modal-body p {
                     margin: 0 0 20px;
-                    color: #6b7280;
-                    font-size: 15px;
+                    color: #555;
+                    font-size: 14px;
                     line-height: 1.5;
                 }
 
                 .feedback-options {
-                    margin-bottom: 20px;
+                    margin-bottom: 16px;
                 }
 
                 .feedback-option {
                     display: flex;
-                    align-items: flex-start;
+                    align-items: center;
                     margin: 0 0 12px;
-                    padding: 16px;
-                    border: 1px solid #e5e7eb;
-                    border-radius: 8px;
+                    padding: 0;
                     cursor: pointer;
-                    transition: all 0.2s ease;
-                    position: relative;
-                    background: #ffffff;
+                    font-size: 14px;
+                    color: #333;
+                    line-height: 1.4;
                 }
 
                 .feedback-option:hover {
-                    border-color: #d1d5db;
-                    background: #f9fafb;
+                    color: #0073aa;
                 }
 
                 .feedback-option input[type="radio"] {
@@ -420,68 +383,34 @@ class onepaquc_cart_anaylytics
                     width: 0;
                 }
 
-                .feedback-option input[type="radio"]:checked+.checkmark {
-                    background: #3b82f6;
-                    border-color: #3b82f6;
-                }
-
-                .feedback-option input[type="radio"]:checked+.checkmark:after {
-                    display: block;
-                }
-
-                .feedback-option input[type="radio"]:checked~.option-content {
-                    color: #1f2937;
-                }
-
-                .feedback-option:has(input[type="radio"]:checked) {
-                    border-color: #3b82f6;
-                    background: #eff6ff;
-                }
-
-                .checkmark {
-                    height: 20px;
-                    width: 20px;
+                .radio-button {
+                    height: 16px;
+                    width: 16px;
                     background: #ffffff;
-                    border: 2px solid #d1d5db;
+                    border: 2px solid #ddd;
                     border-radius: 50%;
                     margin-right: 12px;
-                    margin-top: 2px;
                     flex-shrink: 0;
                     position: relative;
                     transition: all 0.2s ease;
                 }
 
-                .checkmark:after {
+                .feedback-option input[type="radio"]:checked+.radio-button {
+                    border-color: #0073aa;
+                    background: #0073aa;
+                }
+
+                .feedback-option input[type="radio"]:checked+.radio-button:after {
                     content: "";
                     position: absolute;
-                    display: none;
+                    display: block;
                     left: 50%;
                     top: 50%;
                     transform: translate(-50%, -50%);
-                    width: 8px;
-                    height: 8px;
+                    width: 6px;
+                    height: 6px;
                     border-radius: 50%;
                     background: white;
-                }
-
-                .option-content {
-                    flex: 1;
-                    color: #6b7280;
-                    transition: color 0.2s ease;
-                }
-
-                .option-content strong {
-                    display: block;
-                    font-weight: 600;
-                    color: #374151;
-                    margin-bottom: 2px;
-                    font-size: 15px;
-                }
-
-                .option-content small {
-                    font-size: 13px;
-                    color: #9ca3af;
-                    line-height: 1.3;
                 }
 
                 .other-reason-container {
@@ -505,9 +434,9 @@ class onepaquc_cart_anaylytics
 
                 .other-reason-container textarea {
                     width: 100%;
-                    padding: 12px 16px;
-                    border: 2px solid #e5e7eb;
-                    border-radius: 8px;
+                    padding: 8px 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
                     resize: vertical;
                     font-family: inherit;
                     font-size: 14px;
@@ -518,23 +447,22 @@ class onepaquc_cart_anaylytics
 
                 .other-reason-container textarea:focus {
                     outline: none;
-                    border-color: #3b82f6;
-                    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+                    border-color: #0073aa;
+                    box-shadow: 0 0 0 1px #0073aa;
                 }
 
                 .modal-footer {
                     display: flex;
-                    gap: 12px;
                     justify-content: flex-end;
-                    margin-top: 24px;
-                    padding-top: 20px;
-                    border-top: 1px solid #e5e7eb;
+                    margin-top: 20px;
+                    padding-top: 16px;
+                    border-top: 1px solid #eee;
                 }
 
                 .btn {
-                    padding: 10px 20px;
+                    padding: 8px 16px;
                     border: none;
-                    border-radius: 6px;
+                    border-radius: 4px;
                     cursor: pointer;
                     font-size: 14px;
                     font-weight: 500;
@@ -543,30 +471,16 @@ class onepaquc_cart_anaylytics
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    min-width: 100px;
+                    min-width: 120px;
                 }
 
                 .btn-primary {
-                    background: #3b82f6;
+                    background: #0073aa;
                     color: white;
                 }
 
                 .btn-primary:hover {
-                    background: #2563eb;
-                    transform: translateY(-1px);
-                    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-                }
-
-                .btn-secondary {
-                    background: #ffffff;
-                    color: #6b7280;
-                    border: 1px solid #d1d5db;
-                }
-
-                .btn-secondary:hover {
-                    background: #f9fafb;
-                    color: #374151;
-                    border-color: #9ca3af;
+                    background: #005a87;
                 }
 
                 /* Responsive design */
@@ -577,15 +491,11 @@ class onepaquc_cart_anaylytics
                     }
 
                     .modal-header {
-                        padding: 20px 20px 16px;
+                        padding: 20px 20px 8px;
                     }
 
                     .modal-body {
                         padding: 16px 20px 20px;
-                    }
-
-                    .modal-footer {
-                        flex-direction: column-reverse;
                     }
 
                     .btn {
@@ -639,7 +549,7 @@ class onepaquc_cart_anaylytics
                             reason = otherReason;
                         }
 
-                        $(this).find("button.btn.btn-primary").text("deactivating...");
+                        $(this).find("button.btn.btn-primary").text("Deactivating...");
 
                         // Send deactivation data
                         $.ajax({
@@ -651,7 +561,6 @@ class onepaquc_cart_anaylytics
                                 nonce: '<?php echo wp_create_nonce('deactivation_feedback'); ?>'
                             },
                             complete: function() {
-                                $(this).find("button.btn.btn-primary").text("deactivated");
                                 // Proceed with deactivation
                                 window.location.href = deactivateUrl;
                             }
@@ -669,11 +578,6 @@ class onepaquc_cart_anaylytics
 
                     // Handle close button
                     $('.close-button').click(function() {
-                        $('#plugin-deactivation-feedback').hide();
-                    });
-
-                    // Handle cancel
-                    $('.feedback-cancel').click(function() {
                         $('#plugin-deactivation-feedback').hide();
                     });
 
