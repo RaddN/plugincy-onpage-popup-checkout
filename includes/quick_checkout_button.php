@@ -29,7 +29,7 @@ function onepaquc_should_display_button($product)
     }
 
     // Check product type
-    $allowed_product_types = get_option('rmenu_show_quick_checkout_by_types', ['simple']);
+    $allowed_product_types = get_option('rmenu_show_quick_checkout_by_types', ["simple","variable","external"]);
     $product_type = $product->get_type();
 
     if (!in_array($product_type, $allowed_product_types)) {
@@ -37,7 +37,7 @@ function onepaquc_should_display_button($product)
     }
 
     // Get allowed pages
-    $allowed_pages = get_option('rmenu_show_quick_checkout_by_page', ['single']);
+    $allowed_pages = get_option('rmenu_show_quick_checkout_by_page', ["single","related","upsells","shop-page","category-archives","tag-archives","featured-products","on-sale","recent","widgets","shortcodes"]);
 
     // Check current page type
 
@@ -116,12 +116,19 @@ function onepaquc_get_button_styling()
 {
     // Basic button classes
     $classes = "button single_add_to_cart_button direct-checkout-button rmenu-direct-checkout-btn";
-    $style = "cursor:pointer;";
+    $style = "cursor:pointer;text-align: center;";
+    $position = get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart');
+    if ($position === "bottom_add_to_cart") {
+        $style .= "padding: 14px 30px;";
+    } else {
+        $style .= "padding: 14px 16px;";
+    }
     $icon = '';
     $additional_css = '';
 
     // Apply button style settings
     $button_style = get_option('rmenu_wc_checkout_style', 'default');
+    
     if ($button_style === 'alt') {
         $classes .= " alt-style";
     }
@@ -134,7 +141,7 @@ function onepaquc_get_button_styling()
     }
 
     // Handle button icon
-    $icon_type = get_option('rmenu_wc_checkout_icon', 'none');
+    $icon_type = get_option('rmenu_wc_checkout_icon', 'cart');
     $icon_position = get_option('rmenu_wc_checkout_icon_position', 'left');
 
     if ($icon_type !== 'none') {
@@ -198,8 +205,7 @@ function onepaquc_add_button_css()
 
         /* Alternative button style */
         .rmenu-direct-checkout-btn.alt-style {
-            border-radius: 30px;
-            text-transform: uppercase;
+            border-radius: 4px;
             letter-spacing: 1px;
             font-weight: 600;
         }
@@ -296,7 +302,7 @@ function onepaquc_add_checkout_button()
     $icon_position = isset($icon['position']) ? $icon['position'] : 'left';
 
     // Button text
-    $button_text = esc_html(get_option('txt-direct-checkout') !== "" ? get_option('txt-direct-checkout', 'Direct Checkout') : "Direct Checkout");
+    $button_text = esc_html(get_option('txt-direct-checkout') !== "" ? get_option('txt-direct-checkout', 'Buy Now') : "Buy Now");
 
     // Prepare icon HTML
     $icon_html = '<span class="onepaquc-icon">' . $icon_content . '</span>';
@@ -345,13 +351,14 @@ function onepaquc_modify_add_to_cart_button()
 
         case 'after_add_to_cart':
         case 'replace_add_to_cart':
+        case 'bottom_add_to_cart':
             add_action('woocommerce_after_add_to_cart_button', 'onepaquc_add_checkout_button');
             break;
     }
 }
 
 // Apply the checkout button modifications if enabled
-if (get_option('rmenu_add_direct_checkout_button')) {
+if (get_option('rmenu_add_direct_checkout_button', 1)) {
     $position = get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart");
     if ($position === "replace_add_to_cart") {
         add_action('wp_head', 'onepaquc_hide_add_to_cart_css');
@@ -394,7 +401,7 @@ function onepaquc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
     $icon_position = isset($icon['position']) ? $icon['position'] : 'left';
 
     // Button text
-    $button_text = esc_html(get_option('txt-direct-checkout') !== "" ? get_option('txt-direct-checkout', 'Direct Checkout') : "Direct Checkout");
+    $button_text = esc_html(get_option('txt-direct-checkout') !== "" ? get_option('txt-direct-checkout', 'Buy Now') : "Buy Now");
 
     // Prepare icon HTML
     $icon_html = '<span class="onepaquc-icon">' . $icon_content . '</span>';
@@ -425,6 +432,7 @@ function onepaquc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
             return $checkout_button . ' ' . $link;
 
         case 'after_add_to_cart':
+        case 'bottom_add_to_cart':
             return $link . ' ' . $checkout_button;
 
         case 'replace_add_to_cart':
@@ -437,6 +445,6 @@ function onepaquc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
 
 
 // Apply the checkout button to product loops if enabled
-if (get_option('rmenu_add_direct_checkout_button')) {
+if (get_option('rmenu_add_direct_checkout_button', 1)) {
     add_filter('woocommerce_loop_add_to_cart_link', 'onepaquc_add_checkout_button_to_add_to_cart_shortcode', 10, 2);
 }

@@ -256,7 +256,7 @@ function onepaquc_trust_badges_settings_content() {
         // if onepaquc_trust_badges_enabled is not checked, disable all fields use on change
         $('input[name="onepaquc_trust_badges_enabled"]').on('change', function() {
             var isChecked = $(this).is(':checked');
-            $('div#tab-6 table:first').find('input, select, textarea').not('[name="onepaquc_trust_badges_enabled"]').prop('disabled', !isChecked);
+            $('div#tab-6 table:first').find('input, select, textarea').not('[name="onepaquc_trust_badges_enabled"]').toggleClass("disabled",!isChecked);
         }).trigger('change');
 
         // Toggle badge content

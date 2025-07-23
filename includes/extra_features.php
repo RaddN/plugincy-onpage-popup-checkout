@@ -80,8 +80,8 @@ if (get_option('rmenu_disable_cart_page', 0)) {
 }
 
 if (get_option('rmenu_link_product', 0)) {
-    add_filter('woocommerce_cart_item_name', 'link_product_name_on_checkout', 10, 3);
-    function link_product_name_on_checkout($product_name, $cart_item, $cart_item_key)
+    add_filter('woocommerce_cart_item_name', 'onepaquc_link_product_name_on_checkout', 10, 3);
+    function onepaquc_link_product_name_on_checkout($product_name, $cart_item, $cart_item_key)
     {
         // Only apply on the checkout page
         if (is_checkout()) {

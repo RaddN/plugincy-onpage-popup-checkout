@@ -243,7 +243,7 @@ jQuery(document).ready(function ($) {
     var methodKey = $directbehave.rmenu_wc_checkout_method;
 
     function directcheckout(product_id, product_type, $button) {
-        var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() || 0;
+        var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() || $button.siblings('.variation_id').val() || 0;
 
         $('#checkout-button-drawer-link').prop('disabled', true);
 
@@ -311,9 +311,10 @@ jQuery(document).ready(function ($) {
                         // Update UI
                         updateCartContent(false);
                         updateCheckoutForm();
+                        $(document.body).trigger('update_checkout');
 
                         // Trigger WooCommerce hook
-                        // $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);
+                        $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);
 
                         // Redirect or UI handling
                         if (methodKey === 'direct_checkout') {

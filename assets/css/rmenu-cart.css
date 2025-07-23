@@ -393,6 +393,7 @@ button.rwc_cart-button span.cart-icon img {
   font-weight: bold;
   font-size: 16px;
   line-height: 26px;
+  color: #000;
 }
 .checkout-qty-minus {
   border-radius: 3px 0 0 3px;
@@ -1498,8 +1499,11 @@ table.one-page-checkout-product-table td {
 .direct-checkout-button {
   position: relative; /* Required for positioning the :after element */
 }
+.direct-checkout-button:focus {
+  border: none !important;
+}
 
-.direct-checkout-button.loading:after {
+.direct-checkout-button.loading:before {
   content: "";
   position: absolute;
   top: 50%;
@@ -1589,7 +1593,7 @@ table.one-page-checkout-product-table td {
   }
 }
 a.rmenu-quick-view-btn.display-text_icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

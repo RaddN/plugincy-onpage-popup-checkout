@@ -272,12 +272,12 @@
                     html += '<input type="hidden" name="add-to-cart" value="' + productData.id + '">';
 
                     // Quantity field
-                    if ($.inArray('quantity', elements) !== -1) {
-                        html += '<div class="quantity">';
-                        html += '<label class="screen-reader-text" for="quantity_' + productData.id + '">' + self.settings.i18n.quantity + '</label>';
-                        html += '<input type="number" id="quantity_' + productData.id + '" class="input-text qty text" step="1" min="1" max="' + (productData.max_purchase_quantity || '') + '" name="quantity" value="' + (productData.min_purchase_quantity || '1') + '" title="Qty" size="4">';
-                        html += '</div>';
-                    }
+                    // if ($.inArray('quantity', elements) !== -1) {
+                    //     html += '<div class="quantity">';
+                    //     html += '<label class="screen-reader-text" for="quantity_' + productData.id + '">' + self.settings.i18n.quantity + '</label>';
+                    //     html += '<input type="number" id="quantity_' + productData.id + '" class="input-text qty text" step="1" min="1" max="' + (productData.max_purchase_quantity || '') + '" name="quantity" value="' + (productData.min_purchase_quantity || '1') + '" title="Qty" size="4">';
+                    //     html += '</div>';
+                    // }
 
                     // Add to cart button based on stock status
                     if (productData.is_in_stock && productData.is_purchasable) {

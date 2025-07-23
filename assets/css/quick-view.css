@@ -38,7 +38,7 @@
 
 /* Icon-only button */
 .rmenu-quick-view-btn.display-icon {
-    padding: 6px;
+    padding: 0 !important;
     border-radius: 50%;
     width: 36px;
     height: 36px;

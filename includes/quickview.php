@@ -34,7 +34,7 @@ class RMENU_Quick_View {
      * Add quick view button to appropriate locations
      */
     private function add_quick_view_button() {
-        $button_position = get_option('rmenu_quick_view_button_position', 'after_image');
+        $button_position = get_option('rmenu_quick_view_button_position', 'image_overlay');
         
         switch ($button_position) {
             case 'after_image':
@@ -71,13 +71,13 @@ class RMENU_Quick_View {
         global $product;
         
         // Check if product type is allowed
-        $allowed_types = get_option('rmenu_show_quick_view_by_types', array('simple', 'variable'));
+        $allowed_types = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable',"grouped","external"]);
         if (!in_array($product->get_type(), $allowed_types)) {
             return;
         }
         
         // Check if current page is allowed
-        $allowed_pages = get_option('rmenu_show_quick_view_by_page', array('shop-page', 'category-archives', 'search'));
+        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives',"tag-archives", 'search',"featured-products","on-sale","recent","widgets","shortcodes"]);
         $display = false;
         
         if (in_array('shop-page', $allowed_pages) && is_shop()) {
@@ -115,7 +115,7 @@ class RMENU_Quick_View {
         global $product;
         
         // Same checks as display_quick_view_button
-        $allowed_types = get_option('rmenu_show_quick_view_by_types', array('simple', 'variable'));
+        $allowed_types = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable',"grouped","external"]);
         if (!in_array($product->get_type(), $allowed_types)) {
             return;
         }
@@ -133,7 +133,7 @@ class RMENU_Quick_View {
         if (empty($button_text)) {
             $button_text = 'Quick View';
         }
-        $display_type = get_option('rmenu_quick_view_display_type', 'button');
+        $display_type = get_option('rmenu_quick_view_display_type', 'icon');
         $button_icon = get_option('rmenu_quick_view_button_icon', 'eye');
         $icon_position = get_option('rmenu_quick_view_icon_position', 'left');
         
@@ -212,7 +212,7 @@ class RMENU_Quick_View {
         }
         
         // Get elements to display
-        $elements = get_option('rmenu_quick_view_content_elements', array('image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta'));
+        $elements = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']);
         
         // Prepare product data
         $product_data = array(
@@ -344,7 +344,7 @@ class RMENU_Quick_View {
         $mobile_optimize = false;
         $debug_mode = get_option('rmenu_quick_view_debug_mode', 0);
         $lightbox = get_option('rmenu_quick_view_enable_lightbox', 1);
-        $elements_in_popup = get_option('rmenu_quick_view_content_elements', array('image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta', 'title','quantity','sharing', 'view_details', 'attributes'));
+        $elements_in_popup = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']);
 
         // Localize script with settings
         wp_localize_script('rmenu-quick-view-scripts', 'rmenu_quick_view_params', array(
