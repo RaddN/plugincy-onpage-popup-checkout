@@ -183,7 +183,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.8.1</span></div>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.8.2</span></div>
         <p>Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 
@@ -3432,7 +3432,7 @@ function onepaquc_cart_custom_css()
     global $onepaquc_rcheckoutformfields;
 
     // Initialize an empty string for the custom CSS
-    $custom_css = '.checkout-popup .woocommerce-privacy-policy-text { display: none !important; }.onepagecheckoutwidget .woocommerce-privacy-policy-text { display: block !important; }';
+    $custom_css = ' .woocommerce-privacy-policy-text { display: none !important; }.onepagecheckoutwidget .woocommerce-privacy-policy-text { display: block !important; }';
 
     // Loop through the fields to generate CSS
     foreach (onepaquc_rmenu_fields() as $key => $field) {
@@ -3467,12 +3467,12 @@ add_action('wp_enqueue_scripts', 'onepaquc_cart_custom_css', 9999999);
 function onepaquc_rmenu_fields()
 {
     return [
-        'hide_coupon_toggle'          => ['selector' => '#checkout-form .woocommerce-form-coupon-toggle, #checkout-form .col-form-coupon,.one-page-checkout-container .woocommerce-form-coupon-toggle, .one-page-checkout-container .col-form-coupon', 'title' => 'Hide Top Coupon'],
-        'hide_customer_details_col2'  => ['selector' => '.checkout-popup .woocommerce-shipping-fields, .one-page-checkout-container .woocommerce-shipping-fields', 'title' => 'Hide Shipping Address'],
-        'hide_notices_wrapper'        => ['selector' => '#checkout-form .woocommerce-notices-wrapper,.one-page-checkout-container .woocommerce-notices-wrapper', 'title' => 'Hide Notices Wrapper'],
-        'hide_privacy_policy_text'    => ['selector' => '#checkout-form .woocommerce-privacy-policy-text,.one-page-checkout-container .woocommerce-privacy-policy-text', 'title' => 'Hide Privacy Policy Text'],
-        'hide_payment'                 => ['selector' => '#checkout-form div#payment ul,.one-page-checkout-container div#payment ul', 'title' => 'Hide Payment Options'],
-        'hide_product'                 => ['selector' => '#checkout-form table.shop_table,.one-page-checkout-container table.shop_table', 'title' => 'Hide Product Table']
+        'hide_coupon_toggle'          => ['selector' => '.woocommerce-form-coupon-toggle, .col-form-coupon,.woocommerce-form-coupon-toggle, .col-form-coupon', 'title' => 'Hide Top Coupon'],
+        'hide_customer_details_col2'  => ['selector' => ' .woocommerce-shipping-fields, .woocommerce-shipping-fields', 'title' => 'Hide Shipping Address'],
+        'hide_notices_wrapper'        => ['selector' => '.woocommerce-notices-wrapper,.woocommerce-notices-wrapper', 'title' => 'Hide Notices Wrapper'],
+        'hide_privacy_policy_text'    => ['selector' => '.woocommerce-privacy-policy-text,.woocommerce-privacy-policy-text', 'title' => 'Hide Privacy Policy Text'],
+        'hide_payment'                 => ['selector' => 'div#payment ul,div#payment ul', 'title' => 'Hide Payment Options'],
+        'hide_product'                 => ['selector' => 'table.shop_table,table.shop_table', 'title' => 'Hide Product Table']
 
     ];
 }
@@ -3480,8 +3480,8 @@ function onepaquc_rmenu_fields()
 function onepaquc_onpcheckout_heading()
 {
     return [
-        'hide_billing_details'          => ['selector' => '#checkout-form .woocommerce-billing-fields h3,.one-page-checkout-container .woocommerce-billing-fields h3', 'title' => 'Hide Billing details'],
-        'hide_additional_details'          => ['selector' => '.checkout-popup .woocommerce-additional-fields h3,.one-page-checkout-container .woocommerce-additional-fields h3', 'title' => 'Hide Additional Details'],
-        'hide_order_review_heading'   => ['selector' => '#checkout-form h3#order_review_heading,.one-page-checkout-container h3#order_review_heading', 'title' => 'Hide Order Review Heading'],
+        'hide_billing_details'          => ['selector' => '.woocommerce-billing-fields h3,.woocommerce-billing-fields h3', 'title' => 'Hide Billing details'],
+        'hide_additional_details'          => ['selector' => ' .woocommerce-additional-fields h3,.woocommerce-additional-fields h3', 'title' => 'Hide Additional Details'],
+        'hide_order_review_heading'   => ['selector' => 'h3#order_review_heading,h3#order_review_heading', 'title' => 'Hide Order Review Heading'],
     ];
 }

@@ -68,8 +68,8 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
                 /* Hide scrollbar but keep functionality */
                 #tableContainer {
-                    scrollbar-width: none;
                     scrollbar-color: #c1c1c1 #f1f1f1;
+                    scrollbar-width: thin;
                 }
             </style>
             <div style="overflow: scroll; width: 100%; height: 100vh; max-height: max-content; position: relative;" id="tableContainer">

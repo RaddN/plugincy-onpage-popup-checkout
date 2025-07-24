@@ -149,7 +149,7 @@ class RMENU_Quick_View {
                     $icon_class = 'dashicons-search';
                     break;
                 case 'zoom':
-                    $icon_class = 'dashicons-zoom';
+                    $icon_class = 'dashicons-fullscreen-alt';
                     break;
                 case 'preview':
                     $icon_class = 'dashicons-welcome-view-site';
