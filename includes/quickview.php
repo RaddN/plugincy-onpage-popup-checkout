@@ -159,7 +159,7 @@ class RMENU_Quick_View {
         }
         
         // Generate button classes
-        $button_classes = array('rmenu-quick-view-btn');
+        $button_classes = array('opqvfw-btn');
         $button_style = get_option('rmenu_quick_view_button_style', 'default');
         
         if ($button_style === 'default') {
@@ -391,16 +391,17 @@ class RMENU_Quick_View {
      * Add dynamic CSS for button styling
      */
     private function add_dynamic_css() {
-        $button_color = get_option('rmenu_quick_view_button_color', '#96588a');
+        $button_color = get_option('rmenu_quick_view_button_color', '#000');
         $text_color = get_option('rmenu_quick_view_text_color', '#ffffff');
         
         $custom_css = "
-            .rmenu-quick-view-btn.custom-style {
+            .opqvfw-btn {
                 background-color: {$button_color};
                 color: {$text_color};
             }
-            .rmenu-quick-view-btn.custom-style:hover {
+            .opqvfw-btn:hover {
                 background-color: " . $this->adjust_brightness($button_color, -15) . ";
+                color: {$text_color};
             }
         ";
         
@@ -432,9 +433,9 @@ class RMENU_Quick_View {
      */
     public function quick_view_modal_container() {
         ?>
-        <div class="rmenu-quick-view-modal-container">
-            <div class="rmenu-quick-view-modal-overlay"></div>
-            <div class="rmenu-quick-view-modal">
+        <div class="opqvfw-modal-container">
+            <div class="opqvfw-modal-overlay"></div>
+            <div class="opqvfw-modal">
                 <div class="rmenu-quick-view-close">
                     <span class="dashicons dashicons-no-alt"></span>
                     <span class="screen-reader-text"><?php echo esc_html(get_option('rmenu_quick_view_close_text', 'Close')); ?></span>

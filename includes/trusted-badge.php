@@ -74,7 +74,7 @@ function onepaquc_trust_badges_settings_content() {
                         <option value="above_checkout" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'above_checkout'); ?>><?php esc_html_e('Above Checkout Form', 'one-page-quick-checkout-for-woocommerce'); ?></option>
                         <option value="below_checkout" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'below_checkout'); ?>><?php esc_html_e('Below Checkout Form', 'one-page-quick-checkout-for-woocommerce'); ?></option>
                         <option value="payment_section" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'payment_section'); ?>><?php esc_html_e('Next to Payment Methods', 'one-page-quick-checkout-for-woocommerce'); ?></option>
-                        <option value="order_summary" <?php selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'order_summary'); ?>><?php esc_html_e('Below Order Summary', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                        <!-- <option value="order_summary" <?php //selected(get_option('onepaquc_trust_badge_position', 'below_checkout'), 'order_summary'); ?>><?php //esc_html_e('Below Order Summary', 'one-page-quick-checkout-for-woocommerce'); ?></option> -->
                     </select>
                 </td>
             </tr>

@@ -3,7 +3,7 @@
  */
 
 /* Quick View Button Styles */
-.rmenu-quick-view-btn {
+.opqvfw-btn {
     padding: 8px 15px;
     margin: 5px 0;
     display: inline-block;
@@ -16,28 +16,19 @@
     box-shadow: none;
 }
 
-.rmenu-quick-view-btn.button {
+.opqvfw-btn.button {
     background-color: #ebe9eb;
     color: #515151;
     font-weight: 600;
 }
 
-.rmenu-quick-view-btn.button:hover {
+.opqvfw-btn.button:hover {
     background-color: #dad8da;
     color: #515151;
 }
 
-.rmenu-quick-view-btn.button.alt {
-    background-color: #a46497;
-    color: #fff;
-}
-
-.rmenu-quick-view-btn.button.alt:hover {
-    background-color: #96588a;
-}
-
 /* Icon-only button */
-.rmenu-quick-view-btn.display-icon {
+.opqvfw-btn.display-icon {
     padding: 0 !important;
     border-radius: 50%;
     width: 36px;
@@ -48,26 +39,26 @@
 }
 
 /* Text with icon button */
-.rmenu-quick-view-btn.display-text_icon {
+.opqvfw-btn.display-text_icon {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.rmenu-quick-view-btn.display-text_icon .dashicons {
+.opqvfw-btn.display-text_icon .dashicons {
     margin-right: 5px;
 }
 
 /* Hover effect button */
-.rmenu-quick-view-btn.hover-effect .icon {
+.opqvfw-btn.hover-effect .icon {
     display: none;
 }
 
-.rmenu-quick-view-btn.hover-effect:hover .text {
+.opqvfw-btn.hover-effect:hover .text {
     display: none;
 }
 
-.rmenu-quick-view-btn.hover-effect:hover .icon {
+.opqvfw-btn.hover-effect:hover .icon {
     display: block;
 }
 
@@ -92,7 +83,7 @@
 }
 
 /* Modal container */
-.rmenu-quick-view-modal-container {
+.opqvfw-modal-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -102,12 +93,12 @@
     z-index: 999999;
 }
 
-.rmenu-quick-view-modal-container.active {
+.opqvfw-modal-container.active {
     display: block;
 }
 
 /* Modal overlay */
-.rmenu-quick-view-modal-overlay {
+.opqvfw-modal-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -118,7 +109,7 @@
 }
 
 /* Modal content */
-.rmenu-quick-view-modal {
+.opqvfw-modal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -388,15 +379,15 @@
 }
 
 /* Animation effects */
-.rmenu-quick-view-modal-container.active.fade-in .rmenu-quick-view-modal {
+.opqvfw-modal-container.active.fade-in .opqvfw-modal {
     animation: rmenu-fade-in 0.3s;
 }
 
-.rmenu-quick-view-modal-container.active.slide-in .rmenu-quick-view-modal {
+.opqvfw-modal-container.active.slide-in .opqvfw-modal {
     animation: rmenu-slide-in 0.3s;
 }
 
-.rmenu-quick-view-modal-container.active.zoom-in .rmenu-quick-view-modal {
+.opqvfw-modal-container.active.zoom-in .opqvfw-modal {
     animation: rmenu-zoom-in 0.3s;
 }
 
@@ -451,7 +442,7 @@
         padding-right: 0;
     }
     
-    .rmenu-quick-view-modal {
+    .opqvfw-modal {
         width: 95%;
     }
     
@@ -469,30 +460,30 @@
 }
 
 /* Modal sizes */
-.rmenu-quick-view-modal.modal-size-small {
+.opqvfw-modal.modal-size-small {
     max-width: 600px;
 }
 
-.rmenu-quick-view-modal.modal-size-medium {
+.opqvfw-modal.modal-size-medium {
     max-width: 800px;
 }
 
-.rmenu-quick-view-modal.modal-size-large {
+.opqvfw-modal.modal-size-large {
     max-width: 1000px;
 }
 
-.rmenu-quick-view-modal.modal-size-full {
+.opqvfw-modal.modal-size-full {
     max-width: 90%;
 }
 
 /* Fix for variable product forms */
-.rmenu-quick-view-modal form.variations_form .woocommerce-variation-add-to-cart {
+.opqvfw-modal form.variations_form .woocommerce-variation-add-to-cart {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 }
 
-.rmenu-quick-view-modal .woocommerce-variation-price {
+.opqvfw-modal .woocommerce-variation-price {
     margin-bottom: 10px;
 }
 
@@ -516,7 +507,7 @@ a.rmenu-quick-view-image img {
     display: flex;
     gap: 10px;
 }
-a.rmenu-quick-view-btn.button.display-icon {
+a.opqvfw-btn.button.display-icon {
     display: flex;
     color: #fff;
 }

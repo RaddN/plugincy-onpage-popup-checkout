@@ -505,3 +505,6 @@ li.rmenu-settings-tab-item.active {
 .tab-content {
     display: none;
 }
+label.switch input {
+    display: none !important;
+}

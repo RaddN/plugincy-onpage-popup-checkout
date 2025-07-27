@@ -25,8 +25,8 @@
          */
         init: function () {
             // Cache DOM elements
-            this.modal = $('.rmenu-quick-view-modal-container');
-            this.overlay = this.modal.find('.rmenu-quick-view-modal-overlay');
+            this.modal = $('.opqvfw-modal-container');
+            this.overlay = this.modal.find('.opqvfw-modal-overlay');
             this.content = this.modal.find('.rmenu-quick-view-inner');
             this.closeBtn = this.modal.find('.rmenu-quick-view-close');
             this.loading = this.modal.find('.rmenu-quick-view-loading');
@@ -53,7 +53,7 @@
             var self = this;
 
             // Quick view button click
-            $(document.body).on('click', '.rmenu-quick-view-btn', function (e) {
+            $(document.body).on('click', '.opqvfw-btn', function (e) {
                 e.preventDefault();
                 var productId = $(this).data('product-id');
                 self.openQuickView(productId);
@@ -428,7 +428,7 @@
 
             // Find the current product index
             $productItems.each(function (index) {
-                var pid = $(this).find('.rmenu-quick-view-btn').data('product-id');
+                var pid = $(this).find('.opqvfw-btn').data('product-id');
                 if (pid == self.currentProductId) { // Use self instead of this
                     currentIndex = index;
                     return false;
@@ -453,7 +453,7 @@
             }
 
             var $nextProduct = $productItems.eq(newIndex);
-            var nextProductId = $nextProduct.find('.rmenu-quick-view-btn').data('product-id');
+            var nextProductId = $nextProduct.find('.opqvfw-btn').data('product-id');
 
             if (nextProductId) {
                 self.openQuickView(nextProductId);

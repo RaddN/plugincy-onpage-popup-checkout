@@ -1577,22 +1577,23 @@ table.one-page-checkout-product-table td {
 .checkout-popup.onepagecheckoutwidget {
   display: block !important;
 }
-.rmenu-direct-checkout-btn {
+.opqcfw-btn {
   margin-top: 10px !important;
 }
 @media (min-width: 768px) {
-  .single .summary.entry-summary .rmenu-direct-checkout-btn {
+  .single .summary.entry-summary .opqcfw-btn {
     margin-top: 0 !important;
-    margin-left: 10px !important;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 @media (max-width: 768px) {
-  .single .summary.entry-summary .rmenu-direct-checkout-btn {
+  .single .summary.entry-summary .opqcfw-btn {
     margin-top: 0 !important;
     margin-left: 3px !important;
   }
 }
-a.rmenu-quick-view-btn.display-text_icon {
+a.opqvfw-btn.display-text_icon {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -6,7 +6,6 @@ jQuery(document).ready(function ($) {
         var cartIcon = $('.rwc_cart-button').data('cart-icon');
         var productTitleTag = $('.rwc_cart-button').data('product_title_tag');
         var drawerPosition = $('.rwc_cart-button').data('drawer-position');
-
         $.ajax({
             url: onepaquc_wc_cart_params.ajax_url,
             type: 'POST',
@@ -152,6 +151,8 @@ jQuery(document).ready(function ($) {
             return;
         }
 
+        var $thisButton = $(this);
+
         // Block the checkout while updating
         $('.woocommerce-checkout-review-order-table').block({
             message: null,
@@ -171,7 +172,9 @@ jQuery(document).ready(function ($) {
                 quantity: qty,
                 nonce: onepaquc_wc_cart_params.update_cart_item_quantity
             },
-            success: function () {
+            success: function (response) {
+                // Trigger WC events
+                $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisButton]);
                 $('body').trigger('onepaquc_update_checkout');
                 $(document.body).trigger('update_checkout');
                 updateCartContent(false);
@@ -188,6 +191,7 @@ jQuery(document).ready(function ($) {
     $(document).on('click', '.remove-item-checkout', function (e) {
         e.preventDefault();
         var cartItemKey = $(this).data('cart-item');
+        var $thisButton = $(this);
 
         $(this).closest('.cart_item').css('transition', 'opacity 0.5s ease'); // Optional: add transition for smooth effect
         $(this).closest('.cart_item').css('opacity', '0.5'); // Optional: fade out the item
@@ -201,6 +205,7 @@ jQuery(document).ready(function ($) {
                 nonce: onepaquc_wc_cart_params.remove_cart_item
             },
             success: function (response) {
+                $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisButton]);
                 // Get product IDs from data attribute
                 var product_ids = $('.one-page-checkout-product-list').data('product-ids');
 

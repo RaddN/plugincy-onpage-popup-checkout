@@ -115,7 +115,7 @@ function onepaquc_should_display_button($product)
 function onepaquc_get_button_styling()
 {
     // Basic button classes
-    $classes = "button single_add_to_cart_button direct-checkout-button rmenu-direct-checkout-btn";
+    $classes = "button single_add_to_cart_button direct-checkout-button opqcfw-btn";
     $style = "cursor:pointer;text-align: center;";
     $position = get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart');
     if ($position === "bottom_add_to_cart") {
@@ -135,9 +135,9 @@ function onepaquc_get_button_styling()
 
     // Apply color settings if not using default style
     if ($button_style !== 'default') {
-        $bg_color = get_option('rmenu_wc_checkout_color', '#96588a');
+        $bg_color = get_option('rmenu_wc_checkout_color', '#000');
         $text_color = get_option('rmenu_wc_checkout_text_color', '#ffffff');
-        $style .= "background-color:{$bg_color}!important;color:{$text_color}!important;border-color:{$bg_color}!important;";
+        $style .= "background-color:{$bg_color};color:{$text_color};border-color:{$bg_color};";
     }
 
     // Handle button icon
@@ -199,43 +199,43 @@ function onepaquc_add_button_css()
 ?>
     <style>
         /* Base styling for direct checkout button */
-        .rmenu-direct-checkout-btn {
+        .opqcfw-btn {
             transition: all 0.3s ease;
         }
 
         /* Alternative button style */
-        .rmenu-direct-checkout-btn.alt-style {
+        .opqcfw-btn.alt-style {
             border-radius: 4px;
             letter-spacing: 1px;
             font-weight: 600;
         }
 
         /* Icon positioning styles */
-        .rmenu-direct-checkout-btn .rmenu-icon {
+        .opqcfw-btn .rmenu-icon {
             display: inline-block;
             vertical-align: middle;
         }
 
-        .rmenu-direct-checkout-btn.icon-position-left .rmenu-icon {
+        .opqcfw-btn.icon-position-left .rmenu-icon {
             margin-right: 8px;
         }
 
-        .rmenu-direct-checkout-btn.icon-position-right .rmenu-icon {
+        .opqcfw-btn.icon-position-right .rmenu-icon {
             margin-left: 8px;
         }
 
-        .rmenu-direct-checkout-btn.icon-position-top .rmenu-icon {
+        .opqcfw-btn.icon-position-top .rmenu-icon {
             display: block;
             margin: 0 auto 5px;
         }
 
-        .rmenu-direct-checkout-btn.icon-position-bottom .rmenu-icon {
+        .opqcfw-btn.icon-position-bottom .rmenu-icon {
             display: block;
             margin: 5px auto 0;
         }
 
-        .rmenu-direct-checkout-btn.icon-position-top,
-        .rmenu-direct-checkout-btn.icon-position-bottom {
+        .opqcfw-btn.icon-position-top,
+        .opqcfw-btn.icon-position-bottom {
             text-align: center;
         }
 
@@ -345,13 +345,14 @@ function onepaquc_modify_add_to_cart_button()
     $position = get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart");
 
     switch ($position) {
-        case 'before_add_to_cart':
-            add_action('woocommerce_before_add_to_cart_button', 'onepaquc_add_checkout_button');
-            break;
+        // case 'before_add_to_cart':
+        //     add_action('woocommerce_before_add_to_cart_button', 'onepaquc_add_checkout_button');
+        //     break;
 
         case 'after_add_to_cart':
         case 'replace_add_to_cart':
         case 'bottom_add_to_cart':
+        case 'before_add_to_cart':
             add_action('woocommerce_after_add_to_cart_button', 'onepaquc_add_checkout_button');
             break;
     }
@@ -359,29 +360,47 @@ function onepaquc_modify_add_to_cart_button()
 
 // Apply the checkout button modifications if enabled
 if (get_option('rmenu_add_direct_checkout_button', 1)) {
-    $position = get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart");
-    if ($position === "replace_add_to_cart") {
-        add_action('wp_head', 'onepaquc_hide_add_to_cart_css');
-    }
+    add_action('wp_head', 'onepaquc_position_wise_css');
     add_action('woocommerce_before_single_product', 'onepaquc_modify_add_to_cart_button');
 }
 
 if (get_option('rmenu_add_to_cart_catalog_display') == "hide") {
-    add_action('wp_footer', 'onepaquc_hide_add_to_cart_css');
+    add_action('wp_footer', 'onepaquc_position_wise_css');
 }
 
 // Function to hide the original add to cart button when in replace mode
-function onepaquc_hide_add_to_cart_css()
+function onepaquc_position_wise_css()
 {
-?>
+    $position = get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart");
+    if ($position === "replace_add_to_cart") {
+    ?>
+        <style>
+            button.single_add_to_cart_button,
+            a.button.product_type_simple.add_to_cart_button,
+            .quantity {
+                display: none !important;
+            }
+        </style>
+    <?php
+    } else if ($position === "before_add_to_cart") { ?>
     <style>
-        button.single_add_to_cart_button,
-        a.button.product_type_simple.add_to_cart_button,
-        .quantity {
-            display: none !important;
+        form.cart {
+            display: flex;
+        }
+
+        button.single_add_to_cart_button {
+            order: 3;
         }
     </style>
+<?php } else if ($position === "bottom_add_to_cart") { ?>
+        <style>
+            a.button.single_add_to_cart_button.direct-checkout-button.opqcfw-btn {
+                width: 100% !important;
+                margin: 0 0 1rem;
+            }
+        </style>
 <?php
+    }
 }
 
 // Function to add checkout button to product loops (listings)

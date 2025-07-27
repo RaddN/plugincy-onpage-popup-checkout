@@ -21,7 +21,7 @@ function rmenu_apply_add_to_cart_styles()
 {
     // Get saved options with defaults
     $button_style = get_option('rmenu_add_to_cart_style', 'default');
-    $bg_color = get_option('rmenu_add_to_cart_bg_color', '#96588a');
+    $bg_color = get_option('rmenu_add_to_cart_bg_color', '#000');
     $text_color = get_option('rmenu_add_to_cart_text_color', '#ffffff');
     $hover_bg_color = get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579');
     $hover_text_color = get_option('rmenu_add_to_cart_hover_text_color', '#ffffff');
