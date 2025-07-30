@@ -449,7 +449,16 @@ add_action('wp_head', function () {
     }
 });
 
+if (get_option("rmenu_enable_sticky_cart", 1)) {
+    function onepaquc_display_cart()
+    {
+        if (class_exists('WooCommerce')) {
+            echo do_shortcode('[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4" position="fixed" top="" left=""]');
+        }
+    }
 
+    add_action('wp_footer', 'onepaquc_display_cart');
+}
 
 
 

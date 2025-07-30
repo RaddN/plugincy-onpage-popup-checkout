@@ -7,16 +7,18 @@ function onepaquc_cart_shortcode($atts) {
         array(
             'drawer' => 'right',
             'cart_icon'=>"cart",
-            "product_title_tag"=>"cart"
+            "product_title_tag"=>"cart",
+            "position" => "",
+            "top" => "",
+            "left" => ""
         ), $atts);
 
     ob_start(); ?>
 
 <div class="rmenu-cart">
     <?php 
-    onepaquc_cart($atts['drawer'],$atts['cart_icon'],$atts['product_title_tag']); ?>
+    onepaquc_cart($atts['drawer'],$atts['cart_icon'],$atts['product_title_tag'],$atts['position'],$atts['top'],$atts['left']); ?>
 </div>
-
     <?php
     return ob_get_clean();
 }

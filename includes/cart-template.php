@@ -2,14 +2,14 @@
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 // Shortcode to display cart icon and drawer
-function onepaquc_cart($drawer_position = 'right',$cart_icon = 'cart',$product_title_tag = 'p' )
-{ 
+function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product_title_tag = 'p', $position = "", $top = "", $left = "")
+{
     $cart_icons = array(
-        'cart' => '<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 576 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M96 0C107.5 0 117.4 8.19 119.6 19.51L121.1 32H541.8C562.1 32 578.3 52.25 572.6 72.66L518.6 264.7C514.7 278.5 502.1 288 487.8 288H170.7L179.9 336H488C501.3 336 512 346.7 512 360C512 373.3 501.3 384 488 384H159.1C148.5 384 138.6 375.8 136.4 364.5L76.14 48H24C10.75 48 0 37.25 0 24C0 10.75 10.75 0 24 0H96zM128 464C128 437.5 149.5 416 176 416C202.5 416 224 437.5 224 464C224 490.5 202.5 512 176 512C149.5 512 128 490.5 128 464zM512 464C512 490.5 490.5 512 464 512C437.5 512 416 490.5 416 464C416 437.5 437.5 416 464 416C490.5 416 512 437.5 512 464z"></path></svg>',
-        
-        'shopping-bag' => '<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M112 112C112 50.14 162.1 0 224 0C285.9 0 336 50.14 336 112V160H400C426.5 160 448 181.5 448 208V416C448 469 405 512 352 512H96C42.98 512 0 469 0 416V208C0 181.5 21.49 160 48 160H112V112zM160 160H288V112C288 76.65 259.3 48 224 48C188.7 48 160 76.65 160 112V160zM136 256C149.3 256 160 245.3 160 232C160 218.7 149.3 208 136 208C122.7 208 112 218.7 112 232C112 245.3 122.7 256 136 256zM312 208C298.7 208 288 218.7 288 232C288 245.3 298.7 256 312 256C325.3 256 336 245.3 336 232C336 218.7 325.3 208 312 208z"></path></svg>',
-        
-        'basket' => '<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 576 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M171.7 191.1H404.3L322.7 35.07C316.6 23.31 321.2 8.821 332.9 2.706C344.7-3.409 359.2 1.167 365.3 12.93L458.4 191.1H544C561.7 191.1 576 206.3 576 223.1C576 241.7 561.7 255.1 544 255.1L492.1 463.5C484.1 492 459.4 512 430 512H145.1C116.6 512 91 492 83.88 463.5L32 255.1C14.33 255.1 0 241.7 0 223.1C0 206.3 14.33 191.1 32 191.1H117.6L210.7 12.93C216.8 1.167 231.3-3.409 243.1 2.706C254.8 8.821 259.4 23.31 253.3 35.07L171.7 191.1zM191.1 303.1C191.1 295.1 184.8 287.1 175.1 287.1C167.2 287.1 159.1 295.1 159.1 303.1V399.1C159.1 408.8 167.2 415.1 175.1 415.1C184.8 415.1 191.1 408.8 191.1 399.1V303.1zM271.1 303.1V399.1C271.1 408.8 279.2 415.1 287.1 415.1C296.8 415.1 304 408.8 304 399.1V303.1C304 295.1 296.8 287.1 287.1 287.1C279.2 287.1 271.1 295.1 271.1 303.1zM416 303.1C416 295.1 408.8 287.1 400 287.1C391.2 287.1 384 295.1 384 303.1V399.1C384 408.8 391.2 415.1 400 415.1C408.8 415.1 416 408.8 416 399.1V303.1z"></path></svg>'
+        'cart' => '<svg fill="#fff" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 1.95 1.95" enable-background="new 0 0 52 52" xml:space="preserve"><g><path d="M0.754 0.975H1.65c0.026 0 0.052 -0.019 0.056 -0.045l0.165 -0.578c0.011 -0.041 -0.019 -0.075 -0.056 -0.075H0.431l-0.022 -0.086C0.397 0.15 0.36 0.124 0.322 0.124h-0.15c-0.049 0 -0.094 0.037 -0.098 0.086C0.071 0.263 0.116 0.307 0.165 0.307h0.086l0.285 0.964c0.011 0.041 0.045 0.068 0.086 0.068h1.057c0.049 0 0.094 -0.037 0.098 -0.086 0.004 -0.052 -0.041 -0.098 -0.09 -0.098H0.757c-0.041 0 -0.075 -0.026 -0.086 -0.064V1.087c-0.019 -0.056 0.026 -0.112 0.083 -0.112"/><path cx="20.6" cy="44.6" r="4" d="M0.922 1.673A0.15 0.15 0 0 1 0.773 1.823A0.15 0.15 0 0 1 0.623 1.673A0.15 0.15 0 0 1 0.922 1.673z"/><path cx="40.1" cy="44.6" r="4" d="M1.654 1.673A0.15 0.15 0 0 1 1.504 1.823A0.15 0.15 0 0 1 1.354 1.673A0.15 0.15 0 0 1 1.654 1.673z"/></g></svg>',
+
+        'shopping-bag' => '<svg fill="#fff" height="30px" width="30px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 19.2 19.2" enable-background="new 0 0 512 512" xml:space="preserve"><path d="M15.795 4.8h-1.601v0.799c0 0.881 -0.716 1.601 -1.601 1.601 -0.881 0 -1.601 -0.716 -1.601 -1.601V4.8h-3.199v0.799c0 0.881 -0.716 1.601 -1.601 1.601 -0.881 0 -1.601 -0.716 -1.601 -1.601V4.8H2.996c0 7.999 -0.799 14.4 -0.799 14.4h14.4c-0.004 0 -0.802 -6.401 -0.802 -14.4m-9.6 1.601c0.443 0 0.799 -0.356 0.799 -0.799v-1.601c0 -1.327 1.073 -2.4 2.4 -2.4s2.4 1.073 2.4 2.4v1.601c0 0.443 0.356 0.799 0.799 0.799s0.799 -0.356 0.799 -0.799v-1.601C13.395 1.792 11.602 0 9.394 0S5.393 1.792 5.393 4.001v1.601c0.004 0.439 0.36 0.799 0.802 0.799"/></svg>',
+
+        'basket' => '<svg fill="#fff" height="30" width="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.2 19.2" xml:space="preserve"><path d="M15.199 7.2 12 0h-1.601l3.199 7.2zM8.801 0H7.2L4.001 7.2h1.601zm-7.2 17.599c0 .881.716 1.601 1.601 1.601h12.799c.881 0 1.601-.716 1.601-1.601l.799-7.2H.799zm12-5.599h1.601l-.802 5.599h-1.601zm-4.8 0h1.601v5.599H8.801zm-3.203 0 .799 5.599H4.8L4.001 12zM18.4 7.999H.799A.8.8 0 0 0 0 8.801V9.6h19.2v-.799a.8.8 0 0 0-.799-.802"/></svg>'
     );
 
     // Get selected cart icon or fallback to default
@@ -36,9 +36,9 @@ function onepaquc_cart($drawer_position = 'right',$cart_icon = 'cart',$product_t
             'stroke-width' => array(),
         ),
     );
-    ?>
+?>
 
-    <button class="rwc_cart-button" data-cart-icon = "<?php echo esc_attr($cart_icon); ?>" data-product_title_tag = "<?php echo esc_attr($product_title_tag); ?>" data-drawer-position = "<?php echo esc_attr($drawer_position); ?>" onclick="openCartDrawer('<?php echo esc_attr($drawer_position); ?>')">
+    <button class="rwc_cart-button plugincy_pos_<?php echo $position ?>" data-cart-icon="<?php echo esc_attr($cart_icon); ?>" data-product_title_tag="<?php echo esc_attr($product_title_tag); ?>" data-drawer-position="<?php echo esc_attr($drawer_position); ?>" onclick="openCartDrawer('<?php echo esc_attr($drawer_position); ?>')">
         <span class="cart-icon">
             <?php echo wp_kses($selected_icon, $allowed_svg); ?>
         </span>
@@ -54,7 +54,9 @@ function onepaquc_cart($drawer_position = 'right',$cart_icon = 'cart',$product_t
     </button>
     <div class="cart-drawer right">
         <div class="cart-content">
-            <div class="close_button"> <svg onclick="closeCheckoutPopup()" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 320 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path></svg> </div>
+            <div class="close_button"> <svg onclick="closeCheckoutPopup()" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 320 512" role="graphics-symbol" aria-hidden="false" aria-label="">
+                    <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
+                </svg> </div>
             <h2><?php echo get_option("your_cart") ? esc_attr(get_option("your_cart", 'Your Cart')) : "Your Cart"; ?></h2>
             <div class="cart-items">
                 <?php
@@ -105,11 +107,131 @@ function onepaquc_cart($drawer_position = 'right',$cart_icon = 'cart',$product_t
                     </div>
                     <a href="#checkout-popup" style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></a>
                     <button class="checkout-button checkout-button-drawer" onclick="openCheckoutPopup()"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></button>
-            <?php }?>
-                                                                                                                                                                                                                                                                                
+                <?php } ?>
+
         </div>
     </div>
     <div class="overlay"></div>
-<?php
-}
-}
+    <?php if (get_option("rmenu_enable_sticky_cart", 1)) : ?>
+        <style>
+            :root {
+                --cart-top: <?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>;
+                --cart-left: <?php echo esc_attr(get_option('rmenu_cart_left_position', '97%')); ?>;
+                <?php
+                    $border_radius = get_option('rmenu_cart_border_radius', '5');
+                    if ($border_radius == '50') {
+                        echo '--cart-radius: 50%;';
+                        echo '--cart-width: 50px;';
+                        echo '--cart-height: 50px;';
+                        echo '--cart-padding: 0;';
+                    } else {
+                        echo '--cart-radius: ' . esc_attr($border_radius) . 'px;';
+                        echo '--cart-width: auto;';
+                        echo '--cart-height: auto;';
+                        echo '--cart-padding: 10px 15px;';
+                    }
+                ?>--cart-bg: <?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>;
+                --cart-text: <?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>;
+                --cart-hover-bg: <?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>;
+                --cart-hover-text: <?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>;
+            }
+
+            .plugincy_pos_,
+            .plugincy_pos_fixed {
+                position: fixed;
+                top: var(--cart-top);
+                left: var(--cart-left);
+                border-radius: var(--cart-radius);
+                background: var(--cart-bg);
+                color: var(--cart-text);
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: var(--cart-width);
+                height: var(--cart-height);
+                padding: var(--cart-padding);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .plugincy_pos_:hover,
+            .plugincy_pos_fixed:hover {
+                background: var(--cart-hover-bg);
+                color: var(--cart-hover-text);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .plugincy_pos_ .cart-icon svg,
+            .plugincy_pos_fixed .cart-icon svg {
+                fill: var(--cart-text);
+                transition: fill 0.3s ease;
+                width: 24px;
+                height: 24px;
+            }
+
+            .plugincy_pos_:hover .cart-icon svg,
+            .plugincy_pos_fixed:hover .cart-icon svg {
+                fill: var(--cart-hover-text);
+            }
+
+            .cart-icon {
+                margin-right: <?php echo ($border_radius == '50') ? '0' : '8px'; ?>;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            span.cart-count {
+                position: absolute;
+                top: <?php echo ($border_radius == '50') ? '-8px' : '-5px'; ?>;
+                <?php echo ($border_radius == '50') ? 'right: -8px; left: auto;' : 'left: -6px;'; ?>padding: 3px 7px;
+                border-radius: 50%;
+                background: #ff4757;
+                color: white;
+                font-size: 12px;
+                font-weight: bold;
+                min-width: 20px;
+                text-align: center;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 768px) {
+
+                .plugincy_pos_,
+                .plugincy_pos_fixed {
+                    top: auto;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    <?php if ($border_radius == '50'): ?>border-radius: 50%;
+                    width: 50px;
+                    height: 50px;
+                    padding: 0;
+                    <?php else: ?>border-radius: 50px;
+                    padding: 12px 20px;
+                    <?php endif; ?>
+                }
+
+                .plugincy_pos_:hover,
+                .plugincy_pos_fixed:hover {
+                    transform: translateX(-50%) translateY(-2px);
+                }
+
+                <?php if ($border_radius == '50'): ?>.cart-icon {
+                    margin-right: 0;
+                }
+
+                span.cart-count {
+                    top: -8px;
+                    right: -8px;
+                    left: auto;
+                }
+
+                <?php endif; ?>
+            }
+        </style>
+<?php endif;
+            }
+        }

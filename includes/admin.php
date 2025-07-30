@@ -222,6 +222,10 @@ function onepaquc_cart_dashboard()
                 <span class="dashicons dashicons-admin-page"></span>
                 One Page Checkout
             </div>
+            <div class="tab" data-tab="9">
+                <span class="dashicons dashicons-archive"></span>
+                Plugincy Cart
+            </div>
             <div class="tab" data-tab="4">
                 <span class="dashicons dashicons-cart"></span>
                 Direct Checkout
@@ -581,6 +585,160 @@ function onepaquc_cart_dashboard()
                         </td>
                     </tr>
                 </table>
+            </div>
+            <div class="tab-content" id="tab-9">
+                <div class="rmenu-settings-header">
+                    <h2>Plugincy Cart Settings</h2>
+                    <p class="rmenu-settings-description">Configure the appearance and behavior of your shopping cart.</p>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Enable Sticky Cart</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_enable_sticky_cart" value="1" <?php checked(1, get_option("rmenu_enable_sticky_cart", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">Enable or disable the sticky cart functionality.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Cart Layout (coming soon)</label>
+                            <div class="rmenu-settings-control">
+                                <select name="rmenu_cart_layout" class="rmenu-select">
+                                    <option value="direct_checkout" <?php //selected(get_option('rmenu_cart_layout', 'side_cart'), 'direct_checkout'); ?>>Direct Checkout</option>
+                                    <option value="direct_cart" <?php //selected(get_option('rmenu_cart_layout', 'side_cart'), 'direct_cart'); ?>>Direct Cart</option>
+                                    <option value="side_cart" <?php //selected(get_option('rmenu_cart_layout', 'side_cart'), 'side_cart'); ?>>Side Cart</option>
+                                    <option value="popup_checkout" <?php //selected(get_option('rmenu_cart_layout', 'side_cart'), 'popup_checkout'); ?>>Popup Checkout</option>
+                                </select>
+                                <p class="rmenu-field-description">Choose the layout for your shopping cart.</p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-move"></span> Position Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Top Position</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_cart_top_position" value="<?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Enter value with unit (px, %, em, etc.).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Left Position</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_cart_left_position" value="<?php echo esc_attr(get_option('rmenu_cart_left_position', '97%')); ?>" class="regular-text" />
+                                    <p class="rmenu-field-description">Enter value with unit (px, %, em, etc.).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-admin-appearance"></span> Style Settings</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Background Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Text Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_cart_text_color', '#333333')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row rmenu-settings-row-columns">
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Hover Background</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_cart_hover_bg" value="<?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rmenu-settings-column">
+                            <div class="rmenu-settings-field">
+                                <label class="rmenu-settings-label">Hover Text Color</label>
+                                <div class="rmenu-settings-control">
+                                    <input type="color" name="rmenu_cart_hover_text" value="<?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>" class="rmenu-color-picker" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Border Radius</label>
+                            <div class="rmenu-settings-control">
+                                <input type="number" name="rmenu_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_cart_border_radius', '5')); ?>" class="small-text" min="0" max="50" step="1" />
+                                <span class="rmenu-unit">px</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="rmenu-settings-section">
+                    <div class="rmenu-settings-section-header">
+                        <h3><span class="dashicons dashicons-admin-settings"></span> Additional Settings (coming soon)</h3>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Show Cart Icon</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_show_cart_icon" value="1" <?php //checked(1, get_option("rmenu_show_cart_icon", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Show Cart Count</label>
+                            <div class="rmenu-settings-control">
+                                <label class="rmenu-toggle-switch">
+                                    <input type="checkbox" name="rmenu_show_cart_count" value="1" <?php //checked(1, get_option("rmenu_show_cart_count", 1), true); ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
             </div>
             <div class="tab-content" id="tab-3">
                 <div class="d-flex space-between">
@@ -1045,19 +1203,19 @@ function onepaquc_cart_dashboard()
                             </div>
                         </div> -->
 
-                        <!-- <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-row">
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Enable for Guest Checkout</label>
                                 <div class="rmenu-settings-control">
                                     <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_wc_checkout_guest_enabled" value="1" <?php //checked(1, get_option("rmenu_wc_checkout_guest_enabled", 1), true); 
+                                        <input type="checkbox" name="rmenu_wc_checkout_guest_enabled" value="1" <?php checked(1, get_option("rmenu_wc_checkout_guest_enabled", 1), true);
                                                                                                                 ?> />
                                         <span class="rmenu-toggle-slider"></span>
                                     </label>
                                     <p class="rmenu-field-description">When enabled, the direct checkout button will be available for guest users. When disabled, only logged-in users will see the button.</p>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
 
@@ -2707,11 +2865,16 @@ function onepaquc_cart_dashboard()
                                     <label class="rmenu-settings-label">Button Icon</label>
                                     <div class="rmenu-settings-control">
                                         <select name="rmenu_add_to_cart_icon" class="rmenu-select">
-                                            <option value="none" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); ?>>No Icon</option>
-                                            <option value="cart" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); ?>>Cart Icon</option>
-                                            <option value="plus" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); ?>>Plus Icon</option>
-                                            <option value="bag" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); ?>>Shopping Bag Icon</option>
-                                            <option value="basket" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); ?>>Basket Icon</option>
+                                            <option value="none" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); 
+                                                                    ?>>No Icon</option>
+                                            <option value="cart" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); 
+                                                                    ?>>Cart Icon</option>
+                                            <option value="plus" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); 
+                                                                    ?>>Plus Icon</option>
+                                            <option value="bag" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); 
+                                                                ?>>Shopping Bag Icon</option>
+                                            <option value="basket" <?php //selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); 
+                                                                    ?>>Basket Icon</option>
                                         </select>
                                     </div>
                                 </div>
@@ -2722,10 +2885,14 @@ function onepaquc_cart_dashboard()
                                     <label class="rmenu-settings-label">Icon Position</label>
                                     <div class="rmenu-settings-control">
                                         <select name="rmenu_add_to_cart_icon_position" class="rmenu-select">
-                                            <option value="left" <?php //selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); ?>>Left</option>
-                                            <option value="right" <?php //selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); ?>>Right</option>
-                                            <option value="top" <?php //selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'top'); ?>>Top</option>
-                                            <option value="bottom" <?php //selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
+                                            <option value="left" <?php //selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); 
+                                                                    ?>>Left</option>
+                                            <option value="right" <?php //selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); 
+                                                                    ?>>Right</option>
+                                            <option value="top" <?php //selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'top'); 
+                                                                ?>>Top</option>
+                                            <option value="bottom" <?php //selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'bottom'); 
+                                                                    ?>>Bottom</option>
                                         </select>
                                     </div>
                                 </div>
@@ -3361,6 +3528,19 @@ function onepaquc_cart_settings()
         "onepaquc_trust_badge_position",
         "onepaquc_trust_badge_style",
         "show_custom_html",
+        "rmenu_enable_sticky_cart",
+        "rmenu_cart_layout",
+        "rmenu_cart_top_position",
+        "rmenu_cart_left_position",
+        "rmenu_cart_bg_color",
+        "rmenu_cart_text_color",
+        "rmenu_cart_hover_bg",
+        "rmenu_cart_hover_text",
+        "rmenu_cart_border_radius",
+        "rmenu_show_cart_icon",
+        "rmenu_show_cart_count",
+        "rmenu_show_cart_total",
+        "rmenu_cart_animation",
     ];
 
     foreach ($string_fields as $field) {

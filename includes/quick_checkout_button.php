@@ -117,12 +117,6 @@ function onepaquc_get_button_styling()
     // Basic button classes
     $classes = "button single_add_to_cart_button direct-checkout-button opqcfw-btn";
     $style = "cursor:pointer;text-align: center;";
-    $position = get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart');
-    if ($position === "bottom_add_to_cart") {
-        $style .= "padding: 14px 30px;";
-    } else {
-        $style .= "padding: 14px 16px;";
-    }
     $icon = '';
     $additional_css = '';
 
@@ -394,9 +388,9 @@ function onepaquc_position_wise_css()
     </style>
 <?php } else if ($position === "bottom_add_to_cart") { ?>
         <style>
-            a.button.single_add_to_cart_button.direct-checkout-button.opqcfw-btn {
+            a.button.opqcfw-btn {
                 width: 100% !important;
-                margin: 0 0 1rem;
+                margin: 0 0 1rem !important;
             }
         </style>
 <?php
