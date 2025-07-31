@@ -35,7 +35,7 @@ jQuery(document).ready(function ($) {
 
             // Create iframe for checkout
             var iframe = $('<iframe>', {
-                src: onepaquc_rmsgValue.checkout_url+'?hide_header_footer=1',
+                src: onepaquc_rmsgValue.checkout_url + '?hide_header_footer=1',
                 id: 'checkout-iframe',
                 frameborder: 0,
                 style: 'width: 100%; min-height: 0%; height:0;'
@@ -56,15 +56,25 @@ jQuery(document).ready(function ($) {
                 $('.checkout-popup #checkout-form').html('<p>Error loading checkout. Please try again.</p>');
             });
         }
+
+        $('body').append(`
+            <style id="cart-drawer-style">
+                .cart-drawer {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                }
+            </style>
+        `);
     };
 
     // Function to close the cart drawer and checkout popup
     function closeCartAndCheckout() {
         if (!$isonepagewidget) {
-            $('.checkout-popup').hide();           
+            $('.checkout-popup').hide();
         }
         $('.cart-drawer').removeClass('open');
         $('.overlay').hide(); // Hide overlay when cart is closed
+        if ($('#cart-drawer-style')) $('#cart-drawer-style').remove();
     }
 
     // Intercept the form submission for checkout

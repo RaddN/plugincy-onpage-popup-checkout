@@ -4,7 +4,7 @@
  * Plugin Name: One Page Quick Checkout for WooCommerce
  * Plugin URI:  https://plugincy.com/one-page-quick-checkout-for-woocommerce/
  * Description: Enhance WooCommerce with popup checkout, cart drawer, and flexible checkout templates to boost conversions.
- * Version: 1.0.9
+ * Version: 1.1.0
  * Author: plugincy
  * Author URI: https://plugincy.com
  * license: GPL2
@@ -14,7 +14,7 @@
 
 
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
-define("RMENU_VERSION", "1.0.9");
+define("RMENU_VERSION", "1.1.0");
 
 // Include the admin notice file
 require_once plugin_dir_path(__FILE__) . 'includes/admin-notice.php';
@@ -26,7 +26,122 @@ require_once plugin_dir_path(__FILE__) . 'includes/admin.php';
 require_once plugin_dir_path(__FILE__) . 'includes/one-page-checkout-shortcode.php';
 require_once plugin_dir_path(__FILE__) . 'includes/add-to-cart-button.php';
 
-global $onepaquc_checkoutformfields, $onepaquc_productpageformfields, $onepaquc_rcheckoutformfields;
+global $onepaquc_checkoutformfields, $onepaquc_productpageformfields, $onepaquc_rcheckoutformfields, $onepaquc_string_settings_fields;
+
+$onepaquc_string_settings_fields = [
+    "rmsg_editor",
+    "onpage_checkout_position",
+    "onpage_checkout_cart_empty",
+    "onpage_checkout_enable",
+    "onpage_checkout_enable_all",
+    "onpage_checkout_cart_add",
+    "onpage_checkout_widget_cart_empty",
+    "onpage_checkout_widget_cart_add",
+    "onpage_checkout_hide_cart_button",
+    "rmenu_quantity_control",
+    "rmenu_at_one_product_cart",
+    "rmenu_disable_cart_page",
+    "rmenu_link_product",
+    "rmenu_allow_analytics",
+    "rmenu_remove_product",
+    "rmenu_add_img_before_product",
+    "rmenu_add_direct_checkout_button",
+    "rmenu_enable_custom_add_to_cart",
+    "rmenu_wc_checkout_guest_enabled",
+    "rmenu_wc_checkout_mobile_optimize",
+    "rmenu_wc_direct_checkout_position",
+    "rmenu_variation_show_archive",
+    "rmenu_wc_hide_select_option",
+    "txt-direct-checkout",
+    "rmenu_wc_checkout_color",
+    "rmenu_add_to_cart_bg_color",
+    "rmenu_wc_checkout_text_color",
+    "rmenu_wc_checkout_custom_css",
+    "rmenu_add_to_cart_text_color",
+    "rmenu_add_to_cart_hover_bg_color",
+    "rmenu_add_to_cart_hover_text_color",
+    "rmenu_add_to_cart_border_radius",
+    "rmenu_add_to_cart_font_size",
+    "rmenu_add_to_cart_width",
+    "rmenu_add_to_cart_custom_css",
+    "rmenu_add_to_cart_icon",
+    "rmenu_add_to_cart_icon_position",
+    "rmenu_add_to_cart_catalog_display",
+    "rmenu_wc_checkout_style",
+    "rmenu_add_to_cart_style",
+    "rmenu_wc_checkout_icon",
+    "rmenu_wc_checkout_icon_position",
+    "rmenu_wc_checkout_method",
+    "rmenu_wc_clear_cart",
+    "rmenu_wc_one_click_purchase",
+    "rmenu_wc_add_confirmation",
+    "rmenu_enable_ajax_add_to_cart",
+    "rmenu_add_to_cart_default_qty",
+    "rmenu_show_quantity_archive",
+    "rmenu_redirect_after_add",
+    "rmenu_add_to_cart_animation",
+    "rmenu_add_to_cart_notification_style",
+    "rmenu_add_to_cart_success_message",
+    "rmenu_show_view_cart_link",
+    "rmenu_add_to_cart_notification_duration",
+    "rmenu_show_checkout_link",
+    "rmenu_sticky_add_to_cart_mobile",
+    "rmenu_mobile_add_to_cart_text",
+    "rmenu_mobile_button_size",
+    "rmenu_hide_on_mobile_options",
+    "rmenu_mobile_icon_only",
+    "rmenu_add_to_cart_loading_effect",
+    "rmenu_disable_btn_out_of_stock",
+    "rmenu_force_button_css",
+    "rmenu_enable_quick_view",
+    "rmenu_quick_view_button_text",
+    "rmenu_quick_view_button_position",
+    "rmenu_quick_view_display_type",
+    "rmenu_quick_view_modal_size",
+    "rmenu_quick_view_enable_lightbox",
+    "rmenu_quick_view_loading_effect",
+    "rmenu_quick_view_button_style",
+    "rmenu_quick_view_button_color",
+    "rmenu_quick_view_text_color",
+    "rmenu_quick_view_button_icon",
+    "rmenu_quick_view_icon_position",
+    "rmenu_quick_view_custom_css",
+    "rmenu_quick_view_ajax_add_to_cart",
+    "rmenu_quick_view_direct_checkout",
+    "rmenu_quick_view_mobile_optimize",
+    "rmenu_quick_view_close_on_add",
+    "rmenu_quick_view_keyboard_nav",
+    "rmenu_quick_view_preload",
+    "rmenu_quick_view_enable_cache",
+    "rmenu_quick_view_cache_expiration",
+    "rmenu_quick_view_lazy_load",
+    "rmenu_quick_view_details_text",
+    "rmenu_quick_view_close_text",
+    "rmenu_quick_view_prev_text",
+    "rmenu_quick_view_next_text",
+    "rmenu_quick_view_track_events",
+    "rmenu_quick_view_event_category",
+    "rmenu_quick_view_event_action",
+    "rmenu_quick_view_load_scripts",
+    "rmenu_quick_view_theme_compat",
+    "onepaquc_trust_badges_enabled",
+    "onepaquc_trust_badge_position",
+    "onepaquc_trust_badge_style",
+    "show_custom_html",
+    "rmenu_enable_sticky_cart",
+    "rmenu_cart_layout",
+    "rmenu_cart_top_position",
+    "rmenu_cart_left_position",
+    "rmenu_cart_bg_color",
+    "rmenu_cart_text_color",
+    "rmenu_cart_hover_bg",
+    "rmenu_cart_hover_text",
+    "rmenu_cart_border_radius",
+    "rmenu_show_cart_icon",
+    "rmenu_show_cart_count",
+    "rmenu_show_cart_total",
+    "rmenu_cart_animation",
+];
 
 require_once plugin_dir_path(__FILE__) . 'includes/global-values.php';
 require_once plugin_dir_path(__FILE__) . 'includes/quickview.php';
@@ -52,9 +167,9 @@ function onepaquc_cart_enqueue_scripts()
         }
     }
 
-    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.0.9");
-    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.0.9", true);
-    wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.0.9", true);
+    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.1.0");
+    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.1.0", true);
+    wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.1.0", true);
     $direct_checkout_behave = [
         'rmenu_wc_checkout_method' => get_option('rmenu_wc_checkout_method', 'direct_checkout'),
         'rmenu_wc_clear_cart' => get_option('rmenu_wc_clear_cart', 0),
@@ -94,12 +209,12 @@ add_action('admin_enqueue_scripts', 'onepaquc_cart_admin_styles');
 function onepaquc_cart_admin_styles($hook)
 {
     if ($hook === 'toplevel_page_onepaquc_cart') {
-        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.0.9");
-        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.0.9");
-        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.0.9", true);
+        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.1.0");
+        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.1.0");
+        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.1.0", true);
     }
-    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.0.9");
-    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.0.9", true);
+    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.1.0");
+    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.1.0", true);
 }
 
 // add shortcode
@@ -120,7 +235,7 @@ function onepaquc_editor_script()
         'plugincy-custom-editor',
         plugin_dir_url(__FILE__) . 'includes/blocks/editor.js',
         array('wp-blocks', 'wp-element', 'wp-edit-post', 'wp-dom-ready', 'wp-plugins'),
-        '1.0.9',
+        '1.1.0',
         true
     );
 }
@@ -243,7 +358,7 @@ function onepaquc_display_one_page_checkout_form()
         return;
     }
 ?>
-    <div class="one-page-checkout-container" id="checkout-popup">
+    <div class="one-page-checkout-container" id="checkout-popup" data-isonepagewidget="true">
         <h2>Checkout</h2>
         <p class="one-page-checkout-description"><?php echo get_option('txt-complete_your_purchase') ? esc_attr(get_option('txt-complete_your_purchase')) : 'Complete your purchase using the form below.'; ?></p>
         <?php echo do_shortcode('[woocommerce_checkout]'); ?>
@@ -374,13 +489,62 @@ add_action('admin_init', 'onepaquc_add_settings_link');
 add_action('wp_head', function () {
     if (isset($_GET['hide_header_footer']) && $_GET['hide_header_footer'] == '1') {
         echo '<style>
-            div#ast-scroll-top, div#wpadminbar, header, .site-header, #masthead, footer, .site-footer, #colophon {
+            div#ast-scroll-top, div#wpadminbar, header, .site-header, #masthead, footer, .site-footer, #colophon,.rmenu-cart,iframe {
                 display: none !important;
             }
-        </style>';
+            html {
+                margin: 0 !important;
+                padding-bottom: 100px;
+            }
+            .ast-container {
+                padding: 0 !important;
+            }
+            .woocommerce-info {
+                margin: 0 !important;
+            }
+            .form-row.place-order {
+                position: fixed;
+                bottom: 0;
+                background: #fff;
+                width: 100%;
+                left: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px 0 !important;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            }
+            .form-row.place-order p.order-total-price {
+                margin: 0 !important;
+            }
+            button#place_order {
+                width: max-content !important;
+                margin: 0 !important;
+            }
+        </style>
+        ';
         // Add JS to append ?hide_header_footer=1 to all links
     ?>
         <script>
+            const elementsToHide = [
+                'div#ast-scroll-top',
+                'div#wpadminbar',
+                'header',
+                '.site-header',
+                '#masthead',
+                'footer',
+                '.site-footer',
+                '#colophon',
+                '.rmenu-cart',
+                'iframe'
+            ];
+
+            elementsToHide.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(element => {
+                    element.style.setProperty('display', 'none', 'important');
+                });
+            });
             // Define a function to append ?hide_header_footer=1 to all links
             function appendHideHeaderFooterParam() {
                 // Store current screen width & height in localStorage
@@ -425,6 +589,25 @@ add_action('wp_head', function () {
     } else {
     ?>
         <script>
+            const elements2ToHide = [
+                'div#ast-scroll-top',
+                'div#wpadminbar',
+                'header',
+                '.site-header',
+                '#masthead',
+                'footer',
+                '.site-footer',
+                '#colophon',
+                '.rmenu-cart',
+                'iframe'
+            ];
+
+            elements2ToHide.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(element => {
+                    element.style.setProperty('display', 'none', 'important');
+                });
+            });
             // Get stored screen width & height from localStorage
             const stored_width = localStorage.getItem('screen_width');
             const stored_height = localStorage.getItem('screen_height');
@@ -438,8 +621,37 @@ add_action('wp_head', function () {
                 // Hide header and footer elements if sizes match
                 var style = document.createElement('style');
                 style.innerHTML = `
-                        div#ast-scroll-top, div#wpadminbar, header, .site-header, #masthead, footer, .site-footer, #colophon {
+                        div#ast-scroll-top, div#wpadminbar, header, .site-header, #masthead, footer, .site-footer, #colophon,.rmenu-cart,iframe {
                             display: none !important;
+                        }
+                        html {
+                            margin: 0 !important;
+                            padding-bottom: 100px;
+                        }
+                        .ast-container {
+                            padding: 0 !important;
+                        }
+                        .woocommerce-info {
+                            margin: 0 !important;
+                        }
+                        .form-row.place-order {
+                            position: fixed;
+                            bottom: 0;
+                            background: #fff;
+                            width: 100%;
+                            left: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding: 20px 0 !important;
+                            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                        }
+                        .form-row.place-order p.order-total-price {
+                            margin: 0 !important;
+                        }
+                        button#place_order {
+                            width: max-content !important;
+                            margin: 0 !important;
                         }
                     `;
                 document.head.appendChild(style);
@@ -453,7 +665,7 @@ if (get_option("rmenu_enable_sticky_cart", 1)) {
     function onepaquc_display_cart()
     {
         if (class_exists('WooCommerce')) {
-            echo do_shortcode('[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4" position="fixed" top="" left=""]');
+            echo do_shortcode('[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4" position="fixed"]');
         }
     }
 

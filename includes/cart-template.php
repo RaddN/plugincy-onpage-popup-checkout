@@ -52,186 +52,219 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
             ?>
         </span>
     </button>
-    <div class="cart-drawer right">
+    <div class="cart-drawer <?php echo $drawer_position ?>">
         <div class="cart-content">
-            <div class="close_button"> <svg onclick="closeCheckoutPopup()" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 320 512" role="graphics-symbol" aria-hidden="false" aria-label="">
-                    <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
-                </svg> </div>
-            <h2><?php echo get_option("your_cart") ? esc_attr(get_option("your_cart", 'Your Cart')) : "Your Cart"; ?></h2>
-            <div class="cart-items">
-                <?php
-                if (function_exists('WC') && WC() && WC()->cart) {
-                    if (WC()->cart->is_empty()) {
-                ?>
-                        <p>Your cart is currently empty.</p>
-                        <?php
-                    } else {
-                        foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
-                            $_product = $cart_item['data'];
-                            $thumbnail = $_product->get_image();
-                        ?>
-                            <div class="cart-item">
-                                <div class="thumbnail">
-                                    <?php echo wp_kses($thumbnail, array(
-                                        'img' => array(
-                                            'src' => array(),
-                                            'alt' => array(),
-                                            'class' => array(),
-                                            // Add other attributes as needed
-                                        ),
-                                    )); ?>
-                                </div>
-                                <div>
-                                    <<?php echo esc_attr($product_title_tag); ?> class="item-title"><?php echo esc_html($_product->get_name()); ?></<?php echo esc_attr($product_title_tag); ?>>
-                                    <p class="item-price"><?php echo wp_kses_post(wc_price($_product->get_price())); ?></p>
-                                    <div class="quantity">
-                                        <input type="number" class="item-quantity" value="<?php echo esc_attr($cart_item['quantity']); ?>" min="1">
-                                        <button class="remove-item" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>"><?php echo get_option("btn_remove") ? esc_attr(get_option("btn_remove", 'Remove')) : '<svg style="width: 16px; fill: #ff0000;" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM31.1 128H416V448C416 483.3 387.3 512 352 512H95.1C60.65 512 31.1 483.3 31.1 448V128zM111.1 208V432C111.1 440.8 119.2 448 127.1 448C136.8 448 143.1 440.8 143.1 432V208C143.1 199.2 136.8 192 127.1 192C119.2 192 111.1 199.2 111.1 208zM207.1 208V432C207.1 440.8 215.2 448 223.1 448C232.8 448 240 440.8 240 432V208C240 199.2 232.8 192 223.1 192C215.2 192 207.1 199.2 207.1 208zM304 208V432C304 440.8 311.2 448 320 448C328.8 448 336 440.8 336 432V208C336 199.2 328.8 192 320 192C311.2 192 304 199.2 304 208z"></path></svg>'; ?></button>
+            <div style=" display: flex; justify-content: space-between; ">
+                <h2><?php echo get_option("your_cart") ? esc_attr(get_option("your_cart", 'Your Cart')) : "Your Cart"; ?></h2>
+                <div class="close_button" onclick="closeCheckoutPopup()"></div>
+                
+            </div>
+            <?php
+            if (function_exists('WC') && WC() && WC()->cart) {
+                if (WC()->cart->is_empty()) {
+            ?>
+                    <div class="cart-items empty-cart-items">
+                        <div class="empty-cart">
+                            <svg data-icon="icon-checkout" width="56" height="56" viewBox="0 0 24 24" class="plugincy-icon-checkout" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 2.71411C2 2.31972 2.31972 2 2.71411 2H3.34019C4.37842 2 4.97454 2.67566 5.31984 3.34917C5.55645 3.8107 5.72685 4.37375 5.86764 4.86133H20.5709C21.5186 4.86133 22.2035 5.7674 21.945 6.67914L19.809 14.2123C19.4606 15.4413 18.3384 16.2896 17.0609 16.2896H9.80665C8.51866 16.2896 7.39 15.4276 7.05095 14.185L6.13344 10.8225C6.12779 10.8073 6.12262 10.7917 6.11795 10.7758L4.64782 5.78023C4.59738 5.61449 4.55096 5.45386 4.50614 5.29878C4.36354 4.80529 4.23716 4.36794 4.04891 4.00075C3.82131 3.55681 3.61232 3.42822 3.34019 3.42822H2.71411C2.31972 3.42822 2 3.1085 2 2.71411ZM7.49529 10.3874L8.4288 13.8091C8.59832 14.4304 9.16266 14.8613 9.80665 14.8613H17.0609C17.6997 14.8613 18.2608 14.4372 18.435 13.8227L20.5709 6.28955H6.28975L7.49529 10.3874ZM12.0017 19.8577C12.0017 21.0408 11.0426 22 9.85941 22C8.67623 22 7.71708 21.0408 7.71708 19.8577C7.71708 18.6745 8.67623 17.7153 9.85941 17.7153C11.0426 17.7153 12.0017 18.6745 12.0017 19.8577ZM10.5735 19.8577C10.5735 19.4633 10.2538 19.1436 9.85941 19.1436C9.46502 19.1436 9.1453 19.4633 9.1453 19.8577C9.1453 20.2521 9.46502 20.5718 9.85941 20.5718C10.2538 20.5718 10.5735 20.2521 10.5735 19.8577ZM19.1429 19.8577C19.1429 21.0408 18.1837 22 17.0005 22C15.8173 22 14.8582 21.0408 14.8582 19.8577C14.8582 18.6745 15.8173 17.7153 17.0005 17.7153C18.1837 17.7153 19.1429 18.6745 19.1429 19.8577ZM17.7146 19.8577C17.7146 19.4633 17.3949 19.1436 17.0005 19.1436C16.6061 19.1436 16.2864 19.4633 16.2864 19.8577C16.2864 20.2521 16.6061 20.5718 17.0005 20.5718C17.3949 20.5718 17.7146 20.2521 17.7146 19.8577Z" fill="currentColor"></path>
+                            </svg>
+                            <div class="plugincy-zero-state-title">Your Cart is Empty</div>
+                            <?php
+                            // Get the shop page URL or fallback to home page
+                            $shop_url = get_home_url(); // Default to home page
+
+                            // Check if WooCommerce is active and get shop page ID
+                            if (function_exists('wc_get_page_id')) {
+                                $shop_page_id = wc_get_page_id('shop');
+
+                                // If shop page exists and is published, use its URL
+                                if ($shop_page_id && get_post_status($shop_page_id) === 'publish') {
+                                    $shop_url = get_permalink($shop_page_id);
+                                }
+                            }
+                            // Alternative check if WooCommerce functions aren't available
+                            elseif (function_exists('get_option')) {
+                                $shop_page_id = get_option('woocommerce_shop_page_id');
+
+                                // If shop page exists and is published, use its URL
+                                if ($shop_page_id && get_post_status($shop_page_id) === 'publish') {
+                                    $shop_url = get_permalink($shop_page_id);
+                                }
+                            }
+                            ?>
+
+                            <a href="<?php echo esc_url($shop_url); ?>" class="plugincy-primary-button plugincy-shop-button plugincy-modal-close">Shop Now</a>
+                        </div>
+                    <?php
+                } else { ?>
+                        <div class="cart-items">
+                            <?php
+                            foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+                                $_product = $cart_item['data'];
+                                $thumbnail = $_product->get_image();
+                            ?>
+                                <div class="cart-item">
+                                    <div class="thumbnail">
+                                        <?php echo wp_kses($thumbnail, array(
+                                            'img' => array(
+                                                'src' => array(),
+                                                'alt' => array(),
+                                                'class' => array(),
+                                                // Add other attributes as needed
+                                            ),
+                                        )); ?>
+                                    </div>
+                                    <div>
+                                        <<?php echo esc_attr($product_title_tag); ?> class="item-title"><?php echo esc_html($_product->get_name()); ?></<?php echo esc_attr($product_title_tag); ?>>
+                                        <p class="item-price"><?php echo wp_kses_post(wc_price($_product->get_price())); ?></p>
+                                        <div class="quantity">
+                                            <input type="number" class="item-quantity" value="<?php echo esc_attr($cart_item['quantity']); ?>" min="1">
+                                            <button class="remove-item" data-cart-item-key="<?php echo esc_attr($cart_item_key); ?>"><?php echo get_option("btn_remove") ? esc_attr(get_option("btn_remove", 'Remove')) : '<svg style="width: 16px; fill: #ff0000;" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label=""><path d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM31.1 128H416V448C416 483.3 387.3 512 352 512H95.1C60.65 512 31.1 483.3 31.1 448V128zM111.1 208V432C111.1 440.8 119.2 448 127.1 448C136.8 448 143.1 440.8 143.1 432V208C143.1 199.2 136.8 192 127.1 192C119.2 192 111.1 199.2 111.1 208zM207.1 208V432C207.1 440.8 215.2 448 223.1 448C232.8 448 240 440.8 240 432V208C240 199.2 232.8 192 223.1 192C215.2 192 207.1 199.2 207.1 208zM304 208V432C304 440.8 311.2 448 320 448C328.8 448 336 440.8 336 432V208C336 199.2 328.8 192 320 192C311.2 192 304 199.2 304 208z"></path></svg>'; ?></button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                <?php }
-                    }
-                } else {
-                    // Fallback when WooCommerce is not initialized
-                    echo '<p>Your cart is currently empty.</p>';
-                } ?>
-            </div>
-
-        </div>
-        <div>
-            <?php if (function_exists('WC') && WC() && WC()->cart) {
-                if (!WC()->cart->is_empty()) { ?>
-                    <div class="cart-subtotal">
-                        <span><?php echo get_option("txt_subtotal") ? esc_attr(get_option("txt_subtotal", 'Subtotal: ')) : "Subtotal: "; ?><?php echo wp_kses_post(wc_price(WC()->cart->get_subtotal())); ?></span>
-                    </div>
-                    <a href="#checkout-popup" style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></a>
-                    <button class="checkout-button checkout-button-drawer" onclick="openCheckoutPopup()"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></button>
-                <?php } ?>
-
-        </div>
-    </div>
-    <div class="overlay"></div>
-    <?php if (get_option("rmenu_enable_sticky_cart", 1)) : ?>
-        <style>
-            :root {
-                --cart-top: <?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>;
-                --cart-left: <?php echo esc_attr(get_option('rmenu_cart_left_position', '97%')); ?>;
-                <?php
-                    $border_radius = get_option('rmenu_cart_border_radius', '5');
-                    if ($border_radius == '50') {
-                        echo '--cart-radius: 50%;';
-                        echo '--cart-width: 50px;';
-                        echo '--cart-height: 50px;';
-                        echo '--cart-padding: 0;';
+                    <?php }
+                        }
                     } else {
-                        echo '--cart-radius: ' . esc_attr($border_radius) . 'px;';
-                        echo '--cart-width: auto;';
-                        echo '--cart-height: auto;';
-                        echo '--cart-padding: 10px 15px;';
-                    }
-                ?>--cart-bg: <?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>;
-                --cart-text: <?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>;
-                --cart-hover-bg: <?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>;
-                --cart-hover-text: <?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>;
-            }
+                        // Fallback when WooCommerce is not initialized
+                        echo '<p>Your cart is currently empty.</p>';
+                    } ?>
+                        </div>
 
-            .plugincy_pos_,
-            .plugincy_pos_fixed {
-                position: fixed;
-                top: var(--cart-top);
-                left: var(--cart-left);
-                border-radius: var(--cart-radius);
-                background: var(--cart-bg);
-                color: var(--cart-text);
-                transition: all 0.3s ease;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: var(--cart-width);
-                height: var(--cart-height);
-                padding: var(--cart-padding);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            }
+                    </div>
+                    <div>
+                        <?php if (function_exists('WC') && WC() && WC()->cart) {
+                            if (!WC()->cart->is_empty()) { ?>
+                                <div class="cart-subtotal">
+                                    <span><?php echo get_option("txt_subtotal") ? esc_attr(get_option("txt_subtotal", 'Subtotal: ')) : "Subtotal: "; ?><?php echo wp_kses_post(wc_price(WC()->cart->get_subtotal())); ?></span>
+                                </div>
+                                <a href="#checkout-popup" style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></a>
+                                <button class="checkout-button checkout-button-drawer" onclick="openCheckoutPopup()"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></button>
+                            <?php } ?>
 
-            .plugincy_pos_:hover,
-            .plugincy_pos_fixed:hover {
-                background: var(--cart-hover-bg);
-                color: var(--cart-hover-text);
-                transform: translateY(-2px);
-                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            }
-
-            .plugincy_pos_ .cart-icon svg,
-            .plugincy_pos_fixed .cart-icon svg {
-                fill: var(--cart-text);
-                transition: fill 0.3s ease;
-                width: 24px;
-                height: 24px;
-            }
-
-            .plugincy_pos_:hover .cart-icon svg,
-            .plugincy_pos_fixed:hover .cart-icon svg {
-                fill: var(--cart-hover-text);
-            }
-
-            .cart-icon {
-                margin-right: <?php echo ($border_radius == '50') ? '0' : '8px'; ?>;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            span.cart-count {
-                position: absolute;
-                top: <?php echo ($border_radius == '50') ? '-8px' : '-5px'; ?>;
-                <?php echo ($border_radius == '50') ? 'right: -8px; left: auto;' : 'left: -6px;'; ?>padding: 3px 7px;
-                border-radius: 50%;
-                background: #ff4757;
-                color: white;
-                font-size: 12px;
-                font-weight: bold;
-                min-width: 20px;
-                text-align: center;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            }
-
-            /* Responsive adjustments */
-            @media (max-width: 768px) {
+                    </div>
+        </div>
+        <div class="overlay"></div>
+        <?php if (get_option("rmenu_enable_sticky_cart", 1)) : ?>
+            <style>
+                :root {
+                    --cart-top: <?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>;
+                    --cart-left: <?php echo esc_attr(get_option('rmenu_cart_left_position', '97%')); ?>;
+                    <?php
+                                $border_radius = get_option('rmenu_cart_border_radius', '5');
+                                if ($border_radius == '50') {
+                                    echo '--cart-radius: 50%;';
+                                    echo '--cart-width: 50px;';
+                                    echo '--cart-height: 50px;';
+                                    echo '--cart-padding: 0;';
+                                } else {
+                                    echo '--cart-radius: ' . esc_attr($border_radius) . 'px;';
+                                    echo '--cart-width: auto;';
+                                    echo '--cart-height: auto;';
+                                    echo '--cart-padding: 10px 15px;';
+                                }
+                    ?>--cart-bg: <?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>;
+                    --cart-text: <?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>;
+                    --cart-hover-bg: <?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>;
+                    --cart-hover-text: <?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>;
+                }
 
                 .plugincy_pos_,
                 .plugincy_pos_fixed {
-                    top: auto;
-                    bottom: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    <?php if ($border_radius == '50'): ?>border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
-                    padding: 0;
-                    <?php else: ?>border-radius: 50px;
-                    padding: 12px 20px;
-                    <?php endif; ?>
+                    position: fixed;
+                    top: var(--cart-top);
+                    left: var(--cart-left);
+                    border-radius: var(--cart-radius);
+                    background: var(--cart-bg);
+                    color: var(--cart-text);
+                    transition: all 0.3s ease;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: var(--cart-width);
+                    height: var(--cart-height);
+                    padding: var(--cart-padding);
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                 }
 
                 .plugincy_pos_:hover,
                 .plugincy_pos_fixed:hover {
-                    transform: translateX(-50%) translateY(-2px);
+                    background: var(--cart-hover-bg);
+                    color: var(--cart-hover-text);
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
                 }
 
-                <?php if ($border_radius == '50'): ?>.cart-icon {
-                    margin-right: 0;
+                .plugincy_pos_ .cart-icon svg,
+                .plugincy_pos_fixed .cart-icon svg {
+                    fill: var(--cart-text);
+                    transition: fill 0.3s ease;
+                    width: 24px;
+                    height: 24px;
+                }
+
+                .plugincy_pos_:hover .cart-icon svg,
+                .plugincy_pos_fixed:hover .cart-icon svg {
+                    fill: var(--cart-hover-text);
+                }
+
+                .cart-icon {
+                    margin-right: <?php echo ($border_radius == '50') ? '0' : '8px'; ?>;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
 
                 span.cart-count {
-                    top: -8px;
-                    right: -8px;
-                    left: auto;
+                    position: absolute;
+                    top: <?php echo ($border_radius == '50') ? '-8px' : '-5px'; ?>;
+                    <?php echo ($border_radius == '50') ? 'right: -8px; left: auto;' : 'left: -6px;'; ?>padding: 3px 7px;
+                    border-radius: 50%;
+                    background: #ff4757;
+                    color: white;
+                    font-size: 12px;
+                    font-weight: bold;
+                    min-width: 20px;
+                    text-align: center;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
                 }
 
-                <?php endif; ?>
-            }
-        </style>
+                /* Responsive adjustments */
+                @media (max-width: 768px) {
+
+                    .plugincy_pos_,
+                    .plugincy_pos_fixed {
+                        top: auto;
+                        bottom: 20px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        <?php if ($border_radius == '50'): ?>border-radius: 50%;
+                        width: 50px;
+                        height: 50px;
+                        padding: 0;
+                        <?php else: ?>border-radius: 50px;
+                        padding: 12px 20px;
+                        <?php endif; ?>
+                    }
+
+                    .plugincy_pos_:hover,
+                    .plugincy_pos_fixed:hover {
+                        transform: translateX(-50%) translateY(-2px);
+                    }
+
+                    <?php if ($border_radius == '50'): ?>.cart-icon {
+                        margin-right: 0;
+                    }
+
+                    span.cart-count {
+                        top: -8px;
+                        right: -8px;
+                        left: auto;
+                    }
+
+                    <?php endif; ?>
+                }
+            </style>
 <?php endif;
-            }
-        }
+                        }
+                    }

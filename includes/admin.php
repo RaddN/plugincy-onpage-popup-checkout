@@ -183,7 +183,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.0.9</span></div>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.1.0</span></div>
         <p>Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
         <p>Get started by configuring your settings below or explore our quick setup guide.</p>
 
@@ -224,7 +224,7 @@ function onepaquc_cart_dashboard()
             </div>
             <div class="tab" data-tab="9">
                 <span class="dashicons dashicons-archive"></span>
-                Plugincy Cart
+                Floating Cart
             </div>
             <div class="tab" data-tab="4">
                 <span class="dashicons dashicons-cart"></span>
@@ -486,7 +486,7 @@ function onepaquc_cart_dashboard()
                         <th scope="row">Empty Cart on Page Load</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_cart_empty" value="1" <?php checked(1, get_option("onpage_checkout_cart_empty"), true); ?> />
+                                <input type="checkbox" name="onpage_checkout_cart_empty" value="1" <?php checked(1, get_option("onpage_checkout_cart_empty","1"), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                             <span class="tooltip">
@@ -499,7 +499,7 @@ function onepaquc_cart_dashboard()
                         <th scope="row">Add to Cart on Page Load</th>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_cart_add" value="1" <?php checked(1, get_option("onpage_checkout_cart_add"), true); ?> />
+                                <input type="checkbox" name="onpage_checkout_cart_add" value="1" <?php checked(1, get_option("onpage_checkout_cart_add","1"), true); ?> />
                                 <span class="slider round"></span>
                             </label>
                             <span class="tooltip">
@@ -588,7 +588,7 @@ function onepaquc_cart_dashboard()
             </div>
             <div class="tab-content" id="tab-9">
                 <div class="rmenu-settings-header">
-                    <h2>Plugincy Cart Settings</h2>
+                    <h2>Floating Cart Settings</h2>
                     <p class="rmenu-settings-description">Configure the appearance and behavior of your shopping cart.</p>
                 </div>
 
@@ -673,7 +673,7 @@ function onepaquc_cart_dashboard()
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Text Color</label>
                                 <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_cart_text_color', '#333333')); ?>" class="rmenu-color-picker" />
+                                    <input type="color" name="rmenu_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
                                 </div>
                             </div>
                         </div>
@@ -3407,7 +3407,13 @@ function onepaquc_cart_dashboard()
             </script>
             <?php submit_button(); ?>
         </form>
-        <p style="text-align: center;font-size: 15px;">To add menu cart to your page, use the shortcode <b>[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4"]</b> or use Plugincy Cart Widget/Block</p>
+        <form method="post" action="" onsubmit="return confirm('Are you sure you want to reset all settings to default? This action cannot be undone.');" style="display: none;">
+            <input type="hidden" name="onepaquc_reset_settings" value="1">
+            <?php
+            submit_button('Reset Settings', 'button-primary', '', false, array_merge(array('style' => 'margin-left: 20px;background:#dc3545;color:#fff;border-color:#dc3545;')));
+            ?>
+        </form>
+        <p style="text-align: center;font-size: 15px;">To add menu cart to your page, use the shortcode <b>[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4"]</b> or use Floating Cart Widget/Block</p>
         <p style="text-align: center;padding-bottom:20px; font-size: 15px;">[plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"] or use <b>Plugincy One Page Checkout</b> widget/block <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/one-page-checkout/multi-product-one-page-checkout/">view documentation</a></p>
     </div>
 <?php
@@ -3416,11 +3422,68 @@ function onepaquc_cart_dashboard()
 add_action('admin_init', 'onepaquc_cart_settings');
 // add_action('wp_head', 'onepaquc_cart_custom_css');
 
+function onepaquc_handle_reset_settings()
+{
+    if (isset($_POST['onepaquc_reset_settings']) && $_POST['onepaquc_reset_settings'] == '1') {
+        global $onepaquc_string_settings_fields;
+        foreach (onepaquc_rmenu_fields() as $key => $field) {
+            delete_option($key);
+        }
+        foreach (onepaquc_onpcheckout_heading() as $key => $field) {
+            delete_option($key);
+        }
 
+        foreach ($onepaquc_string_settings_fields as $field) {
+            delete_option($field);
+        }
+
+        global $onepaquc_checkoutformfields, $onepaquc_productpageformfields;
+        $settings = array_merge(array_keys($onepaquc_checkoutformfields), array_keys($onepaquc_productpageformfields));
+
+        foreach ($settings as $setting) {
+            delete_option($setting);
+        }
+
+        // List of settings to reset
+        $settings_to_reset = [
+            'onepaquc_checkout_fields',
+            'rmenu_show_quick_checkout_by_types',
+            'rmenu_show_quick_checkout_by_page',
+            'rmenu_add_to_cart_by_types',
+            'rmenu_quick_view_content_elements',
+            'rmenu_show_quick_view_by_types',
+            'rmenu_show_quick_view_by_page',
+            'onepaquc_my_trust_badges_items',
+            'checkout_form_setup',
+            'onepaquc_trust_badge_custom_html',
+        ];
+
+        // Reset each setting
+        foreach ($settings_to_reset as $setting) {
+            delete_option($setting);
+        }
+
+        // Redirect to the same page to avoid resubmission
+        $current_url = $_SERVER['REQUEST_URI'];
+
+        // Check if the URL already has a query string
+        if (strpos($current_url, '?') !== false) {
+            // Append the new action parameter
+            $redirect_url = $current_url . '&action=reset_success';
+        } else {
+            // Add the action parameter as the first query parameter
+            $redirect_url = $current_url . '?action=reset_success';
+        }
+        wp_redirect($redirect_url);
+        exit;
+    }
+}
+add_action('admin_init', 'onepaquc_handle_reset_settings');
 
 
 function onepaquc_cart_settings()
 {
+    global $onepaquc_string_settings_fields;
     foreach (onepaquc_rmenu_fields() as $key => $field) {
         register_setting('onepaquc_cart_settings', $key, 'sanitize_text_field');
     }
@@ -3428,122 +3491,7 @@ function onepaquc_cart_settings()
         register_setting('onepaquc_cart_settings', $key, 'sanitize_text_field');
     }
 
-    $string_fields = [
-        "rmsg_editor",
-        "onpage_checkout_position",
-        "onpage_checkout_cart_empty",
-        "onpage_checkout_enable",
-        "onpage_checkout_enable_all",
-        "onpage_checkout_cart_add",
-        "onpage_checkout_widget_cart_empty",
-        "onpage_checkout_widget_cart_add",
-        "onpage_checkout_hide_cart_button",
-        "rmenu_quantity_control",
-        "rmenu_at_one_product_cart",
-        "rmenu_disable_cart_page",
-        "rmenu_link_product",
-        "rmenu_allow_analytics",
-        "rmenu_remove_product",
-        "rmenu_add_img_before_product",
-        "rmenu_add_direct_checkout_button",
-        "rmenu_enable_custom_add_to_cart",
-        "rmenu_wc_checkout_guest_enabled",
-        "rmenu_wc_checkout_mobile_optimize",
-        "rmenu_wc_direct_checkout_position",
-        "rmenu_variation_show_archive",
-        "rmenu_wc_hide_select_option",
-        "txt-direct-checkout",
-        "rmenu_wc_checkout_color",
-        "rmenu_add_to_cart_bg_color",
-        "rmenu_wc_checkout_text_color",
-        "rmenu_wc_checkout_custom_css",
-        "rmenu_add_to_cart_text_color",
-        "rmenu_add_to_cart_hover_bg_color",
-        "rmenu_add_to_cart_hover_text_color",
-        "rmenu_add_to_cart_border_radius",
-        "rmenu_add_to_cart_font_size",
-        "rmenu_add_to_cart_width",
-        "rmenu_add_to_cart_custom_css",
-        "rmenu_add_to_cart_icon",
-        "rmenu_add_to_cart_icon_position",
-        "rmenu_add_to_cart_catalog_display",
-        "rmenu_wc_checkout_style",
-        "rmenu_add_to_cart_style",
-        "rmenu_wc_checkout_icon",
-        "rmenu_wc_checkout_icon_position",
-        "rmenu_wc_checkout_method",
-        "rmenu_wc_clear_cart",
-        "rmenu_wc_one_click_purchase",
-        "rmenu_wc_add_confirmation",
-        "rmenu_enable_ajax_add_to_cart",
-        "rmenu_add_to_cart_default_qty",
-        "rmenu_show_quantity_archive",
-        "rmenu_redirect_after_add",
-        "rmenu_add_to_cart_animation",
-        "rmenu_add_to_cart_notification_style",
-        "rmenu_add_to_cart_success_message",
-        "rmenu_show_view_cart_link",
-        "rmenu_add_to_cart_notification_duration",
-        "rmenu_show_checkout_link",
-        "rmenu_sticky_add_to_cart_mobile",
-        "rmenu_mobile_add_to_cart_text",
-        "rmenu_mobile_button_size",
-        "rmenu_hide_on_mobile_options",
-        "rmenu_mobile_icon_only",
-        "rmenu_add_to_cart_loading_effect",
-        "rmenu_disable_btn_out_of_stock",
-        "rmenu_force_button_css",
-        "rmenu_enable_quick_view",
-        "rmenu_quick_view_button_text",
-        "rmenu_quick_view_button_position",
-        "rmenu_quick_view_display_type",
-        "rmenu_quick_view_modal_size",
-        "rmenu_quick_view_enable_lightbox",
-        "rmenu_quick_view_loading_effect",
-        "rmenu_quick_view_button_style",
-        "rmenu_quick_view_button_color",
-        "rmenu_quick_view_text_color",
-        "rmenu_quick_view_button_icon",
-        "rmenu_quick_view_icon_position",
-        "rmenu_quick_view_custom_css",
-        "rmenu_quick_view_ajax_add_to_cart",
-        "rmenu_quick_view_direct_checkout",
-        "rmenu_quick_view_mobile_optimize",
-        "rmenu_quick_view_close_on_add",
-        "rmenu_quick_view_keyboard_nav",
-        "rmenu_quick_view_preload",
-        "rmenu_quick_view_enable_cache",
-        "rmenu_quick_view_cache_expiration",
-        "rmenu_quick_view_lazy_load",
-        "rmenu_quick_view_details_text",
-        "rmenu_quick_view_close_text",
-        "rmenu_quick_view_prev_text",
-        "rmenu_quick_view_next_text",
-        "rmenu_quick_view_track_events",
-        "rmenu_quick_view_event_category",
-        "rmenu_quick_view_event_action",
-        "rmenu_quick_view_load_scripts",
-        "rmenu_quick_view_theme_compat",
-        "onepaquc_trust_badges_enabled",
-        "onepaquc_trust_badge_position",
-        "onepaquc_trust_badge_style",
-        "show_custom_html",
-        "rmenu_enable_sticky_cart",
-        "rmenu_cart_layout",
-        "rmenu_cart_top_position",
-        "rmenu_cart_left_position",
-        "rmenu_cart_bg_color",
-        "rmenu_cart_text_color",
-        "rmenu_cart_hover_bg",
-        "rmenu_cart_hover_text",
-        "rmenu_cart_border_radius",
-        "rmenu_show_cart_icon",
-        "rmenu_show_cart_count",
-        "rmenu_show_cart_total",
-        "rmenu_cart_animation",
-    ];
-
-    foreach ($string_fields as $field) {
+    foreach ($onepaquc_string_settings_fields as $field) {
         register_setting('onepaquc_cart_settings', $field, 'sanitize_text_field');
     }
 

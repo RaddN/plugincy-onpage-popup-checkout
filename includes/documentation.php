@@ -2,9 +2,9 @@
 if (!defined('ABSPATH')) exit;
 
 /**
- * Renders the Plugincy Cart documentation page
+ * Renders the Floating Cart documentation page
  * 
- * @since 1.0.9
+ * @since 1.1.0
  * @return void
  */
 function onepaquc_cart_documentation()
@@ -13,8 +13,8 @@ function onepaquc_cart_documentation()
     <div class="wrap">
         <div class="plugincy-docs">
             <div class="plugincy-header">
-                <h1>Plugincy Cart Documentation</h1>
-                <p>Comprehensive guide to using the Plugincy Cart plugin for WooCommerce</p>
+                <h1>Floating Cart Documentation</h1>
+                <p>Comprehensive guide to using the Floating Cart plugin for WooCommerce</p>
             </div>
 
             <div class="plugincy-docs-sidebar">
@@ -52,7 +52,7 @@ function onepaquc_cart_documentation()
             <div class="plugincy-docs-content">
                 <div id="introduction" class="plugincy-section">
                     <h2>Introduction</h2>
-                    <p>Plugincy Cart is a powerful WooCommerce extension that enhances your store's checkout experience with menu cart functionality and one-page checkout options. This documentation will guide you through the features and implementation of the plugin.</p>
+                    <p>Floating Cart is a powerful WooCommerce extension that enhances your store's checkout experience with menu cart functionality and one-page checkout options. This documentation will guide you through the features and implementation of the plugin.</p>
                 </div>
 
                 <div id="features" class="plugincy-section">
@@ -131,7 +131,7 @@ function onepaquc_cart_documentation()
 
                     <div id="templates">
                         <h3>Available Templates</h3>
-                        <p>Plugincy Cart offers several templates for displaying products in one-page checkout:</p>
+                        <p>Floating Cart offers several templates for displaying products in one-page checkout:</p>
 
                         <div class="plugincy-templates">
                             <div class="plugincy-template">
@@ -207,7 +207,7 @@ function onepaquc_cart_documentation()
 
                 <div id="elementor-int" class="plugincy-section">
                     <h2>Elementor Integration</h2>
-                    <p>Plugincy Cart provides two dedicated Elementor widgets:</p>
+                    <p>Floating Cart provides two dedicated Elementor widgets:</p>
                     <ol>
                         <li><strong>Plugincy WC Cart</strong> - For adding a mini cart</li>
                         <li><strong>Plugincy One Page Checkout</strong> - For creating Multiple Products One Page Checkout</li>
@@ -216,7 +216,7 @@ function onepaquc_cart_documentation()
 
                 <div id="gutenberg-int" class="plugincy-section">
                     <h2>Gutenberg Integration</h2>
-                    <p>Plugincy Cart provides two dedicated Gutenberg blocks:</p>
+                    <p>Floating Cart provides two dedicated Gutenberg blocks:</p>
                     <ol>
                         <li><strong>Plugincy WC Cart</strong> - For adding a mini cart</li>
                         <li><strong>Plugincy One Page Checkout</strong> - For creating Multiple Products One Page Checkout</li>
@@ -225,7 +225,7 @@ function onepaquc_cart_documentation()
 
                 <div id="support" class="plugincy-section">
                     <h2>Support</h2>
-                    <p>If you encounter any issues or have questions about Plugincy Cart, please contact our support team at <a href="mailto:support@plugincy.com">support@plugincy.com</a> or visit our <a href="https://plugincy.com/support" target="_blank">support forum</a>.</p>
+                    <p>If you encounter any issues or have questions about Floating Cart, please contact our support team at <a href="mailto:support@plugincy.com">support@plugincy.com</a> or visit our <a href="https://plugincy.com/support" target="_blank">support forum</a>.</p>
                 </div>
             </div>
         </div>

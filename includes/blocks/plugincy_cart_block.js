@@ -5,7 +5,7 @@
     const el = element.createElement;
 
     blocks.registerBlockType('wc/checkout-block', {
-        title: 'Plugincy Cart',
+        title: 'Floating Cart',
         icon: 'onepaquc_cart',
         category: 'plugincy',
         attributes: {
