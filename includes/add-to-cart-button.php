@@ -359,8 +359,6 @@ class RMENU_Add_To_Cart_Handler
         // Setup AJAX add to cart if enabled
         if (get_option('rmenu_enable_ajax_add_to_cart', 1)) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_ajax_scripts'));
-            add_action('wp_ajax_onepaquc_ajax_add_to_cart', array($this, 'onepaquc_ajax_add_to_cart'));
-            add_action('wp_ajax_nopriv_onepaquc_ajax_add_to_cart', array($this, 'onepaquc_ajax_add_to_cart'));
             add_filter('woocommerce_add_to_cart_fragments', array($this, 'add_to_cart_fragments'));
         }
 
@@ -401,7 +399,7 @@ class RMENU_Add_To_Cart_Handler
         wp_localize_script('rmenu-ajax-add-to-cart', 'rmenu_ajax_object', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('rmenu-ajax-nonce'),
-            'animation' => get_option('rmenu_add_to_cart_animation', 'slide'),
+            'animation' => get_option('rmenu_add_to_cart_animation', 'none'),
             'notification_style' => 'default',
             'notification_duration' => 3000,
             'i18n' => array(
@@ -410,78 +408,6 @@ class RMENU_Add_To_Cart_Handler
                 'checkout' => '',
             )
         ));
-    }
-
-    /**
-     * AJAX add to cart handler
-     */
-    public function onepaquc_ajax_add_to_cart()
-    {
-        check_ajax_referer('rmenu-ajax-nonce', 'nonce');
-
-        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint( isset($_POST['product_id']) ? $_POST['product_id'] : 0));
-
-        // Get default quantity from settings if quantity is not provided
-        $default_qty = 1;
-
-        // Use posted quantity if available, otherwise use default
-        // $quantity = empty($_POST['quantity']) ? $default_qty : wc_stock_amount($_POST['quantity']);
-
-        $quantity = empty($_POST['quantity']) ? $default_qty : (int) sanitize_text_field(wp_unslash($_POST['quantity']));
-
-        $variation_id = empty($_POST['variation_id']) ? 0 : absint($_POST['variation_id']);
-        $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field',  wp_unslash($_POST['variations'])) : array();
-
-        $product_status = get_post_status($product_id);
-
-        $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations);
-
-        if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variations) && 'publish' === $product_status) {
-
-            do_action('woocommerce_ajax_added_to_cart', $product_id);
-
-            // Get product name for the message
-            $product = wc_get_product($product_id);
-            $product_name = $product ? $product->get_name() : '';
-
-            // Get cart URL
-            $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : WC()->cart->get_cart_url();
-
-            // Get checkout URL
-            $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : WC()->cart->get_checkout_url();
-
-            // Get redirect option
-            $redirect_option = get_option('rmenu_redirect_after_add', 'none');
-            $redirect_url = 'none';
-
-            if ($redirect_option === 'cart') {
-                $redirect_url = $cart_url;
-            } elseif ($redirect_option === 'checkout') {
-                $redirect_url = $checkout_url;
-            }
-
-            $response = array(
-                'success' => true,
-                'product_name' => $product_name,
-                'cart_url' => $cart_url,
-                'checkout_url' => $checkout_url,
-                'cart_total' => WC()->cart->get_cart_total(),
-                'cart_count' => WC()->cart->get_cart_contents_count(),
-                'redirect' => $redirect_option !== 'none',
-                'redirect_url' => $redirect_url
-            );
-
-            wp_send_json($response);
-        } else {
-            $data = array(
-                'error' => true,
-                'message' => __('Error adding product to cart', 'one-page-quick-checkout-for-woocommerce')
-            );
-
-            wp_send_json($data);
-        }
-
-        wp_die();
     }
 
     /**

@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
     let isUpdatingCart = false;
     let isUpdatingCheckout = false;
-    $isonepagewidget = $('.checkout-popup').data('isonepagewidget');
+    $isonepagewidget = ($('.checkout-popup,#checkout-popup').length) ? $('.checkout-popup,#checkout-popup').data('isonepagewidget') : false;
     // Function to fetch and update cart contents
     function updateCartContent(isdrawer = true) {
         if (isUpdatingCart) return;
@@ -22,8 +22,8 @@ jQuery(document).ready(function ($) {
             success: function (response) {
                 if (response.success) {
                     $('.rmenu-cart').html(response.data.cart_html);
-                    if (isdrawer) {
-                        $('.cart-drawer').addClass('open');
+                    if (isdrawer && response.data.cart_count !== 0) {
+                        window.openCartDrawer();
                     }
                     isUpdatingCart = false;
                 }
@@ -34,15 +34,23 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    window.updateCartCount = function (incrementValue = 1) {
+    window.updateCartCount = function (isIncrement = true, Value = 1) {
         // Select the cart count element
         const cartCountElement = document.querySelector('span.cart-count');
+
+        $(document.body).on('removed_from_cart', function () {
+            isIncrement = false;
+        });
 
         // Check if the element exists
         if (cartCountElement) {
             // Get the current count, parse it as an integer, and increase it by the increment value
             let currentCount = parseInt(cartCountElement.textContent, 10);
-            currentCount += incrementValue;
+            if (isIncrement) {
+                currentCount += Value;
+            } else {
+                currentCount -= Value;
+            }
 
             // Update the cart count display
             cartCountElement.textContent = currentCount;
@@ -52,9 +60,20 @@ jQuery(document).ready(function ($) {
     };
     // Event handler for adding/removing items from the cart
     $(document.body).on('added_to_cart removed_from_cart', function () {
-        window.updateCartCount();
-        debouncedUpdate();
+        const cartDrawer = document.querySelector('.cart-drawer');
+        if (cartDrawer && cartDrawer.classList.contains('open')) {
+            window.createCheckoutIframe();
+            window.refreshCheckoutIframe();
+        } else {
+            window.createCheckoutIframe();
+            window.refreshCheckoutIframe();
+            // window.updateCartCount();
+            debouncedUpdate();
+        }
     });
+    // $(document.body).on('updated_wc_div updated_checkout', function () {
+    //     debouncedUpdate();
+    // });
 
     // Function to update the checkout form
     function updateCheckoutForm() {
@@ -89,11 +108,16 @@ jQuery(document).ready(function ($) {
         updateCheckoutForm();
     }
 
+    window.updateCartContent = function (isdrawer = true) {
+        updateCartContent(isdrawer);
+    }
+
     // Handle quantity change
     $('.rmenu-cart').on('change', '.item-quantity', function () {
         const $input = $(this);
         const cartItemKey = $input.closest('.cart-item').find('.remove-item').data('cart-item-key');
         const quantity = $input.val();
+        const cartCountElement = document.querySelector('span.cart-count');
 
         // Add loading class (spinner)
         $input.prop('disabled', true).parent().addClass('loading-spinner');
@@ -109,7 +133,10 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 if (response.success) {
-                    debouncedUpdate();
+                    // Update cart totals
+                    window.updateCartTotals(response.data);
+                    cartCountElement.textContent = response.data.cart_count;
+                    // debouncedUpdate();
                     $(document.body).trigger('update_checkout');
                     $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);
                 }
@@ -126,9 +153,19 @@ jQuery(document).ready(function ($) {
     $('.rmenu-cart').on('click', '.remove-item', function (e) {
         e.preventDefault();
         const cartItemKey = $(this).data('cart-item-key');
+        const cartItem = $(this).closest('.cart-item');
+        cartItem.addClass("removing");
+        cartItem.css('transition', 'opacity 0.5s ease'); // Optional: add transition for smooth effect
+        cartItem.css('opacity', '0.5'); // Optional: fade out the item
 
-        $(this).closest('.cart-item').css('transition', 'opacity 0.5s ease'); // Optional: add transition for smooth effect
-        $(this).closest('.cart-item').css('opacity', '0.5'); // Optional: fade out the item
+        window.removecartitem(cartItemKey);
+    });
+
+    window.removecartitem = function (cartItemKey) {
+        const removingItems = document.querySelectorAll('.removing');
+        let cart_count = document.querySelector('span.cart-count');
+        const selectedCountText = document.getElementById('selected-count-text');
+        const removeSelectedButton = document.getElementById('remove-selected');
 
         $.ajax({
             url: onepaquc_wc_cart_params.ajax_url,
@@ -140,16 +177,34 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 if (response.success) {
-                    debouncedUpdate();
+                    window.updateCartTotals(response.data);
+
+                    removingItems.forEach(item => {
+                        let currentCount = parseInt(cart_count.textContent, 10) || 0;
+                        currentCount -= 1;
+                        // Update the element with the new count
+                        cart_count.textContent = currentCount;
+                        if (currentCount === 0) {
+                            window.closeCheckoutPopup();
+                            cart_count.textContent = "0";
+                        }
+                        item.classList.add('fade-out'); // Start fade-out animation
+                        setTimeout(() => {
+                            item.remove(); // Remove item after animation
+                        }, 500); // Match timeout with CSS transition duration
+                    });
+
                     // Update checkout totals
                     $(document.body).trigger('update_checkout');
+                    selectedCountText.textContent = `0 selected`;
+                    removeSelectedButton.style.display = 'none';
 
                     // Trigger WooCommerce hook
                     $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);
                 }
             }
         });
-    });
+    }
     // handle quantity change
 
     // Function to update quantity
@@ -298,16 +353,22 @@ jQuery(document).ready(function ($) {
     var $directbehave = onepaquc_wc_cart_params.direct_checkout_behave;
     var methodKey = $directbehave.rmenu_wc_checkout_method;
 
-    function directcheckout(product_id, product_type, $button) {
-        var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() || $button.siblings('.variation_id').val() || 0;
+    function directcheckout(product_id, product_type, $button, methodKey) { // Add methodKey parameter
+        var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() ||
+            $button.siblings('.variation_id').val() ||
+            $button.closest('.product').find('.archive-variations-container').find('.variation_id').val() || 0;
+
+        // Convert to number to ensure proper comparison
+        $variation_id = parseInt($variation_id) || 0;
 
         $('#checkout-button-drawer-link').prop('disabled', true);
 
+        // Check for variation selection FIRST
         if (product_type === 'variable' && $variation_id === 0) {
             $('#checkout-button-drawer-link').prop('disabled', false);
             $button.removeClass('loading').prop('disabled', false);
-            alert("Please Select a variation first");
-            return;
+            alert("Please select some product options before adding this product to your cart.");
+            return false; // Explicitly return false
         }
 
         // Handle confirmation if enabled
@@ -321,7 +382,6 @@ jQuery(document).ready(function ($) {
             };
 
             var methodLabel = methodMap[methodKey] || "Direct Checkout";
-
             var confirmMessage = `Are you sure you want to proceed with ${methodLabel}?`;
 
             if ($directbehave.rmenu_wc_clear_cart === "1") {
@@ -333,7 +393,7 @@ jQuery(document).ready(function ($) {
             if (!confirmed) {
                 $('#checkout-button-drawer-link').prop('disabled', false);
                 $button.removeClass('loading').prop('disabled', false);
-                return;
+                return; // Stop execution if user cancels
             }
         }
 
@@ -347,7 +407,7 @@ jQuery(document).ready(function ($) {
                     product_id: product_id,
                     quantity: 1,
                     variation_id: $variation_id,
-                    nonce: onepaquc_wc_cart_params.nonce || '', // Fallback if needed
+                    nonce: onepaquc_wc_cart_params.nonce || '',
                 },
                 success: function (response) {
                     if (response.success) {
@@ -362,25 +422,33 @@ jQuery(document).ready(function ($) {
                                 sessionStorage.setItem('wc_cart_hash', response.cart_hash);
                             }
                         }
+
                         // Update UI
                         debouncedUpdate(false);
                         $(document.body).trigger('update_checkout');
 
-                        // Trigger WooCommerce hook
-                        $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);
+                        const cartDrawer = $('.cart-drawer');
 
-                        // Redirect or UI handling
+                        // Trigger WooCommerce hook
+                        $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $button]);
+
+                        // Redirect or UI handling based on method
                         if (methodKey === 'direct_checkout') {
                             window.location.href = onepaquc_wc_cart_params.checkout_url;
                         } else if (methodKey === 'ajax_add') {
-                            $('.cart-drawer').removeClass('open');
+                            if (cartDrawer.length) cartDrawer.removeClass('open');
                         } else if (methodKey === 'cart_redirect') {
                             window.location.href = onepaquc_wc_cart_params.cart_url;
                         } else if (methodKey === 'side_cart' && !$isonepagewidget) {
+                            if ($('#cart-drawer2-style').length) $('#cart-drawer2-style').remove();
+                            if (!cartDrawer.length) {
+                                console.error('Cart drawer not found. Enable floating/sticky cart from settings.');
+                            }
                             debouncedUpdate();
                         } else {
-                            $('.checkout-popup').show();
-                            $('.cart-drawer').removeClass('open');
+                            const checkout_popup = $('.checkout-popup');
+                            if (checkout_popup.length) checkout_popup.show();
+                            if (cartDrawer.length) cartDrawer.removeClass('open');
                         }
                     } else {
                         alert(response.message || 'Could not add the product to cart.');
@@ -404,7 +472,6 @@ jQuery(document).ready(function ($) {
             });
         }
 
-
         // If clear cart is enabled, clear the cart before proceeding
         if ($directbehave.rmenu_wc_clear_cart == 1) {
             $.ajax({
@@ -414,77 +481,130 @@ jQuery(document).ready(function ($) {
                     action: 'woocommerce_clear_cart'
                 },
                 success: function () {
-                    proceedToAddToCart(); // Now add the product
+                    proceedToAddToCart();
                 },
                 error: function () {
                     alert('Could not clear cart. Please try again.');
                     $('#checkout-button-drawer-link').prop('disabled', false);
+                    $button.removeClass('loading').prop('disabled', false);
                 }
             });
         } else {
             proceedToAddToCart();
         }
-        function showVariationSelectionPopup(product_id) {
-            // Fetch the product's variation HTML using AJAX
-            $.ajax({
-                type: 'GET',
-                url: onepaquc_wc_cart_params.ajax_url,
-                data: {
-                    action: 'rmenu_get_product_variations', // Define this action in your PHP
-                    product_id: product_id
-                },
-                success: function (response) {
-                    if (response.success) {
-                        // Create the popup
-                        var popupHtml = `
-                        <div class="variation-popup-overlay">
-                            <div class="variation-popup">
-                                <span class="variation-popup-close">&times;</span>
-                                <h3>Select Product Options</h3>
-                                ${response.data}
-                            </div>
+    }
+
+    // Helper function for showing variation selection popup (if needed)
+    function showVariationSelectionPopup(product_id) {
+        $.ajax({
+            type: 'GET',
+            url: onepaquc_wc_cart_params.ajax_url,
+            data: {
+                action: 'rmenu_get_product_variations',
+                product_id: product_id
+            },
+            success: function (response) {
+                if (response.success) {
+                    var popupHtml = `
+                    <div class="variation-popup-overlay">
+                        <div class="variation-popup">
+                            <span class="variation-popup-close">&times;</span>
+                            <h3>Select Product Options</h3>
+                            ${response.data}
                         </div>
-                    `;
-                        // Append the popup to the body
-                        $('body').append(popupHtml);
+                    </div>
+                `;
 
-                        // Close the popup when the close button or overlay is clicked
-                        $('.variation-popup-close, .variation-popup-overlay').on('click', function () {
-                            $('.variation-popup-overlay').remove();
-                        });
+                    $('body').append(popupHtml);
 
-                        // Prevent clicks inside the popup from closing it
-                        $('.variation-popup').on('click', function (event) {
-                            event.stopPropagation();
-                        });
-                    } else {
-                        alert(response.message || 'Could not load variations. Please try again.');
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error('AJAX error:', textStatus, errorThrown);
-                    alert('Failed to load variations. Please try again later.');
+                    $('.variation-popup-close, .variation-popup-overlay').on('click', function () {
+                        $('.variation-popup-overlay').remove();
+                    });
+
+                    $('.variation-popup').on('click', function (event) {
+                        event.stopPropagation();
+                    });
+                } else {
+                    alert(response.message || 'Could not load variations. Please try again.');
                 }
-            });
-        }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('AJAX error:', textStatus, errorThrown);
+                alert('Failed to load variations. Please try again later.');
+            }
+        });
+    }
+
+    // Helper function for showing variation selection popup (if needed)
+    function showVariationSelectionPopup(product_id) {
+        $.ajax({
+            type: 'GET',
+            url: onepaquc_wc_cart_params.ajax_url,
+            data: {
+                action: 'rmenu_get_product_variations',
+                product_id: product_id
+            },
+            success: function (response) {
+                if (response.success) {
+                    var popupHtml = `
+                    <div class="variation-popup-overlay">
+                        <div class="variation-popup">
+                            <span class="variation-popup-close">&times;</span>
+                            <h3>Select Product Options</h3>
+                            ${response.data}
+                        </div>
+                    </div>
+                `;
+
+                    $('body').append(popupHtml);
+
+                    $('.variation-popup-close, .variation-popup-overlay').on('click', function () {
+                        $('.variation-popup-overlay').remove();
+                    });
+
+                    $('.variation-popup').on('click', function (event) {
+                        event.stopPropagation();
+                    });
+                } else {
+                    alert(response.message || 'Could not load variations. Please try again.');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('AJAX error:', textStatus, errorThrown);
+                alert('Failed to load variations. Please try again later.');
+            }
+        });
     }
     // Event delegation for better performance
     $(document).on('click', '.direct-checkout-button', function (e) {
         e.preventDefault(); // Prevent the default anchor behavior
-
         var $button = $(this); // Cache the button reference
         var product_id = $button.data('product-id');
         var product_type = $button.data('product-type');
         // Add loading class
         $button.addClass('loading').prop('disabled', true); // Disable the button
+        $('body').append(`
+            <style id="cart-drawer2-style">
+                .cart-drawer,.overlay {
+                    opacity: 0 !important;
+                    visibility: hidden !important;
+                    display: none !important;
+                }
+                body{
+                    overflow: auto !important;
+                }
+            </style>
+        `);
         directcheckout(product_id, product_type, $button);
     });
 
     $(document.body).on('updated_checkout', function () {
         // Get the full HTML of the order total amount from the specified element
-        var orderTotalHtml = $('.order-total .woocommerce-Price-amount').html().trim();
+        var orderTotalHtml = $('.order-total .woocommerce-Price-amount').html()
+
+        if (orderTotalHtml) orderTotalHtml.trim();
         // Check if the <p> with the class 'order-total-price' exists
-        var totalPriceElement = $('.checkout-popup .form-row.place-order p.order-total-price');
+        var totalPriceElement = $('.form-row.place-order p.order-total-price');
         if (totalPriceElement.length) {
             // If it exists, update the HTML
             totalPriceElement.html('<span>Total: </span>' + orderTotalHtml);
@@ -493,6 +613,71 @@ jQuery(document).ready(function ($) {
             var newTotalParagraph = '<p class="order-total-price"><span>Total: </span>' + orderTotalHtml + '</p>';
             $('.form-row.place-order').prepend(newTotalParagraph);
         }
+    });
+
+    function setbtnLoadingState($button, loading) {
+
+        if (loading) {
+            // Store the original text if not already stored
+            if (!$button.data('original-text')) {
+                $button.data('original-text', $button.text());
+            }
+            $button
+                .addClass("loading")
+                .prop('disabled', true)
+                .text('Adding...');
+        } else {
+            $button
+                .removeClass("loading")
+                .prop('disabled', false)
+                .text('Add to Cart');
+        }
+    }
+
+    $(document).on('click', '.add-to-cart-button', function (e) {
+        var $button = $(this);
+        setbtnLoadingState($button, true);
+        const couponMessage = document.getElementById('coupon-message');
+
+        const productId = this.dataset.productId;
+
+        const data = {
+            action: 'onepaquc_ajax_add_to_cart',
+            product_id: productId,
+            nonce: onepaquc_wc_cart_params.rmenu_ajax_nonce
+        };
+
+        jQuery.post(onepaquc_wc_cart_params.ajax_url, data, function (response) {
+            if (response.success) {
+                const cart_items = document.querySelector('.cart-items');
+                if (cart_items && response.cart_items_html) {
+                    cart_items.innerHTML = response.cart_items_html; // Use innerHTML
+                }
+
+                setbtnLoadingState($button, false);
+
+                // Update cart count
+                document.querySelector('span.cart-count').textContent = response.cart_count;
+
+                // Show success message
+                couponMessage.textContent = 'Product added to cart!';
+                couponMessage.className = 'coupon-message success';
+                couponMessage.style.display = "block";
+
+                // Trigger WooCommerce hook
+                $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);
+
+                debouncedUpdate();
+
+                // Clear message after delay
+                setTimeout(() => {
+                    couponMessage.textContent = '';
+                    couponMessage.className = 'coupon-message';
+                    couponMessage.style.display = "none";
+                }, 3000);
+            }
+        });
+
     });
 });
 

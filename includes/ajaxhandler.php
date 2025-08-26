@@ -1,6 +1,6 @@
 <?php
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
-
+// ajaxhandler.php
 
 // update cart content
 
@@ -37,26 +37,73 @@ function onepaquc_update_cart_item_quantity()
     $cart_item_key = isset($_POST['cart_item_key']) ? sanitize_text_field(wp_unslash($_POST['cart_item_key'])) : '';
     $quantity = isset($_POST['quantity']) ? (int)sanitize_text_field(wp_unslash($_POST['quantity'])) : 0;
 
+
     if (WC()->cart->set_quantity($cart_item_key, $quantity)) {
-        wp_send_json_success();
+        $cart = WC()->cart;
+
+        // Get updated cart data
+        $subtotal = wc_price($cart->get_subtotal());
+        $total = wc_price($cart->get_total('raw'));
+        $cart_count = $cart->get_cart_contents_count();
+
+        wp_send_json_success(array(
+            'subtotal' => $subtotal,
+            'discount_total' => $cart->get_discount_total(),
+            'cart_count' => $cart_count,
+            'total' => $total
+        ));
     } else {
         wp_send_json_error('Could not update quantity.');
     }
 }
 
 
-// remove cart item
+
+// remove cart item(s)
 add_action('wp_ajax_onepaquc_remove_cart_item', 'onepaquc_handle_remove_cart_item');
 add_action('wp_ajax_nopriv_onepaquc_remove_cart_item', 'onepaquc_handle_remove_cart_item');
 function onepaquc_handle_remove_cart_item()
 {
     check_ajax_referer('remove_cart_item', 'nonce');
-    $cart_item_key = isset($_POST['cart_item_key']) ? sanitize_text_field(wp_unslash($_POST['cart_item_key'])) : '';
-
-    if (WC()->cart->remove_cart_item($cart_item_key)) {
-        wp_send_json_success();
+    $cart_item_keys = array();
+    if (isset($_POST['cart_item_key']) && is_array($_POST['cart_item_key'])) {
+        $cart_item_keys = $_POST['cart_item_key'];
+    } elseif (isset($_POST['cart_item_key'])) {
+        $cart_item_keys = array($_POST['cart_item_key']);
     } else {
-        wp_send_json_error('Could not remove item.');
+        wp_send_json_error('No cart item key provided.');
+    }
+    $sanitized_keys = array();
+    foreach ($cart_item_keys as $key) {
+        $sanitized_keys[] = sanitize_text_field(wp_unslash($key));
+    }
+
+    $failed_keys = array();
+
+    foreach ($sanitized_keys as $key) {
+        if (!WC()->cart->remove_cart_item($key)) {
+            $failed_keys[] = $key;
+        }
+    }
+
+
+    $cart = WC()->cart;
+
+    // Get updated cart data
+    $subtotal = wc_price($cart->get_subtotal());
+    $total = wc_price($cart->get_total('raw'));
+
+    if (empty($failed_keys)) {
+        wp_send_json_success(array(
+            'subtotal' => $subtotal,
+            'discount_total' => $cart->get_discount_total(),
+            'total' => $total
+        ));
+    } else {
+        wp_send_json_error(array(
+            'message' => 'Could not remove some items.',
+            'failed_keys' => $failed_keys
+        ));
     }
 }
 
@@ -186,68 +233,295 @@ add_action('wp_ajax_onepaquc_ajax_add_to_cart', 'onepaquc_ajax_add_to_cart');
 add_action('wp_ajax_nopriv_onepaquc_ajax_add_to_cart', 'onepaquc_ajax_add_to_cart');
 
 
-function onepaquc_ajax_add_to_cart() {
-        check_ajax_referer('rmenu-ajax-nonce', 'nonce');
+function onepaquc_ajax_add_to_cart()
+{
+    check_ajax_referer('rmenu-ajax-nonce', 'nonce');
 
-        $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint(isset($_POST['product_id']) ? $_POST['product_id'] : 0));
+    $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint(isset($_POST['product_id']) ? $_POST['product_id'] : 0));
 
-        // Get default quantity from settings if quantity is not provided
-        $default_qty = 1;
-        
-        // Use posted quantity if available, otherwise use default
-        $quantity = empty($_POST['quantity']) ? $default_qty : (int) sanitize_text_field(wp_unslash($_POST['quantity']));
-        
-        $variation_id = empty($_POST['variation_id']) ? 0 : absint($_POST['variation_id']);
-        $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field', wp_unslash($_POST['variations'])) : array();
+    // Get default quantity from settings if quantity is not provided
+    $default_qty = 1;
 
-        $product_status = get_post_status($product_id);
+    // Use posted quantity if available, otherwise use default
+    $quantity = empty($_POST['quantity']) ? $default_qty : (int) sanitize_text_field(wp_unslash($_POST['quantity']));
+
+    $variation_id = empty($_POST['variation_id']) ? 0 : absint($_POST['variation_id']);
+    $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field', wp_unslash($_POST['variations'])) : array();
+
+    $product_status = get_post_status($product_id);
+
+    $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations);
+
+    if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variations) && 'publish' === $product_status) {
+
+        do_action('woocommerce_ajax_added_to_cart', $product_id);
+
+        // Get product name for the message
+        $product = wc_get_product($product_id);
+        $product_name = $product ? $product->get_name() : '';
+
+        // Get cart URL
+        $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : WC()->cart->get_cart_url();
+
+        // Get checkout URL
+        $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : WC()->cart->get_checkout_url();
+
+        // Render cart items
+        $cart_items_html = "";
+        $cart_count = WC()->cart->get_cart_contents_count();
+        $cart_items = WC()->cart->get_cart();
+
+        foreach ($cart_items as $cart_item_key => $cart_item) {
+            $_product = $cart_item['data'];
+            $thumbnail = $_product->get_image();
+            $product_price = wc_price($_product->get_price());
+            $product_quantity = $cart_item['quantity'];
+            $product_total = wc_price($_product->get_price() * $product_quantity);
+
+            $cart_items_html .= '<div class="cart-item" data-cart-item-key="' . esc_attr($cart_item_key) . '">
+                <div class="item-select">
+                    <input type="checkbox" class="item-checkbox" data-cart-item-key="' . esc_attr($cart_item_key) . '">
+                </div>
+                <div class="thumbnail">
+                    ' . wp_kses($thumbnail, array(
+                "img" => array(
+                    "src" => array(),
+                    "alt" => array(),
+                    "class" => array(),
+                ),
+            )) . '
+                    <button class="remove-item" data-cart-item-key="' . esc_attr($cart_item_key) . '"><svg style="width: 16px; fill: #ff0000;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                    </button>
+                </div>
+                <div class="item-details">
+                    <div style="display:flex;gap:1rem;">
+                        <p class="item-title">' . esc_html($_product->get_name()) . '</p>
+                        <p class="item-price">' . wp_kses_post($product_price) . '</p>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus" data-action="minus" data-cart-item-key="' . esc_attr($cart_item_key) . '">-</button>
+                        <input type="number" class="item-quantity" value="' . esc_attr($product_quantity) . '" min="1" data-cart-item-key="' . esc_attr($cart_item_key) . '">
+                        <button class="quantity-btn plus" data-action="plus" data-cart-item-key="' . esc_attr($cart_item_key) . '">+</button>
+                    </div>
+
+                </div>
+            </div>';
+        }
+
+
+
+        // Get redirect option
+        $redirect_option = get_option('rmenu_redirect_after_add', 'none');
+        $redirect_url = 'none';
+
+        if ($redirect_option === 'cart') {
+            $redirect_url = $cart_url;
+        } elseif ($redirect_option === 'checkout') {
+            $redirect_url = $checkout_url;
+        }
+
+        $response = array(
+            'success' => true,
+            'product_name' => $product_name,
+            'cart_url' => $cart_url,
+            'checkout_url' => $checkout_url,
+            'cart_total' => WC()->cart->get_cart_total(),
+            'cart_count' => $cart_count,
+            'cart_items_html' => $cart_items_html,
+            'redirect' => $redirect_option !== 'none',
+            'redirect_url' => $redirect_url
+        );
+
+        wp_send_json($response);
+    } else {
+        $data = array(
+            'error' => true,
+            'message' => __('Error adding product to cart', 'one-page-quick-checkout-for-woocommerce')
+        );
+
+        wp_send_json($data);
+    }
+
+    wp_die();
+}
+
+
+// coupon ajax handler
+add_action('wp_ajax_apply_coupon', 'onepaquc_apply_coupon');
+add_action('wp_ajax_nopriv_apply_coupon', 'onepaquc_apply_coupon');
+
+function onepaquc_apply_coupon()
+{
+    check_ajax_referer('apply-coupon', 'security');
+
+    $coupon_code = sanitize_text_field($_POST['coupon_code']);
+
+    // Apply coupon
+    $cart = WC()->cart;
+    $result = $cart->apply_coupon($coupon_code);
+
+    if ($result) {
+        // Get updated cart data
+        $subtotal = wc_price($cart->get_subtotal());
+        $discount_total = wc_price($cart->get_discount_total());
+        $total = wc_price($cart->get_total('raw'));
+
+        wp_send_json_success(array(
+            'subtotal' => $subtotal,
+            'discount_total' => $cart->get_discount_total(),
+            'total' => $total
+        ));
+    } else {
+        wp_send_json_error(array('message' => 'Invalid coupon code.'));
+    }
+}
+
+add_action('wp_ajax_remove_coupon', 'onepaquc_remove_coupon');
+add_action('wp_ajax_nopriv_remove_coupon', 'onepaquc_remove_coupon');
+
+function onepaquc_remove_coupon()
+{
+    check_ajax_referer('apply-coupon', 'security');
+
+    $coupon_code = sanitize_text_field($_POST['coupon_code']);
+
+    // Remove coupon
+    $cart = WC()->cart;
+    $cart->remove_coupon($coupon_code);
+
+    // Get updated cart data
+    $subtotal = wc_price($cart->get_subtotal());
+    $discount_total = wc_price($cart->get_discount_total());
+    $total = wc_price($cart->get_total('raw'));
+
+    wp_send_json_success(array(
+        'subtotal' => $subtotal,
+        'discount_total' => $cart->get_discount_total(),
+        'total' => $total
+    ));
+}
+
+
+/**
+ * AJAX handler for getting all products quick view data
+ */
+function onepaquc_get_all_products_quick_view() {
+    // Verify nonce for security
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'rmenu_quick_view_nonce')) {
+        wp_send_json_error(array('message' => 'Security check failed'));
+    }
+    
+    // Get product IDs from the request
+    $product_ids = isset($_POST['product_ids']) ? array_map('intval', $_POST['product_ids']) : array();
+    
+    if (empty($product_ids)) {
+        wp_send_json_error(array('message' => 'No product IDs provided'));
+    }
+    
+    $products_data = array();
+    
+    foreach ($product_ids as $product_id) {
+        $product = wc_get_product($product_id);
         
-        $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations);
-        
-        if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variations) && 'publish' === $product_status) {
-            
-            do_action('woocommerce_ajax_added_to_cart', $product_id);
-            
-            // Get product name for the message
-            $product = wc_get_product($product_id);
-            $product_name = $product ? $product->get_name() : '';
-            
-            // Get cart URL
-            $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : WC()->cart->get_cart_url();
-            
-            // Get checkout URL
-            $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : WC()->cart->get_checkout_url();
-            
-            // Get redirect option
-            $redirect_option = get_option('rmenu_redirect_after_add', 'none');
-            $redirect_url = 'none';
-            
-            if ($redirect_option === 'cart') {
-                $redirect_url = $cart_url;
-            } elseif ($redirect_option === 'checkout') {
-                $redirect_url = $checkout_url;
-            }
-            
-            $response = array(
-                'success' => true,
-                'product_name' => $product_name,
-                'cart_url' => $cart_url,
-                'checkout_url' => $checkout_url,
-                'cart_total' => WC()->cart->get_cart_total(),
-                'cart_count' => WC()->cart->get_cart_contents_count(),
-                'redirect' => $redirect_option !== 'none',
-                'redirect_url' => $redirect_url
-            );
-            
-            wp_send_json($response);
-        } else {
-            $data = array(
-                'error' => true,
-                'message' => __('Error adding product to cart', 'one-page-quick-checkout-for-woocommerce')
-            );
-            
-            wp_send_json($data);
+        if (!$product) {
+            continue; // Skip if product doesn't exist
         }
         
-        wp_die();
+        // Get product images
+        $images = array();
+        $attachment_ids = $product->get_gallery_image_ids();
+        
+        // Add featured image first
+        $featured_image_id = $product->get_image_id();
+        if ($featured_image_id) {
+            array_unshift($attachment_ids, $featured_image_id);
+        }
+        
+        // If no images, add placeholder
+        if (empty($attachment_ids)) {
+            $images[] = array(
+                'id'    => 0,
+                'src'   => wc_placeholder_img_src(),
+                'thumb' => wc_placeholder_img_src('thumbnail'),
+                'full'  => wc_placeholder_img_src('full'),
+                'alt'   => __('Placeholder', 'woocommerce')
+            );
+        } else {
+            foreach ($attachment_ids as $attachment_id) {
+                $image_src = wp_get_attachment_image_src($attachment_id, 'woocommerce_single');
+                $thumb_src = wp_get_attachment_image_src($attachment_id, 'woocommerce_thumbnail');
+                $full_src  = wp_get_attachment_image_src($attachment_id, 'full');
+                
+                $images[] = array(
+                    'id'    => $attachment_id,
+                    'src'   => $image_src ? $image_src[0] : wc_placeholder_img_src(),
+                    'thumb' => $thumb_src ? $thumb_src[0] : wc_placeholder_img_src('thumbnail'),
+                    'full'  => $full_src ? $full_src[0] : wc_placeholder_img_src('full'),
+                    'alt'   => get_post_meta($attachment_id, '_wp_attachment_image_alt', true)
+                );
+            }
+        }
+        
+        // Get product categories
+        $categories_html = '';
+        $categories = get_the_terms($product_id, 'product_cat');
+        if ($categories && !is_wp_error($categories)) {
+            $category_links = array();
+            foreach ($categories as $category) {
+                $category_links[] = '<a href="' . get_term_link($category) . '">' . $category->name . '</a>';
+            }
+            $categories_html = implode(', ', $category_links);
+        }
+        
+        // Get product brands (if using a brands plugin)
+        $brands_html = '';
+        if (taxonomy_exists('product_brand')) {
+            $brands = get_the_terms($product_id, 'product_brand');
+            if ($brands && !is_wp_error($brands)) {
+                $brand_links = array();
+                foreach ($brands as $brand) {
+                    $brand_links[] = '<a href="' . get_term_link($brand) . '">' . $brand->name . '</a>';
+                }
+                $brands_html = implode(', ', $brand_links);
+            }
+        }
+        
+        // Get product tags
+        $tags_html = '';
+        $tags = get_the_terms($product_id, 'product_tag');
+        if ($tags && !is_wp_error($tags)) {
+            $tag_links = array();
+            foreach ($tags as $tag) {
+                $tag_links[] = '<a href="' . get_term_link($tag) . '">' . $tag->name . '</a>';
+            }
+            $tags_html = implode(', ', $tag_links);
+        }
+        
+        // Compile product data
+        $products_data[$product_id] = array(
+            'id'                   => $product_id,
+            'title'                => $product->get_name(),
+            'permalink'            => $product->get_permalink(),
+            'price_html'           => $product->get_price_html(),
+            'excerpt'              => $product->get_short_description(),
+            'rating_html'          => wc_get_rating_html($product->get_average_rating()),
+            'type'                 => $product->get_type(),
+            'sku'                  => $product->get_sku(),
+            'images'               => $images,
+            'is_in_stock'          => $product->is_in_stock(),
+            'is_purchasable'       => $product->is_purchasable(),
+            'min_purchase_quantity' => $product->get_min_purchase_quantity(),
+            'max_purchase_quantity' => $product->get_max_purchase_quantity(),
+            'brands_html'          => $brands_html,
+            'categories_html'      => $categories_html,
+            'tags_html'            => $tags_html
+        );
     }
+    
+    // Send the response
+    wp_send_json_success($products_data);
+}
+add_action('wp_ajax_rmenu_get_all_products_quick_view', 'onepaquc_get_all_products_quick_view');
+add_action('wp_ajax_nopriv_rmenu_get_all_products_quick_view', 'onepaquc_get_all_products_quick_view');

@@ -72,7 +72,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                     scrollbar-width: thin;
                 }
             </style>
-            <div style="overflow: scroll; width: 100%; height: 100vh; max-height: max-content; position: relative;" id="tableContainer">
+            <div style="overflow: auto; width: 100%; height: 100vh; max-height: max-content; position: relative;" id="tableContainer">
                 <table class="comparison-table">
                     <!-- Product Headers -->
                     <tr class="product-header-row">

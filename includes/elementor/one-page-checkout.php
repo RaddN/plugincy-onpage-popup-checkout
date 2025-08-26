@@ -570,4 +570,4 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
 \Elementor\Plugin::instance()->widgets_manager->register(new onepaquc_One_Page_Checkout_Widget());
 }
 
-add_action('elementor/init', 'onepaquc_plugincy_one_page_checkout_widget');
+add_action('elementor/init', 'onepaquc_plugincy_one_page_checkout_widget', 100);

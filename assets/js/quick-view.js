@@ -18,6 +18,8 @@
         currentProductId: null,
         isLoading: false,
         settings: rmenu_quick_view_params,
+        productsData: {}, // Store all product data here
+        productsLoaded: false, // Track if products are loaded
 
 
         /**
@@ -25,6 +27,7 @@
          */
         init: function () {
             // Cache DOM elements
+            var self = this;
             this.modal = $('.opqvfw-modal-container');
             this.overlay = this.modal.find('.opqvfw-modal-overlay');
             this.content = this.modal.find('.rmenu-quick-view-inner');
@@ -44,6 +47,13 @@
 
             // Trigger init event
             $(document.body).trigger('rmenu_quick_view_init');
+
+            if ($('.rmenu-product-data[data-product-info]').length < 1) {
+                // Preload all products data
+                setTimeout(function () {
+                    self.loadAllProductsData();
+                }, 100); // Small delay to ensure DOM is ready
+            }
         },
 
         /**
@@ -320,13 +330,18 @@
                 }
 
                 // Categories
-                if (productData.categories) {
-                    html += '<span class="posted_in"> Categories: ' + productData.categories + '</span>';
+                if (productData.brands_html) {
+                    html += '<span class="posted_in"> Brands: ' + productData.brands_html + '</span>';
+                }
+
+                // Categories
+                if (productData.categories_html) {
+                    html += '<span class="posted_in"> Categories: ' + productData.categories_html + '</span>';
                 }
 
                 // Tags
-                if (productData.tags) {
-                    html += '<span class="tagged_as"> Tags: ' + productData.tags + '</span>';
+                if (productData.tags_html) {
+                    html += '<span class="tagged_as"> Tags: ' + productData.tags_html + '</span>';
                 }
 
                 html += '</div>';
@@ -352,16 +367,84 @@
             self.isLoading = false;
         },
 
+        loadAllProductsData: function () {
+            var self = this;
+
+            if (self.productsLoaded || self.isLoading) {
+                return Promise.resolve();
+            }
+
+            // Get all product IDs from the page
+            var productIds = [];
+            $('.opqvfw-btn').each(function () {
+                var productId = $(this).data('product-id');
+                if (productId && productIds.indexOf(productId) === -1) {
+                    productIds.push(productId);
+                }
+            });
+
+            if (productIds.length === 0) {
+                return Promise.resolve();
+            }
+
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: self.settings.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'rmenu_get_all_products_quick_view',
+                        product_ids: productIds,
+                        nonce: self.settings.nonce
+                    },
+                    success: function (response) {
+                        if (response.success && response.data) {
+                            self.productsData = response.data;
+                            self.productsLoaded = true;
+                            resolve(response.data);
+                        } else {
+                            reject(response.data || 'Failed to load products');
+                        }
+                    },
+                    error: function () {
+                        reject('Ajax error occurred');
+                    }
+                });
+            });
+        },
+
         /**
          * Load product content via AJAX (fallback)
          */
         loadProductContent: function (productId) {
             var self = this;
 
-            // Add AJAX fallback implementation if needed
-            self.content.html('<div class="rmenu-quick-view-error">Error loading product information. Please refresh and try again.</div>');
-            self.loading.hide();
-            self.isLoading = false;
+            // Check if we have the product data cached
+            if (self.productsData[productId]) {
+                self.renderProductContent(self.productsData[productId]);
+                return;
+            }
+
+            // If products aren't loaded yet, load them first
+            if (!self.productsLoaded) {
+                self.loadAllProductsData().then(function () {
+                    if (self.productsData[productId]) {
+                        self.renderProductContent(self.productsData[productId]);
+                    } else {
+                        self.content.html('<div class="rmenu-quick-view-error">' + self.settings.i18n.error_loading + '</div>');
+                        self.loading.hide();
+                        self.isLoading = false;
+                    }
+                }).catch(function (error) {
+                    self.content.html('<div class="rmenu-quick-view-error">' + self.settings.i18n.error_loading + '</div>');
+                    self.loading.hide();
+                    self.isLoading = false;
+                });
+            } else {
+                // Products loaded but this specific product not found
+                self.content.html('<div class="rmenu-quick-view-error">' + self.settings.i18n.error_loading + '</div>');
+                self.loading.hide();
+                self.isLoading = false;
+            }
         },
 
         /**
@@ -423,7 +506,7 @@
                 return;
             }
 
-            var $productItems = $('.products li.product');
+            var $productItems = $('.product');
             var currentIndex = -1;
 
             // Find the current product index
@@ -464,7 +547,7 @@
          * Update the navigation buttons visibility
          */
         updateNavigation: function () {
-            var $productItems = $('.products li.product');
+            var $productItems = $('.product');
 
             if ($productItems.length <= 1) {
                 this.prevBtn.hide();

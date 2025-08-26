@@ -4,7 +4,7 @@
  * Plugin Name: One Page Quick Checkout for WooCommerce
  * Plugin URI:  https://plugincy.com/one-page-quick-checkout-for-woocommerce/
  * Description: Enhance WooCommerce with popup checkout, cart drawer, and flexible checkout templates to boost conversions.
- * Version: 1.1.0
+ * Version: 1.2.2.9
  * Author: plugincy
  * Author URI: https://plugincy.com
  * license: GPL2
@@ -14,7 +14,7 @@
 
 
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
-define("RMENU_VERSION", "1.1.0");
+define("RMENU_VERSION", "1.2.2.9");
 
 // Include the admin notice file
 require_once plugin_dir_path(__FILE__) . 'includes/admin-notice.php';
@@ -25,6 +25,8 @@ require_once plugin_dir_path(__FILE__) . 'includes/admin.php';
 // include one page checkout shortcode
 require_once plugin_dir_path(__FILE__) . 'includes/one-page-checkout-shortcode.php';
 require_once plugin_dir_path(__FILE__) . 'includes/add-to-cart-button.php';
+require_once plugin_dir_path(__FILE__) . 'includes/class_helper.php';
+
 
 global $onepaquc_checkoutformfields, $onepaquc_productpageformfields, $onepaquc_rcheckoutformfields, $onepaquc_string_settings_fields;
 
@@ -50,6 +52,7 @@ $onepaquc_string_settings_fields = [
     "rmenu_wc_checkout_guest_enabled",
     "rmenu_wc_checkout_mobile_optimize",
     "rmenu_wc_direct_checkout_position",
+    "rmenu_wc_direct_checkout_single_position",
     "rmenu_variation_show_archive",
     "rmenu_wc_hide_select_option",
     "txt-direct-checkout",
@@ -129,7 +132,7 @@ $onepaquc_string_settings_fields = [
     "onepaquc_trust_badge_style",
     "show_custom_html",
     "rmenu_enable_sticky_cart",
-    "rmenu_cart_layout",
+    "rmenu_cart_checkout_behavior",
     "rmenu_cart_top_position",
     "rmenu_cart_left_position",
     "rmenu_cart_bg_color",
@@ -167,9 +170,9 @@ function onepaquc_cart_enqueue_scripts()
         }
     }
 
-    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.1.0");
-    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.1.0", true);
-    wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.1.0", true);
+    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.2.2.9");
+    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.2.2.9", true);
+    wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.2.2.9", true);
     $direct_checkout_behave = [
         'rmenu_wc_checkout_method' => get_option('rmenu_wc_checkout_method', 'direct_checkout'),
         'rmenu_wc_clear_cart' => get_option('rmenu_wc_clear_cart', 0),
@@ -182,6 +185,7 @@ function onepaquc_cart_enqueue_scripts()
         'get_cart_content_none' => wp_create_nonce('get_cart_content_none'),
         'update_cart_item_quantity' => wp_create_nonce('update_cart_item_quantity'),
         'remove_cart_item' => wp_create_nonce('remove_cart_item'),
+        'rmenu_ajax_nonce' => wp_create_nonce('rmenu-ajax-nonce'),
         'onepaquc_refresh_checkout_product_list' => wp_create_nonce('onepaquc_refresh_checkout_product_list'),
         'get_variations_nonce' => wp_create_nonce('get_variations_nonce'), // Add this line
         'direct_checkout_behave' => $direct_checkout_behave,
@@ -191,11 +195,15 @@ function onepaquc_cart_enqueue_scripts()
     ));
     // Retrieve the rmsg_editor value
     $rmsg_editor_value = get_option('rmsg_editor', '');
+    $currency_symbol = get_woocommerce_currency_symbol();
 
     // Localize the script with the rmsg_editor value
     wp_localize_script('rmenu-cart-script', 'onepaquc_rmsgValue', array(
         'rmsgEditor' => $rmsg_editor_value,
-        'checkout_url' => wc_get_checkout_url()
+        'checkout_url' => wc_get_checkout_url(),
+        'apply_coupon' => wp_create_nonce('apply-coupon'),
+        'currency_symbol' => $currency_symbol,
+
     ));
     wp_localize_script('rmenu-cart-script', 'onepaquc_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 
@@ -209,12 +217,12 @@ add_action('admin_enqueue_scripts', 'onepaquc_cart_admin_styles');
 function onepaquc_cart_admin_styles($hook)
 {
     if ($hook === 'toplevel_page_onepaquc_cart') {
-        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.1.0");
-        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.1.0");
-        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.1.0", true);
+        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.2.2.9");
+        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.2.2.9");
+        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.2.2.9", true);
     }
-    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.1.0");
-    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.1.0", true);
+    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.2.2.9");
+    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.2.2.9", true);
 }
 
 // add shortcode
@@ -235,7 +243,7 @@ function onepaquc_editor_script()
         'plugincy-custom-editor',
         plugin_dir_url(__FILE__) . 'includes/blocks/editor.js',
         array('wp-blocks', 'wp-element', 'wp-edit-post', 'wp-dom-ready', 'wp-plugins'),
-        '1.1.0',
+        '1.2.2.9',
         true
     );
 }
@@ -266,12 +274,15 @@ require_once plugin_dir_path(__FILE__) . 'admin/product_edit_page_setup.php';
 
 function onepaquc_display_checkout_on_single_product()
 {
+    // if(is_checkout()){
+    //     return;
+    // }
     // Only run on single product pages
     if (!is_product()) {
-        global $post;
-        if (isset($post) && is_object($post) && strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
-            add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
-        }
+        // global $post;
+        // if (isset($post) && is_object($post) && strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
+        //     add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
+        // }
         return;
     }
 
@@ -279,10 +290,10 @@ function onepaquc_display_checkout_on_single_product()
     $product = wc_get_product($product_id);
 
     if (!$product || !is_a($product, 'WC_Product')) {
-        global $post;
-        if (isset($post) && is_object($post) && strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
-            add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
-        }
+        // global $post;
+        // if (isset($post) && is_object($post) && strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
+        //     add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
+        // }
         return;
     }
 
@@ -320,7 +331,29 @@ function onepaquc_display_checkout_on_single_product()
 
         add_action('wp_enqueue_scripts', 'onepaquc_add_checkout_inline_styles', 99);
         if (get_option("onpage_checkout_enable", "1") === "1") {
+
+            add_filter('woocommerce_product_tabs', 'onepaquc_add_checkout_tab_to_product_page');
+
             add_action('woocommerce_after_single_product_summary', 'onepaquc_display_one_page_checkout_form',  get_option("onpage_checkout_position", '9'));
+            // Fallback hooks for themes that don't use the standard hook
+
+            // Product tabs area hooks
+            add_action('woocommerce_product_tabs', 'onepaquc_display_one_page_checkout_form', get_option("onpage_checkout_position", '9'));
+            add_action('woocommerce_before_product_tabs', 'onepaquc_display_one_page_checkout_form', get_option("onpage_checkout_position", '9'));
+            add_action('woocommerce_after_product_tabs', 'onepaquc_display_one_page_checkout_form', get_option("onpage_checkout_position", '9'));
+
+            // Related products
+            add_action('woocommerce_output_related_products', 'onepaquc_display_one_page_checkout_form', get_option("onpage_checkout_position", '9'));
+            add_action('woocommerce_before_related_products', 'onepaquc_display_one_page_checkout_form', get_option("onpage_checkout_position", '9'));
+            add_action('woocommerce_after_related_products', 'onepaquc_display_one_page_checkout_form', get_option("onpage_checkout_position", '9'));
+
+            // After single product
+            add_action('woocommerce_after_single_product', 'onepaquc_display_one_page_checkout_form', get_option("onpage_checkout_position", '9'));
+
+            // WooCommerce content hooks (broader scope)
+            add_action('woocommerce_after_main_content', 'onepaquc_display_one_page_checkout_form', get_option("onpage_checkout_position", '9'));
+
+            add_action('wp_footer', 'onepaquc_display_one_page_checkout_form', 10);
         }
         if (get_option("onpage_checkout_hide_cart_button") === "1") {
             remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
@@ -336,27 +369,37 @@ function onepaquc_display_checkout_on_single_product()
                 </style>';
             });
         }
-    } else {
-        global $post;
-        if (isset($post) && is_object($post) && strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
-            add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
-        }
     }
+    // else {
+    //     global $post;
+    //     if (isset($post) && is_object($post) && strpos($post->post_content, 'plugincy_one_page_checkout') === false) {
+    //         add_action('wp_head', 'onepaquc_rmenu_checkout_popup');
+    //     }
+    // }
 }
 
 
 add_action('wp', 'onepaquc_display_checkout_on_single_product', 99);
 
+$is_one_checkout = false;
 
 /**
  * Display the checkout form
  */
 function onepaquc_display_one_page_checkout_form()
 {
+    global $is_one_checkout;
+    
     // check if cart is empty
     if (WC()->cart->is_empty()) {
         return;
     }
+    if ($is_one_checkout) {
+        return; // Already displayed
+    }
+
+    // Mark as displayed
+    $is_one_checkout = true;
 ?>
     <div class="one-page-checkout-container" id="checkout-popup" data-isonepagewidget="true">
         <h2>Checkout</h2>
@@ -364,6 +407,32 @@ function onepaquc_display_one_page_checkout_form()
         <?php echo do_shortcode('[woocommerce_checkout]'); ?>
     </div>
     <?php
+}
+
+function onepaquc_add_checkout_tab_to_product_page($tabs) {
+    // Add checkout tab as the first tab
+    $new_tabs = array();
+
+    global $is_one_checkout;
+
+    if ($is_one_checkout) {
+        return; // Already displayed
+    }
+    
+    // Add checkout tab first
+    $new_tabs['checkout'] = array(
+        'title'    => __('Checkout', 'woocommerce'),
+        'priority' => 5, // Lower number = higher priority (appears first)
+        'callback' => 'onepaquc_display_one_page_checkout_form'
+    );
+    
+    // Add existing tabs after checkout
+    foreach($tabs as $key => $tab) {
+        $tab['priority'] = $tab['priority'] + 10; // Push other tabs down
+        $new_tabs[$key] = $tab;
+    }
+    
+    return $new_tabs;
 }
 
 function onepaquc_add_checkout_inline_styles()
@@ -489,7 +558,7 @@ add_action('admin_init', 'onepaquc_add_settings_link');
 add_action('wp_head', function () {
     if (isset($_GET['hide_header_footer']) && $_GET['hide_header_footer'] == '1') {
         echo '<style>
-            div#ast-scroll-top, div#wpadminbar, header, .site-header, #masthead, footer, .site-footer, #colophon,.rmenu-cart,iframe {
+            div#ast-scroll-top, div#wpadminbar, header, .site-header, #masthead, footer, .site-footer, #colophon,.rmenu-cart,iframe,.woocommerce form .form-row::after, .woocommerce form .form-row::before, .woocommerce-page form .form-row::after, .woocommerce-page form .form-row::before,aside {
                 display: none !important;
             }
             html {
@@ -521,6 +590,14 @@ add_action('wp_head', function () {
                 width: max-content !important;
                 margin: 0 !important;
             }
+            .order-total-price {
+                display: flex;
+                flex-direction: column;
+            }
+            .order-total-price bdi {
+                font-weight: bold;
+                font-size: 20px;
+            }
         </style>
         ';
         // Add JS to append ?hide_header_footer=1 to all links
@@ -536,14 +613,95 @@ add_action('wp_head', function () {
                 '.site-footer',
                 '#colophon',
                 '.rmenu-cart',
-                'iframe'
+                'iframe',
+                'aside'
             ];
 
-            elementsToHide.forEach(selector => {
-                const elements = document.querySelectorAll(selector);
-                elements.forEach(element => {
-                    element.style.setProperty('display', 'none', 'important');
+            // Function to hide elements
+            function hideElements() {
+                elementsToHide.forEach(selector => {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(element => {
+                        element.style.setProperty('display', 'none', 'important');
+                        element.style.setProperty('visibility', 'hidden', 'important');
+                        element.style.setProperty('opacity', '0', 'important');
+                        // Optionally remove the element entirely
+                        // element.remove();
+                    });
                 });
+            }
+
+            // Run immediately
+            hideElements();
+
+            // Run on DOM ready
+            document.addEventListener('DOMContentLoaded', hideElements);
+
+            // Run after page load (for late-loading elements)
+            window.addEventListener('load', hideElements);
+
+            // Create a MutationObserver to watch for dynamically added elements
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList') {
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeType === 1) { // Element node
+                                // Check if the added node matches our selectors
+                                elementsToHide.forEach(selector => {
+                                    if (node.matches && node.matches(selector)) {
+                                        node.style.setProperty('display', 'none', 'important');
+                                        node.style.setProperty('visibility', 'hidden', 'important');
+                                        node.style.setProperty('opacity', '0', 'important');
+                                    }
+                                    // Also check children of the added node
+                                    const children = node.querySelectorAll ? node.querySelectorAll(selector) : [];
+                                    children.forEach(child => {
+                                        child.style.setProperty('display', 'none', 'important');
+                                        child.style.setProperty('visibility', 'hidden', 'important');
+                                        child.style.setProperty('opacity', '0', 'important');
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Start observing when body is available
+            function startObserver() {
+                const targetNode = document.body || document.documentElement;
+                if (targetNode) {
+                    observer.observe(targetNode, {
+                        childList: true,
+                        subtree: true
+                    });
+                } else {
+                    // If neither body nor documentElement exists, wait
+                    document.addEventListener('DOMContentLoaded', () => {
+                        observer.observe(document.body || document.documentElement, {
+                            childList: true,
+                            subtree: true
+                        });
+                    });
+                }
+            }
+
+            startObserver();
+
+            // Add CSS to prevent flash of unstyled content
+            const style = document.createElement('style');
+            style.textContent = `
+                ${elementsToHide.join(', ')} {
+                    display: none !important;
+                    visibility: hidden !important;
+                    opacity: 0 !important;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Disable right-click context menu
+            document.addEventListener('contextmenu', function(event) {
+                event.preventDefault();
             });
             // Define a function to append ?hide_header_footer=1 to all links
             function appendHideHeaderFooterParam() {
@@ -582,90 +740,19 @@ add_action('wp_head', function () {
             if (window.jQuery) {
                 jQuery(document).ajaxComplete(function() {
                     appendHideHeaderFooterParam();
+                    hideElements();
                 });
-            }
-        </script>
-    <?php
-    } else {
-    ?>
-        <script>
-            const elements2ToHide = [
-                'div#ast-scroll-top',
-                'div#wpadminbar',
-                'header',
-                '.site-header',
-                '#masthead',
-                'footer',
-                '.site-footer',
-                '#colophon',
-                '.rmenu-cart',
-                'iframe'
-            ];
-
-            elements2ToHide.forEach(selector => {
-                const elements = document.querySelectorAll(selector);
-                elements.forEach(element => {
-                    element.style.setProperty('display', 'none', 'important');
-                });
-            });
-            // Get stored screen width & height from localStorage
-            const stored_width = localStorage.getItem('screen_width');
-            const stored_height = localStorage.getItem('screen_height');
-
-            // Compare with current window size
-            if (
-                stored_width && stored_height &&
-                parseInt(stored_width, 10) === window.innerWidth &&
-                parseInt(stored_height, 10) === window.innerHeight
-            ) {
-                // Hide header and footer elements if sizes match
-                var style = document.createElement('style');
-                style.innerHTML = `
-                        div#ast-scroll-top, div#wpadminbar, header, .site-header, #masthead, footer, .site-footer, #colophon,.rmenu-cart,iframe {
-                            display: none !important;
-                        }
-                        html {
-                            margin: 0 !important;
-                            padding-bottom: 100px;
-                        }
-                        .ast-container {
-                            padding: 0 !important;
-                        }
-                        .woocommerce-info {
-                            margin: 0 !important;
-                        }
-                        .form-row.place-order {
-                            position: fixed;
-                            bottom: 0;
-                            background: #fff;
-                            width: 100%;
-                            left: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            padding: 20px 0 !important;
-                            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-                        }
-                        .form-row.place-order p.order-total-price {
-                            margin: 0 !important;
-                        }
-                        button#place_order {
-                            width: max-content !important;
-                            margin: 0 !important;
-                        }
-                    `;
-                document.head.appendChild(style);
             }
         </script>
 <?php
     }
 });
 
-if (get_option("rmenu_enable_sticky_cart", 1)) {
+if (get_option("rmenu_enable_sticky_cart", 0)) {
     function onepaquc_display_cart()
     {
         if (class_exists('WooCommerce')) {
-            echo do_shortcode('[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4" position="fixed"]');
+            echo do_shortcode('[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="p" position="fixed"]');
         }
     }
 

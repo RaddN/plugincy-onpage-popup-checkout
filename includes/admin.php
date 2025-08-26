@@ -148,31 +148,26 @@ function onepaquc_cart_get_pro()
 // Display the form for Side Cart and PopUp settings
 function onepaquc_cart_text_change_form($textvariable)
 {
+    $onepaquc_helper = new onepaquc_helper();
 
+    echo '<div class="plugincy_card">';
+    $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<svg fill="#fff" width="18" height="18" viewBox="0 0 0.27 0.27" xmlns="http://www.w3.org/2000/svg"><path d="M.27.022v.045a.022.022 0 0 1-.045 0V.045H.158v.18H.18a.022.022 0 0 1 0 .045H.09a.022.022 0 0 1 0-.045h.022v-.18H.045v.022a.022.022 0 1 1-.045 0V.022A.02.02 0 0 1 .022 0h.225a.02.02 0 0 1 .022.022"/></svg>', esc_html__('Cart Text Changes', 'one-page-quick-checkout-for-woocommerce'));
 
-    echo '<div class="d-flex">';
+    echo '<div class="plugincy_grid" style="row-gap:10px">';
 
     foreach (array_chunk($textvariable, 4, true) as $column) {
-        echo '<div>';
-
         foreach ($column as $name => $label) {
             $value = esc_attr(get_option($name, ''));
     ?>
             <label>
-                <p style="display: inline;"><?php echo esc_html($label); ?></p>
-                <span class="tooltip" style="display: inline;">
-                    <span class="question-mark">?</span>
-                    <span class="tooltip-text">You can find "<?php echo esc_html($label); ?>" in the checkout form & drawer<?php echo $name === "txt-complete_your_purchase" ? " on single product pages." : "."; ?></span>
-                </span>
+                <?php $onepaquc_helper->sec_head('p', '', '', esc_html($label), 'You can find "' . esc_html($label) . '" in the checkout form & drawer' . ($name === "txt-complete_your_purchase" ? " on single product pages." : ".")); ?>
                 <input type="text" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>" />
             </label>
     <?php
         }
-
-        echo '</div>';
     }
 
-    echo '</div>';
+    echo '</div> </div>';
 }
 
 // Dashboard page
@@ -180,30 +175,47 @@ function onepaquc_cart_dashboard()
 {
     global $onepaquc_checkoutformfields,
         $onepaquc_productpageformfields;
+
+    $onepaquc_helper = new onepaquc_helper();
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.1.0</span></div>
-        <p>Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
-        <p>Get started by configuring your settings below or explore our quick setup guide.</p>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.2.2.9</span></div>
+        <p style="max-width: 70%; margin:0 auto;">Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
 
         <div class="feature-grid">
             <div class="feature-item">
+                <div class="feature-icon">
+                    <svg fill="#fff" width="30" height="30" viewBox="-0.282 -0.132 0.9 0.9" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin" class="jam jam-thunder-f">
+                        <path d="M.214.186h.068a.057.057 0 0 1 .051.078L.184.611A.039.039 0 0 1 .109.596v-.26L.054.334A.06.06 0 0 1 0 .279V.057A.06.06 0 0 1 .057 0h.101a.06.06 0 0 1 .057.057z" />
+                    </svg>
+                </div>
                 <h3>Fast Setup</h3>
                 <p>Configure your checkout in minutes with our intuitive options.</p>
             </div>
-            <div class="feature-item">
+            <div class="feature-item" style="background: #ebfcf1;">
+                <div class="feature-icon" style="background: #22c55e;">
+                    <svg width="30" height="30" viewBox="0 0 0.75 0.75" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#fff" d="M.563 0a.075.075 0 0 1 .075.075v.6A.075.075 0 0 1 .563.75H.188A.075.075 0 0 1 .113.675v-.6A.075.075 0 0 1 .188 0zm.022.577h-.42v.098a.02.02 0 0 0 .022.022h.375A.02.02 0 0 0 .584.675zM.375.6a.037.037 0 1 1 0 .075.037.037 0 0 1 0-.075M.563.053H.188a.02.02 0 0 0-.022.022v.45h.42v-.45A.02.02 0 0 0 .564.053" />
+                    </svg>
+                </div>
                 <h3>Mobile Friendly</h3>
                 <p>Responsive design works perfectly on all devices.</p>
             </div>
-            <div class="feature-item">
+            <div class="feature-item" style="background: #f8f2ff;">
+                <div class="feature-icon" style="background: #a855f7;">
+                    <svg width="30" height="30" viewBox="0 0 0.9 0.9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M.075.319h.75m-.6.3H.3m.094 0h.15" stroke="#fff" stroke-width=".056" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M.241.131h.417c.134 0 .167.033.167.165v.308c0 .132-.033.165-.167.165H.241C.108.769.074.736.074.605V.297c0-.132.033-.165.167-.165" stroke="#fff" stroke-width=".056" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
                 <h3>Payment Gateways</h3>
                 <p>Supports all major payment processors.</p>
             </div>
         </div>
 
         <div class="button-row">
-            <a target="_blank" href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ff5a36;color: white;"><span class="dashicons dashicons-visibility" style=" margin-right: 5px; "></span> Get Pro</a>
+            <a target="_blank" href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ff5a36;color: white;"><span class="dashicons dashicons-superhero-alt" style=" margin-right: 5px; "></span> Get Pro</a>
             <a target="_blank" href="https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ed8936;color: white;"><span class="dashicons dashicons-visibility" style=" margin-right: 5px; "></span> View Demo</a>
             <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button"><span class="dashicons dashicons-book" style=" margin-right: 5px; "></span> View Documentation</a>
             <a href="https://plugincy.com/support" target="_blank" class="button button-secondary"><span class="dashicons dashicons-sos" style=" margin-right: 5px; "></span> Get Support</a>
@@ -264,15 +276,19 @@ function onepaquc_cart_dashboard()
                 if (!Array.isArray(allinputFields)) {
                     if (isDisabled) {
                         allinputFields.classList.add('disabled');
+                        allinputFields.readOnly = true;
                     } else {
                         allinputFields.classList.remove('disabled');
+                        allinputFields.readOnly = false;
                     }
                 } else {
                     allinputFields.forEach(field => {
                         if (isDisabled) {
                             field.classList.add('disabled');
+                            field.readOnly = true;
                         } else {
                             field.classList.remove('disabled');
+                            field.readOnly = false;
                         }
                     });
                 }
@@ -341,47 +357,42 @@ function onepaquc_cart_dashboard()
             <!-- Add nonce field for security -->
             <?php wp_nonce_field('onepaquc_cart_settings'); ?>
             <?php settings_fields('onepaquc_cart_settings'); ?>
-            <div class="tab-content" id="tab-1">
-                <h2>Checkout Form Manage</h2>
-                <table class="form-table">
-                    <tr valign="top">
-                        <th scope="row">Remove checkout fields</th>
-                        <td>
-                            <!-- multiple select options -->
-                            <select class="remove_checkout_fields chosen_select select2-hidden-accessible enhanced" name="onepaquc_checkout_fields[]" id="qlwcdc_remove_checkout_fields" multiple>
-                                <?php
-                                global $onepaquc_rcheckoutformfields;
-                                $selected_fields = get_option('onepaquc_checkout_fields', []) ?? [];
-                                foreach ($onepaquc_rcheckoutformfields as $key => $field) {
-                                    echo '<option value="' . esc_attr($key) . '" ' . (is_array($selected_fields) && in_array($key, $selected_fields) ? 'selected' : '') . '>' . esc_html($field['title']) . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </td>
-                    </tr>
-                    <?php foreach (onepaquc_rmenu_fields() as $key => $field) : ?>
+            <div class="tab-content plugincy_card" id="tab-1" style="margin-top: 20px;">
+                <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-forms"></span>', 'Checkout Form Manage', 'Customize the checkout form fields and headings to enhance user experience.'); ?>
+                <table class="form-table plugincy_table mb-4">
+                    <tbody class="plugincy_grid">
                         <tr valign="top">
-                            <th scope="row"><?php echo esc_html($field['title']); ?></th>
+                            <th scope="row">Remove checkout fields</th>
                             <td>
-                                <label class="switch">
-                                    <input type="checkbox" name="<?php echo esc_attr($key); ?>" value="1" <?php checked(1, get_option($key), true); ?> />
-                                    <span class="slider round"></span>
-                                </label>
+                                <!-- multiple select options -->
+                                <select class="remove_checkout_fields chosen_select select2-hidden-accessible enhanced" name="onepaquc_checkout_fields[]" id="qlwcdc_remove_checkout_fields" multiple>
+                                    <?php
+                                    global $onepaquc_rcheckoutformfields;
+                                    $selected_fields = get_option('onepaquc_checkout_fields', []) ?? [];
+                                    foreach ($onepaquc_rcheckoutformfields as $key => $field) {
+                                        echo '<option value="' . esc_attr($key) . '" ' . (is_array($selected_fields) && in_array($key, $selected_fields) ? 'selected' : '') . '>' . esc_html($field['title']) . '</option>';
+                                    }
+                                    ?>
+                                </select>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                        <?php foreach (onepaquc_rmenu_fields() as $key => $field) : ?>
+                            <tr valign="top">
+                                <th scope="row"><?php echo esc_html($field['title']); ?></th>
+                                <td>
+                                    <?php $onepaquc_helper->switcher(esc_attr($key), 0); ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
                 </table>
-                <hr />
-                <h3>Heading Manage</h3>
-                <table class="form-table">
+                <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '', 'Heading Manage', 'Customize the headings of the checkout form fields to enhance user experience.'); ?>
+                <table class="form-table plugincy_table">
                     <?php foreach (onepaquc_onpcheckout_heading() as $key => $field) : ?>
                         <tr valign="top">
                             <th scope="row"><?php echo esc_html($field['title']); ?></th>
                             <td>
-                                <label class="switch">
-                                    <input type="checkbox" name="<?php echo esc_attr($key); ?>" value="1" <?php checked(1, get_option($key), true); ?> />
-                                    <span class="slider round"></span>
-                                </label>
+                                <?php $onepaquc_helper->switcher(esc_attr($key), 0); ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -436,232 +447,165 @@ function onepaquc_cart_dashboard()
                     }
                 </style>
 
-                <h2>One Page Checkout in Single Product</h2>
-                <p class="description">Configure one-page checkout for individual product pages. Enable one-page checkout for specific products from the WooCommerce product edit screen.</p>
-                <table class="form-table">
-                    <tr valign="top">
-                        <th scope="row">Enable One Page Checkout</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_enable" value="1" <?php checked(1, get_option("onpage_checkout_enable", 1), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable one-page checkout for single product page.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Enable for All Products</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_enable_all" value="1" <?php checked(1, get_option("onpage_checkout_enable_all"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable one-page checkout for all products without individual selection.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Form Position</th>
-                        <td>
-                            <?php
-                            // Get the saved value or default to 9 if not set or empty
-                            $onpage_checkout_position = get_option("onpage_checkout_position", '');
-                            if ($onpage_checkout_position === '' || $onpage_checkout_position === false) {
-                                $onpage_checkout_position = 9;
-                            }
-                            ?>
-                            <input type="number" name="onpage_checkout_position" value="<?php echo esc_attr($onpage_checkout_position); ?>" />
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Set the priority of the one-page checkout form. The default value is 9, but not all values work with every theme. So, adjust it based on your theme.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Empty Cart on Page Load</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_cart_empty" value="1" <?php checked(1, get_option("onpage_checkout_cart_empty","1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Clear existing cart items when the one-page checkout product page loads.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Add to Cart on Page Load</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_cart_add" value="1" <?php checked(1, get_option("onpage_checkout_cart_add","1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Automatically add the product to cart when the page loads.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Hide Add to Cart Button</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_hide_cart_button" value="1" <?php checked(1, get_option("onpage_checkout_hide_cart_button"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Hide the regular Add to Cart button on one-page checkout product pages.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Checkout Layout</th>
-                        <td class="pro-only">
-                            <select disabled name="onpage_checkout_layout">
-                                <option value="two_column" <?php selected(get_option('onpage_checkout_layout', 'two_column'), 'two_column'); ?>>Two Columns (Product & Checkout)</option>
-                                <option value="one_column" <?php selected(get_option('onpage_checkout_layout', 'two_column'), 'one_column'); ?>>One Column (Stacked)</option>
-                                <option value="product_first" <?php selected(get_option('onpage_checkout_layout', 'two_column'), 'product_first'); ?>>Product First, Then Checkout</option>
-                            </select>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Select the layout for the one-page checkout form.</span>
-                            </span>
-                        </td>
-                    </tr>
-                </table>
+                <div class="plugincy_row">
+                    <div class="plugincy_col-5 plugincy_card">
+                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<svg fill="#fff" height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve">
+                                    <path d="M8.424 2.56H7.57v.426a.855.855 0 0 1-1.708 0V2.56H4.156v.426a.855.855 0 0 1-1.708 0V2.56h-.85c0 4.266-.426 7.68-.426 7.68h7.68c-.002 0-.428-3.414-.428-7.68m-5.12.854c.236 0 .426-.19.426-.426v-.854c0-.708.572-1.28 1.28-1.28s1.28.572 1.28 1.28v.854a.425.425 0 1 0 .852 0v-.854C7.144.956 6.188 0 5.01 0S2.876.956 2.876 2.134v.854a.43.43 0 0 0 .428.426" />
+                                </svg>', 'One Page Checkout in Single Product', 'Configure one-page checkout for individual product pages. Enable one-page checkout for specific products from the WooCommerce product edit screen.'); ?>
+                        <table class="form-table plugincy_table">
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable One Page Checkout', 'Enable one-page checkout for single product page.'); ?>
+                                <td>
+                                    <?php
+                                    $onepaquc_helper->switcher('onpage_checkout_enable');
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable for All Products', 'Enable one-page checkout for all products without individual selection.'); ?>
+                                <td>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_enable_all', 0); ?>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                        const enableCheckout = document.querySelector('div#tab-2 input[name="onpage_checkout_enable"]');
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Form Position', 'Set the priority of the one-page checkout form. The default value is 9, but not all values work with every theme. So, adjust it based on your theme.'); ?>
+                                <td>
+                                    <?php
+                                    // Get the saved value or default to 9 if not set or empty
+                                    $onpage_checkout_position = get_option("onpage_checkout_position", '');
+                                    if ($onpage_checkout_position === '' || $onpage_checkout_position === false) {
+                                        $onpage_checkout_position = 9;
+                                    }
+                                    ?>
+                                    <input type="number" name="onpage_checkout_position" value="<?php echo esc_attr($onpage_checkout_position); ?>" />
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Empty Cart on Page Load', 'Clear existing cart items when the one-page checkout product page loads.'); ?>
+                                <td>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_cart_empty', 0); ?>
+                                </td>
+                            </tr>
 
-                        const allinputFields = Array.from(document.querySelectorAll('div#tab-2 table:nth-of-type(1) input')).filter(
-                            el => !(el.name === "onpage_checkout_enable")
-                        );
-                        toggleDisabledClass(!enableCheckout.checked, allinputFields); // Set initial state
-                        enableCheckout.addEventListener('change', function() {
-                            toggleDisabledClass(!this.checked, allinputFields);
+                            </td>
+                            </tr>
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Add to Cart on Page Load', 'Automatically add the product to cart when the page loads.'); ?>
+                                <td>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_cart_add'); ?>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Hide Add to Cart Button', 'Hide the regular Add to Cart button on one-page checkout product pages.'); ?>
+                                <td>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_hide_cart_button', 0); ?>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Checkout Layout', 'Select the layout for the one-page checkout form.'); ?>
+                                <td class="pro-only">
+                                    <select disabled name="onpage_checkout_layout">
+                                        <option value="two_column" <?php selected(get_option('onpage_checkout_layout', 'two_column'), 'two_column'); ?>>Two Columns (Product & Checkout)</option>
+                                        <option value="one_column" <?php selected(get_option('onpage_checkout_layout', 'two_column'), 'one_column'); ?>>One Column (Stacked)</option>
+                                        <option value="product_first" <?php selected(get_option('onpage_checkout_layout', 'two_column'), 'product_first'); ?>>Product First, Then Checkout</option>
+                                    </select>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
+                            const enableCheckout = document.querySelector('div#tab-2 input[name="onpage_checkout_enable"]');
+
+                            const allinputFields = Array.from(document.querySelectorAll('div#tab-2 table:nth-of-type(1) input')).filter(
+                                el => !(el.name === "onpage_checkout_enable")
+                            );
+                            toggleDisabledClass(!enableCheckout.checked, allinputFields); // Set initial state
+                            enableCheckout.addEventListener('change', function() {
+                                toggleDisabledClass(!this.checked, allinputFields);
+                            });
                         });
-                    });
-                </script>
-                <hr />
-
-                <h2>Multi-product One Page Checkout <span class="tooltip">
-                        <span class="question-mark">?</span>
-                        <span class="tooltip-text">Configure settings for the multi-product one-page checkout shortcode. Use: [plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"]</span>
-                    </span></h2>
-                <table class="form-table">
-                    <tr valign="top">
-                        <th scope="row">Empty Cart on Page Load</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_widget_cart_empty" value="1" <?php checked(1, get_option("onpage_checkout_widget_cart_empty", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Clear existing cart items when a multi-product one-page checkout page loads.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Add to Cart on Page Load</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="onpage_checkout_widget_cart_add" value="1" <?php checked(1, get_option("onpage_checkout_widget_cart_add", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Automatically add the first product to cart when the page loads.</span>
-                            </span>
-                        </td>
-                    </tr>
-                </table>
+                    </script>
+                    <div class="plugincy_col-5 plugincy_card">
+                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-forms"></span>', 'Multi-product One Page Checkout', 'Configure settings for the multi-product one-page checkout shortcode. Use: [plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"]'); ?>
+                        <table class="form-table plugincy_table">
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Empty Cart on Page Load', 'Clear existing cart items when a multi-product one-page checkout page loads.'); ?>
+                                <td>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_empty'); ?>
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Add to Cart on Page Load', 'Automatically add the first product to cart when the page loads.'); ?>
+                                <td>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_add'); ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="tab-content" id="tab-9">
-                <div class="rmenu-settings-header">
-                    <h2>Floating Cart Settings</h2>
-                    <p class="rmenu-settings-description">Configure the appearance and behavior of your shopping cart.</p>
+                <div class="mb-4">
+                    <?php $onepaquc_helper->sec_head('h2', '', '<span class="dashicons dashicons-cart"></span>', 'Floating Cart Settings', ''); ?>
+                    <p class="description">Configure the appearance and behavior of your floating cart. Enable the floating cart to provide users with quick access to their cart from any page on your site.</p>
                 </div>
 
-                <div class="rmenu-settings-section">
-                    <div class="rmenu-settings-section-header">
-                        <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
+                <div class="plugincy_row mb-4">
+                    <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', 'General settings for the floating cart.'); ?>
+
+                        <table class="form-table plugincy_table">
+                            <tr>
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable Sticky Cart', 'Enable or disable the sticky cart functionality.'); ?>
+                                <td class="rmenu-settings-control">
+                                    <?php $onepaquc_helper->switcher('rmenu_enable_sticky_cart', 0); ?>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Cart Checkout Behavior', 'Choose the behavior of the cart checkout process.'); ?>
+                                <td class="pro-only">
+                                    <select name="rmenu_cart_checkout_behavior" class="rmenu-select">
+                                        <option value="direct_checkout" <?php selected(get_option('rmenu_cart_checkout_behavior', 'direct_checkout'), 'direct_checkout'); ?>>Direct Checkout</option>
+                                        <option disabled value="pro" <?php selected(get_option('rmenu_cart_checkout_behavior', 'side_cart'), 'pro'); ?>>Popup Checkout (Pro Features)</option>
+                                    </select>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
 
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Enable Sticky Cart</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_enable_sticky_cart" value="1" <?php checked(1, get_option("rmenu_enable_sticky_cart", 1), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">Enable or disable the sticky cart functionality.</p>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-move"></span>', 'Position Settings', 'Configure the position of the floating cart.'); ?>
 
-                    <!-- <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Cart Layout (coming soon)</label>
-                            <div class="rmenu-settings-control">
-                                <select name="rmenu_cart_layout" class="rmenu-select">
-                                    <option value="direct_checkout" <?php //selected(get_option('rmenu_cart_layout', 'side_cart'), 'direct_checkout'); ?>>Direct Checkout</option>
-                                    <option value="direct_cart" <?php //selected(get_option('rmenu_cart_layout', 'side_cart'), 'direct_cart'); ?>>Direct Cart</option>
-                                    <option value="side_cart" <?php //selected(get_option('rmenu_cart_layout', 'side_cart'), 'side_cart'); ?>>Side Cart</option>
-                                    <option value="popup_checkout" <?php //selected(get_option('rmenu_cart_layout', 'side_cart'), 'popup_checkout'); ?>>Popup Checkout</option>
-                                </select>
-                                <p class="rmenu-field-description">Choose the layout for your shopping cart.</p>
-                            </div>
-                        </div>
-                    </div> -->
-                </div>
-
-                <div class="rmenu-settings-section">
-                    <div class="rmenu-settings-section-header">
-                        <h3><span class="dashicons dashicons-move"></span> Position Settings</h3>
-                    </div>
-
-                    <div class="rmenu-settings-row rmenu-settings-row-columns">
-                        <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Top Position</label>
-                                <div class="rmenu-settings-control">
+                        <table class="form-table plugincy_table">
+                            <tr>
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Top Position', 'Set the top position of the floating cart.'); ?>
+                                <td class="rmenu-settings-control">
                                     <input type="text" name="rmenu_cart_top_position" value="<?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Enter value with unit (px, %, em, etc.).</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Left Position</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="text" name="rmenu_cart_left_position" value="<?php echo esc_attr(get_option('rmenu_cart_left_position', '97%')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Enter value with unit (px, %, em, etc.).</p>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <?php $onepaquc_helper->sec_head('th', '', '', 'Left Position', 'Set the left position of the floating cart.'); ?>
+                                <td class="rmenu-settings-control">
+                                    <input type="text" name="rmenu_cart_left_position" value="<?php echo esc_attr(get_option('rmenu_cart_left_position', '100%')); ?>" class="regular-text" />
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
 
-                <div class="rmenu-settings-section">
-                    <div class="rmenu-settings-section-header">
-                        <h3><span class="dashicons dashicons-admin-appearance"></span> Style Settings</h3>
-                    </div>
+                <div class="rmenu-settings-section plugincy_card">
+                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style Settings', 'Configure the style of the floating cart button.'); ?>
 
                     <div class="rmenu-settings-row rmenu-settings-row-columns">
                         <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
+                            <div class="rmenu-settings-field plugincy_row items_center">
                                 <label class="rmenu-settings-label">Background Color</label>
                                 <div class="rmenu-settings-control">
                                     <input type="color" name="rmenu_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>" class="rmenu-color-picker" />
@@ -670,7 +614,7 @@ function onepaquc_cart_dashboard()
                         </div>
 
                         <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
+                            <div class="rmenu-settings-field plugincy_row items_center">
                                 <label class="rmenu-settings-label">Text Color</label>
                                 <div class="rmenu-settings-control">
                                     <input type="color" name="rmenu_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
@@ -681,7 +625,7 @@ function onepaquc_cart_dashboard()
 
                     <div class="rmenu-settings-row rmenu-settings-row-columns">
                         <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
+                            <div class="rmenu-settings-field plugincy_row items_center">
                                 <label class="rmenu-settings-label">Hover Background</label>
                                 <div class="rmenu-settings-control">
                                     <input type="color" name="rmenu_cart_hover_bg" value="<?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>" class="rmenu-color-picker" />
@@ -690,7 +634,7 @@ function onepaquc_cart_dashboard()
                         </div>
 
                         <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
+                            <div class="rmenu-settings-field plugincy_row items_center">
                                 <label class="rmenu-settings-label">Hover Text Color</label>
                                 <div class="rmenu-settings-control">
                                     <input type="color" name="rmenu_cart_hover_text" value="<?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>" class="rmenu-color-picker" />
@@ -700,11 +644,10 @@ function onepaquc_cart_dashboard()
                     </div>
 
                     <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
+                        <div class="rmenu-settings-field plugincy_row items_center">
                             <label class="rmenu-settings-label">Border Radius</label>
                             <div class="rmenu-settings-control">
-                                <input type="number" name="rmenu_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_cart_border_radius', '5')); ?>" class="small-text" min="0" max="50" step="1" />
-                                <span class="rmenu-unit">px</span>
+                                <input type="text" name="rmenu_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_cart_border_radius', '5px 0 0 5px')); ?>" placeholder="0px 0px 0px 0px" />
                             </div>
                         </div>
                     </div>
@@ -720,7 +663,8 @@ function onepaquc_cart_dashboard()
                             <label class="rmenu-settings-label">Show Cart Icon</label>
                             <div class="rmenu-settings-control">
                                 <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_show_cart_icon" value="1" <?php //checked(1, get_option("rmenu_show_cart_icon", 1), true); ?> />
+                                    <input type="checkbox" name="rmenu_show_cart_icon" value="1" <?php //checked(1, get_option("rmenu_show_cart_icon", 1), true); 
+                                                                                                    ?> />
                                     <span class="rmenu-toggle-slider"></span>
                                 </label>
                             </div>
@@ -732,282 +676,364 @@ function onepaquc_cart_dashboard()
                             <label class="rmenu-settings-label">Show Cart Count</label>
                             <div class="rmenu-settings-control">
                                 <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_show_cart_count" value="1" <?php //checked(1, get_option("rmenu_show_cart_count", 1), true); ?> />
+                                    <input type="checkbox" name="rmenu_show_cart_count" value="1" <?php //checked(1, get_option("rmenu_show_cart_count", 1), true); 
+                                                                                                    ?> />
                                     <span class="rmenu-toggle-slider"></span>
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div> -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // if the "Enable floating cart" checkbox is checked
+                        const enableCheckout = document.querySelector('div#tab-9 input[name="rmenu_enable_sticky_cart"]');
+
+                        const allinputFields = Array.from(document.querySelectorAll('div#tab-9 input,div#tab-9 select')).filter(
+                            el => !(el.name === "rmenu_enable_sticky_cart")
+                        );
+                        toggleDisabledClass(!enableCheckout.checked, allinputFields); // Set initial state
+                        enableCheckout.addEventListener('change', function() {
+                            toggleDisabledClass(!this.checked, allinputFields);
+                        });
+                    });
+                </script>
             </div>
+
             <div class="tab-content" id="tab-3">
-                <div class="d-flex space-between">
+                <!-- <div class="d-flex space-between">
                     <h2>Checkout Form Text</h2> <button id="reset-defaults" class="button button-primary" style="background:red;">Reset Default</button>
-                </div>
+                </div> -->
                 <?php
                 onepaquc_cart_text_change_form($onepaquc_checkoutformfields);
 
                 ?>
             </div>
             <div class="tab-content" id="tab-4">
-                <div class="rmenu-settings-header">
-                    <h2>WooCommerce Direct Checkout</h2>
-                    <p class="rmenu-settings-description">Configure how the quick checkout functionality works with your WooCommerce store.</p>
-                </div>
-
-                <div class="rmenu-settings-tabs">
-                    <ul class="rmenu-settings-tab-list" style="color: #135e96;display: flex; gap: 10px; cursor: pointer;text-decoration: underline;">
-                        <li class="rmenu-settings-tab-item active" data-tab="direct-general-settings">General Settings</li>
-                        <li class="rmenu-settings-tab-item" data-tab="direct-button-behavior">Button Behavior</li>
-                        <li class="rmenu-settings-tab-item" data-tab="direct-advanced">Advanced</li>
-                    </ul>
+                <div class="plugincy_nav_card mb-4">
+                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" xml:space="preserve" width="16" height="16">
+                                <path d="M13.984 5.25a.73.73 0 0 0-.65-.402H9.662l1.898-3.796A.727.727 0 0 0 10.909 0H6.545a.73.73 0 0 0-.65.402L2.016 8.16a.727.727 0 0 0 .65 1.052h3.949L5.349 15.12a.726.726 0 0 0 .41.814.73.73 0 0 0 .883-.226l7.273-9.697a.73.73 0 0 0 .069-.762" />
+                            </svg>', 'WooCommerce Direct Checkout','','Enable direct checkout to allow customers to bypass the cart and proceed directly to checkout, streamlining the purchasing process.'); ?>
+                    <div class="rmenu-settings-tabs">
+                        <ul class="rmenu-settings-tab-list">
+                            <li class="rmenu-settings-tab-item active" data-tab="direct-general-settings">
+                                <span class="dashicons dashicons-admin-generic"></span> General Settings
+                            </li>
+                            <li class="rmenu-settings-tab-item" data-tab="direct-advanced">
+                                <span class="dashicons dashicons-admin-tools"></span> Advanced
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="tab-content" id="direct-general-settings" style="padding: 0;">
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
+                    <div class="plugincy_row mb-4">
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', ''); ?>
+                            <table class="form-table plugincy_table">
+                                <tr valign="top">
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Enable Direct Checkout', 'Enable or disable the direct checkout functionality across your WooCommerce store.'); ?>
+                                    <td><?php $onepaquc_helper->switcher('rmenu_add_direct_checkout_button'); ?></td>
+                                </tr>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Text', 'Customize the text displayed on the direct checkout button.'); ?>
+                                    </th>
+                                    <td>
+                                        <div class="rmenu-settings-control">
+                                            <?php
+                                            $direct_checkout_text = get_option('txt-direct-checkout', '');
+                                            if (empty($direct_checkout_text)) {
+                                                $direct_checkout_text = 'Buy Now';
+                                            }
+                                            ?>
+                                            <input type="text" name="txt-direct-checkout" value="<?php echo esc_attr($direct_checkout_text); ?>" class="regular-text" />
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Position on Archive Page', 'Choose where to display the direct checkout button on product pages.'); ?>
+                                    <td>
+                                        <div class="rmenu-settings-control">
+                                            <select name="rmenu_wc_direct_checkout_position" class="rmenu-select">
+                                                <option value="overlay_thumbnail" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'overlay_thumbnail'); ?>>Overlay on Product Image</option>
+                                                <option value="overlay_thumbnail_hover" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'overlay_thumbnail_hover'); ?>>Overlay on Product Image Hover</option>
+                                                <option value="after_product" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product'); ?>>After Product</option>
+                                                <option value="after_product_title" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_title'); ?>>After Product Title</option>
+                                                <option value="before_product_title" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'before_product_title'); ?>>Before Product Title</option>
+                                                <option value="after_product_excerpt" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_excerpt'); ?>>After Product Excerpt</option>
+                                                <option value="after_product_rating" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_rating'); ?>>After Product Rating</option>
+                                                <option value="after_product_price" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_price'); ?>>After Product Price</option>
+                                                <option value="after_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
+                                                <option value="before_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'before_add_to_cart'); ?>>Before Add to Cart Button</option>
+                                                <option value="bottom_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'bottom_add_to_cart'); ?>>Bottom of Add to Cart Button</option>
+                                                <option value="replace_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'replace_add_to_cart'); ?>>Replace Add to Cart Button</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Position on Single Page', 'Choose where to display the direct checkout button on single pages.'); ?>
+                                    </th>
+                                    <td>
+                                        <div class="rmenu-settings-control">
+                                            <select name="rmenu_wc_direct_checkout_single_position" class="rmenu-select">
+                                                <option value="after_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
+                                                <option value="before_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'before_add_to_cart'); ?>>Before Add to Cart Button</option>
+                                                <option value="bottom_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'bottom_add_to_cart'); ?>>Bottom of Add to Cart Button</option>
+                                                <option value="replace_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'replace_add_to_cart'); ?>>Replace Add to Cart Button</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
+                        <div class="rmenu-settings-section plugincy_col-5 plugincy_card" id="rmenu-direct-button-display-section">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-visibility"></span>', 'Display Settings', ''); ?>
 
-                        <div class="rmenu-settings-row" id="rmenu-direct-checkout-enable-field">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Enable Direct Checkout</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_add_direct_checkout_button" value="1" <?php checked(1, get_option("rmenu_add_direct_checkout_button", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Enable or disable the direct checkout functionality across your WooCommerce store.</p>
-                                </div>
-                            </div>
-                        </div>
+                            <div class="rmenu-settings-row">
+                                <div class="rmenu-settings-field">
+                                    <label class="rmenu-settings-label">Product Types</label>
+                                    <?php $product_types_option = get_option('rmenu_show_quick_checkout_by_types', ["simple", "variable", "external"]); ?>
+                                    <div class="rmenu-settings-control rmenu-checkbox-group">
+                                        <label class="rmenu-checkbox-container">
+                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">Simple Products</span>
+                                        </label>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Text</label>
-                                <div class="rmenu-settings-control">
-                                    <?php
-                                    $direct_checkout_text = get_option('txt-direct-checkout', '');
-                                    if (empty($direct_checkout_text)) {
-                                        $direct_checkout_text = 'Buy Now';
-                                    }
-                                    ?>
-                                    <input type="text" name="txt-direct-checkout" value="<?php echo esc_attr($direct_checkout_text); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Customize the text displayed on the direct checkout button.</p>
-                                </div>
-                            </div>
-                        </div>
+                                        <label class="rmenu-checkbox-container">
+                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">Variable Products</span>
+                                        </label>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Position</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_wc_direct_checkout_position" class="rmenu-select">
-                                        <option value="after_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
-                                        <option value="before_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'before_add_to_cart'); ?>>Before Add to Cart Button</option>
-                                        <option value="bottom_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'bottom_add_to_cart'); ?>>Bottom of Add to Cart Button</option>
-                                        <option value="replace_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'replace_add_to_cart'); ?>>Replace Add to Cart Button</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Choose where to display the direct checkout button on product pages.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rmenu-settings-section" id="rmenu-direct-button-display-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-visibility"></span> Display Settings</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Product Types</label>
-                                <?php $product_types_option = get_option('rmenu_show_quick_checkout_by_types', ["simple", "variable", "external"]); ?>
-                                <div class="rmenu-settings-control rmenu-checkbox-group">
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Simple Products</span>
-                                    </label>
-
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Variable Products</span>
-                                    </label>
-
-                                    <!-- <label class="rmenu-checkbox-container pro-only">
+                                        <!-- <label class="rmenu-checkbox-container pro-only">
                                         <input disabled type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="coming_grouped" <?php //checked(in_array('grouped', $product_types_option)); 
                                                                                                                                             ?> />
                                         <span class="rmenu-checkbox-label">Grouped Products (Pro Feature)</span>
                                     </label> -->
 
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
-                                        <span class="rmenu-checkbox-label">External/Affiliate Products</span>
-                                    </label>
-
-                                    <p class="rmenu-field-description">Select which WooCommerce product types should display the direct checkout button.</p>
+                                        <label class="rmenu-checkbox-container">
+                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">External/Affiliate Products</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <?php $product_types_option = get_option('rmenu_show_quick_checkout_by_page', ["single", "related", "upsells", "shop-page", "category-archives", "tag-archives", "featured-products", "on-sale", "recent", "widgets", "shortcodes"]); ?>
-                                <div class="rmenu-settings-control rmenu-checkbox-group">
-                                    <div class="rmenu-checkbox-column">
-                                        <h4>Product Pages</h4>
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="single" <?php checked(in_array('single', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Single Product Pages</span>
-                                        </label>
+                            <div class="rmenu-settings-row">
+                                <div class="rmenu-settings-field">
+                                    <?php $product_types_option = get_option('rmenu_show_quick_checkout_by_page', ["single", "related", "upsells", "shop-page", "category-archives", "tag-archives", "featured-products", "on-sale", "recent", "widgets", "shortcodes"]); ?>
+                                    <div class="rmenu-settings-control rmenu-checkbox-group">
+                                        <div class="rmenu-checkbox-column">
+                                            <h4>Product Pages</h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="single" <?php checked(in_array('single', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Single Product Pages</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="related" <?php checked(in_array('related', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Related Products</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="related" <?php checked(in_array('related', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Related Products</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="upsells" <?php checked(in_array('upsells', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Upsells</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="upsells" <?php checked(in_array('upsells', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Upsells</span>
+                                            </label>
 
-                                        <!-- <label class="rmenu-checkbox-container pro-only">
+                                            <!-- <label class="rmenu-checkbox-container pro-only">
                                             <input disabled type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="cross-sells" <?php //checked(in_array('cross-sells', $product_types_option)); 
                                                                                                                                             ?> />
                                             <span class="rmenu-checkbox-label">Cross-sells (Pro Features)</span>
                                         </label> -->
-                                    </div>
+                                        </div>
 
-                                    <div class="rmenu-checkbox-column">
-                                        <h4>Archive Pages</h4>
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Main Shop Page</span>
-                                        </label>
+                                        <div class="rmenu-checkbox-column">
+                                            <h4>Archive Pages</h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Main Shop Page</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Product Category Archives</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Category Archives</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Product Tag Archives</span>
-                                        </label>
-                                    </div>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Tag Archives</span>
+                                            </label>
+                                        </div>
 
-                                    <div class="rmenu-checkbox-column">
-                                        <h4>Other Pages</h4>
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Featured Products</span>
-                                        </label>
+                                        <div class="rmenu-checkbox-column">
+                                            <h4>Other Pages</h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Featured Products</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">On-Sale Products</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">On-Sale Products</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="recent" <?php checked(in_array('recent', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Recent Products</span>
-                                        </label>
-                                    </div>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="recent" <?php checked(in_array('recent', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Recent Products</span>
+                                            </label>
+                                        </div>
 
-                                    <div class="rmenu-checkbox-column">
-                                        <h4>Widgets & Shortcodes</h4>
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="widgets" <?php checked(in_array('widgets', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Widgets</span>
-                                        </label>
+                                        <div class="rmenu-checkbox-column">
+                                            <h4>Widgets & Shortcodes</h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="widgets" <?php checked(in_array('widgets', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Widgets</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Shortcodes</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Shortcodes</span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="plugincy_row">
+                        <div class="rmenu-settings-section direct-button-style-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
 
-                    <div class="rmenu-settings-section direct-button-style-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-appearance"></span> Button Style</h3>
+                            <table class="form-table plugincy_table">
+                                <tbody class="plugincy_grid">
+                                    <tr style="grid-column: span 2;">
+                                        <th class="rmenu-settings-label">Button Style</th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_wc_checkout_style" class="rmenu-select" id="rmenu-style-select">
+                                                <option value="default" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
+                                                <option value="alt" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'alt'); ?>>Alternative Style</option>
+                                                <option value="custom" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Button Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_wc_checkout_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_color', '#000')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Text Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_wc_checkout_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
+                                        <th class="rmenu-settings-label">Custom CSS</th>
+                                        <td class="rmenu-settings-control">
+                                            <textarea name="rmenu_wc_checkout_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_wc_checkout_custom_css', '')); ?></textarea>
+                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqcfw-btn</code> to target the button.</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="rmenu-settings-label">Button Icon</th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_wc_checkout_icon" class="rmenu-select">
+                                                <option value="none" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'none'); ?>>No Icon</option>
+                                                <option value="cart" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'cart'); ?>>Cart Icon</option>
+                                                <option value="checkout" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'checkout'); ?>>Checkout Icon</option>
+                                                <option value="arrow" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'arrow'); ?>>Arrow Icon</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Icon Position</th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_wc_checkout_icon_position" class="rmenu-select">
+                                                <option value="left" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'left'); ?>>Left</option>
+                                                <option value="right" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'right'); ?>>Right</option>
+                                                <option value="top" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'top'); ?>>Top</option>
+                                                <option value="bottom" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                        <div class="plugincy_col-5 items_center  space_between plugincy_card">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-cart"></span>', 'Quick Checkout Behavior', ''); ?>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Style</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_wc_checkout_style" class="rmenu-select" id="rmenu-style-select">
-                                        <option value="default" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
-                                        <option value="alt" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'alt'); ?>>Alternative Style</option>
-                                        <option value="custom" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'custom'); ?>>Custom Style</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row rmenu-settings-row-columns">
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Button Color</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="color" name="rmenu_wc_checkout_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_color', '#000')); ?>" class="rmenu-color-picker" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Text Color</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="color" name="rmenu_wc_checkout_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Custom CSS</label>
-                                <div class="rmenu-settings-control">
-                                    <textarea name="rmenu_wc_checkout_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_wc_checkout_custom_css', '')); ?></textarea>
-                                    <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqcfw-btn</code> to target the button.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row rmenu-settings-row-columns">
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Button Icon</label>
-                                    <div class="rmenu-settings-control">
-                                        <select name="rmenu_wc_checkout_icon" class="rmenu-select">
-                                            <option value="none" <?php selected(get_option('rmenu_wc_checkout_icon', 'cart'), 'none'); ?>>No Icon</option>
-                                            <option value="cart" <?php selected(get_option('rmenu_wc_checkout_icon', 'cart'), 'cart'); ?>>Cart Icon</option>
-                                            <option value="checkout" <?php selected(get_option('rmenu_wc_checkout_icon', 'cart'), 'checkout'); ?>>Checkout Icon</option>
-                                            <option value="arrow" <?php selected(get_option('rmenu_wc_checkout_icon', 'cart'), 'arrow'); ?>>Arrow Icon</option>
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Checkout Method', 'Choose how the quick checkout process should behave when a customer clicks the button.'); ?>
+                                    </th>
+                                    <td class="rmenu-settings-control">
+                                        <select name="rmenu_wc_checkout_method" class="rmenu-select" id="rmenu-checkout-method">
+                                            <option value="direct_checkout" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'direct_checkout'); ?>>Redirect to Checkout</option>
+                                            <option value="ajax_add" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'ajax_add'); ?>>AJAX Add to Cart</option>
+                                            <!-- rmenu_disable_cart_page is it's on disable below option & show cart page is disabled -->
+                                            <?php
+                                            $disable_cart_page = get_option('rmenu_disable_cart_page', '0');
+                                            ?>
+                                            <?php if (!$disable_cart_page) : ?>
+                                                <option value="cart_redirect" <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'cart_redirect'); ?>>Redirect to Cart Page</option>
+                                            <?php else : ?>
+                                                <option value="cart_redirect" disabled <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'cart_redirect'); ?>>Redirect to Cart Page (Disabled)</option>
+                                            <?php endif; ?>
+                                            <option disabled value="popup_checkout_pro" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'popup_checkout_pro'); ?>>Popup Checkout (Pro Features)</option>
+                                            <!-- <option disabled value="advanced_pro" <?php //selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'advanced_pro'); 
+                                                                                        ?>>Advanced Checkout (Pro Features)</option> -->
+                                            <option value="side_cart" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'side_cart'); ?>>Side Cart Slide-in</option>
                                         </select>
-                                        <p class="rmenu-field-description">Choose an optional icon to display with the direct checkout button text.</p>
-                                    </div>
-                                </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Clear Cart Before Adding', 'When enabled, the cart will be emptied before adding the new product. This creates a single-product checkout experience.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php $onepaquc_helper->switcher('rmenu_wc_clear_cart', 0); ?>
+                                    </td>
+                                </tr>
+
+                                <!-- <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">Single Checkout without Clear Cart</label>
+                            <div class="rmenu-settings-control pro-only">
+                                <label class="rmenu-toggle-switch">
+                                    <input disabled type="checkbox" name="rmenu_wc_single_checkout" value="1" <?php //checked(1, get_option("rmenu_wc_single_checkout", 0), true); 
+                                                                                                                ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">When enabled, the cart will not be emptied before adding the new product.</p>
                             </div>
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Icon Position</label>
-                                    <div class="rmenu-settings-control">
-                                        <select name="rmenu_wc_checkout_icon_position" class="rmenu-select">
-                                            <option value="left" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'left'); ?>>Left</option>
-                                            <option value="right" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'right'); ?>>Right</option>
-                                            <option value="top" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'top'); ?>>Top</option>
-                                            <option value="bottom" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
-                                        </select>
-                                    </div>
-                                </div>
+                        </div>
+                    </div> -->
+
+                                <!-- <div class="rmenu-settings-row">
+                        <div class="rmenu-settings-field">
+                            <label class="rmenu-settings-label">One-Click Purchase</label>
+                            <div class="rmenu-settings-control pro-only">
+                                <label class="rmenu-toggle-switch">
+                                    <input disabled type="checkbox" name="rmenu_wc_one_click_purchase" value="1" <?php //checked(1, get_option("rmenu_wc_one_click_purchase", 0), true); 
+                                                                                                                    ?> />
+                                    <span class="rmenu-toggle-slider"></span>
+                                </label>
+                                <p class="rmenu-field-description">When enabled, returning customers can bypass the checkout form and use their last saved payment method. Requires WooCommerce Payments or compatible gateway.</p>
                             </div>
+                        </div>
+                    </div> -->
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Show Confirmation Dialog', 'When enabled, customers will see a confirmation dialog before proceeding to checkout.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php $onepaquc_helper->switcher('rmenu_wc_add_confirmation', 0); ?>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </div>
                     </div>
                     <script>
@@ -1015,9 +1041,8 @@ function onepaquc_cart_dashboard()
                             // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
                             const button_style = document.querySelector('div#tab-4 select[name="rmenu_wc_checkout_style"]');
 
-                            // Select all children except the first two in the .button-style-section & except div#rmenu-atc-custom-width-row
-                            const buttonStyleSection = document.querySelector('.rmenu-settings-section.direct-button-style-section');
-                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(2);
+                            const buttonStyleSection = document.querySelector('.rmenu-settings-section.direct-button-style-section table tbody');
+                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(1);
                             // if rmenu_wc_checkout_icon is 'none', disable the icon position field
                             const iconSelect = document.querySelector('select[name="rmenu_wc_checkout_icon"]');
                             const iconPositionField = document.querySelector('select[name="rmenu_wc_checkout_icon_position"]');
@@ -1065,131 +1090,35 @@ function onepaquc_cart_dashboard()
                     </script>
                 </div>
 
-                <div class="rmenu-settings-section tab-content" id="direct-button-behavior" style="padding: 0;">
-                    <div class="rmenu-settings-section-header">
-                        <h3><span class="dashicons dashicons-cart"></span> Quick Checkout Behavior</h3>
-                    </div>
 
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Checkout Method</label>
-                            <div class="rmenu-settings-control">
-                                <select name="rmenu_wc_checkout_method" class="rmenu-select" id="rmenu-checkout-method">
-                                    <option value="direct_checkout" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'direct_checkout'); ?>>Redirect to Checkout</option>
-                                    <option value="ajax_add" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'ajax_add'); ?>>AJAX Add to Cart</option>
-                                    <!-- rmenu_disable_cart_page is it's on disable below option & show cart page is disabled -->
-                                    <?php
-                                    $disable_cart_page = get_option('rmenu_disable_cart_page', '0');
-                                    ?>
-                                    <?php if (!$disable_cart_page) : ?>
-                                        <option value="cart_redirect" <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'cart_redirect'); ?>>Redirect to Cart Page</option>
-                                    <?php else : ?>
-                                        <option value="cart_redirect" disabled <?php selected(get_option('rmenu_wc_checkout_method', 'popup_checkout'), 'cart_redirect'); ?>>Redirect to Cart Page (Disabled)</option>
-                                    <?php endif; ?>
-                                    <option disabled value="popup_checkout_pro" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'popup_checkout_pro'); ?>>Popup Checkout (Pro Features)</option>
-                                    <!-- <option disabled value="advanced_pro" <?php //selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'advanced_pro'); 
-                                                                                ?>>Advanced Checkout (Pro Features)</option> -->
-                                    <option value="side_cart" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'side_cart'); ?>>Side Cart Slide-in</option>
-                                </select>
-                                <p class="rmenu-field-description">Choose how the quick checkout process should behave when a customer clicks the button.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Clear Cart Before Adding</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_wc_clear_cart" value="1" <?php checked(1, get_option("rmenu_wc_clear_cart", 0), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">When enabled, the cart will be emptied before adding the new product. This creates a single-product checkout experience.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Single Checkout without Clear Cart</label>
-                            <div class="rmenu-settings-control pro-only">
-                                <label class="rmenu-toggle-switch">
-                                    <input disabled type="checkbox" name="rmenu_wc_single_checkout" value="1" <?php //checked(1, get_option("rmenu_wc_single_checkout", 0), true); 
-                                                                                                                ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">When enabled, the cart will not be emptied before adding the new product.</p>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">One-Click Purchase</label>
-                            <div class="rmenu-settings-control pro-only">
-                                <label class="rmenu-toggle-switch">
-                                    <input disabled type="checkbox" name="rmenu_wc_one_click_purchase" value="1" <?php //checked(1, get_option("rmenu_wc_one_click_purchase", 0), true); 
-                                                                                                                    ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">When enabled, returning customers can bypass the checkout form and use their last saved payment method. Requires WooCommerce Payments or compatible gateway.</p>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Show Confirmation Dialog</label>
-                            <div class="rmenu-settings-control">
-                                <label class="rmenu-toggle-switch">
-                                    <input type="checkbox" name="rmenu_wc_add_confirmation" value="1" <?php checked(1, get_option("rmenu_wc_add_confirmation", 0), true); ?> />
-                                    <span class="rmenu-toggle-slider"></span>
-                                </label>
-                                <p class="rmenu-field-description">When enabled, customers will see a confirmation dialog before proceeding to checkout.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
 
                 <div class="tab-content" id="direct-advanced" style="padding: 0;">
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-category"></span>Quick Checkout in Variable Product</h3>
+                    <div class="plugincy_row">
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-category"></span>', 'Checkout in Variable Product'); ?>
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Show Variation Selection in Archive pages', 'When enabled, the variation selection will be shown on archive pages.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php $onepaquc_helper->switcher('rmenu_variation_show_archive', 1); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Hide Select Option Button', 'When enabled, the select option button will be hidden on variable product pages.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <div class="rmenu-settings-control pro-only">
+                                            <?php $onepaquc_helper->switcher('rmenu_wc_hide_select_option', 0); ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Show Variation Selection in Archive pages</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_variation_show_archive" value="1" <?php checked(1, get_option("rmenu_variation_show_archive", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">When enabled, the variation selection will be shown on archive pages.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-tools"></span>', 'Advanced Options'); ?>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Hide Select Option Button</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_wc_hide_select_option" value="1" <?php checked(1, get_option("rmenu_wc_hide_select_option", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">When enabled, the select option button will be hidden on variable product pages.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-tools"></span> Advanced Options</h3>
-                        </div>
-
-                        <!-- <div class="rmenu-settings-row">
+                            <!-- <div class="rmenu-settings-row">
                             <div class="rmenu-settings-field">
                                 <label class="rmenu-settings-label">Mobile Optimization</label>
                                 <div class="rmenu-settings-control pro-only">
@@ -1202,19 +1131,14 @@ function onepaquc_cart_dashboard()
                                 </div>
                             </div>
                         </div> -->
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Enable for Guest Checkout</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_wc_checkout_guest_enabled" value="1" <?php checked(1, get_option("rmenu_wc_checkout_guest_enabled", 1), true);
-                                                                                                                ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">When enabled, the direct checkout button will be available for guest users. When disabled, only logged-in users will see the button.</p>
-                                </div>
-                            </div>
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Enable for Guest Checkout', 'When enabled, the direct checkout button will be available for guest users. When disabled, only logged-in users will see the button.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php $onepaquc_helper->switcher('rmenu_wc_checkout_guest_enabled', 1); ?>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -1238,22 +1162,6 @@ function onepaquc_cart_dashboard()
                         padding: 0;
                     }
 
-                    .rmenu-settings-section {
-                        background: #fff;
-                        border: 1px solid #c3c4c7;
-                        border-radius: 4px;
-                        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
-                        margin-bottom: 25px;
-                        padding: 0;
-                        position: relative;
-                    }
-
-                    .rmenu-settings-section-header {
-                        border-bottom: 1px solid #c3c4c7;
-                        padding: 12px 15px;
-                        background: #f0f0f1;
-                    }
-
                     .rmenu-settings-section-header h3 {
                         margin: 0;
                         font-size: 14px;
@@ -1270,8 +1178,7 @@ function onepaquc_cart_dashboard()
                     }
 
                     .rmenu-settings-row {
-                        padding: 15px;
-                        border-bottom: 1px solid #f0f0f1;
+                        padding: 10px;
                         position: relative;
                         display: flex;
                         flex-wrap: wrap;
@@ -1292,20 +1199,10 @@ function onepaquc_cart_dashboard()
                         min-width: 200px;
                     }
 
-                    .rmenu-settings-field {
-                        width: 100%;
-                        display: flex;
-                        flex-direction: column;
-                    }
-
                     .rmenu-settings-label {
                         font-weight: 600;
                         margin-bottom: 8px;
                         font-size: 14px;
-                    }
-
-                    .rmenu-settings-control {
-                        flex: 1;
                     }
 
                     .rmenu-field-description {
@@ -1384,11 +1281,11 @@ function onepaquc_cart_dashboard()
                     }
 
                     input:checked+.rmenu-toggle-slider {
-                        background-color: #2271b1;
+                        background-color: #4caf50;
                     }
 
                     input:focus+.rmenu-toggle-slider {
-                        box-shadow: 0 0 1px #2271b1;
+                        box-shadow: 0 0 1px #4caf50;
                     }
 
                     input:checked+.rmenu-toggle-slider:before {
@@ -1605,75 +1502,41 @@ function onepaquc_cart_dashboard()
                     });
                 });
             </script>
-            <div class="tab-content" id="tab-5">
-                <h2>Manage Features</h2>
-                <table class="form-table">
-                    <tr valign="top">
-                        <th scope="row">Product Quantity Controller</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_quantity_control" value="1" <?php checked(1, get_option("rmenu_quantity_control", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable "Product Quantity Controller" to manage product quantities in the checkout form.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top" class="pro-only top-50">
-                        <th scope="row">Remove Product Button</th>
-                        <td>
-                            <label class="switch">
-                                <input disabled type="checkbox" name="rmenu_remove_product" value="1" <?php checked(1, get_option("rmenu_remove_product", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable "Remove Product Button" to allow customers to remove products from the checkout form.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Add Image Before Product</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_add_img_before_product" value="1" <?php checked(1, get_option("rmenu_add_img_before_product", 0), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable "Add Image Before Product" to display product images before their titles in the checkout form.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">At Least One Product in Cart</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_at_one_product_cart" value="1" <?php checked(1, get_option("rmenu_at_one_product_cart", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable "At Least One Product in Cart" to add at least one product in the cart.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Disable Cart Page</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_disable_cart_page" value="1" <?php checked(1, get_option("rmenu_disable_cart_page", 0), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable "Disable Cart Page" to remove the cart page from your WooCommerce store. This will redirect customers directly to the checkout page.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <!-- <tr valign="top" class="pro-only top-50">
+            <div class="tab-content plugincy_card" id="tab-5" style="margin-top: 20px;">
+                <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-star-filled"></span>', 'Manage Features', 'Enhance your WooCommerce checkout experience with these powerful features.'); ?>
+                <table class="form-table plugincy_table">
+                    <tbody style="display: grid; grid-template-columns: repeat(auto-fill, minmax(410px, 1fr));">
+                        <tr valign="top">
+                            <?php $onepaquc_helper->sec_head('th', '', '', 'Product Quantity Controller', 'Enable "Product Quantity Controller" to manage product quantities in the checkout form.'); ?>
+                            <td>
+                                <?php $onepaquc_helper->switcher('rmenu_quantity_control', 1); ?>
+                            </td>
+                        </tr>
+                        <tr valign="top" class="pro-only top-50">
+                            <?php $onepaquc_helper->sec_head('th', '', '', 'Remove Product Button', 'Enable "Remove Product Button" to allow customers to remove products from the checkout form.'); ?>
+                            <td>
+                                <?php $onepaquc_helper->switcher('rmenu_remove_product', 0); ?>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <?php $onepaquc_helper->sec_head('th', '', '', 'Add Image Before Product', 'Enable "Add Image Before Product" to display product images before their titles in the checkout form.'); ?>
+                            <td>
+                                <?php $onepaquc_helper->switcher('rmenu_add_img_before_product', 0); ?>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <?php $onepaquc_helper->sec_head('th', '', '', 'At Least One Product in Cart', 'Enable "At Least One Product in Cart" to add at least one product in the cart.'); ?>
+                            <td>
+                                <?php $onepaquc_helper->switcher('rmenu_at_one_product_cart', 0); ?>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <?php $onepaquc_helper->sec_head('th', '', '', 'Disable Cart Page', 'Enable "Disable Cart Page" to remove the cart page from your WooCommerce store. This will redirect customers directly to the checkout page.'); ?>
+                            <td>
+                                <?php $onepaquc_helper->switcher('rmenu_disable_cart_page', 0); ?>
+                            </td>
+                        </tr>
+                        <!-- <tr valign="top" class="pro-only top-50">
                         <th scope="row">Express Checkout Options</th>
                         <td>
                             <label class="switch">
@@ -1687,7 +1550,7 @@ function onepaquc_cart_dashboard()
                             </span>
                         </td>
                     </tr> -->
-                    <!-- <tr valign="top" class="pro-only top-50">
+                        <!-- <tr valign="top" class="pro-only top-50">
                         <th scope="row">Address Auto-Complete</th>
                         <td>
                             <label class="switch">
@@ -1701,7 +1564,7 @@ function onepaquc_cart_dashboard()
                             </span>
                         </td>
                     </tr> -->
-                    <!-- <tr valign="top" class="pro-only top-50">
+                        <!-- <tr valign="top" class="pro-only top-50">
                         <th scope="row">Multi-Step Checkout </th>
                         <td>
                             <label class="switch">
@@ -1715,33 +1578,19 @@ function onepaquc_cart_dashboard()
                             </span>
                         </td>
                     </tr> -->
-                    <tr valign="top" class="pro-only top-50">
-                        <th scope="row">Force Login Before Checkout</th>
-                        <td>
-                            <label class="switch">
-                                <input disabled type="checkbox" name="rmenu_force_login" value="1" <?php checked(1, get_option("rmenu_force_login", 0), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable "Force Login Before Checkout" to require customers to log in before they can access the checkout page.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr valign="top">
-                        <th scope="row">Link Product Name in Checkout Page</th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_link_product" value="1" <?php checked(1, get_option("rmenu_link_product", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">Enable "Link Product Name in Checkout Page" to make the product names clickable, redirecting customers to the product page.</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <!-- <tr valign="top" class="pro-only top-50">
+                        <tr valign="top" class="pro-only top-50">
+                            <?php $onepaquc_helper->sec_head('th', '', '', 'Force Login Before Checkout', 'Enable "Force Login Before Checkout" to require customers to log in before they can access the checkout page.'); ?>
+                            <td>
+                                <?php $onepaquc_helper->switcher('rmenu_force_login', 0); ?>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <?php $onepaquc_helper->sec_head('th', '', '', 'Link Product Name in Checkout Page', 'Enable "Link Product Name in Checkout Page" to make the product names clickable, redirecting customers to the product page.'); ?>
+                            <td>
+                                <?php $onepaquc_helper->switcher('rmenu_link_product', 1); ?>
+                            </td>
+                        </tr>
+                        <!-- <tr valign="top" class="pro-only top-50">
                         <th scope="row">Enable Captcha on Checkout Page</th>
                         <td>
                             <label class="switch">
@@ -1755,82 +1604,67 @@ function onepaquc_cart_dashboard()
                             </span>
                         </td>
                     </tr> -->
+                    </tbody>
                 </table>
             </div>
-            <div class="tab-content" id="tab-6">
+            <div class="tab-content plugincy_card" id="tab-6" style="margin-top: 20px;">
                 <?php onepaquc_trust_badges_settings_content(); ?>
                 <table style="padding-top: 1rem;">
-                    <tr valign="top">
-                        <th scope="row">Contribute to Plugincy</th>
+                    <tr valign="top" style="display: flex; gap: 51px;">
+                        <?php $onepaquc_helper->sec_head('th', '', '', 'Contribute to Plugincy', 'We collect non-sensitive technical details from your website, like the PHP version and features usage, to help us troubleshoot issues faster, make informed development decisions, and build features that truly benefit you. <a href="https://plugincy.com/usage-tracking/" target="_blank" style="color:#fff;">Learn more…</a>'); ?>
                         <td>
-                            <label class="switch">
-                                <input type="checkbox" name="rmenu_allow_analytics" value="1" <?php checked(1, get_option("rmenu_allow_analytics", "1"), true); ?> />
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="tooltip">
-                                <span class="question-mark">?</span>
-                                <span class="tooltip-text">We collect non-sensitive technical details from your website, like the PHP version and features usage, to help us troubleshoot issues faster, make informed development decisions, and build features that truly benefit you. <a href='https://plugincy.com/usage-tracking/' target='_blank' style="color:#fff;">Learn more…</a></span>
-                            </span>
+                            <?php $onepaquc_helper->switcher('rmenu_allow_analytics', 1); ?>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="tab-content" id="tab-7">
-                <div class="rmenu-settings-header">
-                    <h2>WooCommerce Quick View</h2>
-                    <p class="rmenu-settings-description">Configure how customers can quickly preview products without visiting the product page.</p>
-                </div>
-                <div class="rmenu-settings-tabs">
-                    <ul class="rmenu-settings-tab-list" style="color: #135e96;display: flex; gap: 10px; cursor: pointer;text-decoration: underline;">
-                        <li class="rmenu-settings-tab-item active" data-tab="quick-general-settings">General Settings</li>
-                        <li class="rmenu-settings-tab-item" data-tab="quick-popup">Popup Manage</li>
-                        <li class="rmenu-settings-tab-item" data-tab="quick-display">Display</li>
-                        <li class="rmenu-settings-tab-item" data-tab="quick-advanced">Advanced</li>
-                    </ul>
+                <div class="plugincy_nav_card mb-4">
+                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-visibility"></span>', 'WooCommerce Quick View','','Manage the quick view settings for your WooCommerce products.'); ?>
+                    <div class="rmenu-settings-tabs">
+                        <ul class="rmenu-settings-tab-list">
+                            <li class="rmenu-settings-tab-item active" data-tab="quick-general-settings">
+                                <span class="dashicons dashicons-admin-generic"></span> General Settings
+                            </li>
+                            <li class="rmenu-settings-tab-item" data-tab="quick-popup">
+                                <span class="dashicons dashicons-admin-comments"></span> Popup Manage
+                            </li>
+                            <li class="rmenu-settings-tab-item" data-tab="quick-advanced">
+                                <span class="dashicons dashicons-admin-tools"></span> Advanced
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="tab-content" id="quick-general-settings" style="padding: 0;">
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row" id="rmenu-quick-view-enable-field">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Enable Quick View</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_enable_quick_view" value="1" <?php checked(1, get_option("rmenu_enable_quick_view", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Enable or disable the quick view functionality across your WooCommerce store.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Text</label>
-                                <div class="rmenu-settings-control">
-                                    <?php
-                                    $quick_view_button_text = get_option('rmenu_quick_view_button_text', '');
-                                    if (empty($quick_view_button_text)) {
-                                        $quick_view_button_text = 'Quick View';
-                                    }
-                                    ?>
-                                    <input type="text" name="rmenu_quick_view_button_text" value="<?php echo esc_attr($quick_view_button_text); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Customize the text displayed on the quick view button.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Position</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_quick_view_button_position" class="rmenu-select">
-                                        <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_image'); ?>>After Product Image</option>
-                                        <!-- <option disabled value="before_title" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'before_title'); 
-                                                                                    ?>>Before Product Title (Pro Features)</option>
+                    <div class="plugincy_row">
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', ''); ?>
+                            <table class="form-table plugincy_table">
+                                <tr id="rmenu-quick-view-enable-field">
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Enable Quick View', 'Enable or disable the quick view functionality across your WooCommerce store.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php $onepaquc_helper->switcher('rmenu_enable_quick_view', 0); ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Text', 'Customize the text displayed on the quick view button.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php
+                                        $quick_view_button_text = get_option('rmenu_quick_view_button_text', '');
+                                        if (empty($quick_view_button_text)) {
+                                            $quick_view_button_text = 'Quick View';
+                                        }
+                                        ?>
+                                        <input type="text" name="rmenu_quick_view_button_text" value="<?php echo esc_attr($quick_view_button_text); ?>" class="regular-text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Position', 'Choose where to display the quick view button on product listings.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <select name="rmenu_quick_view_button_position" class="rmenu-select">
+                                            <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_image'); ?>>After Product Image</option>
+                                            <!-- <option disabled value="before_title" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'before_title'); 
+                                                                                        ?>>Before Product Title (Pro Features)</option>
                                         <option disabled value="after_title" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_title'); 
                                                                                 ?>>After Product Title (Pro Features)</option>
                                         <option disabled value="before_price" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'before_price'); 
@@ -1839,105 +1673,87 @@ function onepaquc_cart_dashboard()
                                                                                 ?>>After Product Price (Pro Features)</option>
                                         <option disabled value="before_add_to_cart" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'before_add_to_cart'); 
                                                                                     ?>>Before Add to Cart Button (Pro Features)</option> -->
-                                        <option value="after_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
-                                        <option value="image_overlay" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'image_overlay'); ?>>Overlay on Product Image</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Choose where to display the quick view button on product listings.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Display Type</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_quick_view_display_type" class="rmenu-select">
-                                        <option value="button" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'button'); ?>>Button</option>
-                                        <option value="icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'icon'); ?>>Icon Only</option>
-                                        <option value="text_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'text_icon'); ?>>Text with Icon</option>
-                                        <option value="hover_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'hover_icon'); ?>>Hover Icon</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Choose how the quick view trigger should appear to customers.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-section quick-view-button-style">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-appearance"></span> Button Style</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Style</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_quick_view_button_style" class="rmenu-select" id="rmenu-qv-style-select">
-                                        <option value="default" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
-                                        <option value="alt" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'alt'); ?>>Alternative Style</option>
-                                        <option value="custom" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'custom'); ?>>Custom Style</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row rmenu-settings-row-columns">
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Button Color</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="color" name="rmenu_quick_view_button_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_button_color', '#000')); ?>" class="rmenu-color-picker" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Text Color</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="color" name="rmenu_quick_view_text_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row rmenu-settings-row-columns">
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Button Icon</label>
-                                    <div class="rmenu-settings-control">
-                                        <select name="rmenu_quick_view_button_icon" class="rmenu-select">
-                                            <option value="none" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'none'); ?>>No Icon</option>
-                                            <option value="eye" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'eye'); ?>>Eye Icon</option>
-                                            <option value="search" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'search'); ?>>Search Icon</option>
-                                            <option value="zoom" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'zoom'); ?>>Zoom Icon</option>
-                                            <option value="preview" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'preview'); ?>>Preview Icon</option>
+                                            <option value="after_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
+                                            <option value="image_overlay" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'image_overlay'); ?>>Overlay on Product Image</option>
                                         </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Icon Position</label>
-                                    <div class="rmenu-settings-control">
-                                        <select name="rmenu_quick_view_icon_position" class="rmenu-select">
-                                            <option value="left" <?php selected(get_option('rmenu_quick_view_icon_position', 'left'), 'left'); ?>>Left</option>
-                                            <option value="right" <?php selected(get_option('rmenu_quick_view_icon_position', 'left'), 'right'); ?>>Right</option>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Display Type', 'Choose how the quick view trigger should appear to customers.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <select name="rmenu_quick_view_display_type" class="rmenu-select">
+                                            <option value="button" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'button'); ?>>Button</option>
+                                            <option value="icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'icon'); ?>>Icon Only</option>
+                                            <option value="text_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'text_icon'); ?>>Text with Icon</option>
+                                            <!-- <option value="hover_icon" <?php //selected(get_option('rmenu_quick_view_display_type', 'icon'), 'hover_icon'); 
+                                                                            ?>>Hover Icon</option> -->
                                         </select>
-                                    </div>
-                                </div>
-                            </div>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
-                        <div class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-qv-custom-css-row" style="<?php echo (get_option('rmenu_quick_view_button_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Custom CSS</label>
-                                <div class="rmenu-settings-control">
-                                    <textarea name="rmenu_quick_view_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_css', '')); ?></textarea>
-                                    <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.</p>
-                                </div>
-                            </div>
+                        <div class="rmenu-settings-section quick-view-button-style plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
+
+                            <table class="form-table plugincy_table">
+                                <tbody class="plugincy_grid">
+                                    <tr style="grid-column: span 2;">
+                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Button Style', ''); ?>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_quick_view_button_style" class="rmenu-select" id="rmenu-qv-style-select">
+                                                <option value="default" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
+                                                <option value="alt" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'alt'); ?>>Alternative Style</option>
+                                                <option value="custom" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Button Color', ''); ?>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_quick_view_button_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_button_color', '#000')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Text Color', ''); ?>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_quick_view_text_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Button Icon', ''); ?>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_quick_view_button_icon" class="rmenu-select">
+                                                <option value="none" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'none'); ?>>No Icon</option>
+                                                <option value="eye" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'eye'); ?>>Eye Icon</option>
+                                                <option value="search" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'search'); ?>>Search Icon</option>
+                                                <option value="zoom" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'zoom'); ?>>Zoom Icon</option>
+                                                <option value="preview" <?php selected(get_option('rmenu_quick_view_button_icon', 'eye'), 'preview'); ?>>Preview Icon</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Icon Position', ''); ?>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_quick_view_icon_position" class="rmenu-select">
+                                                <option value="left" <?php selected(get_option('rmenu_quick_view_icon_position', 'left'), 'left'); ?>>Left</option>
+                                                <option value="right" <?php selected(get_option('rmenu_quick_view_icon_position', 'left'), 'right'); ?>>Right</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr id="rmenu-qv-custom-css-row" style="<?php echo (get_option('rmenu_quick_view_button_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
+                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Custom CSS', ''); ?>
+                                        <td class="rmenu-settings-control">
+                                            <textarea name="rmenu_quick_view_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_css', '')); ?></textarea>
+                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <script>
@@ -1945,9 +1761,8 @@ function onepaquc_cart_dashboard()
                             // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
                             const button_style = document.querySelector('div#tab-7 select[name="rmenu_quick_view_button_style"]');
 
-                            // Select all children except the first two in the .button-style-section & except div#rmenu-atc-custom-width-row
-                            const buttonStyleSection = document.querySelector('.rmenu-settings-section.quick-view-button-style');
-                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(2);
+                            const buttonStyleSection = document.querySelector('.rmenu-settings-section.quick-view-button-style table tbody');
+                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(1);
 
                             // if button_style !== 'custom', none all fields except the first two
                             if (button_style) {
@@ -1981,414 +1796,343 @@ function onepaquc_cart_dashboard()
                         });
                     </script>
                 </div>
+                <div class="tab-content" id="quick-popup" style="padding: 0;">
+                    <div class="plugincy_row mb-4">
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-visibility"></span>', 'Quick View Content', ''); ?>
+                            <div class="rmenu-settings-row" id="rmenu-quick-view-content-elements">
+                                <div class="rmenu-settings-field">
+                                    <label class="rmenu-settings-label">Content Elements</label>
+                                    <?php $content_elements_option = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']); ?>
+                                    <div class="rmenu-settings-control rmenu-checkbox-group">
+                                        <div class="rmenu-checkbox-column">
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="image" <?php checked(in_array('image', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Image</span>
+                                            </label>
 
-                <div class="rmenu-settings-section tab-content" id="quick-popup" style="padding: 0;">
-                    <div class="rmenu-settings-section-header">
-                        <h3><span class="dashicons dashicons-visibility"></span> Quick View Content</h3>
-                    </div>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="gallery" <?php checked(in_array('gallery', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Gallery</span>
+                                            </label>
 
-                    <div class="rmenu-settings-row" id="rmenu-quick-view-content-elements">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Content Elements</label>
-                            <?php $content_elements_option = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']); ?>
-                            <div class="rmenu-settings-control rmenu-checkbox-group">
-                                <div class="rmenu-checkbox-column">
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="image" <?php checked(in_array('image', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Product Image</span>
-                                    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="title" <?php checked(in_array('title', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Title</span>
+                                            </label>
 
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="gallery" <?php checked(in_array('gallery', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Product Gallery</span>
-                                    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="rating" <?php checked(in_array('rating', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Rating</span>
+                                            </label>
+                                        </div>
 
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="title" <?php checked(in_array('title', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Product Title</span>
-                                    </label>
+                                        <div class="rmenu-checkbox-column">
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="price" <?php checked(in_array('price', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Price</span>
+                                            </label>
 
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="rating" <?php checked(in_array('rating', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Product Rating</span>
-                                    </label>
-                                </div>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="excerpt" <?php checked(in_array('excerpt', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Short Description</span>
+                                            </label>
 
-                                <div class="rmenu-checkbox-column">
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="price" <?php checked(in_array('price', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Product Price</span>
-                                    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="add_to_cart" <?php checked(in_array('add_to_cart', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Add to Cart Button</span>
+                                            </label>
 
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="excerpt" <?php checked(in_array('excerpt', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Short Description</span>
-                                    </label>
-
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="add_to_cart" <?php checked(in_array('add_to_cart', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Add to Cart Button</span>
-                                    </label>
-
-                                    <!-- <label class="rmenu-checkbox-container">
+                                            <!-- <label class="rmenu-checkbox-container">
                                         <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="quantity" <?php //checked(in_array('quantity', $content_elements_option)); 
                                                                                                                             ?> />
                                         <span class="rmenu-checkbox-label">Quantity Selector</span>
                                     </label> -->
-                                </div>
+                                        </div>
 
-                                <div class="rmenu-checkbox-column">
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="meta" <?php checked(in_array('meta', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Product Meta</span>
-                                    </label>
+                                        <div class="rmenu-checkbox-column">
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="meta" <?php checked(in_array('meta', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Meta</span>
+                                            </label>
 
-                                    <label class="rmenu-checkbox-container pro-only">
-                                        <input disabled type="checkbox" name="rmenu_quick_view_content_elements[]" value="sharing" <?php checked(in_array('sharing', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Social Sharing</span>
-                                    </label>
+                                            <label class="rmenu-checkbox-container pro-only">
+                                                <input disabled type="checkbox" name="rmenu_quick_view_content_elements[]" value="sharing" <?php checked(in_array('sharing', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Social Sharing</span>
+                                            </label>
 
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="view_details" <?php checked(in_array('view_details', $content_elements_option)); ?> />
-                                        <span class="rmenu-checkbox-label">View Details Link</span>
-                                    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" id="view_details_checkbox" name="rmenu_quick_view_content_elements[]" value="view_details" <?php checked(in_array('view_details', $content_elements_option)); ?> />
+                                                <span class="rmenu-checkbox-label">View Details Link</span>
+                                            </label>
 
-                                    <!-- <label class="rmenu-checkbox-container pro-only">
+                                            <!-- <label class="rmenu-checkbox-container pro-only">
                                         <input disabled type="checkbox" name="rmenu_quick_view_content_elements[]" value="attributes" <?php //checked(in_array('attributes', $content_elements_option)); 
                                                                                                                                         ?> />
                                         <span class="rmenu-checkbox-label">Product Attributes</span>
                                     </label> -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <p class="rmenu-field-description">Select which product elements should be displayed in the quick view popup.</p>
+
+                            <table class="form-table plugincy_table">
+                                <tbody class="plugincy_grid">
+                                    <tr>
+                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Modal Size', 'Choose the size of the quick view modal popup.'); ?>
+                                        <td class="rmenu-settings-control pro-only">
+                                            <select disabled name="rmenu_quick_view_modal_size" class="rmenu-select">
+                                                <option value="small" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'small'); ?>>Small</option>
+                                                <option value="medium" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'medium'); ?>>Medium</option>
+                                                <option value="large" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'large'); ?>>Large</option>
+                                                <option value="full" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'full'); ?>>Full Width</option>
+                                                <option value="custom" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'custom'); ?>>Custom</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <tr id="rmenu-custom-size-row" style="<?php echo (get_option('rmenu_quick_view_modal_size', 'medium') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
+                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Custom Width', 'Custom width in pixels (e.g., 800).'); ?>
+                                        <td class="rmenu-settings-control pro-only">
+                                            <input disabled type="text" name="rmenu_quick_view_custom_width" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_width', '800')); ?>" class="regular-text" />
+                                        </td>
+                                    </tr>
+                                    <tr id="rmenu-custom-size-row" style="<?php echo (get_option('rmenu_quick_view_modal_size', 'medium') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
+                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Custom Height', 'Custom height in pixels (e.g., 600) or \'auto\'.'); ?>
+                                        <td class="rmenu-settings-control pro-only">
+                                            <input disabled type="text" name="rmenu_quick_view_custom_height" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_height', '600')); ?>" class="regular-text" />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Loading Effect', 'Choose the animation effect when opening the quick view modal.'); ?>
+                                        <td class="rmenu-settings-control pro-only">
+                                            <select disabled name="rmenu_quick_view_loading_effect" class="rmenu-select">
+                                                <option value="fade" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'fade'); ?>>Fade</option>
+                                                <option value="slide" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'slide'); ?>>Slide</option>
+                                                <option value="zoom" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'zoom'); ?>>Zoom</option>
+                                                <option value="none" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'none'); ?>>None</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Modal Size</label>
-                            <div class="rmenu-settings-control pro-only">
-                                <select disabled name="rmenu_quick_view_modal_size" class="rmenu-select">
-                                    <option value="small" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'small'); ?>>Small</option>
-                                    <option value="medium" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'medium'); ?>>Medium</option>
-                                    <option value="large" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'large'); ?>>Large</option>
-                                    <option value="full" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'full'); ?>>Full Width</option>
-                                    <option value="custom" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'custom'); ?>>Custom</option>
-                                </select>
-                                <p class="rmenu-field-description">Choose the size of the quick view modal popup.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row rmenu-settings-row-columns rmenu-custom-size-row" id="rmenu-custom-size-row" style="<?php echo (get_option('rmenu_quick_view_modal_size', 'medium') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
-                        <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Custom Width</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <input disabled type="text" name="rmenu_quick_view_custom_width" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_width', '800')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Custom width in pixels (e.g., 800).</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rmenu-settings-column">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Custom Height</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <input disabled type="text" name="rmenu_quick_view_custom_height" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_height', '600')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Custom height in pixels (e.g., 600) or 'auto'.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="rmenu-settings-row">
-                        <div class="rmenu-settings-field">
-                            <label class="rmenu-settings-label">Loading Effect</label>
-                            <div class="rmenu-settings-control pro-only">
-                                <select disabled name="rmenu_quick_view_loading_effect" class="rmenu-select">
-                                    <option value="fade" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'fade'); ?>>Fade</option>
-                                    <option value="slide" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'slide'); ?>>Slide</option>
-                                    <option value="zoom" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'zoom'); ?>>Zoom</option>
-                                    <option value="none" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'none'); ?>>None</option>
-                                </select>
-                                <p class="rmenu-field-description">Choose the animation effect when opening the quick view modal.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab-content" id="quick-display" style="padding: 0px;">
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-layout"></span> Display Settings</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Product Types</label>
-                                <?php $product_types_option = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]); ?>
-                                <div class="rmenu-settings-control rmenu-checkbox-group">
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Simple Products</span>
-                                    </label>
-
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Variable Products</span>
-                                    </label>
-
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
-                                        <span class="rmenu-checkbox-label">Grouped Products</span>
-                                    </label>
-
-                                    <label class="rmenu-checkbox-container">
-                                        <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
-                                        <span class="rmenu-checkbox-label">External/Affiliate Products</span>
-                                    </label>
-                                </div>
-                                <p class="rmenu-field-description">Select which WooCommerce product types should display the quick view button.</p>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <?php $product_pages_option = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', "tag-archives", 'search', "featured-products", "on-sale", "recent", "widgets", "shortcodes"]); ?>
-                                <div class="rmenu-settings-control rmenu-checkbox-group">
-                                    <div class="rmenu-checkbox-column">
-                                        <h4>Archive Pages</h4>
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-layout"></span>', 'Display Settings', ''); ?>
+                            <div class="rmenu-settings-row">
+                                <div class="rmenu-settings-field">
+                                    <label class="rmenu-settings-label">Product Types</label>
+                                    <?php $product_types_option = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]); ?>
+                                    <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Main Shop Page</span>
+                                            <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">Simple Products</span>
                                         </label>
 
                                         <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Product Category Archives</span>
+                                            <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">Variable Products</span>
                                         </label>
 
                                         <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Product Tag Archives</span>
+                                            <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">Grouped Products</span>
+                                        </label>
+
+                                        <label class="rmenu-checkbox-container">
+                                            <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">External/Affiliate Products</span>
                                         </label>
                                     </div>
+                                </div>
+                            </div>
 
-                                    <div class="rmenu-checkbox-column">
-                                        <h4>Other Pages</h4>
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="search" <?php checked(in_array('search', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Search Results</span>
-                                        </label>
+                            <div class="rmenu-settings-row">
+                                <div class="rmenu-settings-field">
+                                    <?php $product_pages_option = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', "tag-archives", 'search', "featured-products", "on-sale", "recent", "widgets", "shortcodes"]); ?>
+                                    <div class="rmenu-settings-control rmenu-checkbox-group">
+                                        <div class="rmenu-checkbox-column">
+                                            <h4>Archive Pages</h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Main Shop Page</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Featured Products</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Category Archives</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">On-Sale Products</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Tag Archives</span>
+                                            </label>
+                                        </div>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="recent" <?php checked(in_array('recent', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Recent Products</span>
-                                        </label>
-                                    </div>
+                                        <div class="rmenu-checkbox-column">
+                                            <h4>Other Pages</h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="search" <?php checked(in_array('search', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Search Results</span>
+                                            </label>
 
-                                    <div class="rmenu-checkbox-column">
-                                        <h4>Widgets & Shortcodes</h4>
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="widgets" <?php checked(in_array('widgets', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Widgets</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Featured Products</span>
+                                            </label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_pages_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Shortcodes</span>
-                                        </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">On-Sale Products</span>
+                                            </label>
+
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="recent" <?php checked(in_array('recent', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Recent Products</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="rmenu-checkbox-column">
+                                            <h4>Widgets & Shortcodes</h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="widgets" <?php checked(in_array('widgets', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Widgets</span>
+                                            </label>
+
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Shortcodes</span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-translation"></span> Translations</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">"View Details" Text</label>
-                                <div class="rmenu-settings-control">
+                    <div class="rmenu-settings-section plugincy_card">
+                        <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-translation"></span>', 'Translations', ''); ?>
+                        <table class="form-table plugincy_table">
+                            <tr>
+                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', '"Quick View" Text', 'Customize the text for the quick view button or link.'); ?>
+                                <td class="rmenu-settings-control">
                                     <?php
                                     $details_text = get_option('rmenu_quick_view_details_text', '');
                                     if (empty($details_text)) {
                                         $details_text = 'View Full Details';
                                     }
                                     ?>
-                                    <input type="text" name="rmenu_quick_view_details_text" value="<?php echo esc_attr($details_text); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Customize the text for the "View Full Details" link in the quick view popup.</p>
-                                </div>
-                            </div>
-                        </div>
+                                    <input type="text" id="view_details_text" name="rmenu_quick_view_details_text" value="<?php echo esc_attr($details_text); ?>" class="regular-text" />
+                                </td>
+                            </tr>
+                        </table>
                     </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Select the checkbox and the text input
+                            const enableCheckout = document.getElementById('view_details_checkbox');
+                            const allInputFields = document.getElementById('view_details_text');
+
+                            // Function to toggle the disabled class
+                            function toggleDisabledClass(disable, inputField) {
+                                inputField.disabled = disable; // Toggle the disabled property
+                            }
+
+                            // Set initial state
+                            toggleDisabledClass(!enableCheckout.checked, allInputFields);
+
+                            // Add event listener for checkbox change
+                            enableCheckout.addEventListener('change', function() {
+                                toggleDisabledClass(!this.checked, allInputFields);
+                            });
+                        });
+                    </script>
                 </div>
-
                 <div class="tab-content" id="quick-advanced" style="padding: 0;">
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-tools"></span> Advanced Options</h3>
+                    <div class="plugincy_row mb-4">
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-tools"></span>', 'Advanced Options', ''); ?>
+
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Mobile Optimization', 'When enabled, the quick view functionality will be optimized for mobile devices.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <?php $onepaquc_helper->switcher('rmenu_quick_view_mobile_optimize', 1); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Close on Add to Cart', 'When enabled, the quick view popup will automatically close after adding a product to cart.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <?php $onepaquc_helper->switcher('rmenu_quick_view_close_on_add', 0); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Keyboard Navigation', 'When enabled, customers can use keyboard arrows to navigate between products in quick view and ESC to close.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php $onepaquc_helper->switcher('rmenu_quick_view_keyboard_nav', 1); ?>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-analytics"></span>', 'Analytics Integration', ''); ?>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Mobile Optimization</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_quick_view_mobile_optimize" value="1" <?php checked(1, get_option("rmenu_quick_view_mobile_optimize", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">When enabled, the quick view functionality will be optimized for mobile devices.</p>
-                                </div>
-                            </div>
-                        </div>
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Track Quick View Events', 'Track when customers use quick view in Google Analytics or other analytics tools.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <?php $onepaquc_helper->switcher('rmenu_quick_view_track_events', 0); ?>
+                                    </td>
+                                </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Close on Add to Cart</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_quick_view_close_on_add" value="1" <?php checked(1, get_option("rmenu_quick_view_close_on_add", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">When enabled, the quick view popup will automatically close after adding a product to cart.</p>
-                                </div>
-                            </div>
-                        </div>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Event Category', 'The event category name used for analytics tracking.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <input disabled type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'one-page-quick-checkout-for-woocommerce')); ?>" class="regular-text" />
+                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                    </td>
+                                </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Keyboard Navigation</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_quick_view_keyboard_nav" value="1" <?php checked(1, get_option("rmenu_quick_view_keyboard_nav", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">When enabled, customers can use keyboard arrows to navigate between products in quick view and ESC to close.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-analytics"></span> Analytics Integration</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Track Quick View Events</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_quick_view_track_events" value="1" <?php checked(1, get_option("rmenu_quick_view_track_events", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Track when customers use quick view in Google Analytics or other analytics tools.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Event Category</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <input disabled type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'one-page-quick-checkout-for-woocommerce')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">The event category name used for analytics tracking.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Event Action</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <input disabled type="text" name="rmenu_quick_view_event_action" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_action', 'Quick View')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">The event action name used for analytics tracking.</p>
-                                </div>
-                            </div>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Event Action', 'The event action name used for analytics tracking.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <input disabled type="text" name="rmenu_quick_view_event_action" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_action', 'Quick View')); ?>" class="regular-text" />
+                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
 
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-generic"></span> Compatibility Settings</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Load Scripts On</label>
-                                <div class="rmenu-settings-control pro-only">
+                    <div class="rmenu-settings-section plugincy_card">
+                        <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'Compatibility Settings'); ?>
+                        <table class="form-table plugincy_table">
+                            <tr>
+                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Load Scripts On', 'Control where quick view scripts are loaded to improve compatibility and performance.'); ?>
+                                <td class="rmenu-settings-control pro-only">
                                     <select disabled name="rmenu_quick_view_load_scripts" class="rmenu-select">
                                         <option value="all" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'all'); ?>>All Pages</option>
                                         <option value="wc-only" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'wc-only'); ?>>WooCommerce Pages Only</option>
                                         <option value="specific" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'specific'); ?>>Specific Pages Only</option>
                                     </select>
-                                    <p class="rmenu-field-description">Control where quick view scripts are loaded to improve compatibility and performance.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row" id="rmenu-specific-pages-row" style="<?php echo (get_option('rmenu_quick_view_load_scripts', 'wc-only') == 'specific') ? 'display:block;' : 'display:none;'; ?>">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Specific Pages IDs</label>
-                                <div class="rmenu-settings-control pro-only">
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                </td>
+                            </tr>
+                            <tr class="rmenu-settings-row" id="rmenu-specific-pages-row" style="<?php echo (get_option('rmenu_quick_view_load_scripts', 'wc-only') == 'specific') ? 'display:block;' : 'display:none;'; ?>">
+                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Specific Pages IDs', 'Enter the IDs of the specific pages where you want to load the quick view.'); ?>
+                                <td class="rmenu-settings-control pro-only">
                                     <input disabled type="text" name="rmenu_quick_view_specific_pages" value="<?php echo esc_attr(get_option('rmenu_quick_view_specific_pages', '')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Enter page IDs separated by commas (e.g., 10, 15, 21).</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Theme Compatibility Mode</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_quick_view_theme_compat" value="1" <?php checked(1, get_option("rmenu_quick_view_theme_compat", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Enable this if you experience display issues with your theme.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-info"></span> Documentation & Support</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <div class="rmenu-settings-info-box">
-                                    <h4>Quick View Documentation</h4>
-                                    <p>For detailed instructions on customizing the Quick View feature, please visit our documentation:</p>
-                                    <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/quick-view/woocommerce-quick-view-general-settings/" class="button button-secondary">View Documentation</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <div class="rmenu-settings-info-box pro-only">
-                                    <h4>Shortcode Reference</h4>
-                                    <p>You can use the following shortcode to display the Quick View button anywhere on your site:</p>
-                                    <code>[plugincy_quick_view product_id="123" button_text="Quick Preview"]</code>
-                                </div>
-                            </div>
-                        </div> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Theme Compatibility Mode', 'Enable this if you experience display issues with your theme.'); ?>
+                                <td class="rmenu-settings-control">
+                                    <?php $onepaquc_helper->switcher('rmenu_quick_view_theme_compat', 0); ?>
+                                </td>
+                            <tr>
+                        </table>
                     </div>
                 </div>
 
@@ -2651,13 +2395,16 @@ function onepaquc_cart_dashboard()
                     // Show/hide custom CSS row based on selected style after page load
                     const styleSelect = document.querySelector('select[name="rmenu_quick_view_button_style"]');
                     const customCssRow = document.querySelector('textarea[name="rmenu_quick_view_custom_css"]').closest('.rmenu-settings-row');
-                    // if rmenu_quick_view_display_type is button, hide the rmenu_quick_view_button_icon & rmenu_quick_view_icon_position
                     const quickViewButtonIconRow = quickViewButtonIcon.closest('.rmenu-settings-row');
                     const updateQuickViewDisplayType = () => {
                         if (quickViewDisplayType.value === 'button') {
                             quickViewButtonIconRow.style.display = 'none';
+                        } else if (quickViewDisplayType.value === 'icon') {
+                            quickViewButtonIconRow.style.display = 'flex';
+                            quickViewButtonIconRow.querySelector(".rmenu-settings-column:last-child").style.display = 'none';
                         } else {
                             quickViewButtonIconRow.style.display = 'flex';
+                            quickViewButtonIconRow.querySelector(".rmenu-settings-column:last-child").style.display = 'block';
                         }
                     };
 
@@ -2681,185 +2428,161 @@ function onepaquc_cart_dashboard()
                 });
             </script>
             <div class="tab-content" id="tab-8">
-                <div class="rmenu-settings-header">
-                    <h2>WooCommerce Add To Cart</h2>
-                    <p class="rmenu-settings-description">Customize the Add to Cart button appearance and behavior throughout your store.</p>
-                </div>
-
-                <div class="rmenu-settings-tabs">
-                    <ul class="rmenu-settings-tab-list" style="color: #135e96;display: flex; gap: 10px; cursor: pointer;text-decoration: underline;">
-                        <li class="rmenu-settings-tab-item active" data-tab="general-settings">General Settings</li>
-                        <li class="rmenu-settings-tab-item" data-tab="button-behavior">Button Behavior</li>
-                        <li class="rmenu-settings-tab-item" data-tab="advanced">Advanced</li>
-                    </ul>
+                <div class="plugincy_nav_card mb-4">
+                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-cart"></span>', 'WooCommerce Add To Cart','','Easily modify the Add to Cart button text, style, and functionality for a more engaging shopping experience.'); ?>
+                    <div class="rmenu-settings-tabs">
+                        <ul class="rmenu-settings-tab-list">
+                            <li class="rmenu-settings-tab-item active" data-tab="general-settings">
+                                <span class="dashicons dashicons-admin-generic"></span> General Settings
+                            </li>
+                            <li class="rmenu-settings-tab-item" data-tab="button-behavior">
+                                <span class="dashicons dashicons-controls-play"></span> Button Behavior
+                            </li>
+                            <li class="rmenu-settings-tab-item" data-tab="advanced">
+                                <span class="dashicons dashicons-admin-tools"></span> Advanced
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="tab-content" id="general-settings" style="padding: 0;">
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-generic"></span> General Settings</h3>
+                    <div class="plugincy_row">
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', ''); ?>
+
+                            <table class="form-table plugincy_table">
+                                <tr id="rmenu-enable-custom-add-to-cart">
+                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Customizable Add to Cart', 'Enable or disable custom Add to Cart styling and functionality.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php $onepaquc_helper->switcher('rmenu_enable_custom_add_to_cart', 1); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Button Text', 'Customize the text displayed on the Add to Cart button for simple products.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(get_option('txt-add-to-cart', 'Add to Cart')); ?>" class="regular-text" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Variable Product Button Text', 'Customize the text displayed on the Add to Cart button for variable products.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <input type="text" name="txt-select-options" value="<?php echo esc_attr(get_option('txt-select-options', 'Select Options')); ?>" class="regular-text" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Read More Button Text', 'Customize the text displayed on the Read More button.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <input type="text" name="txt-read-more" value="<?php echo esc_attr(get_option('txt-read-more', 'Read More')); ?>" class="regular-text" />
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Grouped Product Button Text', 'Customize the text displayed on the Add to Cart button for grouped products.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', 'View Products')); ?>" class="regular-text" />
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
-                        <div class="rmenu-settings-row" id="rmenu-enable-custom-add-to-cart">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Enable Custom Add to Cart</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_enable_custom_add_to_cart" value="1" <?php checked(1, get_option("rmenu_enable_custom_add_to_cart", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Enable or disable custom Add to Cart styling and functionality.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="rmenu-settings-section button-style-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Text</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(get_option('txt-add-to-cart', 'Add to Cart')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for simple products.</p>
-                                </div>
-                            </div>
-                        </div>
+                            <table class="form-table plugincy_table">
+                                <tbody class="plugincy_grid">
+                                    <tr style="grid-column: span 2;">
+                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Button Style', ''); ?>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_add_to_cart_style" class="rmenu-select" id="rmenu-atc-style-select">
+                                                <option value="default" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
+                                                <option disabled value="modern" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'modern'); ?>>Modern Style (Pro Feature)</option>
+                                                <option value="rounded" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'rounded'); ?>>Rounded Style</option>
+                                                <option disabled value="minimal" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'minimal'); ?>>Minimal Style (Pro Feature)</option>
+                                                <option value="custom" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Button Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_add_to_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_bg_color', '#000')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Variable Product Button Text</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="text" name="txt-select-options" value="<?php echo esc_attr(get_option('txt-select-options', 'Select Options')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for variable products.</p>
-                                </div>
-                            </div>
-                        </div>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Text Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_add_to_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Read More Button Text</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="text" name="txt-read-more" value="<?php echo esc_attr(get_option('txt-read-more', 'Select Options')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for variable products.</p>
-                                </div>
-                            </div>
-                        </div>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Hover Background Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_add_to_cart_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Grouped Product Button Text</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', 'View Products')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Customize the text displayed on the Add to Cart button for grouped products.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Hover Text Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
 
-                    <div class="rmenu-settings-section button-style-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-admin-appearance"></span> Button Style</h3>
-                        </div>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Hover Text Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Style</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_add_to_cart_style" class="rmenu-select" id="rmenu-atc-style-select">
-                                        <option value="default" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
-                                        <option disabled value="modern" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'modern'); ?>>Modern Style (Pro Feature)</option>
-                                        <option value="rounded" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'rounded'); ?>>Rounded Style</option>
-                                        <option disabled value="minimal" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'minimal'); ?>>Minimal Style (Pro Feature)</option>
-                                        <option value="custom" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'custom'); ?>>Custom Style</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Hover Text Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
 
-                        <div class="rmenu-settings-row rmenu-settings-row-columns">
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Button Color</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="color" name="rmenu_add_to_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_bg_color', '#000')); ?>" class="rmenu-color-picker" />
-                                    </div>
-                                </div>
-                            </div>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Border Radius</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="number" name="rmenu_add_to_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_border_radius', '3')); ?>" class="small-text" min="0" max="50" step="1" />
+                                            <span class="rmenu-unit">px</span>
+                                        </td>
+                                    </tr>
 
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Text Color</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="color" name="rmenu_add_to_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Button Font Size</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="number" name="rmenu_add_to_cart_font_size" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_font_size', '14')); ?>" class="small-text" min="10" max="24" step="1" />
+                                            <span class="rmenu-unit">px</span>
+                                        </td>
+                                    </tr>
 
-                        <div class="rmenu-settings-row rmenu-settings-row-columns">
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Hover Background Color</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="color" name="rmenu_add_to_cart_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>" class="rmenu-color-picker" />
-                                    </div>
-                                </div>
-                            </div>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Button Width</th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_add_to_cart_width" class="rmenu-select">
+                                                <option value="auto" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'auto'); ?>>Auto</option>
+                                                <option value="full" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'full'); ?>>Full Width</option>
+                                                <option value="custom" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'custom'); ?>>Custom Width</option>
+                                            </select>
+                                        </td>
+                                    </tr>
 
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Hover Text Color</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    <tr class="rmenu-settings-row" id="rmenu-atc-custom-width-row" style="<?php echo (get_option('rmenu_add_to_cart_width', 'auto') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
+                                        <th class="rmenu-settings-label">Custom Width Value</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="number" name="rmenu_add_to_cart_custom_width" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_custom_width', '150')); ?>" class="small-text" min="50" max="500" step="1" />
+                                            <span class="rmenu-unit">px</span>
+                                        </td>
+                                    </tr>
 
-                        <div class="rmenu-settings-row rmenu-settings-row-columns">
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Border Radius</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="number" name="rmenu_add_to_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_border_radius', '3')); ?>" class="small-text" min="0" max="50" step="1" />
-                                        <span class="rmenu-unit">px</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="rmenu-settings-column">
-                                <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Button Font Size</label>
-                                    <div class="rmenu-settings-control">
-                                        <input type="number" name="rmenu_add_to_cart_font_size" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_font_size', '14')); ?>" class="small-text" min="10" max="24" step="1" />
-                                        <span class="rmenu-unit">px</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Width</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_add_to_cart_width" class="rmenu-select">
-                                        <option value="auto" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'auto'); ?>>Auto</option>
-                                        <option value="full" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'full'); ?>>Full Width</option>
-                                        <option value="custom" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'custom'); ?>>Custom Width</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row" id="rmenu-atc-custom-width-row" style="<?php echo (get_option('rmenu_add_to_cart_width', 'auto') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Custom Width Value</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="number" name="rmenu_add_to_cart_custom_width" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_custom_width', '150')); ?>" class="small-text" min="50" max="500" step="1" />
-                                    <span class="rmenu-unit">px</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- <div class="rmenu-settings-row rmenu-settings-row-columns">
+                                    <!-- <div class="rmenu-settings-row rmenu-settings-row-columns">
                             <div class="rmenu-settings-column">
                                 <div class="rmenu-settings-field">
                                     <label class="rmenu-settings-label">Button Icon</label>
@@ -2899,14 +2622,15 @@ function onepaquc_cart_dashboard()
                             </div>
                         </div> -->
 
-                        <div class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-atc-custom-css-row" style="<?php echo (get_option('rmenu_add_to_cart_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Custom CSS</label>
-                                <div class="rmenu-settings-control">
-                                    <textarea name="rmenu_add_to_cart_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_add_to_cart_custom_css', '')); ?></textarea>
-                                    <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.product_type_simple.add_to_cart_button</code> to target the button.</p>
-                                </div>
-                            </div>
+                                    <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-atc-custom-css-row" style="<?php echo (get_option('rmenu_add_to_cart_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
+                                        <th class="rmenu-settings-label">Custom CSS</th>
+                                        <td class="rmenu-settings-control">
+                                            <textarea name="rmenu_add_to_cart_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_add_to_cart_custom_css', '')); ?></textarea>
+                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.product_type_simple.add_to_cart_button</code> to target the button.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <script>
@@ -2915,8 +2639,8 @@ function onepaquc_cart_dashboard()
                             const button_style = document.querySelector('div#tab-8 select[name="rmenu_add_to_cart_style"]');
 
                             // Select all children except the first two in the .button-style-section & except div#rmenu-atc-custom-width-row
-                            const buttonStyleSection = document.querySelector('.rmenu-settings-section.button-style-section');
-                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(2);
+                            const buttonStyleSection = document.querySelector('.button-style-section table tbody');
+                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(1);
                             const customWidthRow = document.getElementById('rmenu-atc-custom-width-row');
                             // if rmenu_add_to_cart_icon is none, hide the rmenu-atc-icon-position-row
                             const iconPositionRow = document.getElementById('rmenu-atc-icon-position-row');
@@ -2993,10 +2717,8 @@ function onepaquc_cart_dashboard()
                     </script>
                 </div>
                 <div class="tab-content" id="button-behavior" style="padding: 0;">
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-layout"></span> Display Settings</h3>
-                        </div>
+                    <div class="rmenu-settings-section plugincy_card mb-4">
+                        <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-visibility"></span>', 'Display Settings', 'Control how Add to Cart buttons appear on product archive pages.'); ?>
 
                         <div class="rmenu-settings-row">
                             <div class="rmenu-settings-field">
@@ -3007,152 +2729,115 @@ function onepaquc_cart_dashboard()
                                         <option value="show" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'show'); ?>>Always Show</option>
                                         <option value="hide" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'hide'); ?>>Always Hide</option>
                                     </select>
-                                    <p class="rmenu-field-description">Control how Add to Cart buttons appear on product archive pages.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="rmenu-settings-section" id="add_to_cart_behave">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-cart"></span> Add To Cart Behavior</h3>
+                    <div class="plugincy_row">
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5" id="add_to_cart_behave">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-controls-play"></span>', 'Add To Cart Behavior', 'Control how Add to Cart buttons behave on product archive pages.'); ?>
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Enable AJAX Add to Cart', 'Add products to cart without page reload using AJAX.'); ?>
+                                    <td>
+                                        <?php $onepaquc_helper->switcher('rmenu_enable_ajax_add_to_cart', 1); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Default Quantity', 'Set the default quantity when adding products to cart from archive pages.'); ?>
+                                    <td>
+                                        <div class="rmenu-settings-control pro-only">
+                                            <input disabled type="number" name="rmenu_add_to_cart_default_qty" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_default_qty', '1')); ?>" class="small-text" min="1" max="100" step="1" />
+                                            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Quantity Selector on Archives', 'Display quantity selector on shop/archive pages before adding to cart.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <?php $onepaquc_helper->switcher('rmenu_show_quantity_archive', 0); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Redirect After Add to Cart', 'Choose whether to redirect customers after adding products to cart.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <select name="rmenu_redirect_after_add" class="rmenu-select">
+                                            <option value="none" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'none'); ?>>No Redirect</option>
+                                            <!-- rmenu_disable_cart_page is it's on disable below option & show cart page is disabled -->
+                                            <?php
+                                            $disable_cart_page = get_option('rmenu_disable_cart_page', '0');
+                                            ?>
+                                            <option value="cart" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'cart'); ?> <?php echo ($disable_cart_page == '1') ? 'disabled' : ''; ?>>Cart Page <?php echo ($disable_cart_page == '1') ? '(Disabled)' : ''; ?></option>
+                                            <option value="checkout" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'checkout'); ?>>Checkout Page</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Animation', 'Choose the animation effect when products are added to cart.'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <select name="rmenu_add_to_cart_animation" class="rmenu-select">
+                                            <option value="none" <?php selected(get_option('rmenu_add_to_cart_animation', 'none'), 'none'); ?>>None</option>
+                                            <option value="slide" <?php selected(get_option('rmenu_add_to_cart_animation', 'none'), 'slide'); ?>>Slide Effect</option>
+                                            <option value="fade" <?php selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fade'); ?>>Fade Effect</option>
+                                            <option value="fly" <?php selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fly'); ?>>Fly to Cart Effect</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Enable AJAX Add to Cart</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_enable_ajax_add_to_cart" value="1" <?php checked(1, get_option("rmenu_enable_ajax_add_to_cart", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Add products to cart without page reload using AJAX.</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Default Quantity</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <input disabled type="number" name="rmenu_add_to_cart_default_qty" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_default_qty', '1')); ?>" class="small-text" min="1" max="100" step="1" />
-                                    <p class="rmenu-field-description">Set the default quantity when adding products to cart from archive pages.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5" id="add_to_cart_notification">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-bell"></span>', 'Notifications', 'Customize how notifications are displayed when products are added to cart.'); ?>
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Notification Style', 'Choose how to display notifications when products are added to cart.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <select disabled name="rmenu_add_to_cart_notification_style" class="rmenu-select">
+                                            <option value="default" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'default'); ?>>Default WooCommerce Notices</option>
+                                            <option value="popup" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'popup'); ?>>Popup Message</option>
+                                            <option value="toast" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'toast'); ?>>Toast Notification</option>
+                                            <option value="mini_cart" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'mini_cart'); ?>>Mini Cart Preview</option>
+                                        </select>
+                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                    </td>
+                                </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Quantity Selector on Archives</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_show_quantity_archive" value="1" <?php checked(1, get_option("rmenu_show_quantity_archive", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Display quantity selector on shop/archive pages before adding to cart.</p>
-                                </div>
-                            </div>
-                        </div>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Success Message', 'Customize the success message shown after adding to cart. Use {product} as a placeholder for the product name.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <input disabled type="text" name="rmenu_add_to_cart_success_message" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_success_message', '{product} has been added to your cart.')); ?>" class="regular-text" />
+                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                    </td>
+                                </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Redirect After Add to Cart</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_redirect_after_add" class="rmenu-select">
-                                        <option value="none" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'none'); ?>>No Redirect</option>
-                                        <!-- rmenu_disable_cart_page is it's on disable below option & show cart page is disabled -->
-                                        <?php
-                                        $disable_cart_page = get_option('rmenu_disable_cart_page', '0');
-                                        ?>
-                                        <option value="cart" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'cart'); ?> <?php echo ($disable_cart_page == '1') ? 'disabled' : ''; ?>>Cart Page <?php echo ($disable_cart_page == '1') ? '(Disabled)' : ''; ?></option>
-                                        <option value="checkout" <?php selected(get_option('rmenu_redirect_after_add', 'none'), 'checkout'); ?>>Checkout Page</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Choose whether to redirect customers after adding products to cart.</p>
-                                </div>
-                            </div>
-                        </div>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Show View Cart Link', 'Display a "View Cart" link in the notification message.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <?php $onepaquc_helper->switcher('rmenu_show_view_cart_link', 1); ?>
+                                    </td>
+                                </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Add to Cart Animation</label>
-                                <div class="rmenu-settings-control">
-                                    <select name="rmenu_add_to_cart_animation" class="rmenu-select">
-                                        <option value="none" <?php selected(get_option('rmenu_add_to_cart_animation', 'slide'), 'none'); ?>>None</option>
-                                        <option value="slide" <?php selected(get_option('rmenu_add_to_cart_animation', 'slide'), 'slide'); ?>>Slide Effect</option>
-                                        <option value="fade" <?php selected(get_option('rmenu_add_to_cart_animation', 'slide'), 'fade'); ?>>Fade Effect</option>
-                                        <option value="fly" <?php selected(get_option('rmenu_add_to_cart_animation', 'slide'), 'fly'); ?>>Fly to Cart Effect</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Choose the animation effect when products are added to cart.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Show Checkout Link', 'Display a "Checkout" link in the notification message.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <?php $onepaquc_helper->switcher('rmenu_show_checkout_link', 0); ?>
+                                    </td>
+                                </tr>
 
-                    <div class="rmenu-settings-section" id="add_to_cart_notification">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-megaphone"></span> Notifications</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Notification Style</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <select disabled name="rmenu_add_to_cart_notification_style" class="rmenu-select">
-                                        <option value="default" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'default'); ?>>Default WooCommerce Notices</option>
-                                        <option value="popup" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'popup'); ?>>Popup Message</option>
-                                        <option value="toast" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'toast'); ?>>Toast Notification</option>
-                                        <option value="mini_cart" <?php selected(get_option('rmenu_add_to_cart_notification_style', 'default'), 'mini_cart'); ?>>Mini Cart Preview</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Choose how to display notifications when products are added to cart.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Success Message</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <input disabled type="text" name="rmenu_add_to_cart_success_message" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_success_message', '{product} has been added to your cart.')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Customize the success message shown after adding to cart. Use {product} as a placeholder for the product name.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Show View Cart Link</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_show_view_cart_link" value="1" <?php checked(1, get_option("rmenu_show_view_cart_link", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Display a "View Cart" link in the notification message.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Show Checkout Link</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_show_checkout_link" value="1" <?php checked(1, get_option("rmenu_show_checkout_link", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Display a "Checkout" link in the notification message.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Notification Duration</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <input disabled type="number" name="rmenu_add_to_cart_notification_duration" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_notification_duration', '3000')); ?>" class="small-text" min="1000" max="10000" step="500" />
-                                    <span class="rmenu-unit">ms</span>
-                                    <p class="rmenu-field-description">How long to display the notification for (in milliseconds).</p>
-                                </div>
-                            </div>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Notification Duration', 'How long to display the notification for (in milliseconds).'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <input disabled type="number" name="rmenu_add_to_cart_notification_duration" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_notification_duration', '3000')); ?>" class="small-text" min="1000" max="10000" step="500" />
+                                        <span class="rmenu-unit">ms</span>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
 
@@ -3195,112 +2880,86 @@ function onepaquc_cart_dashboard()
                     </script>
                 </div>
                 <div class="tab-content" id="advanced" style="padding: 0;">
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-smartphone"></span> Mobile Settings</h3>
+                    <div class="plugincy_row mb-4">
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-smartphone"></span>', 'Mobile Settings'); ?>
+
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Sticky Add to Cart on Mobile', 'Keep the Add to Cart button visible at the bottom of the screen on mobile devices.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <?php $onepaquc_helper->switcher('rmenu_sticky_add_to_cart_mobile', 0, true); ?>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Mobile Button Text', 'Set a different button text for mobile devices. Leave empty to use the default text.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <input disabled type="text" name="rmenu_mobile_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_mobile_add_to_cart_text', '')); ?>" class="regular-text" />
+                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Mobile Button Size', 'Choose button size optimization for mobile devices.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <select disabled name="rmenu_mobile_button_size" class="rmenu-select">
+                                            <option value="default" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'default'); ?>>Same as Desktop</option>
+                                            <option value="larger" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'larger'); ?>>Larger</option>
+                                            <option value="smaller" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'smaller'); ?>>Smaller</option>
+                                            <option value="full" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'full'); ?>>Full Width</option>
+                                        </select>
+                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Mobile Button Icon Only', 'Show only the icon (without text) on mobile devices to save space.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <?php $onepaquc_helper->switcher('rmenu_mobile_icon_only', 0, true); ?>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Sticky Add to Cart on Mobile</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_sticky_add_to_cart_mobile" value="1" <?php checked(1, get_option("rmenu_sticky_add_to_cart_mobile", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Keep the Add to Cart button visible at the bottom of the screen on mobile devices.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="rmenu-settings-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-welcome-widgets-menus"></span>', 'Advanced Options', ''); ?>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Mobile Button Text</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <input disabled type="text" name="rmenu_mobile_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_mobile_add_to_cart_text', '')); ?>" class="regular-text" />
-                                    <p class="rmenu-field-description">Set a different button text for mobile devices. Leave empty to use the default text.</p>
-                                </div>
-                            </div>
-                        </div>
+                            <table class="form-table plugincy_table">
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Load Effect', 'Choose an animation effect while adding to cart is in progress.'); ?>
+                                    <td class="rmenu-settings-control pro-only">
+                                        <select disabled name="rmenu_add_to_cart_loading_effect" class="rmenu-select">
+                                            <option value="none" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'none'); ?>>None</option>
+                                            <option value="spinner" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'spinner'); ?>>Spinner</option>
+                                            <option value="dots" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'dots'); ?>>Dots</option>
+                                            <option value="pulse" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'pulse'); ?>>Pulse</option>
+                                        </select>
+                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+                                    </td>
+                                </tr>
 
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Mobile Button Size</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <select disabled name="rmenu_mobile_button_size" class="rmenu-select">
-                                        <option value="default" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'default'); ?>>Same as Desktop</option>
-                                        <option value="larger" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'larger'); ?>>Larger</option>
-                                        <option value="smaller" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'smaller'); ?>>Smaller</option>
-                                        <option value="full" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'full'); ?>>Full Width</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Choose button size optimization for mobile devices.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Mobile Button Icon Only</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <label class="rmenu-toggle-switch">
-                                        <input disabled type="checkbox" name="rmenu_mobile_icon_only" value="1" <?php checked(1, get_option("rmenu_mobile_icon_only", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Show only the icon (without text) on mobile devices to save space.</p>
-                                </div>
-                            </div>
+                                <tr>
+                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Disable continue shopping button', 'WooCommerce shows a continue shopping button after a product is added to cart, with this option you can disable that link so user remain on checkout page'); ?>
+                                    <td class="rmenu-settings-control">
+                                        <?php $onepaquc_helper->switcher('rmenu_disable_btn_out_of_stock', 1); ?>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
 
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-welcome-widgets-menus"></span> Advanced Options</h3>
-                        </div>
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Add to Cart Load Effect</label>
-                                <div class="rmenu-settings-control pro-only">
-                                    <select disabled name="rmenu_add_to_cart_loading_effect" class="rmenu-select">
-                                        <option value="none" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'none'); ?>>None</option>
-                                        <option value="spinner" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'spinner'); ?>>Spinner</option>
-                                        <option value="dots" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'dots'); ?>>Dots</option>
-                                        <option value="pulse" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'pulse'); ?>>Pulse</option>
-                                    </select>
-                                    <p class="rmenu-field-description">Choose an animation effect while adding to cart is in progress.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Disable continue shopping button</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_disable_btn_out_of_stock" value="1" <?php checked(1, get_option("rmenu_disable_btn_out_of_stock", 1), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">WooCommerce shows a continue shopping button after a product is added to cart, with this option you can disable that link so user remain on checkout page</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="rmenu-settings-section plugincy_card">
+                        <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-translation"></span>', 'Compatibility Settings', ''); ?>
 
-                    <div class="rmenu-settings-section">
-                        <div class="rmenu-settings-section-header">
-                            <h3><span class="dashicons dashicons-translation"></span> Compatibility Settings</h3>
-                        </div>
-
-                        <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Force Button CSS</label>
-                                <div class="rmenu-settings-control">
-                                    <label class="rmenu-toggle-switch">
-                                        <input type="checkbox" name="rmenu_force_button_css" value="1" <?php checked(1, get_option("rmenu_force_button_css", 0), true); ?> />
-                                        <span class="rmenu-toggle-slider"></span>
-                                    </label>
-                                    <p class="rmenu-field-description">Use !important CSS rules to override theme styling (use only if needed).</p>
-                                </div>
-                            </div>
-                        </div>
+                        <table class="form-table plugincy_table">
+                            <tr>
+                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Force Button CSS', 'Use !important CSS rules to override theme styling (use only if needed).'); ?>
+                                <td class="rmenu-settings-control">
+                                    <?php $onepaquc_helper->switcher('rmenu_force_button_css', 0); ?>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
 
@@ -3349,6 +3008,7 @@ function onepaquc_cart_dashboard()
                                 const highlight_add_to_cart_enable_Section = document.querySelector('#rmenu-enable-custom-add-to-cart');
                                 // If "Enable Custom Add to Cart" is not enabled, show a popup message and prevent tab switching
                                 const enableCustomAddToCart = document.querySelector('input[name="rmenu_enable_custom_add_to_cart"]');
+
                                 if (tabId !== "general-settings" && enableCustomAddToCart && !enableCustomAddToCart.checked) {
                                     showDirectCheckoutWarning(
                                         highlight_add_to_cart_enable_Section,
@@ -3395,17 +3055,24 @@ function onepaquc_cart_dashboard()
                 document.addEventListener('DOMContentLoaded', function() {
                     // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
                     const enableCheckout = document.querySelector('div#tab-8 input[name="rmenu_enable_custom_add_to_cart"]');
+                    const btn_display = document.querySelector('select[name="rmenu_add_to_cart_catalog_display"]');
+                    const btn_display_hidden = btn_display && btn_display.value === 'hide';
 
-                    const allinputFields = Array.from(document.querySelectorAll('div#tab-8 input, div#tab-8 select,div#tab-8 textarea')).filter(
-                        el => !(el.name === "rmenu_enable_custom_add_to_cart")
+                    const allinputFields = Array.from(document.querySelectorAll('div#tab-8 input, div#tab-8 select, div#tab-8 textarea')).filter(
+                        el => !(el.name === "rmenu_enable_custom_add_to_cart" || el.name === "rmenu_add_to_cart_catalog_display")
                     );
-                    toggleDisabledClass(!enableCheckout.checked, allinputFields);
+                    toggleDisabledClass(!enableCheckout.checked || btn_display_hidden, allinputFields);
                     enableCheckout.addEventListener('change', function() {
                         toggleDisabledClass(!this.checked, allinputFields);
                     });
                 });
             </script>
-            <?php submit_button(); ?>
+            <div style="text-align: right;display: flex;justify-content: flex-end;width: 98.5%;margin-top: 42px;align-items: center;padding: 20px;box-sizing: border-box;">
+                <button type="submit" class="button button-primary" style="padding: 4px 20px;border: none;display: flex;gap: 5px;align-items: center;">
+                    <span style="margin-bottom: -7px;"><svg fill="#fff" width="16" height="16" viewBox="0 0 0.48 0.48" xmlns="http://www.w3.org/2000/svg"><path d="M.474.124.356.006A.03.03 0 0 0 .341 0H.022A.02.02 0 0 0 0 .022v.436c0 .013.01.023.022.023h.436A.022.022 0 0 0 .481.459v-.32A.02.02 0 0 0 .475.124zM.131.044h.131V.16H.131zm0 .393V.32h.218v.116zm.306 0H.393V.299A.022.022 0 0 0 .371.276H.109a.02.02 0 0 0-.022.022v.138H.044V.044h.044v.139q.001.02.021.021h.174A.022.022 0 0 0 .306.182V.044h.027l.104.104z"/></svg></span>
+                    <span>Save Changes</span>
+                </button>
+            </div>
         </form>
         <form method="post" action="" onsubmit="return confirm('Are you sure you want to reset all settings to default? This action cannot be undone.');" style="display: none;">
             <input type="hidden" name="onepaquc_reset_settings" value="1">
@@ -3413,8 +3080,6 @@ function onepaquc_cart_dashboard()
             submit_button('Reset Settings', 'button-primary', '', false, array_merge(array('style' => 'margin-left: 20px;background:#dc3545;color:#fff;border-color:#dc3545;')));
             ?>
         </form>
-        <p style="text-align: center;font-size: 15px;">To add menu cart to your page, use the shortcode <b>[plugincy_cart drawer="right" cart_icon="cart" product_title_tag="h4"]</b> or use Floating Cart Widget/Block</p>
-        <p style="text-align: center;padding-bottom:20px; font-size: 15px;">[plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"] or use <b>Plugincy One Page Checkout</b> widget/block <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/one-page-checkout/multi-product-one-page-checkout/">view documentation</a></p>
     </div>
 <?php
     // }
@@ -3584,7 +3249,7 @@ function onepaquc_cart_custom_css()
     global $onepaquc_rcheckoutformfields;
 
     // Initialize an empty string for the custom CSS
-    $custom_css = ' .woocommerce-privacy-policy-text { display: none !important; }.onepagecheckoutwidget .woocommerce-privacy-policy-text { display: block !important; }';
+    $custom_css = '';
 
     // Loop through the fields to generate CSS
     foreach (onepaquc_rmenu_fields() as $key => $field) {

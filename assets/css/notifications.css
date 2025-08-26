@@ -11,21 +11,6 @@
     position: relative;
 }
 
-.rmenu-ajax-add-to-cart.loading::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    margin-left: -10px;
-    border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.1);
-    border-top-color: #000;
-    animation: rmenu-spin 0.8s infinite linear;
-}
-
 .rmenu-ajax-add-to-cart.rmenu-added {
     background-color: #4CAF50;
     border-color: #4CAF50;
@@ -38,7 +23,7 @@
 }
 
 /* Archive page quantity input */
-.products .product .rmenu-archive-quantity {
+.product .rmenu-archive-quantity {
     display: block;
     width: 80px;
     margin: 0 auto 10px;

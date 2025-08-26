@@ -123,10 +123,11 @@
                             // If no redirect, show animation and notification
                             RMENU_Add_To_Cart.triggerAnimation($thisButton, response.product_name);
                             RMENU_Add_To_Cart.showNotification(response);
+                            // Trigger WC events
+                            $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisButton]);
                         }
 
-                        // Trigger WC events
-                        $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisButton]);
+
                     } else {
                         // Show error
                         RMENU_Add_To_Cart.showError(response.message || 'Error adding to cart');
