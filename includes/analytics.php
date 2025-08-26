@@ -142,7 +142,7 @@ class onepaquc_cart_anaylytics
             'multisite' => is_multisite(),
             'wp_version' => get_bloginfo('version'),
             'php_version' => phpversion(),
-            'server_software' => $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown',
+            'server_software' => sanitize_text_field(wp_unslash($_SERVER['SERVER_SOFTWARE'] ?? 'Unknown')),
             'mysql_version' => $wpdb->db_version(),
             'location' => $this->get_site_location(),
             'plugin_version' => $this->plugin_version,
@@ -553,12 +553,12 @@ class onepaquc_cart_anaylytics
 
                         // Send deactivation data
                         $.ajax({
-                            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                            url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
                             type: 'POST',
                             data: {
                                 action: 'send_deactivation_feedback',
                                 reason: reason || 'no-reason-provided',
-                                nonce: '<?php echo wp_create_nonce('deactivation_feedback'); ?>'
+                                nonce: '<?php echo esc_js(wp_create_nonce('deactivation_feedback')); ?>'
                             },
                             complete: function() {
                                 // Proceed with deactivation

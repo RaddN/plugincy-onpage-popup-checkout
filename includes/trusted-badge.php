@@ -33,21 +33,21 @@ function onepaquc_trust_badges_settings_content() {
     
     // Get available dashicons for selection
     $dashicons = array(
-        'dashicons-lock' => __('Lock', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-shield' => __('Shield', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-privacy' => __('Privacy', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-cart' => __('Cart', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-credit-card' => __('Credit Card', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-yes' => __('Checkmark', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-thumbs-up' => __('Thumbs Up', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-awards' => __('Award', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-star-filled' => __('Star', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-businessman' => __('Customer', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-calculator' => __('Calculator', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-clock' => __('Clock', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-phone' => __('Phone', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-email' => __('Email', 'one-page-quick-checkout-for-woocommerce'),
-        'dashicons-admin-site' => __('Website', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-lock' => esc_html__('Lock', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-shield' => esc_html__('Shield', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-privacy' => esc_html__('Privacy', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-cart' => esc_html__('Cart', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-credit-card' => esc_html__('Credit Card', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-yes' => esc_html__('Checkmark', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-thumbs-up' => esc_html__('Thumbs Up', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-awards' => esc_html__('Award', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-star-filled' => esc_html__('Star', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-businessman' => esc_html__('Customer', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-calculator' => esc_html__('Calculator', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-clock' => esc_html__('Clock', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-phone' => esc_html__('Phone', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-email' => esc_html__('Email', 'one-page-quick-checkout-for-woocommerce'),
+        'dashicons-admin-site' => esc_html__('Website', 'one-page-quick-checkout-for-woocommerce'),
     );
 
     $onepaquc_helper = new onepaquc_helper();

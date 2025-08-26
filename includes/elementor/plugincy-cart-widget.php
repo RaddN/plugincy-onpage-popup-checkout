@@ -846,7 +846,7 @@ function onepaquc_plugincy_cart_elementor_widget()
 
             $css .= '</style>';
 
-            echo $css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo wp_kses($css, array());
         }
     }
     // Register the widget

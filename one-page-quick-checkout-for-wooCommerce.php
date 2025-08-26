@@ -160,7 +160,7 @@ function onepaquc_cart_enqueue_scripts()
     if ($checkout_page_id === -1) {
         // Create a new checkout page if it doesn't exist
         $new_checkout_id = wp_insert_post([
-            'post_title'   => __('Checkout'),
+            'post_title'   => esc_html__('Checkout','one-page-quick-checkout-for-woocommerce'),
             'post_content' => '[woocommerce_checkout]',
             'post_status'  => 'publish',
             'post_type'    => 'page',
@@ -181,17 +181,17 @@ function onepaquc_cart_enqueue_scripts()
     ];
     // Localize script for AJAX URL and WooCommerce cart variables
     wp_localize_script('cart-script', 'onepaquc_wc_cart_params', array(
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'get_cart_content_none' => wp_create_nonce('get_cart_content_none'),
-        'update_cart_item_quantity' => wp_create_nonce('update_cart_item_quantity'),
-        'remove_cart_item' => wp_create_nonce('remove_cart_item'),
-        'rmenu_ajax_nonce' => wp_create_nonce('rmenu-ajax-nonce'),
-        'onepaquc_refresh_checkout_product_list' => wp_create_nonce('onepaquc_refresh_checkout_product_list'),
-        'get_variations_nonce' => wp_create_nonce('get_variations_nonce'), // Add this line
+        'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+        'get_cart_content_none' => esc_js(wp_create_nonce('get_cart_content_none')),
+        'update_cart_item_quantity' => esc_js(wp_create_nonce('update_cart_item_quantity')),
+        'remove_cart_item' => esc_js(wp_create_nonce('remove_cart_item')),
+        'rmenu_ajax_nonce' => esc_js(wp_create_nonce('rmenu-ajax-nonce')),
+        'onepaquc_refresh_checkout_product_list' => esc_js(wp_create_nonce('onepaquc_refresh_checkout_product_list')),
+        'get_variations_nonce' => esc_js(wp_create_nonce('get_variations_nonce')), // Add this line
         'direct_checkout_behave' => $direct_checkout_behave,
         'checkout_url' => wc_get_checkout_url(),
         'cart_url'     => wc_get_cart_url(),
-        'nonce' => wp_create_nonce('rmenu-ajax-nonce'),
+        'nonce' => esc_js(wp_create_nonce('rmenu-ajax-nonce')),
     ));
     // Retrieve the rmsg_editor value
     $rmsg_editor_value = get_option('rmsg_editor', '');
@@ -201,11 +201,11 @@ function onepaquc_cart_enqueue_scripts()
     wp_localize_script('rmenu-cart-script', 'onepaquc_rmsgValue', array(
         'rmsgEditor' => $rmsg_editor_value,
         'checkout_url' => wc_get_checkout_url(),
-        'apply_coupon' => wp_create_nonce('apply-coupon'),
+        'apply_coupon' => esc_js(wp_create_nonce('apply-coupon')),
         'currency_symbol' => $currency_symbol,
 
     ));
-    wp_localize_script('rmenu-cart-script', 'onepaquc_ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+    wp_localize_script('rmenu-cart-script', 'onepaquc_ajax_object', array('ajax_url' => esc_url(admin_url('admin-ajax.php'))));
 
     wp_enqueue_style('dashicons');
 }
@@ -421,7 +421,7 @@ function onepaquc_add_checkout_tab_to_product_page($tabs) {
     
     // Add checkout tab first
     $new_tabs['checkout'] = array(
-        'title'    => __('Checkout', 'woocommerce'),
+        'title'    => esc_html__('Checkout', 'one-page-quick-checkout-for-woocommerce'),
         'priority' => 5, // Lower number = higher priority (appears first)
         'callback' => 'onepaquc_display_one_page_checkout_form'
     );
@@ -555,199 +555,6 @@ add_action('plugin_action_links_' . plugin_basename(__FILE__), 'onepaquc_add_set
 add_action('admin_init', 'onepaquc_add_settings_link');
 
 
-add_action('wp_head', function () {
-    if (isset($_GET['hide_header_footer']) && $_GET['hide_header_footer'] == '1') {
-        echo '<style>
-            div#ast-scroll-top, div#wpadminbar, header, .site-header, #masthead, footer, .site-footer, #colophon,.rmenu-cart,iframe,.woocommerce form .form-row::after, .woocommerce form .form-row::before, .woocommerce-page form .form-row::after, .woocommerce-page form .form-row::before,aside {
-                display: none !important;
-            }
-            html {
-                margin: 0 !important;
-                padding-bottom: 100px;
-            }
-            .ast-container {
-                padding: 0 !important;
-            }
-            .woocommerce-info {
-                margin: 0 !important;
-            }
-            .form-row.place-order {
-                position: fixed;
-                bottom: 0;
-                background: #fff;
-                width: 100%;
-                left: 0;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 20px 0 !important;
-                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-            }
-            .form-row.place-order p.order-total-price {
-                margin: 0 !important;
-            }
-            button#place_order {
-                width: max-content !important;
-                margin: 0 !important;
-            }
-            .order-total-price {
-                display: flex;
-                flex-direction: column;
-            }
-            .order-total-price bdi {
-                font-weight: bold;
-                font-size: 20px;
-            }
-        </style>
-        ';
-        // Add JS to append ?hide_header_footer=1 to all links
-    ?>
-        <script>
-            const elementsToHide = [
-                'div#ast-scroll-top',
-                'div#wpadminbar',
-                'header',
-                '.site-header',
-                '#masthead',
-                'footer',
-                '.site-footer',
-                '#colophon',
-                '.rmenu-cart',
-                'iframe',
-                'aside'
-            ];
-
-            // Function to hide elements
-            function hideElements() {
-                elementsToHide.forEach(selector => {
-                    const elements = document.querySelectorAll(selector);
-                    elements.forEach(element => {
-                        element.style.setProperty('display', 'none', 'important');
-                        element.style.setProperty('visibility', 'hidden', 'important');
-                        element.style.setProperty('opacity', '0', 'important');
-                        // Optionally remove the element entirely
-                        // element.remove();
-                    });
-                });
-            }
-
-            // Run immediately
-            hideElements();
-
-            // Run on DOM ready
-            document.addEventListener('DOMContentLoaded', hideElements);
-
-            // Run after page load (for late-loading elements)
-            window.addEventListener('load', hideElements);
-
-            // Create a MutationObserver to watch for dynamically added elements
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.type === 'childList') {
-                        mutation.addedNodes.forEach(function(node) {
-                            if (node.nodeType === 1) { // Element node
-                                // Check if the added node matches our selectors
-                                elementsToHide.forEach(selector => {
-                                    if (node.matches && node.matches(selector)) {
-                                        node.style.setProperty('display', 'none', 'important');
-                                        node.style.setProperty('visibility', 'hidden', 'important');
-                                        node.style.setProperty('opacity', '0', 'important');
-                                    }
-                                    // Also check children of the added node
-                                    const children = node.querySelectorAll ? node.querySelectorAll(selector) : [];
-                                    children.forEach(child => {
-                                        child.style.setProperty('display', 'none', 'important');
-                                        child.style.setProperty('visibility', 'hidden', 'important');
-                                        child.style.setProperty('opacity', '0', 'important');
-                                    });
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-
-            // Start observing when body is available
-            function startObserver() {
-                const targetNode = document.body || document.documentElement;
-                if (targetNode) {
-                    observer.observe(targetNode, {
-                        childList: true,
-                        subtree: true
-                    });
-                } else {
-                    // If neither body nor documentElement exists, wait
-                    document.addEventListener('DOMContentLoaded', () => {
-                        observer.observe(document.body || document.documentElement, {
-                            childList: true,
-                            subtree: true
-                        });
-                    });
-                }
-            }
-
-            startObserver();
-
-            // Add CSS to prevent flash of unstyled content
-            const style = document.createElement('style');
-            style.textContent = `
-                ${elementsToHide.join(', ')} {
-                    display: none !important;
-                    visibility: hidden !important;
-                    opacity: 0 !important;
-                }
-            `;
-            document.head.appendChild(style);
-
-            // Disable right-click context menu
-            document.addEventListener('contextmenu', function(event) {
-                event.preventDefault();
-            });
-            // Define a function to append ?hide_header_footer=1 to all links
-            function appendHideHeaderFooterParam() {
-                // Store current screen width & height in localStorage
-                localStorage.setItem('screen_width', window.innerWidth);
-                localStorage.setItem('screen_height', window.innerHeight);
-
-                var links = document.querySelectorAll('a[href]');
-                links.forEach(function(link) {
-                    var href = link.getAttribute('href');
-                    // Ignore anchors, mailto, tel, javascript, and already set param
-                    if (
-                        href.indexOf('mailto:') === 0 ||
-                        href.indexOf('tel:') === 0 ||
-                        href.indexOf('#') === 0 ||
-                        href.indexOf('hide_header_footer=1') !== -1
-                    ) {
-                        return;
-                    }
-
-                    // Add param
-                    if (href.indexOf('?') !== -1) {
-                        href += '&hide_header_footer=1';
-                    } else {
-                        href += '?hide_header_footer=1';
-                    }
-                    link.setAttribute('href', href);
-                });
-            }
-
-            document.addEventListener('DOMContentLoaded', function() {
-                appendHideHeaderFooterParam();
-            });
-
-            // Also run after every AJAX completion (jQuery required)
-            if (window.jQuery) {
-                jQuery(document).ajaxComplete(function() {
-                    appendHideHeaderFooterParam();
-                    hideElements();
-                });
-            }
-        </script>
-<?php
-    }
-});
-
 if (get_option("rmenu_enable_sticky_cart", 0)) {
     function onepaquc_display_cart()
     {
@@ -817,7 +624,7 @@ class onepaquc_cart_analytics_main
     {
         check_ajax_referer('deactivation_feedback', 'nonce');
 
-        $reason = sanitize_text_field($_POST['reason'] ?? '');
+        $reason = sanitize_text_field(wp_unslash($_POST['reason'] ?? ''));
         $this->analytics->send_deactivation_data($reason);
 
         wp_die();

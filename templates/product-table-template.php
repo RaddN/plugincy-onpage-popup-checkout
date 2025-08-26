@@ -1,6 +1,9 @@
 <?php
  if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+ global $allowed_tags;
 ?>
+
+
 
 <div class="one-page-checkout-container">
                 <!-- products in table format image -- title -- price -- add to cart -->
@@ -36,7 +39,7 @@
                                 echo '<div class="one-page-checkout-product-add-to-cart">';
                                 if ($product) {
                                     $add_to_cart = do_shortcode('[add_to_cart id="' . $product_id . '" style=""]');
-                                    echo $add_to_cart; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                    echo wp_kses($add_to_cart, $allowed_tags);
                                 }
                                 echo '</div>';
                                 echo '</td>';

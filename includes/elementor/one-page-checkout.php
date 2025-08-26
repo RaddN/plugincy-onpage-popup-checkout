@@ -494,13 +494,13 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
         if (!empty($settings['custom_css'])) {
             $container_classes[] = 'custom-css';
             add_action('wp_footer', function() use ($settings) {
-                echo '<style>' . wp_strip_all_tags($settings['custom_css']) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                echo '<style>' . wp_kses(wp_strip_all_tags($settings['custom_css']), array()) . '</style>'; 
             });
         }
 
         // Output the widget
-        echo '<div class="' . esc_attr(implode(' ', $container_classes)) . '" ' . $container_id . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        
+        echo '<div class="' . esc_attr(implode(' ', $container_classes)) . '" ' . esc_attr($container_id) . '>';
+
         // Add inline styles for dynamic styling
         $this->render_inline_styles($settings);
         
@@ -561,7 +561,7 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
 
         // Output styles if any
         if (!empty($styles)) {
-            echo '<style>' . implode(' ', $styles) . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo '<style>' . implode(' ', wp_kses($styles, array())) . '</style>'; 
         }
     }
 }

@@ -11,13 +11,13 @@ if (!defined('ABSPATH')) {
 $iscustomaddtocart = get_option('rmenu_enable_custom_add_to_cart', 0);
 
 if ($iscustomaddtocart) {
-    add_action('wp_head', 'rmenu_apply_add_to_cart_styles');
-    add_action('admin_footer', 'rmenu_add_to_cart_admin_script');
+    add_action('wp_head', 'onepaquc_apply_add_to_cart_styles');
+    add_action('admin_footer', 'onepaquc_add_to_cart_admin_script');
 
     // Initialize the handler
-    new RMENU_Add_To_Cart_Handler();
+    new ONEPAQUC_Add_To_Cart_Handler();
 }
-function rmenu_apply_add_to_cart_styles()
+function onepaquc_apply_add_to_cart_styles()
 {
     // Get saved options with defaults
     $button_style = get_option('rmenu_add_to_cart_style', 'default');
@@ -130,13 +130,13 @@ function rmenu_apply_add_to_cart_styles()
 
     // Output the inline CSS if there is any
     if (!empty($css)) {
-        echo '<style id="rmenu-add-to-cart-custom-styles">' . $css . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo '<style id="rmenu-add-to-cart-custom-styles">' . wp_kses($css, array()) . '</style>';
     }
 
     // Add Button icon
     if ($button_icon != 'none'  && $button_style != 'default') {
         // Add icon with proper positioning through JavaScript
-        add_action('wp_footer', 'rmenu_add_icons_to_buttons');
+        add_action('wp_footer', 'onepaquc_add_icons_to_buttons');
     }
 }
 
@@ -148,8 +148,9 @@ function rmenu_apply_add_to_cart_styles()
 /**
  * Add SVG icons to Add to Cart buttons via JavaScript
  */
-function rmenu_add_icons_to_buttons()
+function onepaquc_add_icons_to_buttons()
 {
+    global $allowed_tags;
     $button_icon = get_option('rmenu_add_to_cart_icon', 'none');
     $icon_position = get_option('rmenu_add_to_cart_icon_position', 'left');
     $mobile_icon_only = get_option('rmenu_mobile_icon_only', 0);
@@ -182,7 +183,7 @@ function rmenu_add_icons_to_buttons()
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addToCartButtons = document.querySelectorAll('.add_to_cart_button:not(.product_type_variable), .single_add_to_cart_button:not(.product_type_variable)');
-            const svgIcon = `<?php echo $svg_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>`; 
+            const svgIcon = `<?php echo wp_kses($svg_icon, $allowed_tags); ?>`; 
             const iconPosition = '<?php echo esc_attr( $icon_position ); ?>';
             const mobileIconOnly = <?php echo $mobile_icon_only ? 'true' : 'false'; ?>;
 
@@ -283,7 +284,7 @@ function rmenu_add_icons_to_buttons()
 /**
  * Add jQuery to handle visibility of custom width field
  */
-function rmenu_add_to_cart_admin_script()
+function onepaquc_add_to_cart_admin_script()
 {
     if (!is_admin()) {
         return;
@@ -339,7 +340,7 @@ function rmenu_add_to_cart_admin_script()
  * Handles the add to cart functionality based on plugin settings
  */
 
-class RMENU_Add_To_Cart_Handler
+class ONEPAQUC_Add_To_Cart_Handler
 {
 
     /**
@@ -397,8 +398,8 @@ class RMENU_Add_To_Cart_Handler
         );
 
         wp_localize_script('rmenu-ajax-add-to-cart', 'rmenu_ajax_object', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('rmenu-ajax-nonce'),
+            'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+            'nonce' => esc_js(wp_create_nonce('rmenu-ajax-nonce')),
             'animation' => get_option('rmenu_add_to_cart_animation', 'none'),
             'notification_style' => 'default',
             'notification_duration' => 3000,
@@ -514,14 +515,14 @@ class RMENU_Add_To_Cart_Handler
         // Update mini cart content
         ob_start();
     ?>
-        <span class="rmenu-cart-count"><?php echo WC()->cart->get_cart_contents_count(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></span>
+        <span class="rmenu-cart-count"><?php echo esc_html(WC()->cart->get_cart_contents_count()); ?></span>
         <?php
         $fragments['span.rmenu-cart-count'] = ob_get_clean();
 
         // Update cart total
         ob_start();
         ?>
-        <span class="rmenu-cart-total"><?php echo WC()->cart->get_cart_total(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></span>
+        <span class="rmenu-cart-total"><?php echo esc_html( WC()->cart->get_cart_total() ); ?></span>
         <?php
         $fragments['span.rmenu-cart-total'] = ob_get_clean();
 

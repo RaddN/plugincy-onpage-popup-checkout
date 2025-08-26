@@ -422,7 +422,7 @@ class onepaquc_License_Manager
                                     input.type = visible ? 'text' : 'password';
                                     eye.classList.toggle('dashicons-visibility');
                                     eye.classList.toggle('dashicons-visibility-alt');
-                                    eye.title = visible ? '<?php echo esc_js(__('Hide license key', 'one-page-quick-checkout-for-woocommerce')); ?>' : '<?php echo esc_js(__('Show license key', 'one-page-quick-checkout-for-woocommerce')); ?>';
+                                    eye.title = visible ? '<?php echo esc_js(esc_html__('Hide license key', 'one-page-quick-checkout-for-woocommerce')); ?>' : '<?php echo esc_js(esc_html__('Show license key', 'one-page-quick-checkout-for-woocommerce')); ?>';
                                 });
                             })();
                         </script>

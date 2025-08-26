@@ -56,7 +56,7 @@ function onepaquc_one_page_checkout_shortcode($atts)
         }
 
         if (!empty($tax_query)) {
-            $args['tax_query'] = $tax_query;
+            $args['tax_query'] = $tax_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
         }
 
         $query = new WP_Query($args);

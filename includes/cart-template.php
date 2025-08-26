@@ -35,7 +35,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
         ),
     );
 ?>
-    <button class="rwc_cart-button plugincy_pos_<?php echo $position ?>" data-cart-icon="<?php echo esc_attr($cart_icon); ?>" data-product_title_tag="<?php echo esc_attr($product_title_tag); ?>" data-drawer-position="<?php echo esc_attr($drawer_position); ?>" onclick="openCartDrawer('<?php echo esc_attr($drawer_position); ?>')">
+    <button class="rwc_cart-button plugincy_pos_<?php echo esc_attr($position); ?>" data-cart-icon="<?php echo esc_attr($cart_icon); ?>" data-product_title_tag="<?php echo esc_attr($product_title_tag); ?>" data-drawer-position="<?php echo esc_attr($drawer_position); ?>" onclick="openCartDrawer('<?php echo esc_attr($drawer_position); ?>')">
         <span class="cart-icon">
             <?php echo wp_kses($selected_icon, $allowed_svg); ?>
         </span>
@@ -50,7 +50,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
         </span>
     </button>
 
-    <div class="cart-drawer <?php echo $drawer_position ?>">
+    <div class="cart-drawer <?php echo esc_attr($drawer_position); ?>">
         <div class="cart-content">
             <div class="cart-header">
                 <h2><?php echo get_option("your_cart") ? esc_attr(get_option("your_cart", 'Your Cart')) : "Your Cart"; ?></h2>
@@ -201,7 +201,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                                         if ($product && $product->get_type() === 'simple') {
                                             echo '<div class="recommended-product">';
                                             echo '<a href="' . esc_url($product->get_permalink()) . '">';
-                                            echo $product->get_image();
+                                            echo wp_kses_post($product->get_image());
                                             echo '<h4>' . esc_html($product->get_name()) . '</h4>';
                                             echo '<span class="price">' . wp_kses_post($product->get_price_html()) . '</span>';
                                             echo '</a>';
@@ -244,7 +244,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                             <?php //echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; 
                             ?>
                         </button> -->
-                        <a href="<?php echo wc_get_checkout_url(); ?>" class="checkout-button checkout-button-drawer">
+                        <a href="<?php echo esc_url(wc_get_checkout_url()); ?>" class="checkout-button checkout-button-drawer">
                             <?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?>
                         </a>
                     </div>
