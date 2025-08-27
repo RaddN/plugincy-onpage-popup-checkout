@@ -2,8 +2,8 @@
 if (!defined('ABSPATH')) exit;
 // Shortcode: [plugincy_one_page_checkout product_ids="" template="product-slider"]
 
-wp_enqueue_style( 'owl-carousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css', array(), "1.2.2.19");
-wp_enqueue_style( 'owl-theme', plugin_dir_url(__FILE__) . '../assets/css/owl.theme.default.css', array(), "1.2.2.19" );
+wp_enqueue_style( 'owl-carousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css', array(), "1.2.2.31");
+wp_enqueue_style( 'owl-theme', plugin_dir_url(__FILE__) . '../assets/css/owl.theme.default.css', array(), "1.2.2.31" );
 ?>
 
 <div class="product-slider-template">
@@ -38,7 +38,7 @@ wp_enqueue_style( 'owl-theme', plugin_dir_url(__FILE__) . '../assets/css/owl.the
 
 <!-- Initialize Owl Carousel -->
 
-<?php wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.min.js', array('jquery'), "1.2.2.19", true); ?>
+<?php wp_enqueue_script('owl-carousel', plugin_dir_url(__FILE__) . '../assets/js/owl.carousel.min.js', array('jquery'), "1.2.2.31", true); ?>
 <?php
 $inline_script = "
     (function($) {

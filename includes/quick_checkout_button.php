@@ -93,7 +93,7 @@ function onepaquc_should_display_button($product)
 
     // Check for widgets and shortcodes
     $is_widget_or_shortcode = false;
-    $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
+    $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
     foreach ($backtrace as $trace) {
         if (isset($trace['function']) && (
             (strpos($trace['function'], 'widget') !== false && in_array('widgets', $allowed_pages)) ||
@@ -551,11 +551,12 @@ function onepaquc_position_wise_css()
         return;
     }
 
+    $position = get_option("rmenu_wc_direct_checkout_single_position", "after_add_to_cart");
+
     if (!is_singular('product')) {
-        return;
+        $position = get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart");
     }
 
-    $position = get_option("rmenu_wc_direct_checkout_single_position", "after_add_to_cart");
     if ($position === "replace_add_to_cart" || (get_option('rmenu_enable_custom_add_to_cart', 0) && get_option('rmenu_add_to_cart_catalog_display') == "hide")) {
     ?>
         <style>
@@ -757,8 +758,6 @@ class onepaquc_add_checkout_button_on_archive
         } elseif (in_array('on-sale', $allowed_pages) && wc_get_loop_prop('is_on_sale')) {
             $display = true;
         } elseif (in_array('recent', $allowed_pages) && wc_get_loop_prop('is_recent')) {
-            $display = true;
-        } elseif (in_array('widgets', $allowed_pages) && (is_active_widget(false, false, 'woocommerce_products', true) || is_active_widget(false, false, 'woocommerce_top_rated_products', true))) {
             $display = true;
         } elseif (in_array('shortcodes', $allowed_pages) && is_singular()) {
             $display = true;

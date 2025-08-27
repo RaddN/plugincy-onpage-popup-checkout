@@ -180,7 +180,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.2.2.19</span></div>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.2.2.31</span></div>
         <p style="max-width: 70%; margin:0 auto;">Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
 
         <div class="feature-grid">
@@ -713,7 +713,7 @@ function onepaquc_cart_dashboard()
                 <div class="plugincy_nav_card mb-4">
                     <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" xml:space="preserve" width="16" height="16">
                                 <path d="M13.984 5.25a.73.73 0 0 0-.65-.402H9.662l1.898-3.796A.727.727 0 0 0 10.909 0H6.545a.73.73 0 0 0-.65.402L2.016 8.16a.727.727 0 0 0 .65 1.052h3.949L5.349 15.12a.726.726 0 0 0 .41.814.73.73 0 0 0 .883-.226l7.273-9.697a.73.73 0 0 0 .069-.762" />
-                            </svg>', 'WooCommerce Direct Checkout','','Enable direct checkout to allow customers to bypass the cart and proceed directly to checkout, streamlining the purchasing process.'); ?>
+                            </svg>', 'WooCommerce Direct Checkout', '', 'Enable direct checkout to allow customers to bypass the cart and proceed directly to checkout, streamlining the purchasing process.'); ?>
                     <div class="rmenu-settings-tabs">
                         <ul class="rmenu-settings-tab-list">
                             <li class="rmenu-settings-tab-item active" data-tab="direct-general-settings">
@@ -1052,7 +1052,9 @@ function onepaquc_cart_dashboard()
                                 });
 
                                 // Trigger change event on page load to set initial visibility
-                                iconSelect.dispatchEvent(new Event('change'));
+                                setTimeout(() => {
+                                    iconSelect.dispatchEvent(new Event('change'));
+                                }, 1000);
                             }
 
                             // if button_style !== 'custom', none all fields except the first two
@@ -1620,7 +1622,7 @@ function onepaquc_cart_dashboard()
             </div>
             <div class="tab-content" id="tab-7">
                 <div class="plugincy_nav_card mb-4">
-                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-visibility"></span>', 'WooCommerce Quick View','','Manage the quick view settings for your WooCommerce products.'); ?>
+                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-visibility"></span>', 'WooCommerce Quick View', '', 'Manage the quick view settings for your WooCommerce products.'); ?>
                     <div class="rmenu-settings-tabs">
                         <ul class="rmenu-settings-tab-list">
                             <li class="rmenu-settings-tab-item active" data-tab="quick-general-settings">
@@ -2394,17 +2396,13 @@ function onepaquc_cart_dashboard()
 
                     // Show/hide custom CSS row based on selected style after page load
                     const styleSelect = document.querySelector('select[name="rmenu_quick_view_button_style"]');
-                    const customCssRow = document.querySelector('textarea[name="rmenu_quick_view_custom_css"]').closest('.rmenu-settings-row');
-                    const quickViewButtonIconRow = quickViewButtonIcon.closest('.rmenu-settings-row');
+                    const customCssRow = document.querySelector('textarea[name="rmenu_quick_view_custom_css"]').closest('tr');
+                    const quickViewButtonIconRow = quickViewButtonIcon.closest('tr');
                     const updateQuickViewDisplayType = () => {
                         if (quickViewDisplayType.value === 'button') {
                             quickViewButtonIconRow.style.display = 'none';
-                        } else if (quickViewDisplayType.value === 'icon') {
-                            quickViewButtonIconRow.style.display = 'flex';
-                            quickViewButtonIconRow.querySelector(".rmenu-settings-column:last-child").style.display = 'none';
                         } else {
                             quickViewButtonIconRow.style.display = 'flex';
-                            quickViewButtonIconRow.querySelector(".rmenu-settings-column:last-child").style.display = 'block';
                         }
                     };
 
@@ -2429,7 +2427,7 @@ function onepaquc_cart_dashboard()
             </script>
             <div class="tab-content" id="tab-8">
                 <div class="plugincy_nav_card mb-4">
-                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-cart"></span>', 'WooCommerce Add To Cart','','Easily modify the Add to Cart button text, style, and functionality for a more engaging shopping experience.'); ?>
+                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-cart"></span>', 'WooCommerce Add To Cart', '', 'Easily modify the Add to Cart button text, style, and functionality for a more engaging shopping experience.'); ?>
                     <div class="rmenu-settings-tabs">
                         <ul class="rmenu-settings-tab-list">
                             <li class="rmenu-settings-tab-item active" data-tab="general-settings">
@@ -2523,20 +2521,6 @@ function onepaquc_cart_dashboard()
                                         <th class="rmenu-settings-label">Hover Background Color</th>
                                         <td class="rmenu-settings-control">
                                             <input type="color" name="rmenu_add_to_cart_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>" class="rmenu-color-picker" />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th class="rmenu-settings-label">Hover Text Color</th>
-                                        <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th class="rmenu-settings-label">Hover Text Color</th>
-                                        <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
 
@@ -2656,7 +2640,9 @@ function onepaquc_cart_dashboard()
                                 });
 
                                 // Trigger change event on page load to set initial visibility
-                                iconSelect.dispatchEvent(new Event('change'));
+                                setTimeout(() => {
+                                    iconSelect.dispatchEvent(new Event('change'));
+                                }, 1000);
                             }
 
                             if (customWidthRow) {
@@ -3069,7 +3055,9 @@ function onepaquc_cart_dashboard()
             </script>
             <div style="text-align: right;display: flex;justify-content: flex-end;width: 98.5%;margin-top: 42px;align-items: center;padding: 20px;box-sizing: border-box;">
                 <button type="submit" class="button button-primary" style="padding: 4px 20px;border: none;display: flex;gap: 5px;align-items: center;">
-                    <span style="margin-bottom: -7px;"><svg fill="#fff" width="16" height="16" viewBox="0 0 0.48 0.48" xmlns="http://www.w3.org/2000/svg"><path d="M.474.124.356.006A.03.03 0 0 0 .341 0H.022A.02.02 0 0 0 0 .022v.436c0 .013.01.023.022.023h.436A.022.022 0 0 0 .481.459v-.32A.02.02 0 0 0 .475.124zM.131.044h.131V.16H.131zm0 .393V.32h.218v.116zm.306 0H.393V.299A.022.022 0 0 0 .371.276H.109a.02.02 0 0 0-.022.022v.138H.044V.044h.044v.139q.001.02.021.021h.174A.022.022 0 0 0 .306.182V.044h.027l.104.104z"/></svg></span>
+                    <span style="margin-bottom: -7px;"><svg fill="#fff" width="16" height="16" viewBox="0 0 0.48 0.48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M.474.124.356.006A.03.03 0 0 0 .341 0H.022A.02.02 0 0 0 0 .022v.436c0 .013.01.023.022.023h.436A.022.022 0 0 0 .481.459v-.32A.02.02 0 0 0 .475.124zM.131.044h.131V.16H.131zm0 .393V.32h.218v.116zm.306 0H.393V.299A.022.022 0 0 0 .371.276H.109a.02.02 0 0 0-.022.022v.138H.044V.044h.044v.139q.001.02.021.021h.174A.022.022 0 0 0 .306.182V.044h.027l.104.104z" />
+                        </svg></span>
                     <span>Save Changes</span>
                 </button>
             </div>

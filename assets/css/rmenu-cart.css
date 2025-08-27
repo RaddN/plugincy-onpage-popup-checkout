@@ -1246,16 +1246,6 @@ table.one-page-checkout-product-table td {
   cursor: pointer;
   position: relative;
 }
-.product-list-template .one-page-checkout-product-item.loading:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.6);
-  z-index: 1;
-}
 .product-list-template .one-page-checkout-product-container {
   display: flex;
   align-items: center;
@@ -1528,29 +1518,6 @@ table.one-page-checkout-product-table td {
 }
 .direct-checkout-button:focus {
   border: none !important;
-}
-
-.direct-checkout-button.loading:before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px; /* Spinner size */
-  height: 20px; /* Spinner size */
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  transform: translate(-50%, -50%); /* Center the spinner */
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 /* Basic CSS for the popup */
@@ -1831,6 +1798,11 @@ button#place_order {
   top: 50px;
   left: 0;
   border-radius: 50%;
+  z-index: 10;
+}
+.product:hover>.plugincy-quick-checkout.overlay_thumbnail_hover,
+.product:hover>.plugincy-quick-checkout.overlay_thumbnail {
+  z-index: 1000;
 }
 .plugincy-quick-checkout.overlay_thumbnail_hover a,
 .plugincy-quick-checkout.overlay_thumbnail a {

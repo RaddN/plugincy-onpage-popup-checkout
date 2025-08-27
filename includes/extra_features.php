@@ -248,6 +248,10 @@ class onepaquc_add_variation_buttons_on_archive
                         z-index: 10;
                     }
 
+                    .product:hover>.overlay-variations {
+                        z-index: 1000;
+                    }
+
                     .bottom-48 {
                         bottom: 48px;
                     }

@@ -351,9 +351,9 @@ jQuery(document).ready(function ($) {
     });
 
     var $directbehave = onepaquc_wc_cart_params.direct_checkout_behave;
-    var methodKey = $directbehave.rmenu_wc_checkout_method;
+    var methodKey = $directbehave.rmenu_wc_checkout_method || 'direct_checkout';
 
-    function directcheckout(product_id, product_type, $button, methodKey) { // Add methodKey parameter
+    function directcheckout(product_id, product_type, $button) {
         var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() ||
             $button.siblings('.variation_id').val() ||
             $button.closest('.product').find('.archive-variations-container').find('.variation_id').val() || 0;
