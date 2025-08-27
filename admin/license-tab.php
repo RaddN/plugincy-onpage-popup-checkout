@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 class onepaquc_License_Manager
 {
     private $api_url = 'https://plugincy.com/';
-    private $item_id = 697;
+    private $item_id = 4042;
     private $pro_plugin_file = 'one-page-quick-checkout-for-woocommerce-pro/one-page-quick-checkout-for-woocommerce-pro.php';
     private $pro_plugin_dir = 'one-page-quick-checkout-for-woocommerce-pro';
 
