@@ -493,9 +493,10 @@ function onepaquc_add_js_fallback()
     </script>
     <?php
 }
-
-// Add the JavaScript fallback to wp_footer
-add_action('wp_footer', 'onepaquc_add_js_fallback');
+if (get_option('rmenu_add_direct_checkout_button', 1)) {
+    // Add the JavaScript fallback to wp_footer
+    add_action('wp_footer', 'onepaquc_add_js_fallback');
+}
 
 // Reset the button rendered flag for each page load
 function onepaquc_reset_button_flag()
