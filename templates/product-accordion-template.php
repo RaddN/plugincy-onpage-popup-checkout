@@ -30,7 +30,7 @@ if (!defined('ABSPATH')) exit;
                             <div class="opc-product-title"><?php echo esc_html($product->get_name()); ?></div>
                             <div class="opc-product-price"><?php echo wp_kses_post($product->get_price_html()); ?></div>
                             <div class="opc-product-add-to-cart">
-                                <?php echo do_shortcode('[add_to_cart id="' . $product_id . '" show_price="false" style=""]'); ?>
+                                <?php echo do_shortcode('[add_to_cart id="' . esc_attr($product_id) . '" show_price="false" style=""]'); ?>
                             </div>
                         </div>
                         <span class="opc-toggle-icon">+</span>

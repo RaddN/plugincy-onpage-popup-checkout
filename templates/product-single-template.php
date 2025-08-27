@@ -36,7 +36,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                         <div class="one-page-checkout-product-form">
                             <?php
                             // Using the add_to_cart shortcode instead of custom button
-                            echo do_shortcode('[add_to_cart id="' . $product_id . '" style="" show_price="false" quantity="1" class="add-to-order-button"]');
+                            echo do_shortcode('[add_to_cart id="' . esc_attr($product_id) . '" style="" show_price="false" quantity="1" class="add-to-order-button"]');
                             ?>
 
                             <a href="#" class="modify-complete-order"><?php echo esc_html__('Modify & complete order below', 'one-page-quick-checkout-for-woocommerce'); ?></a>

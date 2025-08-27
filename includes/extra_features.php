@@ -16,7 +16,7 @@ function onepaquc_add_product_image_to_checkout_cart_items($product_name, $cart_
     $thumbnail = $product->get_image(array(50, 50));
 
     // Return the image followed by the product name
-    return '<div class="checkout-product-item"><div class="checkout-product-image">' . $thumbnail . '</div><div class="checkout-product-name">' . $product_name . '</div></div>';
+    return '<div class="checkout-product-item"><div class="checkout-product-image">' . $thumbnail . '</div><div class="checkout-product-name">' . esc_html($product_name) . '</div></div>';
 }
 add_filter('woocommerce_cart_item_name', 'onepaquc_add_product_image_to_checkout_cart_items', 10, 3);
 

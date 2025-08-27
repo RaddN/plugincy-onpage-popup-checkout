@@ -110,7 +110,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
                                 <div class="add-to-cart-container">
                                     <?php
-                                    echo do_shortcode('[add_to_cart id="' . $product->get_id() . '" style="" show_price="false" quantity="1" class="add-to-cart-button"]');
+                                    echo do_shortcode('[add_to_cart id="' . esc_attr($product->get_id()) . '" style="" show_price="false" quantity="1" class="add-to-cart-button"]');
                                     ?>
                                 </div>
                             </th>

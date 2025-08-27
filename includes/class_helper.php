@@ -654,6 +654,11 @@ $allowed_tags = array(
         'x' => array(),
         'y' => array(),
         'fill' => array(),
+        'stroke' => array(),
+        'stroke-width' => array(),
+        'stroke-linecap' => array(),
+        'stroke-linejoin' => array(),
+        'opacity' => array(),
     ),
     'g' => array(
         'class' => array(),

@@ -186,6 +186,8 @@ function onepaquc_add_button_css()
     $button_styling = onepaquc_get_button_styling();
     $additional_css = $button_styling['additional_css'];
 
+    global $allowed_tags;
+
     // Start output buffer for CSS
     ob_start();
 
@@ -239,7 +241,7 @@ function onepaquc_add_button_css()
 <?php
 
     // Output the CSS
-    echo wp_kses_post(ob_get_clean());
+    echo wp_kses(ob_get_clean(), $allowed_tags);
 }
 
 // Add button CSS to head
@@ -774,7 +776,7 @@ class onepaquc_add_checkout_button_on_archive
                     const $contents = '<?php echo wp_kses($button_contents['button_content'], $allowed_tags); ?>';
                     const $button_class = "<?php echo esc_attr($button_contents['button_classes']); ?>";
                     const $button_style = "<?php echo esc_attr($button_contents['button_style']); ?>";
-                    const $allowed_types = <?php echo json_encode(get_option('rmenu_show_quick_checkout_by_types', ['simple', 'variable', "grouped", "external"])); ?>;
+                    const $allowed_types = <?php echo wp_json_encode(get_option('rmenu_show_quick_checkout_by_types', ['simple', 'variable', "grouped", "external"])); ?>;
 
                     // Remove any .plugincy-quick-checkout that isn't a child of .product
                     $(".plugincy-quick-checkout").each(function() {

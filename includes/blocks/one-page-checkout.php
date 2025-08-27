@@ -203,7 +203,7 @@ function onepaquc_add_block_category( $categories ) {
                 'icon'  => 'cart',
             ),
         ),
-        $categories
+        is_array( $categories ) ? $categories : array()
     );
 }
 add_filter( 'block_categories_all', 'onepaquc_add_block_category' );
@@ -328,8 +328,8 @@ function onepaquc_validate_block_attributes( $attributes ) {
     } else {
         $validated['template'] = 'product-tabs'; // Default fallback
     }
-    
-    return array_merge( $attributes, $validated );
+
+    return array_merge( is_array( $attributes ) ? $attributes : array(), is_array( $validated ) ? $validated : array() );
 }
 
 

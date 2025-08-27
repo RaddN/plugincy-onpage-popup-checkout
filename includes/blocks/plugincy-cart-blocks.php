@@ -280,7 +280,7 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
 
     // Add data attributes to pass to the shortcode
     add_filter('onepaquc_cart_data_attributes', function($attributes_array) use ($attributes) {
-        return array_merge($attributes_array, array(
+        return array_merge(is_array($attributes_array) ? $attributes_array : [], array(
             'data-cart-icon' => $attributes['cartIcon'],
             'data-drawer-position' => $attributes['drawerPosition'],
             'data-product-title-tag' => $attributes['productTitleTag'],
@@ -293,7 +293,7 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
         'rmenu-cart-block-style',
         false, // No actual CSS file
         array(), // No dependencies
-        '1.2.2.9' // Version
+        '1.2.2.19' // Version
     );
     
     // Now enqueue it

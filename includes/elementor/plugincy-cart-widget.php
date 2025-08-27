@@ -724,7 +724,7 @@ function onepaquc_plugincy_cart_elementor_widget()
             // Generate shortcode
             $shortcode = '[plugincy_cart';
             foreach ($shortcode_atts as $key => $value) {
-                $shortcode .= ' ' . $key . '="' . esc_attr($value) . '"';
+                $shortcode .= ' ' . esc_attr($key) . '="' . esc_attr($value) . '"';
             }
             $shortcode .= ']';
 

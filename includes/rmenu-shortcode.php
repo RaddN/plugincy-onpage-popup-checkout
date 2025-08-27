@@ -17,7 +17,7 @@ function onepaquc_cart_shortcode($atts) {
 
 <div class="rmenu-cart">
     <?php 
-    onepaquc_cart($atts['drawer'],$atts['cart_icon'],$atts['product_title_tag'],$atts['position'],$atts['top'],$atts['left']); ?>
+    onepaquc_cart(esc_attr($atts['drawer']), esc_attr($atts['cart_icon']), esc_attr($atts['product_title_tag']), esc_attr($atts['position']), esc_attr($atts['top']), esc_attr($atts['left'])); ?>
 </div>
     <?php
     return ob_get_clean();
