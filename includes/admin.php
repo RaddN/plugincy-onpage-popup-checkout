@@ -180,7 +180,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.2.3</span></div>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.2.4</span></div>
         <p style="max-width: 70%; margin:0 auto;">Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
 
         <div class="feature-grid">
@@ -902,67 +902,6 @@ function onepaquc_cart_dashboard()
                         </div>
                     </div>
                     <div class="plugincy_row">
-                        <div class="rmenu-settings-section direct-button-style-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
-
-                            <table class="form-table plugincy_table">
-                                <tbody class="plugincy_grid">
-                                    <tr style="grid-column: span 2;">
-                                        <th class="rmenu-settings-label">Button Style</th>
-                                        <td class="rmenu-settings-control">
-                                            <select name="rmenu_wc_checkout_style" class="rmenu-select" id="rmenu-style-select">
-                                                <option value="default" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
-                                                <option value="alt" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'alt'); ?>>Alternative Style</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'custom'); ?>>Custom Style</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="rmenu-settings-label">Button Color</th>
-                                        <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_wc_checkout_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_color', '#000')); ?>" class="rmenu-color-picker" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="rmenu-settings-label">Text Color</th>
-                                        <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_wc_checkout_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                        </td>
-                                    </tr>
-
-                                    <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
-                                        <th class="rmenu-settings-label">Custom CSS</th>
-                                        <td class="rmenu-settings-control">
-                                            <textarea name="rmenu_wc_checkout_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_wc_checkout_custom_css', '')); ?></textarea>
-                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqcfw-btn</code> to target the button.</p>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th class="rmenu-settings-label">Button Icon</th>
-                                        <td class="rmenu-settings-control">
-                                            <select name="rmenu_wc_checkout_icon" class="rmenu-select">
-                                                <option value="none" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'none'); ?>>No Icon</option>
-                                                <option value="cart" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'cart'); ?>>Cart Icon</option>
-                                                <option value="checkout" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'checkout'); ?>>Checkout Icon</option>
-                                                <option value="arrow" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'arrow'); ?>>Arrow Icon</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="rmenu-settings-label">Icon Position</th>
-                                        <td class="rmenu-settings-control">
-                                            <select name="rmenu_wc_checkout_icon_position" class="rmenu-select">
-                                                <option value="left" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'left'); ?>>Left</option>
-                                                <option value="right" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'right'); ?>>Right</option>
-                                                <option value="top" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'top'); ?>>Top</option>
-                                                <option value="bottom" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                         <div class="plugincy_col-5 items_center  space_between plugincy_card">
                             <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-cart"></span>', 'Quick Checkout Behavior', ''); ?>
 
@@ -1035,6 +974,68 @@ function onepaquc_cart_dashboard()
                             </table>
 
                         </div>
+                        <div class="rmenu-settings-section direct-button-style-section plugincy_card plugincy_col-5">
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
+
+                            <table class="form-table plugincy_table">
+                                <tbody class="plugincy_grid">
+                                    <tr style="grid-column: span 2;">
+                                        <th class="rmenu-settings-label">Button Style</th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_wc_checkout_style" class="rmenu-select" id="rmenu-style-select">
+                                                <option value="default" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
+                                                <option value="alt" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'alt'); ?>>Alternative Style</option>
+                                                <option value="custom" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Button Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_wc_checkout_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_color', '#000')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Text Color</th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_wc_checkout_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
+
+                                    <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
+                                        <th class="rmenu-settings-label">Custom CSS</th>
+                                        <td class="rmenu-settings-control">
+                                            <textarea name="rmenu_wc_checkout_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_wc_checkout_custom_css', '')); ?></textarea>
+                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqcfw-btn</code> to target the button.</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="rmenu-settings-label">Button Icon</th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_wc_checkout_icon" class="rmenu-select">
+                                                <option value="none" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'none'); ?>>No Icon</option>
+                                                <option value="cart" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'cart'); ?>>Cart Icon</option>
+                                                <option value="checkout" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'checkout'); ?>>Checkout Icon</option>
+                                                <option value="arrow" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'arrow'); ?>>Arrow Icon</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="rmenu-settings-label">Icon Position</th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_wc_checkout_icon_position" class="rmenu-select">
+                                                <option value="left" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'left'); ?>>Left</option>
+                                                <option value="right" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'right'); ?>>Right</option>
+                                                <option value="top" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'top'); ?>>Top</option>
+                                                <option value="bottom" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
@@ -2558,7 +2559,7 @@ function onepaquc_cart_dashboard()
                                         </td>
                                     </tr>
 
-                                    <tr class="rmenu-settings-row" id="rmenu-atc-custom-width-row" style="<?php echo (get_option('rmenu_add_to_cart_width', 'auto') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
+                                    <tr id="rmenu-atc-custom-width-row" style="<?php echo (get_option('rmenu_add_to_cart_width', 'auto') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
                                         <th class="rmenu-settings-label">Custom Width Value</th>
                                         <td class="rmenu-settings-control">
                                             <input type="number" name="rmenu_add_to_cart_custom_width" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_custom_width', '150')); ?>" class="small-text" min="50" max="500" step="1" />
@@ -2629,6 +2630,7 @@ function onepaquc_cart_dashboard()
                             // if rmenu_add_to_cart_icon is none, hide the rmenu-atc-icon-position-row
                             const iconPositionRow = document.getElementById('rmenu-atc-icon-position-row');
                             const iconSelect = document.querySelector('select[name="rmenu_add_to_cart_icon"]');
+                            const customwidth = document.querySelector('select[name="rmenu_add_to_cart_width"]');
 
                             if (iconSelect && iconPositionRow) {
                                 iconSelect.addEventListener('change', function() {
@@ -2660,8 +2662,10 @@ function onepaquc_cart_dashboard()
                                         } else {
                                             document.getElementById('rmenu-atc-custom-css-row').style.display = 'block';
                                         }
+                                        customwidth.dispatchEvent(new Event('change'));
                                     } else {
                                         allFields.forEach(field => field.style.display = 'none');
+                                        customWidthRow.style.display = 'none';
                                     }
                                 });
 

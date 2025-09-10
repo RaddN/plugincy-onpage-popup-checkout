@@ -84,62 +84,61 @@
             // Disable button and show loading state
             $thisButton.addClass('loading').prop('disabled', true);
 
-            // Send AJAX request
-            $.ajax({
-                type: 'POST',
-                url: rmenu_ajax_object.ajax_url,
-                data: {
-                    action: 'onepaquc_ajax_add_to_cart',
-                    product_id: productId,
-                    quantity: quantity,
-                    variation_id: variationId,
-                    variations: variations,
-                    nonce: rmenu_ajax_object.nonce
-                },
-                success: function (response) {
-                    if (response.success) {
-                        // Re-enable button
-                        $thisButton.removeClass('loading').prop('disabled', false);
+            var redirecturlparams = `?add-to-cart=${productId}`;
+            if (variationId && variationId != 0) {
+                redirecturlparams += `&variation_id=${variationId}`;
+            }
 
-                        // Handle fragments if any
-                        if (response.fragments) {
-                            $.each(response.fragments, function (key, value) {
-                                $(key).replaceWith(value);
-                            });
+            if (rmenu_ajax_object.redirect && rmenu_ajax_object.redirect_url !== 'none') {
+                // Redirect after a short delay to allow animation to show
+                window.location.href = rmenu_ajax_object.redirect_url + redirecturlparams;
+            } else {
 
-                            if (typeof sessionStorage !== 'undefined') {
-                                sessionStorage.setItem('wc_fragments', JSON.stringify(response.fragments));
-                                sessionStorage.setItem('wc_cart_hash', response.cart_hash);
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: rmenu_ajax_object.ajax_url,
+                    data: {
+                        action: 'onepaquc_ajax_add_to_cart',
+                        product_id: productId,
+                        quantity: quantity,
+                        variation_id: variationId,
+                        variations: variations,
+                        nonce: rmenu_ajax_object.nonce
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Re-enable button
+                            $thisButton.removeClass('loading').prop('disabled', false);
+
+                            // Handle fragments if any
+                            if (response.fragments) {
+                                $.each(response.fragments, function (key, value) {
+                                    $(key).replaceWith(value);
+                                });
+                                if (typeof sessionStorage !== 'undefined') {
+                                    sessionStorage.setItem('wc_fragments', JSON.stringify(response.fragments));
+                                    sessionStorage.setItem('wc_cart_hash', response.cart_hash);
+                                }
                             }
-                        }
-
-                        // Check if we need to redirect
-                        if (response.redirect && response.redirect_url !== 'none') {
-                            // Redirect after a short delay to allow animation to show
-                            setTimeout(function () {
-                                window.location.href = response.redirect_url;
-                            }, 500);
-                        } else {
                             // If no redirect, show animation and notification
                             RMENU_Add_To_Cart.triggerAnimation($thisButton, response.product_name);
                             RMENU_Add_To_Cart.showNotification(response);
                             // Trigger WC events
                             $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisButton]);
+                        } else {
+                            // Show error
+                            RMENU_Add_To_Cart.showError(response.message || 'Error adding to cart');
+                            $thisButton.removeClass('loading').prop('disabled', false);
                         }
-
-
-                    } else {
+                    },
+                    error: function () {
                         // Show error
-                        RMENU_Add_To_Cart.showError(response.message || 'Error adding to cart');
+                        RMENU_Add_To_Cart.showError('Server error. Please try again.');
                         $thisButton.removeClass('loading').prop('disabled', false);
                     }
-                },
-                error: function () {
-                    // Show error
-                    RMENU_Add_To_Cart.showError('Server error. Please try again.');
-                    $thisButton.removeClass('loading').prop('disabled', false);
-                }
-            });
+                });
+            }
         },
 
         /**

@@ -48,7 +48,7 @@ function onepaquc_apply_add_to_cart_styles()
     // Only apply custom styling if not using default WooCommerce style
     if ($button_style != 'default') {
         // Base button styles
-        $css .= '.woocommerce a.button.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit, .woocommerce a.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit.alt {';
+        $css .= '.single .product .single_add_to_cart_button,.woocommerce a.button.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit, .woocommerce a.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit.alt {';
 
 
 
@@ -183,8 +183,8 @@ function onepaquc_add_icons_to_buttons()
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addToCartButtons = document.querySelectorAll('.add_to_cart_button:not(.product_type_variable), .single_add_to_cart_button:not(.product_type_variable)');
-            const svgIcon = `<?php echo wp_kses($svg_icon, $allowed_tags); ?>`; 
-            const iconPosition = '<?php echo esc_attr( $icon_position ); ?>';
+            const svgIcon = `<?php echo wp_kses($svg_icon, $allowed_tags); ?>`;
+            const iconPosition = '<?php echo esc_attr($icon_position); ?>';
             const mobileIconOnly = <?php echo $mobile_icon_only ? 'true' : 'false'; ?>;
 
             addToCartButtons.forEach(function(button) {
@@ -295,7 +295,7 @@ function onepaquc_add_to_cart_admin_script()
             // Handle visibility of custom width field
             function toggleCustomWidthField() {
                 if ($('select[name="rmenu_add_to_cart_width"]').val() === 'custom') {
-                    $('#rmenu-atc-custom-width-row').show();
+                    $('#rmenu-atc-custom-width-row').css('display', 'flex');
                 } else {
                     $('#rmenu-atc-custom-width-row').hide();
                 }
@@ -397,12 +397,29 @@ class ONEPAQUC_Add_To_Cart_Handler
             true
         );
 
+        // Get cart URL
+        $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : WC()->cart->get_cart_url();
+
+        // Get checkout URL
+        $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : WC()->cart->get_checkout_url();
+
+        $redirect_option = get_option('rmenu_redirect_after_add', 'none');
+        $redirect_url = 'none';
+
+        if ($redirect_option === 'cart') {
+            $redirect_url = $cart_url;
+        } elseif ($redirect_option === 'checkout') {
+            $redirect_url = $checkout_url;
+        }
+
         wp_localize_script('rmenu-ajax-add-to-cart', 'rmenu_ajax_object', array(
             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
             'nonce' => esc_js(wp_create_nonce('rmenu-ajax-nonce')),
             'animation' => get_option('rmenu_add_to_cart_animation', 'none'),
             'notification_style' => 'default',
             'notification_duration' => 3000,
+            'redirect' => $redirect_option !== 'none',
+            'redirect_url' => $redirect_url,
             'i18n' => array(
                 'success' => '{product} has been added to your cart.',
                 'view_cart' => '',
@@ -522,8 +539,8 @@ class ONEPAQUC_Add_To_Cart_Handler
         // Update cart total
         ob_start();
         ?>
-        <span class="rmenu-cart-total"><?php echo esc_html( WC()->cart->get_cart_total() ); ?></span>
-        <?php
+        <span class="rmenu-cart-total"><?php echo esc_html(WC()->cart->get_cart_total()); ?></span>
+<?php
         $fragments['span.rmenu-cart-total'] = ob_get_clean();
 
         return $fragments;

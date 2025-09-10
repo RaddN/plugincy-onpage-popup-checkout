@@ -54,7 +54,7 @@ jQuery(document).ready(function ($) {
     window.openCartDrawer = function () {
         const cartDrawer = $('.cart-drawer');
         const overlay = $('.overlay');
-        if (cartDrawer) {
+        if (cartDrawer && cartDrawer.length){
             cartDrawer.addClass('open');
             if (overlay) overlay.show();
             document.body.style.overflow = 'hidden';
@@ -71,7 +71,7 @@ jQuery(document).ready(function ($) {
     window.openCheckoutPopup = function () {
         if (checkout_popup) checkout_popup.show();
         const cartDrawer = $('.cart-drawer');
-        if (cartDrawer) {
+        if (cartDrawer && cartDrawer.length) {
             cartDrawer.removeClass('open');
         }
 
@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
             if (checkout_popup) checkout_popup.hide();
         }
         const cartDrawer = $('.cart-drawer');
-        if (cartDrawer) cartDrawer.removeClass('open');
+        if (cartDrawer && cartDrawer.length) cartDrawer.removeClass('open');
         $('.overlay').hide(); // Hide overlay when cart is closed
         document.body.style.overflow = '';
         if ($('#cart-drawer-style')) $('#cart-drawer-style').remove();

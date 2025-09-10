@@ -770,43 +770,105 @@ class onepaquc_add_checkout_button_on_archive
     ?>
         <script>
             jQuery(document).ready(function($) {
-                $(".product").each(function() {
-                    let $this = $(this);
-                    const $button_pos = "<?php echo esc_attr(get_option('rmenu_wc_direct_checkout_position', 'overlay_thumbnail_hover')); ?>";
-                    const $contents = '<?php echo wp_kses($button_contents['button_content'], $allowed_tags); ?>';
-                    const $button_class = "<?php echo esc_attr($button_contents['button_classes']); ?>";
-                    const $button_style = "<?php echo esc_attr($button_contents['button_style']); ?>";
-                    const $allowed_types = <?php echo wp_json_encode(get_option('rmenu_show_quick_checkout_by_types', ['simple', 'variable', "grouped", "external"])); ?>;
+                // Configuration variables
+                const quickCheckoutConfig = {
+                    buttonPos: "<?php echo esc_attr(get_option('rmenu_wc_direct_checkout_position', 'overlay_thumbnail_hover')); ?>",
+                    contents: '<?php echo wp_kses($button_contents['button_content'], $allowed_tags); ?>',
+                    buttonClass: "<?php echo esc_attr($button_contents['button_classes']); ?>",
+                    buttonStyle: "<?php echo esc_attr($button_contents['button_style']); ?>",
+                    allowedTypes: <?php echo wp_json_encode(get_option('rmenu_show_quick_checkout_by_types', ['simple', 'variable', "grouped", "external"])); ?>
+                };
 
-                    // Remove any .plugincy-quick-checkout that isn't a child of .product
+                /**
+                 * Initialize quick checkout buttons for products
+                 * @param {jQuery} container - Optional container to limit scope (defaults to entire document)
+                 */
+                function initQuickCheckoutButtons(container = $(document)) {
+                    container.find(".product").each(function() {
+                        let $this = $(this);
+
+                        // Skip if this product already has a quick checkout button
+                        if ($this.has(".plugincy-quick-checkout").length) {
+                            return;
+                        }
+
+                        // Extract product ID from class or button data
+                        let productIdMatch = $this.attr('class').match(/post-(\d+)/);
+                        let product_id = productIdMatch ? productIdMatch[1] :
+                            ($this.find(".button").length ? $this.find(".button").data("product_id") : null);
+
+                        // Extract product type from class or button data
+                        let productTypeMatch = $this.attr('class').match(/product-type-(\w+)/);
+                        let product_type = productTypeMatch ? productTypeMatch[1] :
+                            ($this.find(".button").length ? $this.find(".button").data("product-type") : null);
+
+                        // Only add button if product type is allowed and we have a product ID
+                        if (quickCheckoutConfig.allowedTypes.includes(product_type) && product_id) {
+                            $this.append(
+                                `<div class='plugincy-quick-checkout ${quickCheckoutConfig.buttonPos}' style='text-align:center;'>
+                        <a href="#checkout-popup" class="${quickCheckoutConfig.buttonClass}" 
+                           data-product-id="${product_id}" 
+                           data-product-type="${product_type}" 
+                           data-title="" 
+                           style="${quickCheckoutConfig.buttonStyle}">
+                            ${quickCheckoutConfig.contents}
+                        </a>
+                    </div>`
+                            );
+                        }
+                    });
+
+                    // Clean up any orphaned quick checkout buttons
+                    cleanupOrphanedButtons();
+                }
+
+                /**
+                 * Remove any quick checkout buttons that aren't children of .product elements
+                 */
+                function cleanupOrphanedButtons() {
                     $(".plugincy-quick-checkout").each(function() {
                         if (!$(this).closest('.product').length) {
                             $(this).remove();
                         }
                     });
+                }
 
-                    if (!$this.has(".plugincy-quick-checkout").length) {
-                        // Extract product ID from class
-                        let productIdMatch = $this.attr('class').match(/post-(\d+)/);
-                        let product_id = productIdMatch ? productIdMatch[1] : ($this.find(".button").length ? $this.find(".button").data("product_id") : null);
-                        let productTypeMatch = $this.attr('class').match(/product-type-(\w+)/);
-                        let product_type = productTypeMatch ? productTypeMatch[1] : ($this.find(".button").length ? $this.find(".button").data("product-type") : null);
+                /**
+                 * Refresh quick checkout buttons (remove existing and reinitialize)
+                 * @param {jQuery} container - Optional container to limit scope
+                 */
+                function refreshQuickCheckoutButtons(container = $(document)) {
+                    container.find(".plugincy-quick-checkout").remove();
+                    initQuickCheckoutButtons(container);
+                }
 
-                        if ($allowed_types.includes(product_type)) {
+                // Initial load
+                initQuickCheckoutButtons();
 
-                            if (product_id) {
-                                // Default behavior for other positions (overlay, etc.)
-                                $this.append(
-                                    `<div class='plugincy-quick-checkout ${$button_pos}' style='text-align:center;'>
-                                    <a href="#checkout-popup" class="${$button_class}" data-product-id="${product_id}" data-product-type="${product_type}" data-title="" style="${$button_style}">
-                                        ${$contents}
-                                    </a>
-                                </div>`
-                                );
-                            }
-                        }
+                // Re-initialize after AJAX complete (global)
+                $(document).ajaxComplete(function(event, xhr, settings) {
+                    // Add a small delay to ensure DOM is updated
+                    setTimeout(function() {
+                        initQuickCheckoutButtons();
+                    }, 100);
+                });
+
+                // Re-initialize when new content is loaded via AJAX (WooCommerce specific)
+                $('body').on('wc_fragments_loaded wc_fragments_refreshed', function() {
+                    initQuickCheckoutButtons();
+                });
+
+                // Re-initialize for infinite scroll or pagination
+                $('body').on('post-load', function(e, data) {
+                    if (data && data.length) {
+                        initQuickCheckoutButtons($(data));
                     }
                 });
+
+                // Make functions globally available for manual calls
+                window.initQuickCheckoutButtons = initQuickCheckoutButtons;
+                window.refreshQuickCheckoutButtons = refreshQuickCheckoutButtons;
+                window.cleanupOrphanedButtons = cleanupOrphanedButtons;
             });
         </script>
 <?php

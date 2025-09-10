@@ -117,7 +117,7 @@ class RMENU_Quick_View
 
         global $allowed_tags;
 
-        if(is_singular('product')) {
+        if (is_singular('product')) {
             return;
         }
 
@@ -153,65 +153,129 @@ class RMENU_Quick_View
 ?>
         <script>
             jQuery(document).ready(function($) {
-                $(".product").each(function() {
-                    let $this = $(this);
-                    const $button_pos = "<?php echo esc_attr(get_option('rmenu_quick_view_button_position', 'image_overlay')); ?>";
-                    const $contents = '<?php echo wp_kses($button_contents['button_content'], $allowed_tags); ?>';
-                    const $button_class = "<?php echo esc_attr(implode(' ', $button_contents['button_classes'])); ?>";
-                    const $allowed_types = <?php echo wp_json_encode(get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"])); ?>;
+                // Configuration variables
+                const quickViewConfig = {
+                    buttonPos: "<?php echo esc_attr(get_option('rmenu_quick_view_button_position', 'image_overlay')); ?>",
+                    contents: '<?php echo wp_kses($button_contents['button_content'], $allowed_tags); ?>',
+                    buttonClass: "<?php echo esc_attr(implode(' ', $button_contents['button_classes'])); ?>",
+                    allowedTypes: <?php echo wp_json_encode(get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"])); ?>
+                };
 
-                    // Remove any .rmenu-quick-view-overlay that isn't a child of .product
+                /**
+                 * Initialize quick view buttons for products
+                 * @param {jQuery} container - Optional container to limit scope (defaults to entire document)
+                 */
+                function initQuickViewButtons(container = $(document)) {
+                    container.find(".product").each(function() {
+                        let $this = $(this);
+
+                        // Skip if this product already has a quick view button or conflicting plugin button
+                        if ($this.has(".rmenu-quick-view-overlay").length || $this.has(".opqvfw-btn").length) {
+                            return;
+                        }
+
+                        // Extract product ID from class or button data
+                        let productIdMatch = $this.attr('class').match(/post-(\d+)/);
+                        let product_id = productIdMatch ? productIdMatch[1] :
+                            ($this.find(".button").length ? $this.find(".button").data("product_id") : null);
+
+                        // Extract product type from class or button data
+                        let productTypeMatch = $this.attr('class').match(/product-type-(\w+)/);
+                        let product_type = productTypeMatch ? productTypeMatch[1] :
+                            ($this.find(".button").length ? $this.find(".button").data("product-type") : null);
+
+                        // Only add button if product type is allowed and we have a product ID
+                        if (quickViewConfig.allowedTypes.includes(product_type) && product_id) {
+                            addQuickViewButton($this, product_id);
+                        }
+                    });
+
+                    // Clean up any orphaned quick view buttons
+                    cleanupOrphanedQuickViewButtons();
+                }
+
+                /**
+                 * Add quick view button based on position setting
+                 * @param {jQuery} $product - Product element
+                 * @param {string} product_id - Product ID
+                 */
+                function addQuickViewButton($product, product_id) {
+                    const buttonHtml = `<div class='rmenu-quick-view-overlay ${quickViewConfig.buttonPos}'>
+            <a href="#" class="${quickViewConfig.buttonClass}" data-product-id="${product_id}">
+                ${quickViewConfig.contents}
+            </a>
+        </div>`;
+
+                    if (quickViewConfig.buttonPos === 'after_image') {
+                        // Find the image and add button after it
+                        let $image = $product.find('img').first();
+                        if ($image.length) {
+                            $image.after(buttonHtml);
+                        } else {
+                            // Fallback: append to product if no image found
+                            $product.append(buttonHtml);
+                        }
+                    } else {
+                        // Default behavior for other positions (overlay, etc.)
+                        $product.append(buttonHtml);
+                    }
+                }
+
+                /**
+                 * Remove any quick view buttons that aren't children of .product elements
+                 */
+                function cleanupOrphanedQuickViewButtons() {
                     $(".rmenu-quick-view-overlay").each(function() {
                         if (!$(this).closest('.product').length) {
                             $(this).remove();
                         }
                     });
+                }
 
-                    if (!$this.has(".rmenu-quick-view-overlay").length && !$this.has(".opqvfw-btn").length) {
-                        // Extract product ID from class
-                        let productIdMatch = $this.attr('class').match(/post-(\d+)/);
-                        let product_id = productIdMatch ? productIdMatch[1] : ($this.find(".button").length ? $this.find(".button").data("product_id") : null);
-                        let productTypeMatch = $this.attr('class').match(/product-type-(\w+)/);
-                        let product_type = productTypeMatch ? productTypeMatch[1] : ($this.find(".button").length ? $this.find(".button").data("product-type") : null);
+                /**
+                 * Refresh quick view buttons (remove existing and reinitialize)
+                 * @param {jQuery} container - Optional container to limit scope
+                 */
+                function refreshQuickViewButtons(container = $(document)) {
+                    container.find(".rmenu-quick-view-overlay").remove();
+                    initQuickViewButtons(container);
+                }
 
-                        if ($allowed_types.includes(product_type)) {
+                // Initial load
+                initQuickViewButtons();
 
-                            if (product_id) {
-                                if ($button_pos === 'after_image') {
-                                    // Find the image and add button after it
-                                    let $image = $this.find('img').first();
-                                    if ($image.length) {
-                                        $image.after(
-                                            `<div class='rmenu-quick-view-overlay ${$button_pos}'>
-                                        <a href="#" class="${$button_class}" data-product-id="${product_id}">
-                                            ${$contents}
-                                        </a>
-                                    </div>`
-                                        );
-                                    } else {
-                                        // Fallback: append to product if no image found
-                                        $this.append(
-                                            `<div class='rmenu-quick-view-overlay ${$button_pos}'>
-                                        <a href="#" class="${$button_class}" data-product-id="${product_id}">
-                                            ${$contents}
-                                        </a>
-                                    </div>`
-                                        );
-                                    }
-                                } else {
-                                    // Default behavior for other positions (overlay, etc.)
-                                    $this.append(
-                                        `<div class='rmenu-quick-view-overlay ${$button_pos}'>
-                                    <a href="#" class="${$button_class}" data-product-id="${product_id}">
-                                        ${$contents}
-                                    </a>
-                                </div>`
-                                    );
-                                }
-                            }
-                        }
+                // Re-initialize after AJAX complete (global)
+                $(document).ajaxComplete(function(event, xhr, settings) {
+                    // Add a small delay to ensure DOM is updated
+                    setTimeout(function() {
+                        initQuickViewButtons();
+                    }, 100);
+                });
+
+                // Re-initialize when new content is loaded via AJAX (WooCommerce specific)
+                $('body').on('wc_fragments_loaded wc_fragments_refreshed', function() {
+                    initQuickViewButtons();
+                });
+
+                // Re-initialize for infinite scroll or pagination
+                $('body').on('post-load', function(e, data) {
+                    if (data && data.length) {
+                        initQuickViewButtons($(data));
                     }
                 });
+
+                // Re-initialize when products are updated/filtered
+                $('body').on('woocommerce_updated_cart_totals updated_checkout updated_shipping_method', function() {
+                    setTimeout(function() {
+                        initQuickViewButtons();
+                    }, 100);
+                });
+
+                // Make functions globally available for manual calls
+                window.initQuickViewButtons = initQuickViewButtons;
+                window.refreshQuickViewButtons = refreshQuickViewButtons;
+                window.cleanupOrphanedQuickViewButtons = cleanupOrphanedQuickViewButtons;
+
             });
         </script>
     <?php
@@ -324,7 +388,6 @@ class RMENU_Quick_View
 
 
         echo wp_kses_post(apply_filters('rmenu_quick_view_button_html', $button_html, $product));
-
     }
 
     public function button_contents()
