@@ -38,7 +38,7 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
      * Get widget title.
      */
     public function get_title() {
-        return esc_html__('Plugincy One Page Checkout', 'one-page-quick-checkout-for-woocommerce');
+        return esc_html__('Multi Product One Page Checkout', 'one-page-quick-checkout-for-woocommerce');
     }
 
     /**

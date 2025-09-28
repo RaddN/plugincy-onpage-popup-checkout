@@ -63,7 +63,7 @@ function onepaquc_add_random_product_if_cart_empty()
                     localStorage.removeItem('random_product_added');
                 } catch (e) {}
             </script>
-            <?php
+        <?php
         });
     }
 }
@@ -154,248 +154,234 @@ class onepaquc_add_variation_buttons_on_archive
     {
         global $product;
 
-        // Only proceed if this is a variable product
-        if ($product->is_type('variable')) {
-            // Get available variations
-            $available_variations = $product->get_available_variations();
-
-            if (!empty($available_variations)) {
-                $position = get_option("rmenu_wc_direct_checkout_position", "overlay_thumbnail_hover");
-
-                // Add specific class based on position for styling
-                $container_class = 'archive-variations-container';
-                if (in_array($position, ['overlay_thumbnail', 'overlay_thumbnail_hover', 'after_product'])) {
-                    $container_class .= ' overlay-variations';
-                }
-                if (in_array($position, ['after_product'])) {
-                    $container_class .= ' bottom-48';
-                }
-
-                echo '<div class="' . esc_attr($container_class) . '">';
-
-                // Loop through all variations and create a button for each
-                foreach ($available_variations as $variation) {
-                    $variation_id = $variation['variation_id'];
-
-                    // Create a readable title from the attributes
-                    $variation_title = array();
-                    foreach ($variation['attributes'] as $attribute_name => $attribute_value) {
-                        $taxonomy = str_replace('attribute_', '', $attribute_name);
-                        $term_name = $attribute_value;
-
-                        // If it's a taxonomy attribute, get the term name
-                        if (taxonomy_exists($taxonomy)) {
-                            $term = get_term_by('slug', $attribute_value, $taxonomy);
-                            if ($term && !is_wp_error($term)) {
-                                $term_name = $term->name;
-                            }
-                        }
-
-                        if (!empty($term_name)) {
-                            $variation_title[] = $term_name;
-                        }
-                    }
-
-                    $button_text = implode(' / ', $variation_title);
-
-                    // Create the button with data-id attribute
-                    echo '<button type="button" class="variation-button" data-id="' . esc_attr($variation_id) . '">' . esc_html($button_text) . '</button>';
-                }
-
-                // Hidden input to store the selected variation ID
-                echo '<input type="hidden" class="variation_id" value="">';
-
-                echo '</div>'; // .archive-variations-container
-
-                // Simple JS to update the variation_id when a button is clicked
-            ?>
-                <script type="text/javascript">
-                    jQuery(document).ready(function($) {
-                        // Move overlay variations to be direct child of .product
-                        $('.overlay-variations').each(function() {
-                            var $variations = $(this);
-                            var $product = $variations.closest('.product');
-                            if ($product.length) {
-                                $variations.detach().appendTo($product);
-                            }
-                        });
-
-                        $('.variation-button').click(function() {
-                            var variation_id = $(this).data('id');
-                            $(this).closest('.archive-variations-container').find('.variation_id').val(variation_id);
-                            $(this).addClass('selected').siblings().removeClass('selected');
-                        });
-                    });
-                </script>
-                <style>
-                    .archive-variations-container {
-                        margin-top: 10px;
-                        margin-bottom: 10px;
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 5px;
-                    }
-
-                    /* Special styling for overlay positions */
-                    .overlay-variations {
-                        position: absolute;
-                        bottom: 10px;
-                        left: 10px;
-                        right: 10px;
-                        background: rgba(255, 255, 255, 0.9);
-                        padding: 10px;
-                        border-radius: 5px;
-                        z-index: 10;
-                    }
-
-                    .product:hover>.overlay-variations {
-                        z-index: 1000;
-                    }
-
-                    .bottom-48 {
-                        bottom: 48px;
-                    }
-
-                    /* Hide overlay variations by default, show on hover for hover position */
-                    .overlay-variations {
-                        opacity: 0;
-                        transition: opacity 0.3s ease;
-                    }
-
-                    /* Show overlay variations on product hover for hover position */
-                    .product:hover>.overlay-variations {
-                        opacity: 1;
-                    }
-
-                    /* Always show for non-hover overlay position */
-                    .archive-variations-container:not(.overlay-variations) {
-                        opacity: 1;
-                    }
-
-                    .variation-button {
-                        background-color: #f7f7f7;
-                        border: 1px solid #ddd;
-                        padding: 5px 10px;
-                        border-radius: 3px;
-                        cursor: pointer;
-                        transition: all 0.2s;
-                        color: #000;
-                        font-size: 12px;
-                    }
-
-                    .variation-button:hover {
-                        background-color: #eaeaea;
-                        color: #000;
-                    }
-
-                    .variation-button.selected {
-                        background-color: #4CAF50;
-                        color: white;
-                        border-color: #4CAF50;
-                    }
-
-                    /* Ensure product container has relative positioning for overlay */
-                    .product {
-                        position: relative;
-                    }
-                </style>
-        <?php
-            }
+        if (!$product || !$product->is_type('variable')) {
+            return;
         }
+
+        $available_variations = $product->get_available_variations();
+        if (empty($available_variations)) {
+            return;
+        }
+
+        $position     = get_option('rmenu_wc_direct_checkout_position', 'overlay_thumbnail_hover');
+        $layout       = get_option('rmenu_variation_layout', 'separate'); // 'combine' | 'separate'
+        $show_titles  = (bool) get_option('rmenu_show_variation_title', 0);
+
+        $container_class = 'archive-variations-container';
+        if (in_array($position, ['overlay_thumbnail', 'overlay_thumbnail_hover', 'after_product'], true)) {
+            $container_class .= ' overlay-variations';
+        }
+        if (in_array($position, ['after_product'], true)) {
+            $container_class .= ' bottom-48';
+        }
+
+        echo '<div class="' . esc_attr($container_class) . '" data-layout="' . esc_attr($layout) . '">';
+
+        if ($layout === 'combine') {
+            // ---------- COMBINE (unchanged visual behavior) ----------
+            foreach ($available_variations as $variation) {
+                $variation_id = $variation['variation_id'];
+                $parts = [];
+
+                foreach ($variation['attributes'] as $attribute_name => $attribute_value) {
+                    $taxonomy   = str_replace('attribute_', '', $attribute_name);
+                    $value_label = $attribute_value;
+
+                    if (taxonomy_exists($taxonomy)) {
+                        $term = get_term_by('slug', $attribute_value, $taxonomy);
+                        if ($term && !is_wp_error($term)) {
+                            $value_label = $term->name;
+                        }
+                    }
+                    if ($value_label !== '') {
+                        $parts[] = $value_label;
+                    }
+                }
+
+                echo '<button type="button" class="variation-button" data-id="' . esc_attr($variation_id) . '">' . esc_html(implode(' / ', $parts)) . '</button>';
+            }
+
+            // Hidden + visible
+            echo '<input type="hidden" class="variation_id" value="">';
+        } else {
+            // ---------- SEPARATE (group by attribute) ----------
+            $attributes_terms   = []; // attr_key => ['label'=>..., 'terms'=> [ slug => label ]]
+            $attr_keys_indexed  = []; // seen keys
+            $variations_for_js  = []; // [{id, attrs:{attr=>slug}}]
+
+            foreach ($available_variations as $variation) {
+                $vid       = $variation['variation_id'];
+                $var_attrs = [];
+
+                foreach ($variation['attributes'] as $attribute_name => $attribute_value) {
+                    $attr_key   = str_replace('attribute_', '', $attribute_name); // e.g., pa_color or custom
+                    $slug       = $attribute_value;
+                    if ($slug === '') {
+                        continue;
+                    }
+
+                    $attr_label = wc_attribute_label($attr_key, $product);
+                    $value_label = $slug;
+
+                    if (taxonomy_exists($attr_key)) {
+                        $term = get_term_by('slug', $slug, $attr_key);
+                        if ($term && !is_wp_error($term)) {
+                            $value_label = $term->name;
+                        }
+                    }
+
+                    if (!isset($attributes_terms[$attr_key])) {
+                        $attributes_terms[$attr_key] = [
+                            'label' => $attr_label ?: ucfirst(str_replace('pa_', '', $attr_key)),
+                            'terms' => []
+                        ];
+                    }
+                    $attributes_terms[$attr_key]['terms'][$slug] = $value_label;
+
+                    $var_attrs[$attr_key] = $slug;
+                    $attr_keys_indexed[$attr_key] = true;
+                }
+
+                $variations_for_js[] = ['id' => (string) $vid, 'attrs' => $var_attrs];
+            }
+
+            $attr_keys = array_keys($attr_keys_indexed);
+
+            // Container that carries JSON safely (no HTML-entity headaches)
+            echo '<div class="separate-attrs">';
+            echo '<script type="application/json" class="var-map">' . wp_json_encode($variations_for_js) . '</script>';
+            echo '<script type="application/json" class="attr-keys">' . wp_json_encode($attr_keys) . '</script>';
+
+            foreach ($attributes_terms as $attr_key => $info) {
+                echo '<div class="var-attr-group" data-attr="' . esc_attr($attr_key) . '">';
+
+                if ($show_titles) {
+                    echo '<span class="var-attr-title">' . esc_html($info['label']) . ':</span> ';
+                }
+
+                echo '<div class="var-attr-options">';
+                foreach ($info['terms'] as $slug => $label) {
+                    echo '<button type="button" class="var-attr-option" data-attr="' . esc_attr($attr_key) . '" data-value="' . esc_attr($slug) . '">' . esc_html($label) . '</button>';
+                }
+                echo '</div></div>';
+            }
+
+            echo '</div>'; // .separate-attrs
+
+            // Hidden + visible
+            echo '<input type="hidden" class="variation_id" value="">';
+        }
+
+        echo '</div>'; // container
     }
 }
 
 function onepaquc_add_variation_buttons_to_loop($link, $product)
 {
-    // Only proceed if this is a variable product
-    if ($product->is_type('variable')) {
-        // Get available variations
-        $available_variations = $product->get_available_variations();
+    if (!$product || !$product->is_type('variable')) {
+        return $link;
+    }
 
-        ob_start(); // Start output buffering
+    $available_variations = $product->get_available_variations();
+    if (empty($available_variations)) {
+        return $link;
+    }
 
-        echo '<div class="archive-variations-container">';
+    $layout      = get_option('rmenu_variation_layout', 'separate'); // 'combine' | 'separate'
+    $show_titles = (bool) get_option('rmenu_show_variation_title', 0);
 
-        // Loop through all variations and create a button for each
+    ob_start();
+
+    echo '<div class="archive-variations-container" data-layout="' . esc_attr($layout) . '">';
+
+    if ($layout === 'combine') {
         foreach ($available_variations as $variation) {
-            $variation_id = $variation['variation_id'];
-
-            // Create a readable title from the attributes
-            $variation_title = array();
+            $vid   = $variation['variation_id'];
+            $parts = [];
             foreach ($variation['attributes'] as $attribute_name => $attribute_value) {
-                $taxonomy = str_replace('attribute_', '', $attribute_name);
-                $term_name = $attribute_value;
-
-                // If it's a taxonomy attribute, get the term name
-                if (taxonomy_exists($taxonomy)) {
-                    $term = get_term_by('slug', $attribute_value, $taxonomy);
+                $attr_key    = str_replace('attribute_', '', $attribute_name);
+                $value_label = $attribute_value;
+                if (taxonomy_exists($attr_key)) {
+                    $term = get_term_by('slug', $attribute_value, $attr_key);
                     if ($term && !is_wp_error($term)) {
-                        $term_name = $term->name;
+                        $value_label = $term->name;
+                    }
+                }
+                if ($value_label !== '') {
+                    $parts[] = $value_label;
+                }
+            }
+            echo '<button type="button" class="variation-button" data-id="' . esc_attr($vid) . '">' . esc_html(implode(' / ', $parts)) . '</button>';
+        }
+
+        echo '<input type="hidden" class="variation_id" value="">';
+    } else {
+        $attributes_terms   = [];
+        $attr_keys_indexed  = [];
+        $variations_for_js  = [];
+
+        foreach ($available_variations as $variation) {
+            $vid       = $variation['variation_id'];
+            $var_attrs = [];
+
+            foreach ($variation['attributes'] as $attribute_name => $attribute_value) {
+                $attr_key   = str_replace('attribute_', '', $attribute_name);
+                $slug       = $attribute_value;
+                if ($slug === '') {
+                    continue;
+                }
+
+                $attr_label = wc_attribute_label($attr_key, $product);
+                $value_label = $slug;
+
+                if (taxonomy_exists($attr_key)) {
+                    $term = get_term_by('slug', $slug, $attr_key);
+                    if ($term && !is_wp_error($term)) {
+                        $value_label = $term->name;
                     }
                 }
 
-                if (!empty($term_name)) {
-                    $variation_title[] = $term_name;
+                if (!isset($attributes_terms[$attr_key])) {
+                    $attributes_terms[$attr_key] = [
+                        'label' => $attr_label ?: ucfirst(str_replace('pa_', '', $attr_key)),
+                        'terms' => []
+                    ];
                 }
+                $attributes_terms[$attr_key]['terms'][$slug] = $value_label;
+
+                $var_attrs[$attr_key] = $slug;
+                $attr_keys_indexed[$attr_key] = true;
             }
 
-            $button_text = implode(' / ', $variation_title);
-
-            // Create the button with data-id attribute
-            echo '<button type="button" class="variation-button" data-id="' . esc_attr($variation_id) . '">' . esc_html($button_text) . '</button>';
+            $variations_for_js[] = ['id' => (string) $vid, 'attrs' => $var_attrs];
         }
 
-        // Hidden input to store the selected variation ID
+        $attr_keys = array_keys($attr_keys_indexed);
+
+        echo '<div class="separate-attrs">';
+        echo '<script type="application/json" class="var-map">' . wp_json_encode($variations_for_js) . '</script>';
+        echo '<script type="application/json" class="attr-keys">' . wp_json_encode($attr_keys) . '</script>';
+
+        foreach ($attributes_terms as $attr_key => $info) {
+            echo '<div class="var-attr-group" data-attr="' . esc_attr($attr_key) . '">';
+
+            if ($show_titles) {
+                echo '<span class="var-attr-title">' . esc_html($info['label']) . ':</span> ';
+            }
+
+            echo '<div class="var-attr-options">';
+            foreach ($info['terms'] as $slug => $label) {
+                echo '<button type="button" class="var-attr-option" data-attr="' . esc_attr($attr_key) . '" data-value="' . esc_attr($slug) . '">' . esc_html($label) . '</button>';
+            }
+            echo '</div></div>';
+        }
+
+        echo '</div>'; // .separate-attrs
+
         echo '<input type="hidden" class="variation_id" value="">';
-
-        echo '</div>'; // .archive-variations-container
-
-        // Simple JS to update the variation_id when a button is clicked
-        ?>
-        <script type="text/javascript">
-            jQuery(document).ready(function($) {
-                $('.variation-button').click(function() {
-                    var variation_id = $(this).data('id');
-                    $(this).closest('.archive-variations-container').find('.variation_id').val(variation_id);
-                    $(this).addClass('selected').siblings().removeClass('selected');
-                });
-            });
-        </script>
-        <style>
-            .archive-variations-container {
-                margin-top: 10px;
-                margin-bottom: 10px;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-
-            .variation-button {
-                background-color: #f7f7f7;
-                border: 1px solid #ddd;
-                padding: 5px 10px;
-                border-radius: 3px;
-                cursor: pointer;
-                transition: all 0.2s;
-                color: #000;
-            }
-
-            .variation-button:hover {
-                background-color: #eaeaea;
-                color: #000;
-            }
-
-            .variation-button.selected {
-                background-color: #4CAF50;
-                color: white;
-                border-color: #4CAF50;
-            }
-        </style>
-<?php
-
-        // Append the variations container before the add to cart link
-        return ob_get_clean() . $link; // Return the variations and the link
     }
 
-    return $link; // Return the original link for non-variable products
+    echo '</div>'; // container
+
+    return ob_get_clean() . $link;
 }

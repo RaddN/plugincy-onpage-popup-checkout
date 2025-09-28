@@ -3,6 +3,8 @@ jQuery(document).ready(function ($) {
 
     let updateCartContent_timer;
 
+    plugincydebugLog("Settings : ", onepaquc_rmsgValue.plugincy_all_settings);
+
     const checkout_popup = $('.checkout-popup');
     $isonepagewidget = (checkout_popup.length) ? checkout_popup.data('isonepagewidget') : false;
 
@@ -54,7 +56,7 @@ jQuery(document).ready(function ($) {
     window.openCartDrawer = function () {
         const cartDrawer = $('.cart-drawer');
         const overlay = $('.overlay');
-        if (cartDrawer && cartDrawer.length){
+        if (cartDrawer && cartDrawer.length) {
             cartDrawer.addClass('open');
             if (overlay) overlay.show();
             document.body.style.overflow = 'hidden';
@@ -325,5 +327,120 @@ jQuery(document).ready(function ($) {
         $input.val(currentValue);
         $input.trigger('change'); // Trigger the change event to use your existing code
 
+    });
+});
+
+
+
+
+
+
+
+
+// variation selection handle
+
+jQuery(function ($) {
+    // Keep overlays attached directly to .product
+    $('.overlay-variations').each(function () {
+        var $variations = $(this);
+        var $product = $variations.closest('.product');
+        if ($product.length) {
+            $variations.detach().appendTo($product);
+        }
+    });
+
+    // COMBINE clicks (unchanged)
+    $(document).on('click', '.variation-button', function () {
+        plugincydebugLog("clicked variation button combined: ", $(this));
+        var $wrap = $(this).closest('.archive-variations-container');
+        var id = $(this).data('id');
+        plugincydebugLog("variation id: ", id);
+        $(this).addClass('selected').siblings().removeClass('selected');
+        $wrap.find('input.variation_id').val(id);
+        $wrap.find('span.variation_id').text(id);
+    });
+
+    // SEPARATE logic
+    $('.archive-variations-container[data-layout="separate"]').each(function () {
+        var $wrap = $(this);
+        var $box = $wrap.find('.separate-attrs');
+        if (!$box.length) return;
+
+        var variations = [];
+        var attrKeys = [];
+
+        try {
+            variations = JSON.parse($box.find('script.var-map').text() || '[]');
+        } catch (e) { }
+        try {
+            attrKeys = JSON.parse($box.find('script.attr-keys').text() || '[]');
+        } catch (e) { }
+
+        var selected = {}; // attr_key => slug
+
+        function findVariationId() {
+            for (var i = 0; i < variations.length; i++) {
+                var v = variations[i],
+                    ok = true;
+                    
+                for (var k = 0; k < attrKeys.length; k++) {
+                    var a = attrKeys[k];
+                    if (!selected[a] || v.attrs[a] != selected[a]) {
+                        ok = false;
+                        break;
+                    }
+                }
+                plugincydebugLog("possible variation id : ", v.id);
+                if (ok) return v.id;
+            }
+            return '';
+        }
+
+        // (optional) compute enabled options based on partial selection
+        function refreshAvailability() {
+            // For each attribute, check which options are available given current selection
+            attrKeys.forEach(function(attr) {
+            $box.find('.var-attr-option[data-attr="' + attr + '"]').each(function() {
+                var $option = $(this);
+                var value = $option.data('value');
+                var testSelection = Object.assign({}, selected);
+                testSelection[attr] = value;
+
+                // Check if any variation matches this partial selection
+                var available = variations.some(function(v) {
+                return attrKeys.every(function(a) {
+                    // If attribute is selected, must match; if not selected, ignore
+                    return !testSelection[a] || v.attrs[a] == testSelection[a];
+                });
+                });
+
+                if (available) {
+                $option.removeClass('disabled');
+                } else {
+                $option.addClass('disabled');
+                }
+            });
+            });
+        }
+
+        $box.on('click', '.var-attr-option', function () {
+            plugincydebugLog("clicked variation button: ", $(this));
+            var $btn = $(this);
+            var attr = $btn.data('attr');
+            var value = $btn.data('value');
+
+            // single-select per attribute
+            $btn.addClass('selected').siblings('[data-attr="' + attr + '"]').removeClass('selected');
+            selected[attr] = value;
+
+            plugincydebugLog("selected: ", selected);
+
+            refreshAvailability();
+
+            var id = findVariationId();
+            plugincydebugLog("final variation id: ", id);
+            $wrap.find('input.variation_id').val(id);
+            $wrap.find('span.variation_id').text(id);
+        });
     });
 });

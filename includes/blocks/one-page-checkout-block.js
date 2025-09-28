@@ -5,7 +5,7 @@
     const el = element.createElement;
     
     blocks.registerBlockType('plugincy/one-page-checkout', {
-        title: 'Plugincy One Page Checkout',
+        title: 'Multi Product One Page Checkout',
         icon: 'onepaquc_one_page_cart',
         category: 'plugincy',
         keywords: [

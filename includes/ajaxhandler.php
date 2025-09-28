@@ -179,40 +179,9 @@ function onepaquc_refresh_checkout_product_list()
     }
 
     $html = ob_get_clean();
-    $allowed_html = array(
-        'li' => array(
-            'class' => array(),
-            'data-product-id' => array(),
-            'data-cart-item-key' => array(),
-        ),
-        'div' => array(
-            'class' => array(),
-        ),
-        'label' => array(
-            'class' => array(),
-        ),
-        'input' => array(
-            'type' => array(),
-            'class' => array(),
-            'value' => array(),
-            'checked' => array(),
-        ),
-        'span' => array(
-            'class' => array(),
-        ),
-        'img' => array(
-            'src' => array(),
-            'alt' => array(),
-            'class' => array(),
-            'width' => array(),
-            'height' => array(),
-            'srcset' => array(),
-            'sizes' => array(),
-            'loading' => array(),
-        ),
-    );
+    global $onepaquc_allowed_tags;
 
-    echo wp_kses($html, $allowed_html);
+    echo wp_kses($html, $onepaquc_allowed_tags);
     wp_die();
 }
 

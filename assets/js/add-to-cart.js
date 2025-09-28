@@ -81,8 +81,17 @@
                 });
             }
 
+            
+
             // Disable button and show loading state
             $thisButton.addClass('loading').prop('disabled', true);
+
+            if (Object.keys(variations).length && variationId == 0) {
+                $('#checkout-button-drawer-link').prop('disabled', false);
+                $thisButton.removeClass('loading').prop('disabled', false);
+                alert("Please select some product options before adding this product to your cart.");
+                return false; // Explicitly return false
+            }
 
             var redirecturlparams = `?add-to-cart=${productId}`;
             if (variationId && variationId != 0) {

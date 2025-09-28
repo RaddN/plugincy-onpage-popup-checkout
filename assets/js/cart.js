@@ -1,4 +1,25 @@
+
+
+
 jQuery(document).ready(function ($) {
+
+    (function () {
+        function resetAllCheckoutButtons() {
+            $('#checkout-button-drawer-link').prop('disabled', false);
+            $('.loading').removeClass('loading').prop('disabled', false);
+        }
+
+        window.addEventListener('pageshow', function (e) {
+            const fromBFCache = e.persisted ||
+                (performance && performance.getEntriesByType &&
+                    performance.getEntriesByType('navigation')[0] &&
+                    performance.getEntriesByType('navigation')[0].type === 'back_forward');
+
+            if (fromBFCache) resetAllCheckoutButtons();
+        });
+    })();
+
+
     let isUpdatingCart = false;
     let isUpdatingCheckout = false;
     $isonepagewidget = ($('.checkout-popup,#checkout-popup').length) ? $('.checkout-popup,#checkout-popup').data('isonepagewidget') : false;
@@ -100,10 +121,11 @@ jQuery(document).ready(function ($) {
     }
 
     function debouncedUpdate(showdrawer = true) {
-        if (!$isonepagewidget) {
-            updateCartContent();
-        } else {
+        $is_drawerOpen = ($('.cart-drawer').length && $('.cart-drawer').hasClass('open')) ? true : false;
+        if ($isonepagewidget && !$is_drawerOpen) {
             updateCartContent(false);
+        } else {
+            updateCartContent();
         }
         updateCheckoutForm();
     }
@@ -238,8 +260,6 @@ jQuery(document).ready(function ($) {
                 debouncedUpdate(false);
                 // Trigger WC events
                 $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisButton]);
-                $('body').trigger('onepaquc_update_checkout');
-                $(document.body).trigger('update_checkout');
             },
             complete: function () {
                 $('.woocommerce-checkout-review-order-table').unblock();
@@ -355,7 +375,7 @@ jQuery(document).ready(function ($) {
 
     function directcheckout(product_id, product_type, $button) {
         var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() ||
-            $button.siblings('.variation_id').val() ||
+            $button.siblings('.variation_id').val() || $button.closest('.product').find('.variation_id').val() ||
             $button.closest('.product').find('.archive-variations-container').find('.variation_id').val() || 0;
 
         // Convert to number to ensure proper comparison
@@ -483,9 +503,9 @@ jQuery(document).ready(function ($) {
                     action: 'woocommerce_clear_cart'
                 },
                 success: function () {
-                    if (methodKey === 'direct_checkout') {
+                    if (methodKey === 'direct_checkout' && !$isonepagewidget) {
                         window.location.href = onepaquc_wc_cart_params.checkout_url + $redirecturlparams;
-                    } else if (methodKey === 'cart_redirect') {
+                    } else if (methodKey === 'cart_redirect' && !$isonepagewidget) {
                         window.location.href = onepaquc_wc_cart_params.cart_url + $redirecturlparams;
                     } else {
                         proceedToAddToCart();
@@ -498,9 +518,9 @@ jQuery(document).ready(function ($) {
                 }
             });
         } else {
-            if (methodKey === 'direct_checkout') {
+            if (methodKey === 'direct_checkout' && !$isonepagewidget) {
                 window.location.href = onepaquc_wc_cart_params.checkout_url + $redirecturlparams;
-            } else if (methodKey === 'cart_redirect') {
+            } else if (methodKey === 'cart_redirect' && !$isonepagewidget) {
                 window.location.href = onepaquc_wc_cart_params.cart_url + $redirecturlparams;
             } else {
                 proceedToAddToCart();

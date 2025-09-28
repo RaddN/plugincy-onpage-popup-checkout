@@ -1,3 +1,4 @@
+// includes\blocks\plugincy_cart_block.js
 (function (blocks, element, components, blockEditor) {
     const { Fragment } = element;
     const { TextControl, SelectControl, RangeControl, PanelBody, TabPanel, ColorPicker } = components;

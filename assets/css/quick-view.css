@@ -56,8 +56,8 @@
 /* Image overlay button */
 .rmenu-quick-view-overlay.image_overlay {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 6px;
+  left: 6px;
   transform: translate(0, 0);
   opacity: 0;
   display: flex;
@@ -65,9 +65,10 @@
   align-items: center;
   transition: opacity 0.3s ease;
   z-index: 999;
+  height: 36px;
 }
 
-.product:hover>.rmenu-quick-view-overlay.image_overlay {
+.product:hover > .rmenu-quick-view-overlay.image_overlay {
   opacity: 1;
 }
 
@@ -175,14 +176,16 @@
   background-color: #ffdcdc;
 }
 
-.rmenu-quick-view-close .dashicons {
-  color: #000;
+.rmenu-quick-view-close svg {
+  fill: #000;
+  stroke: #000;
   font-size: 20px;
   width: 20px;
   height: 20px;
 }
-.rmenu-quick-view-close .dashicons:hover {
-  color: #ff0000;
+.rmenu-quick-view-close svg:hover {
+  fill: #ff0000;
+  stroke: #ff0000;
 }
 
 .rmenu-quick-view-close .screen-reader-text {
@@ -224,14 +227,6 @@
 .rmenu-quick-view-next:hover {
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
-}
-
-.rmenu-quick-view-prev .dashicons,
-.rmenu-quick-view-next .dashicons {
-  color: #fff;
-  font-size: 22px;
-  width: 22px;
-  height: 22px;
 }
 
 .rmenu-quick-view-prev .screen-reader-text,
@@ -317,7 +312,7 @@
   margin-bottom: 10px;
 }
 
-.rmenu-quick-view-right .woocommerce-product-rating .review-count{
+.rmenu-quick-view-right .woocommerce-product-rating .review-count {
   display: none !important;
 }
 
@@ -517,6 +512,7 @@ a.opqvfw-btn.button.display-icon {
   border: none;
   border-radius: 100%;
   min-width: 36px;
+  margin: 0 !important;
 }
 a.opqvfw-btn {
   z-index: 99999 !important;
