@@ -264,7 +264,16 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                 --cart-left: <?php echo esc_attr(get_option('rmenu_cart_left_position', '100%')); ?>;
                 <?php
                 $border_radius = get_option('rmenu_cart_border_radius', '5px 0 0 5px');
-                if ($border_radius == '50') {
+
+                // Check if border_radius has a unit
+                if (!preg_match('/(px|%|em|rem|vw|vh)$/', $border_radius)) {
+                    $border_radius .= 'px'; // Append px if no unit is present
+                }
+
+                // Convert border_radius to an integer for comparison
+                $border_radius_value = intval($border_radius); // Get the numeric value
+
+                if ($border_radius_value >= 50) { // Check if the value is greater than or equal to 50
                     echo '--cart-radius: 50%;';
                     echo '--cart-width: 50px;';
                     echo '--cart-height: 50px;';

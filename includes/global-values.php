@@ -55,10 +55,10 @@ $onepaquc_rcheckoutformfields = [
     'notes'     => ['title' => 'Notes', 'selector' => '#order_comments_field'],
 ];
 
-global $onepaquc_allowed_tags;
+global $onepaquc_onepaquc_allowed_tags;
 
 
-$onepaquc_allowed_tags = array(
+$onepaquc_onepaquc_allowed_tags = array(
     'a' => array(
         'href' => array(),
         'title' => array(),

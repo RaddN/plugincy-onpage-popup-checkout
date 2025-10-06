@@ -164,7 +164,7 @@ class Plugincy_OPQC_Checkout_Widget extends Widget_Base {
 		}
 
 		// Safe HTML from your renderer + Woo templates.
-		global $onepaquc_allowed_tags;
-		echo wp_kses( $html, $onepaquc_allowed_tags );
+		global $onepaquc_onepaquc_allowed_tags;
+		echo wp_kses( $html, $onepaquc_onepaquc_allowed_tags );
 	}
 }

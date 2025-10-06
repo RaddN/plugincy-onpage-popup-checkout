@@ -96,6 +96,42 @@ class RMENU_Quick_View
 
     public function onepaquc_display_quick_view_button_to_add_to_cart($link, $product)
     {
+        // Check if product type is allowed
+        $allowed_types = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]);
+        if (!in_array($product->get_type(), $allowed_types)) {
+            return $link;
+        }
+
+        $this->is_btn_add_hook_works = true;
+
+        // Check if current page is allowed
+        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', "tag-archives", 'search', "featured-products", "on-sale", "recent", "widgets", "shortcodes"]);
+        $display = false;
+
+        if (in_array('shop-page', $allowed_pages) && is_shop()) {
+            $display = true;
+        } elseif (in_array('category-archives', $allowed_pages) && is_product_category()) {
+            $display = true;
+        } elseif (in_array('tag-archives', $allowed_pages) && is_product_tag()) {
+            $display = true;
+        } elseif (in_array('search', $allowed_pages) && is_search()) {
+            $display = true;
+        } elseif (in_array('featured-products', $allowed_pages) && wc_get_loop_prop('is_featured')) {
+            $display = true;
+        } elseif (in_array('on-sale', $allowed_pages) && wc_get_loop_prop('is_on_sale')) {
+            $display = true;
+        } elseif (in_array('recent', $allowed_pages) && wc_get_loop_prop('is_recent')) {
+            $display = true;
+        } elseif (in_array('widgets', $allowed_pages) && (is_active_widget(false, false, 'woocommerce_products', true) || is_active_widget(false, false, 'woocommerce_top_rated_products', true))) {
+            $display = true;
+        } elseif (in_array('shortcodes', $allowed_pages) && is_singular()) {
+            $display = true;
+        }
+
+        if (!$display) {
+            return $link;
+        }
+
         $position = get_option('rmenu_quick_view_button_position', 'image_overlay');
 
         $this->is_btn_add_hook_works = true;
@@ -117,7 +153,7 @@ class RMENU_Quick_View
             return;
         }
 
-        global $allowed_tags;
+        global $onepaquc_allowed_tags;
 
         if (is_singular('product')) {
             return;
@@ -158,7 +194,7 @@ class RMENU_Quick_View
                 // Configuration variables
                 const quickViewConfig = {
                     buttonPos: "<?php echo esc_attr(get_option('rmenu_quick_view_button_position', 'image_overlay')); ?>",
-                    contents: '<?php echo wp_kses($button_contents['button_content'], $allowed_tags); ?>',
+                    contents: '<?php echo wp_kses($button_contents['button_content'], $onepaquc_allowed_tags); ?>',
                     buttonClass: "<?php echo esc_attr(implode(' ', $button_contents['button_classes'])); ?>",
                     allowedTypes: <?php echo wp_json_encode(get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"])); ?>
                 };
@@ -405,22 +441,13 @@ class RMENU_Quick_View
 
         // Generate icon HTML if needed
         $icon_html = '';
-        if ($button_icon !== 'none' && ($display_type === 'icon' || $display_type === 'text_icon' || $display_type === 'hover_icon')) {
-            switch ($button_icon) {
-                case 'eye':
-                    $icon_html = '<svg width="20" height="20" viewBox="0 0 0.5 0.5" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h.5v.5H0z"/><path fill="#fff" d="M.458.238a.257.257 0 0 0-.435.027q.008.015.02.03a.256.256 0 0 0 .415 0l.02-.03zM.253.18C.266.167.286.167.298.18s.013.033 0 .045-.033.013-.045 0S.24.192.253.18M.25.373A.23.23 0 0 1 .057.268.23.23 0 0 1 .175.18.1.1 0 0 0 .15.248a.1.1 0 0 0 .1.102.1.1 0 0 0 .102-.1V.247q0-.04-.028-.068a.22.22 0 0 1 .118.088.23.23 0 0 1-.193.105"/></svg>';
-                    break;
-                case 'search':
-                    $icon_html = '<svg width="20" height="20" fill="none" viewBox="0 0 12.8 12.8" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M10.4 11.2 7.975 8.775q-1.05.8-2.375.8-1.075 0-2-.525-.925-.55-1.45-1.475-.55-.925-.55-2t.55-2q.525-.925 1.45-1.45.925-.55 2-.55t2 .55q.925.525 1.475 1.45.525.925.525 2 0 1.35-.825 2.4L11.2 10.4zM5.575 8.4q1.175 0 2-.825.8-.825.8-1.975 0-1.175-.8-1.975-.825-.825-2-.825-1.15 0-1.975.825-.825.8-.825 1.975 0 1.15.825 1.975t1.975.825"/></svg>';
-                    break;
-                case 'zoom':
-                    $icon_html = '<svg width="20" height="20" viewBox="0 0 0.6 0.6" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="M.6 0v.6H0V0zM.315.581.313.582H.312L.31.581H.309v.012l.003.002.003-.002V.582M.322.579.317.581v.011l.005.002h.001zL.321.578m-.018 0H.302L.301.593v.001L.306.592V.581z"/><path d="M.1.375A.025.025 0 0 1 .125.4v.075H.2a.025.025 0 1 1 0 .05H.125a.05.05 0 0 1-.05-.05V.4A.025.025 0 0 1 .1.375m.4 0a.025.025 0 0 1 .025.022v.078a.05.05 0 0 1-.046.05H.4a.025.025 0 0 1-.003-.05h.078V.4A.025.025 0 0 1 .5.375m-.025-.3a.05.05 0 0 1 .05.046V.2a.025.025 0 0 1-.05.003V.125H.4a.025.025 0 0 1-.003-.05H.4zM.2.075a.025.025 0 0 1 .003.05H.125V.2a.025.025 0 0 1-.05.003V.125a.05.05 0 0 1 .046-.05h.004z" fill="#fff"/></g></svg>';
-                    break;
-                case 'preview':
-                    $icon_html = '<svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 20 20" xml:space="preserve" width="20" height="20"><path d="M3.333 2.5c-0.917 0 -1.667 0.75 -1.667 1.667v11.667c0 0.917 0.75 1.667 1.667 1.667h13.333c0.917 0 1.667 -0.75 1.667 -1.667V4.167c0 -0.917 -0.75 -1.667 -1.667 -1.667zm0 1.667h13.333v11.667H3.333zm6.667 2.5c-2.75 0 -5 2.75 -5 3.333s2.25 3.333 5 3.333 5 -2.917 5 -3.333 -2.25 -3.333 -5 -3.333m0 1.25V9.167c0 0.5 0.333 0.833 0.833 0.833h1.25c0 1.333 -1.25 2.333 -2.667 2 -0.667 -0.167 -1.25 -0.75 -1.5 -1.5 -0.25 -1.333 0.75 -2.583 2.083 -2.583"/><path style="fill:none" d="M0 0h20v20H0z"/></svg>';
-                    break;
+        if (empty($icon_html)) {
+            if ($button_icon !== 'none' && ($display_type === 'icon' || $display_type === 'text_icon' || $display_type === 'hover_icon')) {
+                $icon_html = '<span class="ricons ricons-' . $button_icon . '"></span>';
             }
         }
+
+
 
         // Generate button classes
         $button_classes = array('opqvfw-btn');

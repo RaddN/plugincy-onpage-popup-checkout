@@ -1,6 +1,6 @@
 <?php
  if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
- global $allowed_tags;
+ global $onepaquc_allowed_tags;
 ?>
 
 
@@ -39,7 +39,7 @@
                                 echo '<div class="one-page-checkout-product-add-to-cart">';
                                 if ($product) {
                                     $add_to_cart = do_shortcode('[add_to_cart id="' . esc_attr($product_id) . '" style=""]');
-                                    echo wp_kses($add_to_cart, $allowed_tags);
+                                    echo wp_kses($add_to_cart, $onepaquc_allowed_tags);
                                 }
                                 echo '</div>';
                                 echo '</td>';

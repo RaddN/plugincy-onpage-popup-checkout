@@ -740,7 +740,7 @@ function onepaquc_plugincy_cart_elementor_widget()
          */
         private function generate_styles($settings)
         {
-            global $allowed_tags;
+            global $onepaquc_allowed_tags;
             $css = '<style>';
 
             // Cart Icon Styles
@@ -847,7 +847,7 @@ function onepaquc_plugincy_cart_elementor_widget()
 
             $css .= '</style>';
 
-            echo wp_kses($css, $allowed_tags);
+            echo wp_kses($css, $onepaquc_allowed_tags);
         }
     }
     // Register the widget

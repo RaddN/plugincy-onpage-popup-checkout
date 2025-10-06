@@ -215,7 +215,6 @@ function onepaquc_cart_dashboard()
         </div>
 
         <div class="button-row">
-            <a target="_blank" href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ff5a36;color: white;"><span class="dashicons dashicons-superhero-alt" style=" margin-right: 5px; "></span> Get Pro</a>
             <a target="_blank" href="https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ed8936;color: white;"><span class="dashicons dashicons-visibility" style=" margin-right: 5px; "></span> View Demo</a>
             <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button"><span class="dashicons dashicons-book" style=" margin-right: 5px; "></span> View Documentation</a>
             <a href="https://plugincy.com/support" target="_blank" class="button button-secondary"><span class="dashicons dashicons-sos" style=" margin-right: 5px; "></span> Get Support</a>
@@ -833,11 +832,6 @@ function onepaquc_cart_dashboard()
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="related" <?php checked(in_array('related', $product_types_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Related Products</span>
-                                            </label>
-
-                                            <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="upsells" <?php checked(in_array('upsells', $product_types_option)); ?> />
                                                 <span class="rmenu-checkbox-label">Upsells</span>
                                             </label>
@@ -1032,9 +1026,9 @@ function onepaquc_cart_dashboard()
                                         </td>
                                     </tr>
 
-                                    <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
+                                    <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:flex;' : 'display:none;'; ?> grid-column: span 2;">
                                         <th class="rmenu-settings-label">Custom CSS</th>
-                                        <td class="rmenu-settings-control">
+                                        <td class="rmenu-settings-control" style="max-width: 100% !important;">
                                             <textarea name="rmenu_wc_checkout_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_wc_checkout_custom_css', '')); ?></textarea>
                                             <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqcfw-btn</code> to target the button.</p>
                                         </td>
@@ -1153,6 +1147,20 @@ function onepaquc_cart_dashboard()
                                         <?php $onepaquc_helper->switcher('rmenu_show_variation_title', 0); ?>
                                     </td>
                                 </tr>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const variationLayoutSelect = document.querySelector('select[name="rmenu_variation_layout"]');
+                                        const variationTitleSwitch = document.querySelector('input[name="rmenu_show_variation_title"]');
+
+                                        // Initial check
+                                        toggleDisabledClass(variationLayoutSelect.value === 'combine', variationTitleSwitch);
+
+                                        // Event listener for dropdown change
+                                        variationLayoutSelect.addEventListener('change', function() {
+                                            toggleDisabledClass(this.value === 'combine', variationTitleSwitch);
+                                        });
+                                    });
+                                </script>
                                 <tr>
                                     <?php $onepaquc_helper->sec_head('th', '', '', 'Hide Select Option Button', 'When enabled, the select option button will be hidden on variable product pages.'); ?>
                                     <td class="rmenu-settings-control">
@@ -1365,7 +1373,7 @@ function onepaquc_cart_dashboard()
                     jQuery(document).ready(function($) {
                         $('#rmenu-style-select').on('change', function() {
                             if ($(this).val() === 'custom') {
-                                $('#rmenu-custom-css-row').show();
+                                $('#rmenu-custom-css-row').css('display', 'flex');
                             } else {
                                 $('#rmenu-custom-css-row').hide();
                             }
@@ -2444,12 +2452,21 @@ function onepaquc_cart_dashboard()
                     // Show/hide custom CSS row based on selected style after page load
                     const styleSelect = document.querySelector('select[name="rmenu_quick_view_button_style"]');
                     const customCssRow = document.querySelector('textarea[name="rmenu_quick_view_custom_css"]').closest('tr');
+                    const quickViewButtonIconPos = document.querySelector('div#tab-7 select[name="rmenu_quick_view_icon_position"]');
                     const quickViewButtonIconRow = quickViewButtonIcon.closest('tr');
+                    const quickViewButtonIconPosRow = quickViewButtonIconPos.closest('tr');
+
                     const updateQuickViewDisplayType = () => {
                         if (quickViewDisplayType.value === 'button') {
                             quickViewButtonIconRow.style.display = 'none';
+                            quickViewButtonIconPosRow.style.display = 'none';
+
+                        } else if (quickViewDisplayType.value === 'icon') {
+                            quickViewButtonIconRow.style.display = 'flex';
+                            quickViewButtonIconPosRow.style.display = 'none';
                         } else {
                             quickViewButtonIconRow.style.display = 'flex';
+                            quickViewButtonIconPosRow.style.display = 'flex';
                         }
                     };
 
@@ -2757,8 +2774,13 @@ function onepaquc_cart_dashboard()
                         <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-visibility"></span>', 'Display Settings', 'Control how Add to Cart buttons appear on product archive pages.'); ?>
 
                         <div class="rmenu-settings-row">
-                            <div class="rmenu-settings-field">
-                                <label class="rmenu-settings-label">Button Display on Archive Pages</label>
+                            <div class="rmenu-settings-field" style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+                                <label class="rmenu-settings-label">Button Display on Archive Pages
+                                    <span class="tooltip">
+                                        <span class="question-mark">?</span>
+                                        <span class="tooltip-text">Control how Add to Cart buttons appear on product archive pages.</span>
+                                    </span>
+                                </label>
                                 <div class="rmenu-settings-control">
                                     <select name="rmenu_add_to_cart_catalog_display" class="rmenu-select">
                                         <option value="default" <?php selected(get_option('rmenu_add_to_cart_catalog_display', 'default'), 'default'); ?>>Default (WooCommerce Setting)</option>
@@ -2813,17 +2835,17 @@ function onepaquc_cart_dashboard()
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Animation', 'Choose the animation effect when products are added to cart.'); ?>
+                                <!-- <tr>
+                                    <?php //$onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Animation', 'Choose the animation effect when products are added to cart.'); ?>
                                     <td class="rmenu-settings-control">
                                         <select name="rmenu_add_to_cart_animation" class="rmenu-select">
-                                            <option value="none" <?php selected(get_option('rmenu_add_to_cart_animation', 'none'), 'none'); ?>>None</option>
-                                            <option value="slide" <?php selected(get_option('rmenu_add_to_cart_animation', 'none'), 'slide'); ?>>Slide Effect</option>
-                                            <option value="fade" <?php selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fade'); ?>>Fade Effect</option>
-                                            <option value="fly" <?php selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fly'); ?>>Fly to Cart Effect</option>
+                                            <option value="none" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'none'); ?>>None</option>
+                                            <option value="slide" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'slide'); ?>>Slide Effect</option>
+                                            <option value="fade" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fade'); ?>>Fade Effect</option>
+                                            <option value="fly" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fly'); ?>>Fly to Cart Effect</option>
                                         </select>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </table>
                         </div>
 
@@ -2962,18 +2984,18 @@ function onepaquc_cart_dashboard()
                             <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-welcome-widgets-menus"></span>', 'Advanced Options', ''); ?>
 
                             <table class="form-table plugincy_table">
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Load Effect', 'Choose an animation effect while adding to cart is in progress.'); ?>
+                                <!-- <tr>
+                                    <?php //$onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Load Effect', 'Choose an animation effect while adding to cart is in progress.'); ?>
                                     <td class="rmenu-settings-control pro-only">
                                         <select disabled name="rmenu_add_to_cart_loading_effect" class="rmenu-select">
-                                            <option value="none" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'none'); ?>>None</option>
-                                            <option value="spinner" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'spinner'); ?>>Spinner</option>
-                                            <option value="dots" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'dots'); ?>>Dots</option>
-                                            <option value="pulse" <?php selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'pulse'); ?>>Pulse</option>
+                                            <option value="none" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'none'); ?>>None</option>
+                                            <option value="spinner" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'spinner'); ?>>Spinner</option>
+                                            <option value="dots" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'dots'); ?>>Dots</option>
+                                            <option value="pulse" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'pulse'); ?>>Pulse</option>
                                         </select>
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                     </td>
-                                </tr>
+                                </tr> -->
 
                                 <tr>
                                     <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Disable continue shopping button', 'WooCommerce shows a continue shopping button after a product is added to cart, with this option you can disable that link so user remain on checkout page'); ?>

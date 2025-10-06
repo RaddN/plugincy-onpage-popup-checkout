@@ -11,7 +11,7 @@
 
         init: function () {
             // Handle AJAX add to cart for archive/shop pages
-            $(document).on('click', '.rmenu-ajax-add-to-cart,.single_add_to_cart_button:not(.direct-checkout-button)', this.ajaxAddToCart);
+            $(document).on('click', '.rmenu-ajax-add-to-cart,.single_add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn),.add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn)', this.ajaxAddToCart);
 
             // Handle quantity changes on archive pages
             $(document).on('change', '.rmenu-archive-quantity', this.updateAddToCartQuantity);
