@@ -360,8 +360,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                 min-width: 20px;
                 text-align: center;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-                aspect-ratio: 1;
-                width: 20px;
+                width: max-content;
                 height: 20px;
                 box-sizing: border-box;
             }

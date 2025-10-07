@@ -378,6 +378,43 @@ jQuery(document).ready(function ($) {
             $button.siblings('.variation_id').val() || $button.closest('.product').find('.variation_id').val() ||
             $button.closest('.product').find('.archive-variations-container').find('.variation_id').val() || 0;
 
+        var $form = $button.closest('form.cart');
+        var quantity = 1;
+
+        // Try multiple approaches to find the quantity input
+
+        // 1. Check product form first
+        if ($form.length > 0) {
+            quantity = $form.find('input.qty').val();
+        } else {
+            // 2. Check for quantity input in sibling elements
+            var $qtyInput = $button.siblings('.rmenu-archive-quantity');
+            if ($qtyInput.length > 0) {
+                quantity = $qtyInput.val();
+            } else {
+                // 3. Check for quantity in the closest wrapper by product ID
+                var $qtyWrapper = $('.rmenu-quantity-wrapper[data-product_id="' + productId + '"]');
+                if ($qtyWrapper.length > 0) {
+                    var $qtyField = $qtyWrapper.find('.rmenu-archive-quantity');
+                    if ($qtyField.length > 0) {
+                        quantity = $qtyField.val();
+                    }
+                } else {
+                    // 4. Try to find by ID
+                    var $qtyById = $('#quantity_' + productId);
+                    if ($qtyById.length > 0) {
+                        quantity = $qtyById.val();
+                    }
+                }
+            }
+        }
+
+        // Ensure we have a valid quantity
+        if (!quantity || quantity < 1 || isNaN(quantity)) {
+            quantity = 1;
+        }
+
+
         // Convert to number to ensure proper comparison
         $variation_id = parseInt($variation_id) || 0;
 
@@ -425,7 +462,7 @@ jQuery(document).ready(function ($) {
                 data: {
                     action: 'onepaquc_ajax_add_to_cart',
                     product_id: product_id,
-                    quantity: 1,
+                    quantity: quantity,
                     variation_id: $variation_id,
                     nonce: onepaquc_wc_cart_params.nonce || '',
                 },
@@ -489,7 +526,7 @@ jQuery(document).ready(function ($) {
             });
         }
 
-        $redirecturlparams = `?add-to-cart=${product_id}`;
+        $redirecturlparams = `?add-to-cart=${product_id}&quantity=${quantity}`;
         if ($variation_id && $variation_id != 0) {
             $redirecturlparams += `&variation_id=${$variation_id}`;
         }

@@ -359,15 +359,15 @@ function onepaquc_render_checkout_button(): bool
     $one_page_checkout = get_post_meta($product_id, '_one_page_checkout', true);
     $onpage_checkout_cart_add = get_option('onpage_checkout_cart_add', "1");
 
-    if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1") {
-        // Remove 'single_add_to_cart_button' and 'direct-checkout-button' from classes
-        $button_classes = preg_replace('/\b(direct-checkout-button)\b/', '', $button_styling['classes']);
-        $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
-        echo '<a href="#checkout-popup" class="' . esc_attr($button_classes) . ' onepaquc-checkout-btn" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
-    } else {
+    // if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1") {
+    //     // Remove 'single_add_to_cart_button' and 'direct-checkout-button' from classes
+    //     $button_classes = preg_replace('/\b(direct-checkout-button)\b/', '', $button_styling['classes']);
+    //     $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
+    //     echo '<a href="#checkout-popup" class="' . esc_attr($button_classes) . ' onepaquc-checkout-btn" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
+    // } else {
         // Output the button with fallback identifier
         echo '<a href="#checkout-popup" class="' . esc_attr($button_styling['classes']) . ' onepaquc-checkout-btn" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
-    }
+    // }
 
     // Optional: a tiny marker helps debugging/JS checks, doesn’t affect layout
     echo '<span class="onepaquc-rendered-marker" hidden></span>';
@@ -438,12 +438,12 @@ function onepaquc_add_js_fallback()
 
                 // Define button HTML
                 var buttonHtml = '';
-                <?php if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1"): ?>
-                    var buttonClasses = '<?php echo esc_js(preg_replace('/\b(direct-checkout-button)\b/', '', trim(preg_replace('/\s+/', ' ', $button_styling['classes'])))); ?>';
-                    buttonHtml = '<a href="#checkout-popup" class="' + buttonClasses + ' onepaquc-checkout-btn" style="<?php echo esc_js($button_styling['style']); ?>"><?php echo wp_kses($button_inner, $onepaquc_allowed_tags); ?></a>';
-                <?php else: ?>
+                // <?php //if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1"): ?>
+                //     var buttonClasses = '<?php //echo esc_js(preg_replace('/\b(direct-checkout-button)\b/', '', trim(preg_replace('/\s+/', ' ', $button_styling['classes'])))); ?>';
+                //     buttonHtml = '<a href="#checkout-popup" class="' + buttonClasses + ' onepaquc-checkout-btn" style="<?php //echo esc_js($button_styling['style']); ?>"><?php //echo wp_kses($button_inner, $onepaquc_allowed_tags); ?></a>';
+                // <?php //else: ?>
                     buttonHtml = '<a href="#checkout-popup" class="<?php echo esc_js($button_styling['classes']); ?> onepaquc-checkout-btn" data-product-id="<?php echo esc_js($product_id); ?>" data-product-type="<?php echo esc_js($product_type); ?>" data-title="<?php echo esc_js($product_title); ?>" style="<?php echo esc_js($button_styling['style']); ?>"><?php echo wp_kses($button_inner, $onepaquc_allowed_tags); ?></a>';
-                <?php endif; ?>
+                <?php //endif; ?>
 
                 // Try multiple selectors to find the best place to insert the button
                 var selectors = [
@@ -990,15 +990,15 @@ class onepaquc_add_checkout_button_on_archive
         $one_page_checkout = get_post_meta($product_id, '_one_page_checkout', true);
         $onpage_checkout_cart_add = get_option('onpage_checkout_cart_add', "1");
 
-        if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1") {
-            // Remove 'single_add_to_cart_button' and 'direct-checkout-button' from classes
-            $button_classes = preg_replace('/\b(direct-checkout-button)\b/', '', $button_styling['classes']);
-            $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
-            echo '<a href="#checkout-popup" class="' . esc_attr($button_classes) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
-        } else {
+        // if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1") {
+        //     // Remove 'single_add_to_cart_button' and 'direct-checkout-button' from classes
+        //     $button_classes = preg_replace('/\b(direct-checkout-button)\b/', '', $button_styling['classes']);
+        //     $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
+        //     echo '<a href="#checkout-popup" class="' . esc_attr($button_classes) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
+        // } else {
             // Output the button
             echo '<a href="#checkout-popup" class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
-        }
+        // }
     }
 }
 
@@ -1191,10 +1191,10 @@ function onepaquc_button_shortcode_handler($atts = [])
     // Build final button
     $classes = $styling['classes'];
     // If one-page checkout requires removing some classes (match existing behavior)
-    if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1") {
-        $classes = preg_replace('/\b(direct-checkout-button)\b/', '', $classes);
-        $classes = trim(preg_replace('/\s+/', ' ', $classes));
-    }
+    // if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1") {
+    //     $classes = preg_replace('/\b(direct-checkout-button)\b/', '', $classes);
+    //     $classes = trim(preg_replace('/\s+/', ' ', $classes));
+    // }
 
     $attrs = [
         'href'            => '#checkout-popup',
