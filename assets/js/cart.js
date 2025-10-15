@@ -393,7 +393,7 @@ jQuery(document).ready(function ($) {
                 quantity = $qtyInput.val();
             } else {
                 // 3. Check for quantity in the closest wrapper by product ID
-                var $qtyWrapper = $('.rmenu-quantity-wrapper[data-product_id="' + productId + '"]');
+                var $qtyWrapper = $('.rmenu-quantity-wrapper[data-product_id="' + product_id + '"]');
                 if ($qtyWrapper.length > 0) {
                     var $qtyField = $qtyWrapper.find('.rmenu-archive-quantity');
                     if ($qtyField.length > 0) {
@@ -401,7 +401,7 @@ jQuery(document).ready(function ($) {
                     }
                 } else {
                     // 4. Try to find by ID
-                    var $qtyById = $('#quantity_' + productId);
+                    var $qtyById = $('#quantity_' + product_id);
                     if ($qtyById.length > 0) {
                         quantity = $qtyById.val();
                     }

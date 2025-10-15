@@ -215,6 +215,10 @@ function onepaquc_cart_dashboard()
         </div>
 
         <div class="button-row">
+            <a href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" target="_blank" class="button" style="background: #ff5a36; color: #fff;">
+                <span class="dashicons dashicons-star-filled" style=" margin-right: 5px; "></span>
+                <?php echo esc_html__('Upgrade to Pro', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </a>
             <a target="_blank" href="https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ed8936;color: white;"><span class="dashicons dashicons-visibility" style=" margin-right: 5px; "></span> View Demo</a>
             <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button"><span class="dashicons dashicons-book" style=" margin-right: 5px; "></span> View Documentation</a>
             <a href="https://plugincy.com/support" target="_blank" class="button button-secondary"><span class="dashicons dashicons-sos" style=" margin-right: 5px; "></span> Get Support</a>
@@ -968,33 +972,33 @@ function onepaquc_cart_dashboard()
                                 </tr>
                             </table>
 
-                            <script> 
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const checkoutMethodSelect = document.getElementById('rmenu-checkout-method');
-                                const stickyCartCheckbox = document.querySelector('input[name="rmenu_enable_sticky_cart"]');
-                                const sideCartOption = checkoutMethodSelect.querySelector('option[value="side_cart"]');
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const checkoutMethodSelect = document.getElementById('rmenu-checkout-method');
+                                    const stickyCartCheckbox = document.querySelector('input[name="rmenu_enable_sticky_cart"]');
+                                    const sideCartOption = checkoutMethodSelect.querySelector('option[value="side_cart"]');
 
-                                function updateSideCartOption() {
-                                    if (!stickyCartCheckbox.checked) {
-                                        sideCartOption.disabled = true;
-                                        if (checkoutMethodSelect.value === 'side_cart') {
-                                            showDirectCheckoutWarning(
-                                                checkoutMethodSelect.closest('tr'),
-                                                'Enable Sticky Cart in Floating Cart settings to use Side Cart Slide-in or use others Checkout Method.'
-                                            );
+                                    function updateSideCartOption() {
+                                        if (!stickyCartCheckbox.checked) {
+                                            sideCartOption.disabled = true;
+                                            if (checkoutMethodSelect.value === 'side_cart') {
+                                                showDirectCheckoutWarning(
+                                                    checkoutMethodSelect.closest('tr'),
+                                                    'Enable Sticky Cart in Floating Cart settings to use Side Cart Slide-in or use others Checkout Method.'
+                                                );
+                                            }
+                                        } else {
+                                            sideCartOption.disabled = false;
+                                            removeDirectCheckoutWarning(checkoutMethodSelect.closest('tr'));
                                         }
-                                    } else {
-                                        sideCartOption.disabled = false;
-                                        removeDirectCheckoutWarning(checkoutMethodSelect.closest('tr'));
                                     }
-                                }
 
-                                stickyCartCheckbox.addEventListener('change', updateSideCartOption);
-                                checkoutMethodSelect.addEventListener('change', updateSideCartOption);
+                                    stickyCartCheckbox.addEventListener('change', updateSideCartOption);
+                                    checkoutMethodSelect.addEventListener('change', updateSideCartOption);
 
-                                // Initial check
-                                updateSideCartOption();
-                            });
+                                    // Initial check
+                                    updateSideCartOption();
+                                });
                             </script>
 
                         </div>
@@ -2836,13 +2840,18 @@ function onepaquc_cart_dashboard()
                                 </tr>
 
                                 <!-- <tr>
-                                    <?php //$onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Animation', 'Choose the animation effect when products are added to cart.'); ?>
+                                    <?php //$onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Animation', 'Choose the animation effect when products are added to cart.'); 
+                                    ?>
                                     <td class="rmenu-settings-control">
                                         <select name="rmenu_add_to_cart_animation" class="rmenu-select">
-                                            <option value="none" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'none'); ?>>None</option>
-                                            <option value="slide" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'slide'); ?>>Slide Effect</option>
-                                            <option value="fade" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fade'); ?>>Fade Effect</option>
-                                            <option value="fly" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fly'); ?>>Fly to Cart Effect</option>
+                                            <option value="none" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'none'); 
+                                                                    ?>>None</option>
+                                            <option value="slide" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'slide'); 
+                                                                    ?>>Slide Effect</option>
+                                            <option value="fade" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fade'); 
+                                                                    ?>>Fade Effect</option>
+                                            <option value="fly" <?php //selected(get_option('rmenu_add_to_cart_animation', 'none'), 'fly'); 
+                                                                ?>>Fly to Cart Effect</option>
                                         </select>
                                     </td>
                                 </tr> -->
@@ -2904,14 +2913,14 @@ function onepaquc_cart_dashboard()
                             const checkbox = document.querySelector('input[name="rmenu_enable_ajax_add_to_cart"]');
                             const redirect_atc = document.querySelector('select[name="rmenu_redirect_after_add"]');
                             const settingsInputs = Array.from(document.querySelectorAll('#add_to_cart_behave input, #add_to_cart_behave select, #add_to_cart_notification input, #add_to_cart_notification select')).filter(
-                            el => !(el.name === "rmenu_enable_ajax_add_to_cart")
-                        );
+                                el => !(el.name === "rmenu_enable_ajax_add_to_cart")
+                            );
 
                             function updateSettings() {
                                 const enabled_checkbox = document.querySelector('input[name="rmenu_enable_ajax_add_to_cart"]').checked;
 
                                 toggleDisabledClass(!enabled_checkbox, settingsInputs);
-                                
+
                             }
 
                             function notificationVisibilityHandle() {
@@ -2922,8 +2931,8 @@ function onepaquc_cart_dashboard()
                             }
 
                             // Initial update on page load
-                            setTimeout(updateSettings, 2000); 
-                            setTimeout(notificationVisibilityHandle, 2000); 
+                            setTimeout(updateSettings, 2000);
+                            setTimeout(notificationVisibilityHandle, 2000);
 
                             // Update when the checkbox changes
                             checkbox.addEventListener('change', updateSettings);
@@ -2979,13 +2988,18 @@ function onepaquc_cart_dashboard()
 
                             <table class="form-table plugincy_table">
                                 <!-- <tr>
-                                    <?php //$onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Load Effect', 'Choose an animation effect while adding to cart is in progress.'); ?>
+                                    <?php //$onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Add to Cart Load Effect', 'Choose an animation effect while adding to cart is in progress.'); 
+                                    ?>
                                     <td class="rmenu-settings-control pro-only">
                                         <select disabled name="rmenu_add_to_cart_loading_effect" class="rmenu-select">
-                                            <option value="none" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'none'); ?>>None</option>
-                                            <option value="spinner" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'spinner'); ?>>Spinner</option>
-                                            <option value="dots" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'dots'); ?>>Dots</option>
-                                            <option value="pulse" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'pulse'); ?>>Pulse</option>
+                                            <option value="none" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'none'); 
+                                                                    ?>>None</option>
+                                            <option value="spinner" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'spinner'); 
+                                                                    ?>>Spinner</option>
+                                            <option value="dots" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'dots'); 
+                                                                    ?>>Dots</option>
+                                            <option value="pulse" <?php //selected(get_option('rmenu_add_to_cart_loading_effect', 'spinner'), 'pulse'); 
+                                                                    ?>>Pulse</option>
                                         </select>
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                     </td>
