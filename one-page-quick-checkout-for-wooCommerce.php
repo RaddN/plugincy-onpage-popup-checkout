@@ -4,7 +4,7 @@
  * Plugin Name: One Page Quick Checkout for WooCommerce
  * Plugin URI:  https://plugincy.com/one-page-quick-checkout-for-woocommerce/
  * Description: Enhance WooCommerce with popup checkout, cart drawer, and flexible checkout templates to boost conversions.
- * Version:  1.2.8.6
+ * Version:  1.2.8.7
  * Author: plugincy
  * Author URI: https://plugincy.com
  * license: GPL2
@@ -630,7 +630,7 @@ class onepaquc_cart_analytics_main
         }
 
         // Handle deactivation feedback AJAX
-        add_action('wp_ajax_send_deactivation_feedback', array($this, 'handle_deactivation_feedback'));
+        add_action('wp_ajax_onepaquc_send_deactivation_feedback', array($this, 'handle_deactivation_feedback'));
 
         // Also enqueue script in admin to ensure AJAX variables are available
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
