@@ -16,7 +16,7 @@
     const ICONS = {
         cart: `
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     viewBox="0 0 24 24" fill="#ffffff" stroke="currentColor"
      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rmenu-icon">
   <circle cx="9" cy="21" r="1"></circle>
   <circle cx="20" cy="21" r="1"></circle>
@@ -24,14 +24,14 @@
 </svg>`,
         checkout: `
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     viewBox="0 0 24 24" fill="#ffffff" stroke="currentColor"
      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rmenu-icon">
   <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
   <line x1="1" y1="10" x2="23" y2="10"></line>
 </svg>`,
         arrow: `
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+     viewBox="0 0 24 24" fill="#ffffff" stroke="currentColor"
      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rmenu-icon">
   <line x1="5" y1="12" x2="19" y2="12"></line>
   <polyline points="12 5 19 12 12 19"></polyline>
@@ -133,7 +133,6 @@
             'a',
             Object.assign(
                 {
-                    href: '#checkout-popup',
                     className: cls,
                     style: styleObj,
                     onClick: (e) => e.preventDefault(), // don’t navigate in editor
