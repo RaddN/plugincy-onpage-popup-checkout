@@ -4,7 +4,7 @@
  * Plugin Name: One Page Quick Checkout for WooCommerce
  * Plugin URI:  https://plugincy.com/one-page-quick-checkout-for-woocommerce/
  * Description: Enhance WooCommerce with popup checkout, cart drawer, and flexible checkout templates to boost conversions.
- * Version:  1.2.9
+ * Version:  1.2.9.6
  * Author: plugincy
  * Author URI: https://plugincy.com
  * license: GPL2
@@ -17,7 +17,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 define('ONEPAQUC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-define("RMENU_VERSION", "1.2.7.17");
+define("RMENU_VERSION", "1.2.9.6");
 
 // Include the admin notice file
 require_once plugin_dir_path(__FILE__) . 'includes/admin-notice.php';
@@ -177,9 +177,9 @@ function onepaquc_cart_enqueue_scripts()
         }
     }
 
-    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.2.7.17");
-    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.2.7.17", true);
-    wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.2.7.17", true);
+    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.2.9.6");
+    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.2.9.6", true);
+    wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.2.9.6", true);
     $direct_checkout_behave = [
         'rmenu_wc_checkout_method' => get_option('rmenu_wc_checkout_method', 'direct_checkout'),
         'rmenu_wc_clear_cart' => get_option('rmenu_wc_clear_cart', 0),
@@ -244,12 +244,12 @@ add_action('admin_enqueue_scripts', 'onepaquc_cart_admin_styles');
 function onepaquc_cart_admin_styles($hook)
 {
     if ($hook === 'toplevel_page_onepaquc_cart') {
-        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.2.7.17");
-        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.2.7.17");
-        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.2.7.17", true);
+        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.2.9.6");
+        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.2.9.6");
+        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.2.9.6", true);
     }
-    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.2.7.17");
-    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.2.7.17", true);
+    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.2.9.6");
+    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.2.9.6", true);
 }
 
 // add shortcode
@@ -274,7 +274,7 @@ function onepaquc_editor_script()
         'onepaquc_editor_script',
         plugin_dir_url(__FILE__) . 'includes/blocks/editor.js',
         array('wp-blocks', 'wp-element', 'wp-edit-post', 'wp-dom-ready', 'wp-plugins'),
-        '1.0.3',
+        '1.2.9.6',
         true
     );
 }
@@ -670,7 +670,6 @@ class onepaquc_cart_analytics_main
 
         // Ensure jQuery is loaded
         wp_enqueue_script('jquery');
-    
     }
 
     public function handle_deactivation_feedback()
@@ -749,7 +748,8 @@ add_action('wp_enqueue_scripts', function () {
 
 add_action('template_redirect', 'onepaquc_handle_url_add_to_cart', 20);
 
-function onepaquc_handle_url_add_to_cart() {
+function onepaquc_handle_url_add_to_cart()
+{
     // Check if add-to-cart parameter exists
     if (!isset($_GET['onepaquc_add-to-cart'])) {
         return;
@@ -757,7 +757,7 @@ function onepaquc_handle_url_add_to_cart() {
 
     // Sanitize product ID
     $product_id = absint($_GET['onepaquc_add-to-cart']);
-    
+
     if ($product_id <= 0) {
         wc_add_notice(__('Invalid product ID.', 'woocommerce'), 'error');
         return;
@@ -765,7 +765,7 @@ function onepaquc_handle_url_add_to_cart() {
 
     // Get product object
     $product = wc_get_product($product_id);
-    
+
     if (!$product) {
         wc_add_notice(__('Product not found.', 'woocommerce'), 'error');
         return;
@@ -779,7 +779,7 @@ function onepaquc_handle_url_add_to_cart() {
 
     // Get quantity (default to 1)
     $quantity = isset($_GET['onepaquc_quantity']) ? absint($_GET['onepaquc_quantity']) : 1;
-    
+
     if ($quantity <= 0) {
         $quantity = 1;
     }
@@ -792,7 +792,7 @@ function onepaquc_handle_url_add_to_cart() {
     // Handle variable products
     if ($product->is_type('variable')) {
         $variation_id = isset($_GET['onepaquc_variation_id']) ? absint($_GET['onepaquc_variation_id']) : 0;
-        
+
         if ($variation_id <= 0) {
             wc_add_notice(__('Please select product options before adding to cart.', 'woocommerce'), 'error');
             return;
@@ -800,7 +800,7 @@ function onepaquc_handle_url_add_to_cart() {
 
         // Verify variation belongs to parent product
         $variation_product = wc_get_product($variation_id);
-        
+
         if (!$variation_product || $variation_product->get_parent_id() !== $product_id) {
             wc_add_notice(__('Invalid variation selected.', 'woocommerce'), 'error');
             return;
@@ -842,7 +842,7 @@ function onepaquc_handle_url_add_to_cart() {
     // Add to cart
     try {
         $added = false;
-        
+
         if ($variation_id > 0) {
             // Add variable product
             $added = WC()->cart->add_to_cart(
@@ -866,17 +866,16 @@ function onepaquc_handle_url_add_to_cart() {
         if ($added) {
             // Success message
             wc_add_to_cart_message(array($product_id => $quantity), true);
-            
+
             // Get redirect URL
             $redirect_url = onepaquc_get_cart_redirect_url();
-            
+
             // Redirect to cart or custom URL
             wp_safe_redirect($redirect_url);
             exit;
         } else {
             wc_add_notice(__('Unable to add product to cart.', 'woocommerce'), 'error');
         }
-        
     } catch (Exception $e) {
         wc_add_notice($e->getMessage(), 'error');
     }
@@ -887,10 +886,11 @@ function onepaquc_handle_url_add_to_cart() {
  * 
  * @return string Redirect URL
  */
-function onepaquc_get_cart_redirect_url() {
+function onepaquc_get_cart_redirect_url()
+{
     // Get the current URL without query parameters
     $current_url = home_url(add_query_arg(array(), wp_unslash($_SERVER['REQUEST_URI'])));
-    
+
     // Remove all onepaquc parameters
     $redirect_url = remove_query_arg(
         array(
@@ -900,7 +900,7 @@ function onepaquc_get_cart_redirect_url() {
         ),
         $current_url
     );
-    
+
     // Remove attribute parameters
     $parsed_url = parse_url($current_url);
     if (isset($parsed_url['query'])) {
@@ -911,7 +911,7 @@ function onepaquc_get_cart_redirect_url() {
             }
         }
     }
-    
+
     // Stay on the same page (cart, checkout, or wherever they were)
     return $redirect_url;
 }
@@ -922,17 +922,18 @@ function onepaquc_get_cart_redirect_url() {
  */
 add_filter('woocommerce_add_cart_item_data', 'onepaquc_add_custom_cart_item_data', 10, 3);
 
-function onepaquc_add_custom_cart_item_data($cart_item_data, $product_id, $variation_id) {
+function onepaquc_add_custom_cart_item_data($cart_item_data, $product_id, $variation_id)
+{
     // Check if this was added via our URL handler
     if (isset($_GET['onepaquc_add-to-cart'])) {
         // Add custom data here if needed
         // Example: $cart_item_data['custom_field'] = 'custom_value';
-        
+
         // Add a unique identifier to prevent duplicate cart items from being merged
         // Remove this if you want products to merge in cart
         // $cart_item_data['unique_key'] = md5(microtime() . rand());
     }
-    
+
     return $cart_item_data;
 }
 
@@ -941,9 +942,21 @@ function onepaquc_add_custom_cart_item_data($cart_item_data, $product_id, $varia
  */
 add_filter('woocommerce_add_to_cart_validation', 'onepaquc_validate_cart_item', 10, 3);
 
-function onepaquc_validate_cart_item($passed, $product_id, $quantity) {
+function onepaquc_validate_cart_item($passed, $product_id, $quantity)
+{
     // Add custom validation rules here
     // Example: Check if user is logged in for certain products
-    
+
     return $passed;
 }
+
+
+// Allow checkout page access even when the cart is empty
+add_action('template_redirect', function () {
+    if (is_checkout() && !is_wc_endpoint_url()) {
+        remove_action('template_redirect', 'wc_redirect_empty_cart_to_cart');
+    }
+}, 1);
+
+// Let users access checkout even if the cart is empty
+add_filter( 'woocommerce_checkout_redirect_empty_cart', '__return_false' );
