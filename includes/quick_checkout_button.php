@@ -18,8 +18,10 @@ function onepaquc_should_display_button($product)
         return false;
     }
 
-    if ((is_array($product) || is_object($product)) && !$product->is_in_stock()) {
-        return false;
+    if ((is_array($product) || is_object($product))) {
+        if (!$product->is_in_stock() || !$product->is_purchasable()) {
+            return false;
+        }
     }
 
     // Check user login status
@@ -34,6 +36,29 @@ function onepaquc_should_display_button($product)
 
     if (!in_array($product_type, $allowed_product_types)) {
         return false;
+    }
+
+    // If product is variable, ensure there's at least one purchasable in-stock variation.
+    if ($product_type === 'variable') {
+        // Use helper to pick a suitable variation when we have a product object.
+        if ($product instanceof WC_Product_Variable) {
+            $variation_id = onepaquc_pick_variation_id($product);
+            if (empty($variation_id)) {
+                return false;
+            }
+        } else {
+            // Try to obtain a product object (in case an ID was passed)
+            $prod_obj = is_numeric($product) ? wc_get_product((int) $product) : null;
+            if ($prod_obj instanceof WC_Product_Variable) {
+                $variation_id = onepaquc_pick_variation_id($prod_obj);
+                if (empty($variation_id)) {
+                    return false;
+                }
+            } else {
+                // Cannot validate a variable product without a proper product object
+                return false;
+            }
+        }
     }
 
     // Get allowed pages
@@ -115,7 +140,7 @@ function onepaquc_should_display_button($product)
 function onepaquc_get_button_styling()
 {
     // Basic button classes
-    $classes = "button single_add_to_cart_button direct-checkout-button opqcfw-btn wp-element-button has-small-font-size";
+    $classes = "button single_add_to_cart_button direct-checkout-button opqcfw-btn wp-element-button";
     $style = "cursor:pointer;text-align: center;";
     $icon = '';
     $additional_css = '';
@@ -365,8 +390,8 @@ function onepaquc_render_checkout_button(): bool
     //     $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
     //     echo '<a class="' . esc_attr($button_classes) . ' onepaquc-checkout-btn" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
     // } else {
-        // Output the button with fallback identifier
-        echo '<a class="' . esc_attr($button_styling['classes']) . ' onepaquc-checkout-btn" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
+    // Output the button with fallback identifier
+    echo '<a class="' . esc_attr($button_styling['classes']) . ' onepaquc-checkout-btn" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
     // }
 
     // Optional: a tiny marker helps debugging/JS checks, doesn’t affect layout
@@ -438,12 +463,18 @@ function onepaquc_add_js_fallback()
 
                 // Define button HTML
                 var buttonHtml = '';
-                // <?php //if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1"): ?>
-                //     var buttonClasses = '<?php //echo esc_js(preg_replace('/\b(direct-checkout-button)\b/', '', trim(preg_replace('/\s+/', ' ', $button_styling['classes'])))); ?>';
-                //     buttonHtml = '<a class="' + buttonClasses + ' onepaquc-checkout-btn" style="<?php //echo esc_js($button_styling['style']); ?>"><?php //echo wp_kses($button_inner, $onepaquc_allowed_tags); ?></a>';
-                // <?php //else: ?>
-                    buttonHtml = '<a class="<?php echo esc_js($button_styling['classes']); ?> onepaquc-checkout-btn" data-product-id="<?php echo esc_js($product_id); ?>" data-product-type="<?php echo esc_js($product_type); ?>" data-title="<?php echo esc_js($product_title); ?>" style="<?php echo esc_js($button_styling['style']); ?>"><?php echo wp_kses($button_inner, $onepaquc_allowed_tags); ?></a>';
-                <?php //endif; ?>
+                // <?php //if ($one_page_checkout === 'yes' && $onpage_checkout_cart_add === "1"): 
+                    ?>
+                //     var buttonClasses = '<?php //echo esc_js(preg_replace('/\b(direct-checkout-button)\b/', '', trim(preg_replace('/\s+/', ' ', $button_styling['classes'])))); 
+                                            ?>';
+                //     buttonHtml = '<a class="' + buttonClasses + ' onepaquc-checkout-btn" style="<?php //echo esc_js($button_styling['style']); 
+                                                                                                    ?>"><?php //echo wp_kses($button_inner, $onepaquc_allowed_tags); 
+                                                                                                                                                        ?></a>';
+                // <?php //else: 
+                    ?>
+                buttonHtml = '<a class="<?php echo esc_js($button_styling['classes']); ?> onepaquc-checkout-btn" data-product-id="<?php echo esc_js($product_id); ?>" data-product-type="<?php echo esc_js($product_type); ?>" data-title="<?php echo esc_js($product_title); ?>" style="<?php echo esc_js($button_styling['style']); ?>"><?php echo wp_kses($button_inner, $onepaquc_allowed_tags); ?></a>';
+                <?php //endif; 
+                ?>
 
                 // Try multiple selectors to find the best place to insert the button
                 var selectors = [
@@ -608,6 +639,8 @@ function onepaquc_position_wise_css()
 // Function to add checkout button to product loops (listings)
 function onepaquc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
 {
+    global $onepaquc_buy_now_button_in_loop;
+    $onepaquc_buy_now_button_in_loop = true;
     if (!onepaquc_should_display_button($product)) {
         return $link;
     }
@@ -665,10 +698,80 @@ function onepaquc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
     }
 }
 
+/**
+ * Render Quick Checkout button after loop item (archives) as a fallback.
+ * Runs only if the add_to_cart_link filter didn't already output the button.
+ */
+function onepaquc_add_checkout_button_after_loop_item()
+{
+    global $product, $onepaquc_buy_now_button_in_loop, $onepaquc_allowed_tags;
+
+    // If the button is already added via the loop link filter, skip.
+    if (! empty($onepaquc_buy_now_button_in_loop)) {
+        return;
+    }
+
+    // Must have a product and pass display rules.
+    if (! $product instanceof WC_Product || ! onepaquc_should_display_button($product)) {
+        return;
+    }
+
+    $product_id    = $product->get_id();
+    $product_type  = $product->get_type();
+    $button_styles = onepaquc_get_button_styling();
+
+    // Button text
+    $button_text = esc_html(get_option('txt-direct-checkout') !== '' ? get_option('txt-direct-checkout', 'Buy Now') : 'Buy Now');
+
+    // Icon handling
+    $icon         = isset($button_styles['icon']) ? $button_styles['icon'] : [];
+    $icon_content = isset($icon['content']) ? $icon['content'] : '';
+    $icon_pos     = isset($icon['position']) ? $icon['position'] : 'left';
+
+    $icon_html = $icon_content ? '<span class="onepaquc-icon">' . $icon_content . '</span>' : '';
+
+    switch ($icon_pos) {
+        case 'right':
+            $inner = $button_text . ' ' . $icon_html;
+            break;
+        case 'top':
+            $inner = $icon_html . '<br>' . $button_text;
+            break;
+        case 'bottom':
+            $inner = $button_text . '<br>' . $icon_html;
+            break;
+        case 'left':
+        default:
+            $inner = $icon_html . ' ' . $button_text;
+            break;
+    }
+
+    // Minimal safe default for KSES if not set elsewhere
+    if (empty($onepaquc_allowed_tags)) {
+        $onepaquc_allowed_tags = wp_kses_allowed_html('post');
+    }
+
+    // Output the button just after the loop item’s default content.
+    echo '<div class="onepaquc-loop-btn-wrap" style="margin-top:8px;">';
+    echo '<a class="' . esc_attr($button_styles['classes']) . ' onepaquc-checkout-btn"'
+        . ' data-product-id="' . esc_attr($product_id) . '"'
+        . ' data-product-type="' . esc_attr($product_type) . '"'
+        . ' data-title="' . esc_attr($product->get_name()) . '"'
+        . ' style="' . esc_attr($button_styles['style']) . '">'
+        . wp_kses($inner, $onepaquc_allowed_tags)
+        . '</a>';
+    echo '</div>';
+}
+
 
 // Apply the checkout button to product loops if enabled
 if (get_option('rmenu_add_direct_checkout_button', 1) && (get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "after_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "bottom_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "before_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "replace_add_to_cart")) {
+    global $onepaquc_buy_now_button_in_loop;
+    $onepaquc_buy_now_button_in_loop = false;
     add_filter('woocommerce_loop_add_to_cart_link', 'onepaquc_add_checkout_button_to_add_to_cart_shortcode', 100, 2);
+    if (!$onepaquc_buy_now_button_in_loop) {
+        add_action('woocommerce_after_shop_loop_item', 'onepaquc_add_checkout_button_after_loop_item', 111);
+    }
 } else {
     new onepaquc_add_checkout_button_on_archive();
 }
@@ -996,8 +1099,8 @@ class onepaquc_add_checkout_button_on_archive
         //     $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
         //     echo '<a class="' . esc_attr($button_classes) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
         // } else {
-            // Output the button
-            echo '<a class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
+        // Output the button
+        echo '<a class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
         // }
     }
 }

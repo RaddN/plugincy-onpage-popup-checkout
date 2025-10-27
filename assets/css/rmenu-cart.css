@@ -2005,11 +2005,6 @@ button#place_order {
   width: 100%;
 }
 
-.direct-checkout-button:before,
-.direct-checkout-button:after {
-  display: none;
-}
-
 .direct-checkout-button {
   min-width: fit-content !important;
 }

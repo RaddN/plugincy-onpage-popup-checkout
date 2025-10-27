@@ -294,7 +294,7 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
         'rmenu-cart-block-style',
         false, // No actual CSS file
         array(), // No dependencies
-        '1.2.9.6' // Version
+        '1.3.0' // Version
     );
     
     // Now enqueue it

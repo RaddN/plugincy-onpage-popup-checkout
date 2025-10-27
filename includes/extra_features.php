@@ -103,7 +103,12 @@ if (get_option('rmenu_link_product', 0)) {
  * Add variation selection buttons to product archive pages using woocommerce_loop_add_to_cart_link
  */
 if (get_option('rmenu_variation_show_archive', 1) && (get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "after_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "bottom_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "before_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "replace_add_to_cart")) {
+    global $onepaquc_variation_buttons_on_archive;
+    $onepaquc_variation_buttons_on_archive = false;
     add_filter('woocommerce_loop_add_to_cart_link', 'onepaquc_add_variation_buttons_to_loop', 100, 2);
+    if(! $onepaquc_variation_buttons_on_archive) {
+        new onepaquc_add_variation_buttons_on_archive();
+    }
 } else {
     new onepaquc_add_variation_buttons_on_archive();
 }
@@ -124,13 +129,16 @@ class onepaquc_add_variation_buttons_on_archive
 
     public function add_variation_buttons_on_archive()
     {
-        $position = get_option("rmenu_wc_direct_checkout_position", "overlay_thumbnail_hover");
+        $position = get_option("rmenu_wc_direct_checkout_position", "after_product");
+        if ($position === 'after_add_to_cart' || $position === 'before_add_to_cart' || $position === 'bottom_add_to_cart' || $position === 'replace_add_to_cart') {
+            $position = 'after_product';
+        }
 
         switch ($position) {
             case 'overlay_thumbnail':
             case 'overlay_thumbnail_hover':
             case 'after_product':
-                add_action('woocommerce_after_shop_loop_item', array($this, 'onepaquc_variation_buttons'), 5);
+                add_action('woocommerce_after_shop_loop_item', array($this, 'onepaquc_variation_buttons'), 110);
                 break;
             case 'after_product_title':
                 add_action('woocommerce_shop_loop_item_title', array($this, 'onepaquc_variation_buttons'), 14);
@@ -163,12 +171,12 @@ class onepaquc_add_variation_buttons_on_archive
             return;
         }
 
-        $position     = get_option('rmenu_wc_direct_checkout_position', 'overlay_thumbnail_hover');
+        $position     = get_option('rmenu_wc_direct_checkout_position', 'after_product');
         $layout       = get_option('rmenu_variation_layout', 'separate'); // 'combine' | 'separate'
         $show_titles  = (bool) get_option('rmenu_show_variation_title', 0);
 
         $container_class = 'archive-variations-container';
-        if (in_array($position, ['overlay_thumbnail', 'overlay_thumbnail_hover', 'after_product'], true)) {
+        if (in_array($position, ['overlay_thumbnail', 'overlay_thumbnail_hover'], true)) {
             $container_class .= ' overlay-variations';
         }
         if (in_array($position, ['after_product'], true)) {
@@ -278,6 +286,8 @@ class onepaquc_add_variation_buttons_on_archive
 
 function onepaquc_add_variation_buttons_to_loop($link, $product)
 {
+    global $onepaquc_variation_buttons_on_archive;
+    $onepaquc_variation_buttons_on_archive = true;
     if (!$product || !$product->is_type('variable')) {
         return $link;
     }
