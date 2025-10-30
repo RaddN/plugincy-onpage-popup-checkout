@@ -3,7 +3,6 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 $onepaquc_checkoutformfields = [
     "your_cart" => "Your Cart",
-    "btn_remove" => "Remove Button",
     "txt_subtotal" => "Subtotal",
     "txt_checkout" => "Place order",
     "txt_billing_details" => "Billing details",
@@ -22,7 +21,11 @@ $onepaquc_checkoutformfields = [
     "txt_additional_info" => "Additional information",
     "txt_your_order" => "Your order",
     "txt_shipping_address_head" => "Ship to a different address?",
+    "txt_Select_All" => "Select All",
+    "txt_Selected" => "selected",
+    "txt_you_may_like" => "You may also like",
     "txt_total" => "Total",
+    "txt_discount" => "Discount",
     "btn_place_order" => "Place Order Button",
     "txt-woocommerce-privacy-policy-text" => "Woocommerce privacy policy text",
     "txt-have_coupon" => "Have a coupon?",

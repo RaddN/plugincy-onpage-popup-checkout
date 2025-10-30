@@ -52,6 +52,8 @@ class RMENU_Quick_View
      */
     private function add_quick_view_button()
     {
+        global $displayed_quick_view_buttons;
+        $displayed_quick_view_buttons = false;
         $button_position = get_option('rmenu_quick_view_button_position', 'image_overlay');
 
         switch ($button_position) {
@@ -91,11 +93,17 @@ class RMENU_Quick_View
 
                 break;
         }
+
+        if (!$displayed_quick_view_buttons) {
+            add_action('wp_footer', array($this, 'display_overlay_quick_view_button_footer'), 110);
+        }
     }
 
 
     public function onepaquc_display_quick_view_button_to_add_to_cart($link, $product)
     {
+        global $displayed_quick_view_buttons;
+        $displayed_quick_view_buttons = true;
         // Check if product type is allowed
         $allowed_types = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]);
         if (!in_array($product->get_type(), $allowed_types)) {
@@ -324,6 +332,7 @@ class RMENU_Quick_View
      */
     public function display_quick_view_button()
     {
+
         global $product;
 
         // Check if product type is allowed
@@ -717,6 +726,11 @@ class RMENU_Quick_View
      */
     private function add_dynamic_css()
     {
+        $button_style = get_option('rmenu_quick_view_button_style', 'default');
+
+        if ($button_style === 'default') {
+            return; // Only add dynamic CSS for custom style
+        }
         $button_color = get_option('rmenu_quick_view_button_color', '#000');
         $text_color = get_option('rmenu_quick_view_text_color', '#ffffff');
 
