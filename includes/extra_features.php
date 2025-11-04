@@ -104,11 +104,9 @@ if (get_option('rmenu_link_product', 0)) {
  */
 if (get_option('rmenu_variation_show_archive', 1) && (get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "after_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "bottom_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "before_add_to_cart" || get_option("rmenu_wc_direct_checkout_position", "after_add_to_cart") === "replace_add_to_cart")) {
     global $onepaquc_variation_buttons_on_archive;
-    $onepaquc_variation_buttons_on_archive = false;
+    $onepaquc_variation_buttons_on_archive = array();
     add_filter('woocommerce_loop_add_to_cart_link', 'onepaquc_add_variation_buttons_to_loop', 100, 2);
-    if (! $onepaquc_variation_buttons_on_archive) {
-        new onepaquc_add_variation_buttons_on_archive();
-    }
+    new onepaquc_add_variation_buttons_on_archive();
 } else {
     new onepaquc_add_variation_buttons_on_archive();
 }
@@ -163,8 +161,14 @@ class onepaquc_add_variation_buttons_on_archive
         global $product;
         global $onepaquc_variation_buttons_on_archive;
 
+        $product_id = $product->get_id();
 
-        if (!$product || !$product->is_type('variable') || $onepaquc_variation_buttons_on_archive) {
+
+        if (!$product || !$product->is_type('variable')) {
+            return;
+        }
+
+        if(isset($onepaquc_variation_buttons_on_archive[$product_id])){
             return;
         }
 
@@ -173,7 +177,7 @@ class onepaquc_add_variation_buttons_on_archive
             return;
         }
 
-        $onepaquc_variation_buttons_on_archive = true;
+        $onepaquc_variation_buttons_on_archive[$product_id] = true;
 
         $position     = get_option('rmenu_wc_direct_checkout_position', 'after_product');
         $layout       = get_option('rmenu_variation_layout', 'separate'); // 'combine' | 'separate'
@@ -408,10 +412,17 @@ class onepaquc_add_variation_buttons_on_archive
 function onepaquc_add_variation_buttons_to_loop($link, $product)
 {
     global $onepaquc_variation_buttons_on_archive;
-    $onepaquc_variation_buttons_on_archive = true;
+    $product_id = $product->get_id();
+    
     if (!$product || !$product->is_type('variable')) {
         return $link;
     }
+
+    if(isset($onepaquc_variation_buttons_on_archive[$product_id])){
+        return $link;
+    }
+
+    $onepaquc_variation_buttons_on_archive[$product_id] = true;
 
     $available_variations = $product->get_available_variations();
     if (empty($available_variations)) {
