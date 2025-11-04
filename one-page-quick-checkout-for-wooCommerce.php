@@ -524,9 +524,74 @@ add_filter('woocommerce_checkout_cart_item_quantity', 'onepaquc_custom_quantity_
  */
 add_filter('woocommerce_is_checkout', 'onepaquc_force_woocommerce_checkout_mode', 999);
 
-function onepaquc_force_woocommerce_checkout_mode($is_checkout)
-{
-    return true;
+function onepaquc_force_woocommerce_checkout_mode($is_checkout) {
+    // Don't affect wp-admin (except AJAX calls)
+    if (is_admin() && !(defined('DOING_AJAX') && DOING_AJAX)) {
+        return $is_checkout;
+    }
+
+    // (1) Current page has [plugincy_one_page_checkout] shortcode
+    $has_opc_shortcode = onepaquc_page_has_shortcode('plugincy_one_page_checkout');
+
+    // (2) Global setting: popup checkout
+    $checkout_method   = get_option('rmenu_wc_checkout_method', 'direct_checkout');
+    $is_popup_checkout = ($checkout_method === 'popup_checkout');
+
+    // (3) Single product page & (global enable-all OR per-product enabled)
+    $enable_all_opc    = (bool) get_option('onepaquc_checkout_enable_all', 0);
+    $is_single_product = function_exists('is_product') && is_product();
+
+    $per_product_enabled = false;
+    if ($is_single_product && !$enable_all_opc) {
+        // Resolve current product ID safely
+        $product_id = 0;
+        if (function_exists('get_queried_object_id')) {
+            $product_id = (int) get_queried_object_id();
+        }
+        if (!$product_id && isset($GLOBALS['post']->ID)) {
+            $product_id = (int) $GLOBALS['post']->ID;
+        }
+        if ($product_id) {
+            $per_product_enabled = (bool) get_post_meta($product_id, '_one_page_checkout', true);
+        }
+    }
+
+    // Apply your OR conditions
+    if (
+        $has_opc_shortcode
+        || $is_popup_checkout
+        || ( $is_single_product && ( $enable_all_opc || $per_product_enabled ) )
+    ) {
+        return true;
+    }
+
+    return $is_checkout;
+}
+
+/**
+ * Check if the current queried page content contains a shortcode.
+ */
+function onepaquc_page_has_shortcode($shortcode_tag) {
+    if (empty($shortcode_tag)) return false;
+
+    // Check global $post first
+    if (isset($GLOBALS['post']->post_content) && function_exists('has_shortcode')) {
+        if (has_shortcode($GLOBALS['post']->post_content, $shortcode_tag)) {
+            return true;
+        }
+    }
+
+    // Fallback: check queried object content
+    if (function_exists('get_queried_object')) {
+        $obj = get_queried_object();
+        if (!empty($obj->post_content) && function_exists('has_shortcode')) {
+            if (has_shortcode($obj->post_content, $shortcode_tag)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 require_once plugin_dir_path(__FILE__) . 'includes/extra_features.php';

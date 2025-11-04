@@ -402,7 +402,7 @@ button.rwc_cart-button span.cart-icon img {
   min-width: unset !important;
 }
 
-div:has(.checkout-quantity-control) {
+.checkout-popup div:has(.checkout-quantity-control) {
   align-items: center;
 }
 .checkout-qty-btn {
