@@ -63,7 +63,7 @@ function onepaquc_add_random_product_if_cart_empty()
                     localStorage.removeItem('random_product_added');
                 } catch (e) {}
             </script>
-        <?php
+<?php
         });
     }
 }
@@ -106,7 +106,7 @@ if (get_option('rmenu_variation_show_archive', 1) && (get_option("rmenu_wc_direc
     global $onepaquc_variation_buttons_on_archive;
     $onepaquc_variation_buttons_on_archive = false;
     add_filter('woocommerce_loop_add_to_cart_link', 'onepaquc_add_variation_buttons_to_loop', 100, 2);
-    if(! $onepaquc_variation_buttons_on_archive) {
+    if (! $onepaquc_variation_buttons_on_archive) {
         new onepaquc_add_variation_buttons_on_archive();
     }
 } else {
@@ -162,7 +162,7 @@ class onepaquc_add_variation_buttons_on_archive
     {
         global $product;
         global $onepaquc_variation_buttons_on_archive;
-    
+
 
         if (!$product || !$product->is_type('variable') || $onepaquc_variation_buttons_on_archive) {
             return;
@@ -190,30 +190,102 @@ class onepaquc_add_variation_buttons_on_archive
         echo '<div class="' . esc_attr($container_class) . '" data-layout="' . esc_attr($layout) . '">';
 
         if ($layout === 'combine') {
-            // ---------- COMBINE (unchanged visual behavior) ----------
             foreach ($available_variations as $variation) {
-                $variation_id = $variation['variation_id'];
-                $parts = [];
+                $vid = $variation['variation_id'];
 
+                // Build options per attribute (expand "Any" to options ASSIGNED to this product only)
+                $attr_options = []; // [attr_key => [ ['slug'=>..., 'label'=>...], ... ]]
                 foreach ($variation['attributes'] as $attribute_name => $attribute_value) {
-                    $taxonomy   = str_replace('attribute_', '', $attribute_name);
-                    $value_label = $attribute_value;
+                    $attr_key = str_replace('attribute_', '', $attribute_name);
 
-                    if (taxonomy_exists($taxonomy)) {
-                        $term = get_term_by('slug', $attribute_value, $taxonomy);
-                        if ($term && !is_wp_error($term)) {
-                            $value_label = $term->name;
+                    // Specific value chosen -> just that one
+                    if ($attribute_value !== '') {
+                        $slug  = $attribute_value;
+                        $label = $slug;
+
+                        if (taxonomy_exists($attr_key)) {
+                            $term = get_term_by('slug', $slug, $attr_key);
+                            if ($term && !is_wp_error($term)) {
+                                $label = $term->name;
+                            }
                         }
+                        $attr_options[$attr_key][] = ['slug' => $slug, 'label' => $label];
+                        continue;
                     }
-                    if ($value_label !== '') {
-                        $parts[] = $value_label;
+
+                    // "Any ..." chosen -> expand to options that are ASSIGNED on THIS product
+                    $prod_attrs = $product->get_attributes();
+                    if (isset($prod_attrs[$attr_key])) {
+                        /** @var WC_Product_Attribute $pa */
+                        $pa = $prod_attrs[$attr_key];
+
+                        if ($pa->is_taxonomy()) {
+                            // taxonomy attribute: options are term IDs
+                            $term_ids = (array) $pa->get_options();
+                            if (!empty($term_ids)) {
+                                $terms = get_terms([
+                                    'taxonomy'   => $attr_key,
+                                    'hide_empty' => false,
+                                    'include'    => $term_ids,
+                                ]);
+                                if (!is_wp_error($terms) && !empty($terms)) {
+                                    foreach ($terms as $term) {
+                                        $attr_options[$attr_key][] = [
+                                            'slug'  => $term->slug,
+                                            'label' => $term->name,
+                                        ];
+                                    }
+                                }
+                            }
+                        } else {
+                            // custom (non-taxonomy) attribute: options are raw strings
+                            $values = (array) $pa->get_options();
+                            foreach ($values as $val) {
+                                $val = (string) $val;
+                                $attr_options[$attr_key][] = [
+                                    'slug'  => sanitize_title($val),
+                                    'label' => $val,
+                                ];
+                            }
+                        }
                     }
                 }
 
-                echo '<button type="button" class="variation-button" data-id="' . esc_attr($variation_id) . '">' . esc_html(implode(' / ', $parts)) . '</button>';
+                // If for some reason we have no options, skip this variation
+                if (empty($attr_options)) {
+                    continue;
+                }
+
+                // Cartesian product across attributes to produce concrete button labels
+                $combinations = [[]]; // each combo: [ attr_key => ['slug'=>..., 'label'=>...] ]
+                foreach ($attr_options as $key => $opts) {
+                    $next = [];
+                    foreach ($combinations as $combo) {
+                        foreach ($opts as $opt) {
+                            $tmp = $combo;
+                            $tmp[$key] = $opt;
+                            $next[] = $tmp;
+                        }
+                    }
+                    $combinations = $next;
+                }
+
+                // Render one button per concrete combination (store attrs for JS if needed)
+                foreach ($combinations as $combo) {
+                    $labels = [];
+                    $attrs  = [];
+                    foreach ($combo as $k => $opt) {
+                        $labels[]  = $opt['label'];
+                        $attrs[$k] = $opt['slug'];
+                    }
+
+                    echo '<button type="button" class="variation-button" data-id="' . esc_attr($vid) . '" data-attrs="' . esc_attr(wp_json_encode($attrs)) . '">'
+                        . esc_html(implode(' / ', $labels))
+                        . '</button>';
+                }
             }
 
-            // Hidden + visible
+            // Keep the hidden input as before
             echo '<input type="hidden" class="variation_id" value="">';
         } else {
             // ---------- SEPARATE (group by attribute) ----------
@@ -229,6 +301,51 @@ class onepaquc_add_variation_buttons_on_archive
                     $attr_key   = str_replace('attribute_', '', $attribute_name); // e.g., pa_color or custom
                     $slug       = $attribute_value;
                     if ($slug === '') {
+                        $prod_attrs = $product->get_attributes();
+
+                        if (isset($prod_attrs[$attr_key])) {
+                            /** @var WC_Product_Attribute $pa */
+                            $pa = $prod_attrs[$attr_key];
+
+                            if ($pa->is_taxonomy()) {
+                                // taxonomy attribute: options are term IDs
+                                $term_ids = (array) $pa->get_options();
+                                if (!empty($term_ids)) {
+                                    $terms = get_terms([
+                                        'taxonomy'   => $attr_key,
+                                        'hide_empty' => false,
+                                        'include'    => $term_ids,
+                                    ]);
+                                    if (!is_wp_error($terms) && !empty($terms)) {
+                                        foreach ($terms as $term) {
+                                            if (!isset($attributes_terms[$attr_key])) {
+                                                $attributes_terms[$attr_key] = [
+                                                    'label' => wc_attribute_label($attr_key, $product),
+                                                    'terms' => [],
+                                                ];
+                                            }
+                                            $attributes_terms[$attr_key]['terms'][$term->slug] = $term->name;
+                                        }
+                                    }
+                                }
+                            } else {
+                                // custom (non-taxonomy) attribute: options are raw strings
+                                $values = (array) $pa->get_options();
+                                if (!empty($values)) {
+                                    if (!isset($attributes_terms[$attr_key])) {
+                                        $attributes_terms[$attr_key] = [
+                                            'label' => wc_attribute_label($attr_key, $product) ?: ucfirst(str_replace('pa_', '', $attr_key)),
+                                            'terms' => [],
+                                        ];
+                                    }
+                                    foreach ($values as $val) {
+                                        $val = (string) $val;
+                                        $val_slug = sanitize_title($val);
+                                        $attributes_terms[$attr_key]['terms'][$val_slug] = $val;
+                                    }
+                                }
+                            }
+                        }
                         continue;
                     }
 
@@ -310,24 +427,101 @@ function onepaquc_add_variation_buttons_to_loop($link, $product)
 
     if ($layout === 'combine') {
         foreach ($available_variations as $variation) {
-            $vid   = $variation['variation_id'];
-            $parts = [];
+            $vid = $variation['variation_id'];
+
+            // Build options per attribute (expand "Any" to options ASSIGNED to this product only)
+            $attr_options = []; // [attr_key => [ ['slug'=>..., 'label'=>...], ... ]]
             foreach ($variation['attributes'] as $attribute_name => $attribute_value) {
-                $attr_key    = str_replace('attribute_', '', $attribute_name);
-                $value_label = $attribute_value;
-                if (taxonomy_exists($attr_key)) {
-                    $term = get_term_by('slug', $attribute_value, $attr_key);
-                    if ($term && !is_wp_error($term)) {
-                        $value_label = $term->name;
+                $attr_key = str_replace('attribute_', '', $attribute_name);
+
+                // Specific value chosen -> just that one
+                if ($attribute_value !== '') {
+                    $slug  = $attribute_value;
+                    $label = $slug;
+
+                    if (taxonomy_exists($attr_key)) {
+                        $term = get_term_by('slug', $slug, $attr_key);
+                        if ($term && !is_wp_error($term)) {
+                            $label = $term->name;
+                        }
+                    }
+                    $attr_options[$attr_key][] = ['slug' => $slug, 'label' => $label];
+                    continue;
+                }
+
+                // "Any ..." chosen -> expand to options that are ASSIGNED on THIS product
+                $prod_attrs = $product->get_attributes();
+                if (isset($prod_attrs[$attr_key])) {
+                    /** @var WC_Product_Attribute $pa */
+                    $pa = $prod_attrs[$attr_key];
+
+                    if ($pa->is_taxonomy()) {
+                        // taxonomy attribute: options are term IDs
+                        $term_ids = (array) $pa->get_options();
+                        if (!empty($term_ids)) {
+                            $terms = get_terms([
+                                'taxonomy'   => $attr_key,
+                                'hide_empty' => false,
+                                'include'    => $term_ids,
+                            ]);
+                            if (!is_wp_error($terms) && !empty($terms)) {
+                                foreach ($terms as $term) {
+                                    $attr_options[$attr_key][] = [
+                                        'slug'  => $term->slug,
+                                        'label' => $term->name,
+                                    ];
+                                }
+                            }
+                        }
+                    } else {
+                        // custom (non-taxonomy) attribute: options are raw strings
+                        $values = (array) $pa->get_options();
+                        foreach ($values as $val) {
+                            $val = (string) $val;
+                            $attr_options[$attr_key][] = [
+                                'slug'  => sanitize_title($val),
+                                'label' => $val,
+                            ];
+                        }
                     }
                 }
-                if ($value_label !== '') {
-                    $parts[] = $value_label;
-                }
             }
-            echo '<button type="button" class="variation-button" data-id="' . esc_attr($vid) . '">' . esc_html(implode(' / ', $parts)) . '</button>';
+
+            // If for some reason we have no options, skip this variation
+            if (empty($attr_options)) {
+                continue;
+            }
+
+            // Cartesian product across attributes to produce concrete button labels
+            $combinations = [[]]; // each combo: [ attr_key => ['slug'=>..., 'label'=>...] ]
+            foreach ($attr_options as $key => $opts) {
+                $next = [];
+                foreach ($combinations as $combo) {
+                    foreach ($opts as $opt) {
+                        $tmp = $combo;
+                        $tmp[$key] = $opt;
+                        $next[] = $tmp;
+                    }
+                }
+                $combinations = $next;
+            }
+
+            // Render one button per concrete combination (store attrs for JS if needed)
+            foreach ($combinations as $combo) {
+                $labels = [];
+                $attrs  = [];
+                foreach ($combo as $k => $opt) {
+                    $labels[]  = $opt['label'];
+                    $attrs[$k] = $opt['slug'];
+                }
+
+                echo '<button type="button" class="variation-button" data-id="' . esc_attr($vid) . '" data-attrs="' . esc_attr(wp_json_encode($attrs)) . '">'
+                    . esc_html(implode(' / ', $labels))
+                    . '</button>';
+            }
         }
 
+        // Keep the hidden input as before
         echo '<input type="hidden" class="variation_id" value="">';
     } else {
         $attributes_terms   = [];
@@ -342,6 +536,51 @@ function onepaquc_add_variation_buttons_to_loop($link, $product)
                 $attr_key   = str_replace('attribute_', '', $attribute_name);
                 $slug       = $attribute_value;
                 if ($slug === '') {
+                    $prod_attrs = $product->get_attributes();
+
+                    if (isset($prod_attrs[$attr_key])) {
+                        /** @var WC_Product_Attribute $pa */
+                        $pa = $prod_attrs[$attr_key];
+
+                        if ($pa->is_taxonomy()) {
+                            // taxonomy attribute: options are term IDs
+                            $term_ids = (array) $pa->get_options();
+                            if (!empty($term_ids)) {
+                                $terms = get_terms([
+                                    'taxonomy'   => $attr_key,
+                                    'hide_empty' => false,
+                                    'include'    => $term_ids,
+                                ]);
+                                if (!is_wp_error($terms) && !empty($terms)) {
+                                    foreach ($terms as $term) {
+                                        if (!isset($attributes_terms[$attr_key])) {
+                                            $attributes_terms[$attr_key] = [
+                                                'label' => wc_attribute_label($attr_key, $product),
+                                                'terms' => [],
+                                            ];
+                                        }
+                                        $attributes_terms[$attr_key]['terms'][$term->slug] = $term->name;
+                                    }
+                                }
+                            }
+                        } else {
+                            // custom (non-taxonomy) attribute: options are raw strings
+                            $values = (array) $pa->get_options();
+                            if (!empty($values)) {
+                                if (!isset($attributes_terms[$attr_key])) {
+                                    $attributes_terms[$attr_key] = [
+                                        'label' => wc_attribute_label($attr_key, $product) ?: ucfirst(str_replace('pa_', '', $attr_key)),
+                                        'terms' => [],
+                                    ];
+                                }
+                                foreach ($values as $val) {
+                                    $val = (string) $val;
+                                    $val_slug = sanitize_title($val);
+                                    $attributes_terms[$attr_key]['terms'][$val_slug] = $val;
+                                }
+                            }
+                        }
+                    }
                     continue;
                 }
 
