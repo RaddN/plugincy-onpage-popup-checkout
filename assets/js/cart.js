@@ -421,7 +421,7 @@ jQuery(document).ready(function ($) {
         }
 
         // Enhanced variation handling for product forms
-        if ($form.length > 0 && $form.find('input[name="variation_id"]').length > 0 && !variation_on_archive) {
+        if ($form.length > 0 && $form.find('input[name="variation_id"]').length > 0) {
             $form.find('.variations select').each(function () {
                 var attribute = $(this).attr('name');
                 var value = $(this).val();

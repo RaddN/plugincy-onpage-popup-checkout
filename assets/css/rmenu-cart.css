@@ -93,34 +93,34 @@ html {
   /* Allow title to take remaining space */
 }
 
-.remove-item {
+.rmenu-cart .remove-item {
   background: transparent;
   border: none;
   color: red;
   cursor: pointer;
   padding: 5px 10px;
 }
-.quantity {
+.rmenu-cart .quantity {
   display: flex;
   gap: 10px;
 }
-.item-title {
+.rmenu-cart .item-title {
   font-size: 16px;
   margin: 7px 0;
 }
-.thumnail img {
+.rmenu-cart .thumnail img {
   width: 150px;
   object-fit: cover;
 }
 
 /* Subtotal styles */
-.cart-subtotal {
+.rmenu-cart .cart-subtotal {
   padding: 10px;
   font-weight: bold;
 }
 
 /* Checkout button styles */
-.checkout-button {
+.rmenu-cart .checkout-button {
   background-color: #28a745;
   /* Green color for checkout */
   color: white;
