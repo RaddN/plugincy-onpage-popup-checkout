@@ -280,7 +280,7 @@ class onepaquc_add_variation_buttons_on_archive
                     $attrs  = [];
                     foreach ($combo as $k => $opt) {
                         $labels[]  = $opt['label'];
-                        $attrs[$k] = $opt['slug'];
+                        $attrs['attribute_'.$k] = $opt['slug'];
                     }
 
                     echo '<button type="button" class="variation-button" data-id="' . esc_attr($vid) . '" data-attrs="' . esc_attr(wp_json_encode($attrs)) . '">'
@@ -523,7 +523,7 @@ function onepaquc_add_variation_buttons_to_loop($link, $product)
                 $attrs  = [];
                 foreach ($combo as $k => $opt) {
                     $labels[]  = $opt['label'];
-                    $attrs[$k] = $opt['slug'];
+                    $attrs['attribute_'.$k] = $opt['slug'];
                 }
 
                 echo '<button type="button" class="variation-button" data-id="' . esc_attr($vid) . '" data-attrs="' . esc_attr(wp_json_encode($attrs)) . '">'

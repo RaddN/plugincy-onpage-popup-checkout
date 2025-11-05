@@ -377,22 +377,34 @@ jQuery(document).ready(function ($) {
         var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() ||
             $button.siblings('.variation_id').val() || $button.closest('.product').find('.variation_id').val() ||
             $button.closest('.product').find('.archive-variations-container').find('.variation_id').val() || 0;
+        var variations = {};
+
+        var variation_on_archive = $button.siblings('.archive-variations-container').find('.variation-button.selected').data('attrs') ||
+            $button.closest('.product').find('.archive-variations-container').find('.variation-button.selected').data('attrs');
+
+        if (!variation_on_archive) {
+            $(".archive-variations-container").find('.var-attr-group').each(function () {
+                var attribute = $(this).find('button.var-attr-option.selected').data('attr');
+                var value = $(this).find('button.var-attr-option.selected').data('value');
+                if (attribute && value) {
+                    variations[attribute] = value;
+                }
+            });
+
+            variation_on_archive = variations;
+        }
 
         var $form = $button.closest('form.cart');
         var quantity = 1;
 
         // Try multiple approaches to find the quantity input
-
-        // 1. Check product form first
         if ($form.length > 0) {
             quantity = $form.find('input.qty').val();
         } else {
-            // 2. Check for quantity input in sibling elements
             var $qtyInput = $button.siblings('.rmenu-archive-quantity');
             if ($qtyInput.length > 0) {
                 quantity = $qtyInput.val();
             } else {
-                // 3. Check for quantity in the closest wrapper by product ID
                 var $qtyWrapper = $('.rmenu-quantity-wrapper[data-product_id="' + product_id + '"]');
                 if ($qtyWrapper.length > 0) {
                     var $qtyField = $qtyWrapper.find('.rmenu-archive-quantity');
@@ -400,7 +412,6 @@ jQuery(document).ready(function ($) {
                         quantity = $qtyField.val();
                     }
                 } else {
-                    // 4. Try to find by ID
                     var $qtyById = $('#quantity_' + product_id);
                     if ($qtyById.length > 0) {
                         quantity = $qtyById.val();
@@ -409,23 +420,86 @@ jQuery(document).ready(function ($) {
             }
         }
 
+        // Enhanced variation handling for product forms
+        if ($form.length > 0 && $form.find('input[name="variation_id"]').length > 0 && !variation_on_archive) {
+            $form.find('.variations select').each(function () {
+                var attribute = $(this).attr('name');
+                var value = $(this).val();
+                if (value) {
+                    variations[attribute] = value;
+                }
+            });
+        } else if (variation_on_archive) {
+            variations = variation_on_archive;
+        }
+
         // Ensure we have a valid quantity
         if (!quantity || quantity < 1 || isNaN(quantity)) {
             quantity = 1;
         }
-
 
         // Convert to number to ensure proper comparison
         $variation_id = parseInt($variation_id) || 0;
 
         $('#checkout-button-drawer-link').prop('disabled', true);
 
-        // Check for variation selection FIRST
-        if (product_type === 'variable' && $variation_id === 0) {
-            $('#checkout-button-drawer-link').prop('disabled', false);
-            $button.removeClass('loading').prop('disabled', false);
-            alert("Please select some product options before adding this product to your cart.");
-            return false; // Explicitly return false
+        // ENHANCED VALIDATION FOR VARIABLE PRODUCTS
+        if (product_type === 'variable') {
+            // Check if variation_id is missing
+            if ($variation_id === 0) {
+                $('#checkout-button-drawer-link').prop('disabled', false);
+                $button.removeClass('loading').prop('disabled', false);
+                alert("Please select all product options before adding this product to your cart.");
+                return false;
+            }
+
+            // Additional check: Verify all required variation attributes are selected
+            var requiredAttributes = [];
+            var $variationForm = $button.closest('.product').find('form.variations_form, form.cart');
+
+            if ($variationForm.length > 0) {
+                // Count required variation attributes from form
+                $variationForm.find('.variations select').each(function () {
+                    if ($(this).data('attribute_name') || $(this).attr('name')) {
+                        requiredAttributes.push($(this).attr('name') || $(this).data('attribute_name'));
+                    }
+                });
+            } else {
+                // Count required attributes from archive variation container
+                $button.closest('.product').find('.archive-variations-container .var-attr-group').each(function () {
+                    var attrName = $(this).data('attribute') || $(this).find('button.var-attr-option').first().data('attr');
+                    if (attrName) {
+                        requiredAttributes.push(attrName);
+                    }
+                });
+            }
+
+            // Check if all required attributes have been selected
+            var selectedCount = Object.keys(variations).length;
+            var requiredCount = requiredAttributes.length;
+
+            if (requiredCount > 0 && selectedCount < requiredCount) {
+                $('#checkout-button-drawer-link').prop('disabled', false);
+                $button.removeClass('loading').prop('disabled', false);
+                alert("Please select all product options. You have selected " + selectedCount + " out of " + requiredCount + " required options.");
+                return false;
+            }
+
+            // Validate that no variation attribute is empty
+            var hasEmptyVariation = false;
+            $.each(variations, function (key, value) {
+                if (!value || value === '' || value === 'undefined') {
+                    hasEmptyVariation = true;
+                    return false; // break loop
+                }
+            });
+
+            if (hasEmptyVariation) {
+                $('#checkout-button-drawer-link').prop('disabled', false);
+                $button.removeClass('loading').prop('disabled', false);
+                alert("Please complete all product option selections.");
+                return false;
+            }
         }
 
         // Handle confirmation if enabled
@@ -450,7 +524,7 @@ jQuery(document).ready(function ($) {
             if (!confirmed) {
                 $('#checkout-button-drawer-link').prop('disabled', false);
                 $button.removeClass('loading').prop('disabled', false);
-                return; // Stop execution if user cancels
+                return;
             }
         }
 
@@ -464,6 +538,7 @@ jQuery(document).ready(function ($) {
                     product_id: product_id,
                     quantity: quantity,
                     variation_id: $variation_id,
+                    variations: variations,
                     nonce: onepaquc_wc_cart_params.nonce || '',
                 },
                 success: function (response) {
@@ -529,6 +604,10 @@ jQuery(document).ready(function ($) {
         $redirecturlparams = `?onepaquc_add-to-cart=${product_id}&onepaquc_quantity=${quantity}`;
         if ($variation_id && $variation_id != 0) {
             $redirecturlparams += `&onepaquc_variation_id=${$variation_id}`;
+        }
+
+        if (variations && Object.keys(variations).length > 0) {
+            $redirecturlparams += `&onepaquc_variations=${encodeURIComponent(JSON.stringify(variations))}`;
         }
 
         // If clear cart is enabled, clear the cart before proceeding
