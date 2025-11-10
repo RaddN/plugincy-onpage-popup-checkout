@@ -4,7 +4,7 @@
  * Plugin Name: One Page Quick Checkout for WooCommerce
  * Plugin URI:  https://plugincy.com/one-page-quick-checkout-for-woocommerce/
  * Description: Enhance WooCommerce with popup checkout, cart drawer, and flexible checkout templates to boost conversions.
- * Version:  1.3.0.22
+ * Version:  1.3.1.5
  * Author: plugincy
  * Author URI: https://plugincy.com
  * license: GPL2
@@ -17,7 +17,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 define('ONEPAQUC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-define("RMENU_VERSION", "1.3.0.22");
+define("RMENU_VERSION", "1.3.1.5");
 
 // Include the admin notice file
 require_once plugin_dir_path(__FILE__) . 'includes/admin-notice.php';
@@ -177,9 +177,10 @@ function onepaquc_cart_enqueue_scripts()
         }
     }
 
-    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.3.0.22");
-    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.3.0.22", true);
-    wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.3.0.22", true);
+    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.3.1.5");
+    wp_enqueue_style('checkout-form-two-column', plugin_dir_url(__FILE__) . 'assets/css/checkout-form-two-column.css', array(), "1.3.1.5");
+    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.3.1.5", true);
+    wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), "1.3.1.5", true);
     $direct_checkout_behave = [
         'rmenu_wc_checkout_method' => get_option('rmenu_wc_checkout_method', 'direct_checkout'),
         'rmenu_wc_clear_cart' => get_option('rmenu_wc_clear_cart', 0),
@@ -231,10 +232,8 @@ function onepaquc_cart_enqueue_scripts()
         'apply_coupon' => esc_js(wp_create_nonce('apply-coupon')),
         'currency_symbol' => $currency_symbol,
         'plugincy_all_settings' => $plugincy_all_settings,
+        'ajax_url' => esc_url(admin_url('admin-ajax.php'))
     ));
-    wp_localize_script('rmenu-cart-script', 'onepaquc_ajax_object', array('ajax_url' => esc_url(admin_url('admin-ajax.php'))));
-
-    wp_enqueue_style('dashicons');
 }
 add_action('wp_enqueue_scripts', 'onepaquc_cart_enqueue_scripts', 20);
 
@@ -244,12 +243,12 @@ add_action('admin_enqueue_scripts', 'onepaquc_cart_admin_styles');
 function onepaquc_cart_admin_styles($hook)
 {
     if ($hook === 'toplevel_page_onepaquc_cart') {
-        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.3.0.22");
-        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.3.0.22");
-        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.3.0.22", true);
+        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.3.1.5");
+        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.3.1.5");
+        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.3.1.5", true);
     }
-    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.3.0.22");
-    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.3.0.22", true);
+    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.3.1.5");
+    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.3.1.5", true);
 }
 
 // add shortcode
@@ -274,7 +273,7 @@ function onepaquc_editor_script()
         'onepaquc_editor_script',
         plugin_dir_url(__FILE__) . 'includes/blocks/editor.js',
         array('wp-blocks', 'wp-element', 'wp-edit-post', 'wp-dom-ready', 'wp-plugins'),
-        '1.3.0.22',
+        '1.3.1.5',
         true
     );
 }
@@ -291,6 +290,17 @@ require_once plugin_dir_path(__FILE__) . 'includes/blocks/one-page-checkout.php'
 
 function onepaquc_rmenu_checkout_popup($isonepagewidget = false)
 {
+    // Return if this is the cart or checkout page
+    if (is_cart() || is_checkout()) {
+        return;
+    }
+
+    // Return if the current page content already has a WooCommerce checkout form
+    global $post;
+    if ($post && has_shortcode($post->post_content, 'woocommerce_checkout')) {
+        return;
+    }
+
 ?>
     <div class="checkout-popup <?php echo $isonepagewidget ? 'onepagecheckoutwidget' : ''; ?>" data-isonepagewidget="<?php echo esc_attr($isonepagewidget); ?>" style="<?php echo $isonepagewidget ? 'display: block; position: unset; transform: unset; box-shadow: none; background: unset; width: 100%; max-width: 100%; height: 100%;overflow: hidden;' : 'display:none'; ?>;">
         <?php
@@ -654,7 +664,6 @@ function onepaquc_add_settings_link($links)
 // add settings button after deactivate button in plugins page
 
 add_action('plugin_action_links_' . plugin_basename(__FILE__), 'onepaquc_add_settings_link');
-add_action('admin_init', 'onepaquc_add_settings_link');
 
 
 if (get_option("rmenu_enable_sticky_cart", 0)) {
@@ -932,7 +941,8 @@ function onepaquc_handle_url_add_to_cart()
 /**
  * Get a clean checkout URL (no onepaquc_* params) to avoid repeat add on refresh.
  */
-function onepaquc_get_clean_checkout_url() {
+function onepaquc_get_clean_checkout_url()
+{
     // Base checkout URL
     $checkout_url = wc_get_checkout_url();
 
@@ -955,7 +965,8 @@ function onepaquc_get_clean_checkout_url() {
  * Normalize attribute key to Woo format: ensure it starts with 'attribute_' and is lowercase.
  * Accepts keys like 'pa_color', 'attribute_pa_color', 'Color', etc.
  */
-function onepaquc_normalize_attr_key($key) {
+function onepaquc_normalize_attr_key($key)
+{
     $key = wc_clean(wp_unslash($key));
     $key = strtolower($key);
     // If already starts with attribute_, keep; else prepend
@@ -969,7 +980,8 @@ function onepaquc_normalize_attr_key($key) {
 /**
  * Normalize attribute value to a slug Woo expects for variations.
  */
-function onepaquc_normalize_attr_value($value) {
+function onepaquc_normalize_attr_value($value)
+{
     // Convert to slug (e.g., 'Deep Blue' -> 'deep-blue')
     return sanitize_title(wc_clean(wp_unslash($value)));
 }

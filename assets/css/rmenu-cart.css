@@ -460,7 +460,7 @@ table.one-page-checkout-product-table td {
   margin: 0 auto;
   overflow: auto;
 }
-
+/* 
 .one-page-checkout-container div#wc-stripe-express-checkout-element,
 .one-page-checkout-container p#wc-stripe-express-checkout-button-separator {
   width: 100%;
@@ -478,7 +478,7 @@ table.one-page-checkout-product-table td {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 24px;
-}
+} */
 
 .one-page-checkout-description {
   margin-bottom: 20px;
@@ -487,7 +487,7 @@ table.one-page-checkout-product-table td {
 }
 
 /* Hide quantity selector in cart table */
-.one-page-checkout-container
+/* .one-page-checkout-container
   .woocommerce-checkout-review-order-table
   .product-quantity {
   visibility: hidden;
@@ -508,11 +508,11 @@ table.one-page-checkout-product-table td {
   border-width: 0 0 0 2px;
   border-style: solid;
   border-color: var(--ast-border-color);
-}
+} */
 
 /* Responsive checkout form */
 @media (min-width: 768px) {
-  .one-page-checkout-container .woocommerce-checkout {
+  /* .one-page-checkout-container .woocommerce-checkout {
     display: flex !important;
     flex-wrap: wrap;
     margin: 0 -15px;
@@ -542,13 +542,13 @@ table.one-page-checkout-product-table td {
   .woocommerce .one-page-checkout-container .woocommerce-checkout > * > * {
     width: 100%;
     max-width: 100%;
-  }
+  } */
 
   /* .one-page-checkout-container #order_review_heading {
     display: none;
   } */
 
-  .one-page-checkout-container table.shop_table {
+  /* .one-page-checkout-container table.shop_table {
     width: 100%;
     max-width: 100%;
   }
@@ -562,7 +562,7 @@ table.one-page-checkout-product-table td {
     .woocommerce-NoticeGroup.woocommerce-NoticeGroup-checkout {
     max-width: 100%;
     width: 100%;
-  }
+  } */
 }
 
 .one-page-checkout-container .woocommerce-error:empty,

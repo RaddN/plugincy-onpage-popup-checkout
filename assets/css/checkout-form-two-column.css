@@ -1,0 +1,555 @@
+/* ===================================
+   WOODMART TWO-COLUMN CHECKOUT LAYOUT
+   Handles both format 1 (.col2-set) and format 2 (.customer-details)
+   Uses !important to override theme styles
+   =================================== */
+
+/* Reset ALL possible theme styles first */
+.one-page-checkout-container .woocommerce form.checkout,
+.one-page-checkout-container form.woocommerce-checkout,
+.one-page-checkout-container .woocommerce-checkout form,
+.one-page-checkout-container .woocommerce form.checkout *,
+.one-page-checkout-container form.woocommerce-checkout *,
+.one-page-checkout-container .woocommerce-checkout form * {
+    box-sizing: border-box !important;
+}
+
+/* Main checkout form container */
+.one-page-checkout-container .woocommerce form.checkout,
+.one-page-checkout-container form.woocommerce-checkout,
+.one-page-checkout-container .woocommerce-checkout form {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    display: block !important;
+    overflow: visible !important;
+    position: relative !important;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+/* Clearfix for floated elements */
+.one-page-checkout-container .woocommerce form.checkout::after,
+.one-page-checkout-container form.woocommerce-checkout::after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+}
+
+/* Handle ALL wrapper divs - force them to not interfere */
+.one-page-checkout-container .woocommerce form.checkout > div,
+.one-page-checkout-container .woocommerce form.checkout > div > div {
+    display: block !important;
+    position: relative !important;
+}
+
+/* ===================================
+   LEFT COLUMN - Customer Details
+   Handles both .col2-set (format 1) and .customer-details (format 2)
+   =================================== */
+
+.one-page-checkout-container .woocommerce form.checkout .col2-set,
+.one-page-checkout-container .woocommerce form.checkout .customer-details,
+.one-page-checkout-container .woocommerce form.checkout #customer_details,
+.one-page-checkout-container form.woocommerce-checkout .col2-set,
+.one-page-checkout-container form.woocommerce-checkout .customer-details,
+.one-page-checkout-container form.woocommerce-checkout #customer_details {
+    float: left !important;
+    width: calc(50% - 15px) !important;
+    margin-right: 30px !important;
+    margin-left: 0 !important;
+    display: block !important;
+    clear: none !important;
+    position: relative !important;
+}
+
+/* Ensure col-1 and col-2 (format 1) stack vertically in left column */
+.one-page-checkout-container .woocommerce form.checkout .col2-set .col-1,
+.one-page-checkout-container .woocommerce form.checkout .col2-set .col-2,
+.one-page-checkout-container .woocommerce form.checkout #customer_details .col-1,
+.one-page-checkout-container .woocommerce form.checkout #customer_details .col-2 {
+    width: 100% !important;
+    float: none !important;
+    margin: 0 0 20px 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    clear: both !important;
+}
+
+/* ===================================
+   RIGHT COLUMN - Order Review
+   Handles both formats
+   =================================== */
+
+/* Format 1: Direct #order_review_heading and #order_review */
+.one-page-checkout-container .woocommerce form.checkout > #order_review_heading,
+.one-page-checkout-container .woocommerce form.checkout > #order_review,
+.one-page-checkout-container form.woocommerce-checkout > #order_review_heading,
+.one-page-checkout-container form.woocommerce-checkout > #order_review {
+    float: right !important;
+    width: calc(50% - 15px) !important;
+    margin: 0 !important;
+    display: block !important;
+    clear: none !important;
+    position: relative !important;
+}
+
+/* Format 2: Wrapped in .checkout-order-review */
+.one-page-checkout-container .woocommerce form.checkout .checkout-order-review,
+.one-page-checkout-container form.woocommerce-checkout .checkout-order-review {
+    float: right !important;
+    width: calc(50% - 15px) !important;
+    margin: 0 !important;
+    display: block !important;
+    clear: none !important;
+    position: relative !important;
+}
+
+/* Ensure heading and content inside .checkout-order-review take full width */
+.one-page-checkout-container .woocommerce form.checkout .checkout-order-review #order_review_heading,
+.one-page-checkout-container .woocommerce form.checkout .checkout-order-review #order_review {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 0 20px 0 !important;
+    display: block !important;
+}
+
+/* First element in right column should not have top margin */
+.one-page-checkout-container .woocommerce form.checkout .checkout-order-review #order_review_heading:first-child,
+.one-page-checkout-container .woocommerce form.checkout > #order_review_heading {
+    margin-top: 0 !important;
+}
+
+/* Order Review Content */
+.one-page-checkout-container .woocommerce form.checkout #order_review {
+    margin-top: 0 !important;
+}
+
+/* ===================================
+   LEFT COLUMN CONTENT SECTIONS
+   =================================== */
+
+/* Ensure billing and shipping sections are full width in left column */
+.one-page-checkout-container .woocommerce-billing-fields,
+.one-page-checkout-container .woocommerce-shipping-fields,
+.one-page-checkout-container .woocommerce-additional-fields {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+    display: block !important;
+    float: none !important;
+}
+
+/* Section headings */
+.one-page-checkout-container .woocommerce form.checkout h3 {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 2px solid #eee !important;
+}
+
+/* Form fields styling */
+.one-page-checkout-container .woocommerce form.checkout .form-row {
+    margin-bottom: 15px !important;
+}
+
+/* ===================================
+   ORDER REVIEW TABLE - WOODMART SPECIFIC
+   =================================== */
+
+/* Woodmart specific - Table wrapper */
+.one-page-checkout-container .wd-table-wrapper {
+    width: 100% !important;
+    display: block !important;
+    overflow-x: auto !important;
+}
+
+/* Order review table styling - Works for both formats */
+.one-page-checkout-container .woocommerce-checkout-review-order-table,
+.one-page-checkout-container .shop_table.woocommerce-checkout-review-order-table {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+    border-collapse: collapse !important;
+    display: table !important;
+}
+
+.one-page-checkout-container .woocommerce-checkout-review-order-table thead,
+.one-page-checkout-container .shop_table.woocommerce-checkout-review-order-table thead {
+    display: table-header-group !important;
+}
+
+.one-page-checkout-container .woocommerce-checkout-review-order-table tbody,
+.one-page-checkout-container .shop_table.woocommerce-checkout-review-order-table tbody {
+    display: table-row-group !important;
+}
+
+.one-page-checkout-container .woocommerce-checkout-review-order-table tfoot,
+.one-page-checkout-container .shop_table.woocommerce-checkout-review-order-table tfoot {
+    display: table-footer-group !important;
+}
+
+.one-page-checkout-container .woocommerce-checkout-review-order-table tr,
+.one-page-checkout-container .shop_table.woocommerce-checkout-review-order-table tr {
+    display: table-row !important;
+}
+
+.one-page-checkout-container .woocommerce-checkout-review-order-table th,
+.one-page-checkout-container .woocommerce-checkout-review-order-table td,
+.one-page-checkout-container .shop_table.woocommerce-checkout-review-order-table th,
+.one-page-checkout-container .shop_table.woocommerce-checkout-review-order-table td {
+    padding: 12px !important;
+    text-align: left !important;
+    border-bottom: 1px solid #eee !important;
+    display: table-cell !important;
+}
+
+/* Format 1 - Standard product row */
+.one-page-checkout-container .shop_table .product-name {
+    display: table-cell !important;
+}
+
+.one-page-checkout-container .shop_table .product-total {
+    display: table-cell !important;
+}
+
+/* Format 2 - Woodmart product container */
+.one-page-checkout-container .wd-checkout-prod {
+    display: block !important;
+    width: 100% !important;
+}
+
+.one-page-checkout-container .wd-checkout-prod-cont {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+.one-page-checkout-container .wd-checkout-prod-title {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.one-page-checkout-container .wd-checkout-prod-total {
+    flex-shrink: 0 !important;
+    margin-left: 15px !important;
+}
+
+/* Cart product label */
+.one-page-checkout-container .cart-product-label {
+    display: inline-block !important;
+    margin-right: 10px !important;
+}
+
+/* ===================================
+   PAYMENT SECTION
+   =================================== */
+
+/* Payment section */
+.one-page-checkout-container #payment {
+    background: #f9f9f9 !important;
+    padding: 20px !important;
+    border-radius: 5px !important;
+    margin-top: 20px !important;
+}
+
+/* Payment methods list */
+.one-page-checkout-container .wc_payment_methods {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 20px 0 !important;
+}
+
+.one-page-checkout-container .wc_payment_methods li {
+    padding: 12px !important;
+    margin-bottom: 10px !important;
+    background: white !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+}
+
+/* Place order button */
+.one-page-checkout-container .place-order {
+    margin-top: 20px !important;
+}
+
+.one-page-checkout-container #place_order {
+    width: 100% !important;
+    padding: 15px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    background: #333 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease !important;
+}
+
+.one-page-checkout-container #place_order:hover {
+    background: #555 !important;
+}
+
+/* Order total in place-order section */
+.one-page-checkout-container .place-order .order-total-price {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-bottom: 15px !important;
+    padding: 15px !important;
+    background: white !important;
+    border: 2px solid #eee !important;
+    border-radius: 4px !important;
+    text-align: center !important;
+}
+
+/* ===================================
+   UTILITY ELEMENTS
+   =================================== */
+
+/* Stripe express checkout - keep at top, full width */
+.one-page-checkout-container #wc-stripe-express-checkout-element,
+.one-page-checkout-container #wc-stripe-express-checkout-button-separator {
+    float: none !important;
+    width: 100% !important;
+    clear: both !important;
+}
+
+/* Order attribution inputs - hide these */
+.one-page-checkout-container wc-order-attribution-inputs {
+    display: none !important;
+}
+
+/* Quantity controls in checkout */
+.one-page-checkout-container .checkout-quantity-control {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    margin-left: 10px !important;
+}
+
+.one-page-checkout-container .checkout-qty-btn {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0 !important;
+    border: 1px solid #ddd !important;
+    background: white !important;
+    cursor: pointer !important;
+    border-radius: 3px !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+}
+
+.one-page-checkout-container .checkout-qty-input {
+    width: 45px !important;
+    height: 24px !important;
+    text-align: center !important;
+    border: 1px solid #ddd !important;
+    border-radius: 3px !important;
+    padding: 0 5px !important;
+}
+
+/* Remove item button */
+.one-page-checkout-container .remove-item-checkout {
+    margin-left: 8px !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+.one-page-checkout-container .remove-item-checkout:hover svg {
+    opacity: 0.7 !important;
+}
+
+/* Coupon toggle section */
+.one-page-checkout-container .woocommerce-form-coupon-toggle {
+    margin-bottom: 20px !important;
+    width: 100% !important;
+    clear: both !important;
+    display: block !important;
+}
+
+.one-page-checkout-container .checkout_coupon {
+    margin-bottom: 20px !important;
+    width: 100% !important;
+    clear: both !important;
+}
+
+/* Trust badges - full width at bottom */
+.one-page-checkout-container .onepaquc-trust-badges {
+    clear: both !important;
+    width: 100% !important;
+    margin-top: 30px !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+}
+
+.one-page-checkout-container .trust-badge {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px 15px !important;
+    background: #f9f9f9 !important;
+    border-radius: 4px !important;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 992px) {
+    /* Stack everything in single column on tablets and mobile */
+    .one-page-checkout-container .woocommerce form.checkout .col2-set,
+    .one-page-checkout-container .woocommerce form.checkout .customer-details,
+    .one-page-checkout-container .woocommerce form.checkout #customer_details,
+    .one-page-checkout-container .woocommerce form.checkout .checkout-order-review,
+    .one-page-checkout-container .woocommerce form.checkout > #order_review_heading,
+    .one-page-checkout-container .woocommerce form.checkout > #order_review {
+        float: none !important;
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+    
+    /* Add spacing between sections on mobile */
+    .one-page-checkout-container .woocommerce form.checkout .checkout-order-review,
+    .one-page-checkout-container .woocommerce form.checkout > #order_review_heading {
+        margin-top: 30px !important;
+    }
+    
+    .one-page-checkout-container .woocommerce form.checkout > #order_review,
+    .one-page-checkout-container .woocommerce form.checkout .checkout-order-review #order_review {
+        clear: both !important;
+        margin-top: 20px !important;
+    }
+    
+    /* Stripe express checkout full width */
+    .one-page-checkout-container #wc-stripe-express-checkout-element,
+    .one-page-checkout-container #wc-stripe-express-checkout-button-separator {
+        float: none !important;
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .one-page-checkout-container .woocommerce form.checkout {
+        padding: 15px !important;
+    }
+    
+    .one-page-checkout-container .woocommerce form.checkout h3 {
+        font-size: 18px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .one-page-checkout-container #payment {
+        padding: 15px !important;
+    }
+    
+    .one-page-checkout-container .place-order .order-total-price {
+        font-size: 16px !important;
+        padding: 12px !important;
+    }
+
+    /* Stack product info vertically on small screens */
+    .one-page-checkout-container .wd-checkout-prod-cont {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+
+    .one-page-checkout-container .wd-checkout-prod-title {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+    }
+
+    .one-page-checkout-container .wd-checkout-prod-total {
+        margin-left: 0 !important;
+    }
+}
+
+/* ===================================
+   FORCE OVERRIDES FOR WOODMART THEME
+   =================================== */
+
+/* Kill Woodmart's specific flex/grid styles */
+.one-page-checkout-container .woocommerce form.checkout,
+.one-page-checkout-container .woocommerce-checkout form.checkout {
+    display: block !important;
+    flex-direction: initial !important;
+    grid-template-columns: initial !important;
+    flex-wrap: initial !important;
+}
+
+/* Override Woodmart's table display */
+.one-page-checkout-container .wd-table-wrapper.wd-manage-on {
+    display: block !important;
+}
+
+/* ===================================
+   LOADING/BLOCKING OVERLAYS
+   =================================== */
+
+/* Handle WooCommerce blocking overlays */
+.one-page-checkout-container .blockUI.blockOverlay {
+    z-index: 1000 !important;
+}
+
+.one-page-checkout-container .blockUI.blockMsg {
+    z-index: 1001 !important;
+}
+
+/* ===================================
+   ACCESSIBILITY IMPROVEMENTS
+   =================================== */
+
+/* Focus states */
+.one-page-checkout-container .woocommerce form.checkout input:focus,
+.one-page-checkout-container .woocommerce form.checkout select:focus,
+.one-page-checkout-container .woocommerce form.checkout textarea:focus {
+    outline: 2px solid #0073aa !important;
+    outline-offset: 2px !important;
+}
+
+/* Required field indicator */
+.one-page-checkout-container .required {
+    color: #d00 !important;
+    font-weight: bold !important;
+}
+
+/* Screen reader text */
+.one-page-checkout-container .screen-reader-text {
+    clip: rect(1px, 1px, 1px, 1px) !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    width: 1px !important;
+    word-wrap: normal !important;
+}
+
+/* Select2 dropdown - ensure proper display */
+.one-page-checkout-container .select2-container {
+    width: 100% !important;
+}
+
+/* Stripe elements container */
+.one-page-checkout-container .wc-stripe-upe-element {
+    margin: 10px 0 !important;
+}
+
+/* Payment box */
+.one-page-checkout-container .payment_box {
+    padding: 15px !important;
+    margin-top: 10px !important;
+    background: #f9f9f9 !important;
+    border-radius: 4px !important;
+}
+
+/* Terms and conditions */
+.one-page-checkout-container .woocommerce-terms-and-conditions-wrapper {
+    margin: 15px 0 !important;
+    padding: 15px !important;
+    background: #f9f9f9 !important;
+    border-radius: 4px !important;
+}

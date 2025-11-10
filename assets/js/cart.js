@@ -101,7 +101,7 @@ jQuery(document).ready(function ($) {
         if (isUpdatingCheckout) return;
         isUpdatingCheckout = true;
         $.ajax({
-            url: onepaquc_ajax_object.ajax_url,
+            url: onepaquc_rmsgValue.ajax_url,
             method: 'POST',
             data: { action: 'onepaquc_update_checkout' },
             success: function (response) {
