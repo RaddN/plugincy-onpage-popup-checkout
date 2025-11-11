@@ -2014,7 +2014,6 @@ button#place_order {
 
 :has(.archive-variations-container) {
   flex-wrap: wrap;
-  width: 100%;
 }
 
 .direct-checkout-button {

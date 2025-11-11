@@ -17,7 +17,8 @@
 /* Main checkout form container */
 .one-page-checkout-container .woocommerce form.checkout,
 .one-page-checkout-container form.woocommerce-checkout,
-.one-page-checkout-container .woocommerce-checkout form {
+.one-page-checkout-container .woocommerce-checkout form,
+.one-page-checkout-container form.woocommerce-checkout > div:has(.col2-set):has(#order_review) {
     max-width: 1200px !important;
     margin: 0 auto !important;
     display: block !important;
@@ -47,12 +48,14 @@
    Handles both .col2-set (format 1) and .customer-details (format 2)
    =================================== */
 
-.one-page-checkout-container .woocommerce form.checkout .col2-set,
-.one-page-checkout-container .woocommerce form.checkout .customer-details,
-.one-page-checkout-container .woocommerce form.checkout #customer_details,
-.one-page-checkout-container form.woocommerce-checkout .col2-set,
-.one-page-checkout-container form.woocommerce-checkout .customer-details,
-.one-page-checkout-container form.woocommerce-checkout #customer_details {
+.one-page-checkout-container .woocommerce form.checkout > .col2-set,
+.one-page-checkout-container .woocommerce form.checkout > .customer-details,
+.one-page-checkout-container .woocommerce form.checkout > #customer_details,
+.one-page-checkout-container form.woocommerce-checkout > .col2-set,
+.one-page-checkout-container form.woocommerce-checkout > .customer-details,
+.one-page-checkout-container form.woocommerce-checkout > #customer_details,
+.one-page-checkout-container form.woocommerce-checkout > div:has(.col2-set):not(:has(#order_review)),
+.one-page-checkout-container form.woocommerce-checkout > div:has(.col2-set):has(#order_review) > div:has(.col2-set):not(:has(#order_review))  {
     float: left !important;
     width: calc(50% - 15px) !important;
     margin-right: 30px !important;
@@ -61,6 +64,16 @@
     clear: none !important;
     position: relative !important;
 }
+
+.one-page-checkout-container form.woocommerce-checkout > div:has(.col2-set) .col2-set{
+    width: 100% !important;
+    float: none !important;
+    min-width: 100% !important;
+    padding: 0 !important;
+    display: block !important;
+    clear: both !important;
+}
+
 
 /* Ensure col-1 and col-2 (format 1) stack vertically in left column */
 .one-page-checkout-container .woocommerce form.checkout .col2-set .col-1,
@@ -84,13 +97,25 @@
 .one-page-checkout-container .woocommerce form.checkout > #order_review_heading,
 .one-page-checkout-container .woocommerce form.checkout > #order_review,
 .one-page-checkout-container form.woocommerce-checkout > #order_review_heading,
-.one-page-checkout-container form.woocommerce-checkout > #order_review {
+.one-page-checkout-container form.woocommerce-checkout > #order_review,
+.one-page-checkout-container form.woocommerce-checkout > div:has(#order_review):not(:has(.col2-set)),
+.one-page-checkout-container form.woocommerce-checkout > div:has(.col2-set):has(#order_review) > div:has(#order_review):not(:has(.col2-set))
+  {
     float: right !important;
     width: calc(50% - 15px) !important;
     margin: 0 !important;
     display: block !important;
     clear: none !important;
     position: relative !important;
+}
+
+.one-page-checkout-container form.woocommerce-checkout > div:has(#order_review) #order_review{
+    width: 100% !important;
+    float: none !important;
+    min-width: 100% !important;
+    padding: 0 !important;
+    display: block !important;
+    clear: both !important;
 }
 
 /* Format 2: Wrapped in .checkout-order-review */
