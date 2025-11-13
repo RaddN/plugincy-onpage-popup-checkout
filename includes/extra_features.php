@@ -163,12 +163,16 @@ class onepaquc_add_variation_buttons_on_archive
 
         $product_id = $product->get_id();
 
+        static $loop_counter = 0;
+        $loop_counter++;
+        $context_key = $product_id . '_' . $loop_counter;
+
 
         if (!$product || !$product->is_type('variable')) {
             return;
         }
 
-        if(isset($onepaquc_variation_buttons_on_archive[$product_id])){
+        if(isset($onepaquc_variation_buttons_on_archive[$context_key])){
             return;
         }
 
@@ -177,7 +181,7 @@ class onepaquc_add_variation_buttons_on_archive
             return;
         }
 
-        $onepaquc_variation_buttons_on_archive[$product_id] = true;
+        $onepaquc_variation_buttons_on_archive[$context_key] = true;
 
         $position     = get_option('rmenu_wc_direct_checkout_position', 'after_product');
         $layout       = get_option('rmenu_variation_layout', 'separate'); // 'combine' | 'separate'
@@ -413,16 +417,20 @@ function onepaquc_add_variation_buttons_to_loop($link, $product)
 {
     global $onepaquc_variation_buttons_on_archive;
     $product_id = $product->get_id();
+
+    static $loop_counter = 0;
+    $loop_counter++;
+    $context_key = $product_id . '_' . $loop_counter;
     
     if (!$product || !$product->is_type('variable')) {
         return $link;
     }
 
-    if(isset($onepaquc_variation_buttons_on_archive[$product_id])){
+    if(isset($onepaquc_variation_buttons_on_archive[$context_key])){
         return $link;
     }
 
-    $onepaquc_variation_buttons_on_archive[$product_id] = true;
+    $onepaquc_variation_buttons_on_archive[$context_key] = true;
 
     $available_variations = $product->get_available_variations();
     if (empty($available_variations)) {
@@ -648,4 +656,22 @@ function onepaquc_add_variation_buttons_to_loop($link, $product)
     echo '</div>'; // container
 
     return ob_get_clean() . $link;
+}
+
+
+
+add_filter( 'woocommerce_post_class', 'onepaquc_add_non_purchasable_product_class', 10, 2 );
+
+function onepaquc_add_non_purchasable_product_class( $classes, $product ) {
+    // Check if product object exists
+    if ( ! is_object( $product ) ) {
+        $product = wc_get_product( get_the_ID() );
+    }
+    
+    // Check if product is not purchasable
+    if ( $product && ! $product->is_purchasable() ) {
+        $classes[] = 'plugincy-not-purchaseable';
+    }
+    
+    return $classes;
 }

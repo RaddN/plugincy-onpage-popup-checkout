@@ -262,14 +262,20 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
     <?php if (get_option("rmenu_enable_sticky_cart", 0)) : ?>
         <style>
             :root {
-                --cart-top: <?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>;
-                --cart-left: <?php echo esc_attr(get_option('rmenu_cart_left_position', '100%')); ?>;
                 <?php
                 $border_radius = get_option('rmenu_cart_border_radius', '5px 0 0 5px');
+                $top_position = get_option('rmenu_cart_top_position', '50%');
+                $left_position = get_option('rmenu_cart_left_position', '100%');
 
                 // Check if border_radius has a unit
                 if (!preg_match('/(px|%|em|rem|vw|vh)$/', $border_radius)) {
                     $border_radius .= 'px'; // Append px if no unit is present
+                }
+                if (!preg_match('/(px|%|em|rem|vw|vh)$/', $top_position)) {
+                    $top_position .= 'px'; // Append px if no unit is present
+                }
+                if (!preg_match('/(px|%|em|rem|vw|vh)$/', $left_position)) {
+                    $left_position .= 'px'; // Append px if no unit is present
                 }
 
                 // Convert border_radius to an integer for comparison
@@ -286,7 +292,10 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                     echo '--cart-height: auto;';
                     echo '--cart-padding: 15px;';
                 }
-                ?>--cart-bg: <?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>;
+                ?>
+                --cart-top: <?php echo esc_attr($top_position); ?>;
+                --cart-left: <?php echo esc_attr($left_position); ?>;
+                --cart-bg: <?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>;
                 --cart-text: <?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>;
                 --cart-hover-bg: <?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>;
                 --cart-hover-text: <?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>;

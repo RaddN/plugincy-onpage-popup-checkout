@@ -507,7 +507,7 @@ a.rmenu-quick-view-image img {
 }
 a.opqvfw-btn.button.display-icon {
   display: flex !important;
-  background: #ffffff6e;
+  background: #9c9a9a6e;
   color: #1e293b;
   border: none;
   border-radius: 100%;
@@ -518,5 +518,5 @@ a.opqvfw-btn {
   z-index: 9999 !important;
 }
 a.opqvfw-btn.button.display-icon:hover {
-  background: #ffffff;
+  background: #2b2b2b;
 }

@@ -104,7 +104,6 @@
     float: right !important;
     width: calc(50% - 15px) !important;
     margin: 0 !important;
-    display: block !important;
     clear: none !important;
     position: relative !important;
 }
@@ -159,7 +158,6 @@
 .one-page-checkout-container .woocommerce-additional-fields {
     width: 100% !important;
     margin-bottom: 20px !important;
-    display: block !important;
     float: none !important;
 }
 
@@ -194,7 +192,6 @@
     width: 100% !important;
     margin-bottom: 20px !important;
     border-collapse: collapse !important;
-    display: table !important;
 }
 
 .one-page-checkout-container .woocommerce-checkout-review-order-table thead,
@@ -392,7 +389,6 @@
     margin-bottom: 20px !important;
     width: 100% !important;
     clear: both !important;
-    display: block !important;
 }
 
 .one-page-checkout-container .checkout_coupon {
