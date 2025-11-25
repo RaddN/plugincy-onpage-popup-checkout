@@ -45,6 +45,7 @@ function onepaquc_cart_get_pro()
     <div class="wrap">
         <h1>Upgrade to Onepage Checkout Pro</h1>
 
+
         <div class="onepaquc-pro-banner" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin: 20px 0;">
             <h2 style="color: white; margin-top: 0;">🚀 Unlock Premium Features</h2>
             <p style="font-size: 18px; margin-bottom: 30px;">Take your checkout experience to the next level with our premium features designed to boost conversions and enhance user experience.</p>
@@ -223,6 +224,7 @@ function onepaquc_cart_dashboard()
             <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button"><span class="dashicons dashicons-book" style=" margin-right: 5px; "></span> View Documentation</a>
             <a href="https://plugincy.com/support" target="_blank" class="button button-secondary"><span class="dashicons dashicons-sos" style=" margin-right: 5px; "></span> Get Support</a>
         </div>
+
     </div>
 
     <h1 style="padding-top: 3rem;">Dashboard</h1>
