@@ -20,6 +20,302 @@ function onepaquc_add_product_image_to_checkout_cart_items($product_name, $cart_
 }
 add_filter('woocommerce_cart_item_name', 'onepaquc_add_product_image_to_checkout_cart_items', 10, 3);
 
+
+/**
+ * Comprehensive WooCommerce variation validation with deduplication
+ * 
+ * @param WC_Product $product Product object
+ * @return array Validated and deduplicated variations
+ */
+function onepaquc_get_validated_variations( $product ) {
+    // Skip if product is not published or is scheduled
+    if ( ! $product || 'publish' !== $product->get_status() ) {
+        return [];
+    }
+
+    // Get all variations (including potentially invalid ones)
+    $all_variations = $product->get_available_variations();
+    if ( empty( $all_variations ) ) {
+        return [];
+    }
+
+    // Normalize attribute values to the slugs WooCommerce expects.
+    $normalize_attribute_value = static function ( $value ) {
+        if ( is_array( $value ) ) {
+            return '';
+        }
+
+        if ( is_bool( $value ) ) {
+            $value = $value ? 'yes' : 'no';
+        }
+
+        if ( is_numeric( $value ) ) {
+            $value = (string) $value;
+        } else {
+            $value = trim( (string) $value );
+        }
+
+        if ( '' === $value ) {
+            return '';
+        }
+
+        return function_exists( 'sanitize_title' ) ? sanitize_title( $value ) : strtolower( $value );
+    };
+
+    // Get product attributes used for variations
+    $product_attributes   = $product->get_attributes();
+    $variation_attributes = [];
+
+    // Prepare attribute validation data
+    foreach ( $product_attributes as $attribute_name => $attribute ) {
+        if ( $attribute->get_variation() ) {
+            if ( $attribute->is_taxonomy() ) {
+                // Terms (slugs) for taxonomy attributes
+                $terms = wc_get_product_terms(
+                    $product->get_id(),
+                    $attribute_name,
+                    [ 'fields' => 'slugs' ]
+                );
+
+                $variation_attributes[ $attribute_name ] = [
+                    'type'               => 'taxonomy',
+                    'options'            => $terms,
+                    'normalized_options' => array_values(
+                        array_filter(
+                            array_map( $normalize_attribute_value, $terms ),
+                            static function ( $value ) {
+                                return '' !== $value;
+                            }
+                        )
+                    ),
+                    'required'           => true,
+                ];
+            } else {
+                // Options for custom attributes
+                $options = array_map( 'trim', $attribute->get_options() );
+
+                $variation_attributes[ $attribute_name ] = [
+                    'type'               => 'custom',
+                    'options'            => $options,
+                    'normalized_options' => array_values(
+                        array_filter(
+                            array_map( $normalize_attribute_value, $options ),
+                            static function ( $value ) {
+                                return '' !== $value;
+                            }
+                        )
+                    ),
+                    'required'           => true,
+                ];
+            }
+        }
+    }
+
+    // No variation attributes? just return default available variations
+    if ( empty( $variation_attributes ) ) {
+        return $all_variations;
+    }
+
+    $combination_map   = [];
+    $combination_order = [];
+
+    foreach ( $all_variations as $variation ) {
+
+        $variation_id  = $variation['variation_id'];
+        $variation_obj = wc_get_product( $variation_id );
+
+        // 1. Basic checks
+        if ( ! $variation_obj ) {
+            continue;
+        }
+
+        // Status
+        if ( 'publish' !== $variation_obj->get_status() ) {
+            continue;
+        }
+
+        // Catalog visibility
+        if ( 'hidden' === $variation_obj->get_catalog_visibility() ) {
+            continue;
+        }
+
+        // Stock / backorder
+        $stock_status       = $variation_obj->get_stock_status();
+        $backorders_allowed = $variation_obj->get_backorders();
+
+        if ( 'outofstock' === $stock_status && 'no' === $backorders_allowed ) {
+            continue;
+        }
+
+        // Price
+        $price = $variation_obj->get_price();
+        if ( '' === $price || ! is_numeric( $price ) || $price < 0 ) {
+            continue;
+        }
+
+        // Tax class
+        $tax_class = $variation_obj->get_tax_class();
+        if ( ! empty( $tax_class ) ) {
+            $tax_classes = WC_Tax::get_tax_classes(); // names, not slugs
+            if ( ! in_array( $tax_class, $tax_classes, true ) ) {
+                continue;
+            }
+        }
+
+        // Shipping class
+        $shipping_class_id = $variation_obj->get_shipping_class_id();
+        if ( $shipping_class_id > 0 && ! term_exists( $shipping_class_id, 'product_shipping_class' ) ) {
+            continue;
+        }
+
+        // Downloadable file check
+        if ( $variation_obj->is_downloadable() ) {
+            $files = $variation_obj->get_downloads();
+            if ( empty( $files ) ) {
+                continue;
+            }
+        }
+
+        // 2. Normalize attribute keys and values
+        //    convert "attribute_pa_cpu" => "pa_cpu"
+        $raw_attributes = $variation_obj->get_attributes();
+        $attributes     = [];
+
+        foreach ( $raw_attributes as $attr_name => $attr_value ) {
+
+            if ( 0 === strpos( $attr_name, 'attribute_' ) ) {
+                $attr_name = substr( $attr_name, 10 ); // remove "attribute_"
+            }
+
+            $attributes[ $attr_name ] = $normalize_attribute_value( $attr_value );
+        }
+
+        // 3. Validate attributes against product definitions
+        $is_valid = true;
+
+        foreach ( $variation_attributes as $attr_name => $attr_data ) {
+            $attr_value = isset( $attributes[ $attr_name ] ) ? $attributes[ $attr_name ] : '';
+
+            // "any" (empty) is allowed, as long as the product has options for that attribute
+            if ( '' === $attr_value ) {
+                if ( empty( $attr_data['normalized_options'] ) ) {
+                    $is_valid = false;
+                    break;
+                }
+                continue;
+            }
+
+            if ( ! in_array( $attr_value, $attr_data['normalized_options'], true ) ) {
+                $is_valid = false;
+                break;
+            }
+        }
+
+        // Missing required attributes => invalid
+        if ( $is_valid ) {
+            foreach ( $variation_attributes as $attr_name => $attr_data ) {
+                if ( ! array_key_exists( $attr_name, $attributes ) ) {
+                    $is_valid = false;
+                    break;
+                }
+            }
+        }
+
+        if ( ! $is_valid ) {
+            continue;
+        }
+
+        // 4. Expand wildcard attributes to actual combinations so we can dedupe properly.
+        $values_per_attribute = [];
+        $specificity          = 0;
+
+        foreach ( $variation_attributes as $attr_name => $attr_data ) {
+            $attr_value = isset( $attributes[ $attr_name ] ) ? $attributes[ $attr_name ] : '';
+
+            if ( '' === $attr_value ) {
+                $options = $attr_data['normalized_options'];
+                if ( empty( $options ) ) {
+                    $options = [ '' ];
+                }
+                $values_per_attribute[ $attr_name ] = $options;
+            } else {
+                $specificity++;
+                $values_per_attribute[ $attr_name ] = [ $attr_value ];
+            }
+        }
+
+        if ( empty( $values_per_attribute ) ) {
+            continue;
+        }
+
+        $combinations = [ [] ];
+
+        foreach ( $values_per_attribute as $attr_name => $possible_values ) {
+            $new_combinations = [];
+
+            foreach ( $combinations as $combination ) {
+                foreach ( $possible_values as $possible_value ) {
+                    $new_combination               = $combination;
+                    $new_combination[ $attr_name ] = $possible_value;
+                    $new_combinations[]            = $new_combination;
+                }
+            }
+
+            $combinations = $new_combinations;
+        }
+
+        foreach ( $combinations as $combination_values ) {
+            $key_parts = [];
+
+            foreach ( $combination_values as $attr_name => $attr_value ) {
+                $key_parts[ $attr_name ] = $attr_name . '=' . $attr_value;
+            }
+
+            ksort( $key_parts );
+            $combination_key = implode( '&', $key_parts );
+
+            $variation_for_combo = $variation;
+            $variation_for_combo['attributes'] = isset( $variation_for_combo['attributes'] ) && is_array( $variation_for_combo['attributes'] )
+                ? $variation_for_combo['attributes']
+                : [];
+
+            foreach ( $combination_values as $attr_name => $attr_value ) {
+                $attr_key = 0 === strpos( $attr_name, 'attribute_' ) ? $attr_name : 'attribute_' . $attr_name;
+                $variation_for_combo['attributes'][ $attr_key ] = $attr_value;
+            }
+
+            if ( ! isset( $combination_map[ $combination_key ] ) ) {
+                $combination_order[]                = $combination_key;
+                $combination_map[ $combination_key ] = [
+                    'specificity' => $specificity,
+                    'variation'   => $variation_for_combo,
+                ];
+                continue;
+            }
+
+            if ( $specificity >= $combination_map[ $combination_key ]['specificity'] ) {
+                $combination_map[ $combination_key ] = [
+                    'specificity' => $specificity,
+                    'variation'   => $variation_for_combo,
+                ];
+            }
+        }
+    }
+
+    if ( empty( $combination_order ) ) {
+        return [];
+    }
+
+    $result = [];
+    foreach ( $combination_order as $combination_key ) {
+        if ( isset( $combination_map[ $combination_key ] ) ) {
+            $result[] = $combination_map[ $combination_key ]['variation'];
+        }
+    }
+
+    return $result;
+}
+
 // add a random product in cart
 
 if (get_option('rmenu_at_one_product_cart', 0)) {
@@ -176,7 +472,7 @@ class onepaquc_add_variation_buttons_on_archive
             return;
         }
 
-        $available_variations = $product->get_available_variations();
+        $available_variations = onepaquc_get_validated_variations( $product );
         if (empty($available_variations)) {
             return;
         }
@@ -432,7 +728,7 @@ function onepaquc_add_variation_buttons_to_loop($link, $product)
 
     $onepaquc_variation_buttons_on_archive[$context_key] = true;
 
-    $available_variations = $product->get_available_variations();
+    $available_variations = onepaquc_get_validated_variations( $product );
     if (empty($available_variations)) {
         return $link;
     }

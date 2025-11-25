@@ -628,7 +628,7 @@ class RMENU_Quick_View
             $product_data['default_attributes'] = $product->get_default_attributes();
 
             // Get available variations
-            $available_variations = $product->get_available_variations();
+            $available_variations = onepaquc_get_validated_variations( $product );
             if (!empty($available_variations)) {
                 foreach ($available_variations as $variation) {
                     $variation_id = $variation['variation_id'];

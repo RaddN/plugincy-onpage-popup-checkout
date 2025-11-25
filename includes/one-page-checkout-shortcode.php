@@ -76,7 +76,7 @@ function onepaquc_one_page_checkout_shortcode($atts)
         if ($product_id > 0 && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_add", "1") === "1") {
             $product = wc_get_product($product_id);
             if ($product && $product->is_type('variable')) {
-                $available_variations = $product->get_available_variations();
+                $available_variations = onepaquc_get_validated_variations( $product );
                 if (!empty($available_variations)) {
                     $variation_id = $available_variations[0]['variation_id'];
                     $variation = wc_get_product($variation_id);

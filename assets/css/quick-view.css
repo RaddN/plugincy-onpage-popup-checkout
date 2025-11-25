@@ -323,6 +323,52 @@
   color: #a46497;
 }
 
+.rmenu-quick-view-promo {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px dashed #a46497;
+  border-radius: 6px;
+  background: #fff7f3;
+  color: #3d2a24;
+}
+
+.rmenu-promo-headline {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rmenu-promo-body {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.rmenu-promo-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #a46497;
+  font-weight: 700;
+}
+
+.rmenu-promo-code strong {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #a46497;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.rmenu-promo-code span {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  color: #5c3f37;
+}
+
 .rmenu-quick-view-right .woocommerce-product-details__short-description {
   margin-bottom: 20px;
 }
