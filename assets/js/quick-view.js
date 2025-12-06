@@ -269,22 +269,6 @@
                 html += '<div class="price">' + productData.price_html + '</div>';
             }
 
-            // Cyber Monday promotion banner
-            if (self.settings.cyber_deal && (self.settings.cyber_deal.description || self.settings.cyber_deal.code)) {
-                var promoCta = self.settings.cyber_deal.cta_label || 'Use code';
-                html += '<div class="rmenu-quick-view-promo">';
-                if (self.settings.cyber_deal.headline) {
-                    html += '<div class="rmenu-promo-headline">' + self.settings.cyber_deal.headline + '</div>';
-                }
-                if (self.settings.cyber_deal.description) {
-                    html += '<div class="rmenu-promo-body">' + self.settings.cyber_deal.description + '</div>';
-                }
-                if (self.settings.cyber_deal.code) {
-                    html += '<div class="rmenu-promo-code"><span>' + promoCta + '</span><strong>' + self.settings.cyber_deal.code + '</strong></div>';
-                }
-                html += '</div>';
-            }
-
             // Excerpt
             if ($.inArray('excerpt', elements) !== -1 && productData.excerpt) {
                 html += '<div class="woocommerce-product-details__short-description">' + productData.excerpt + '</div>';

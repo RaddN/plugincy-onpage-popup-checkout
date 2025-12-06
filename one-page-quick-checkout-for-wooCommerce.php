@@ -491,6 +491,13 @@ function onepaquc_cart_add_disabled_notice() {
             ">⚠</div>
             
             <div style="flex: 1;">
+                <div style="
+                align-self: center;
+                font-size: 12px;
+                font-weight: 600;
+                color: #f39c12;
+                white-space: nowrap;
+            ">This notice is only visible to administrators.</div>
                 <h4 style="
                     margin: 0 0 8px 0;
                     font-size: 16px;
