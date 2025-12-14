@@ -291,8 +291,16 @@ require_once plugin_dir_path(__FILE__) . 'includes/blocks/one-page-checkout.php'
 function onepaquc_rmenu_checkout_popup($isonepagewidget = false)
 {
     // Return if this is the cart or checkout page
-    if (is_cart() || is_checkout()) {
+    if (is_cart()) {
         return;
+    }
+
+    // Global setting: popup checkout
+    $checkout_method   = get_option('rmenu_wc_checkout_method', 'direct_checkout');
+    $is_popup_checkout = ($checkout_method === 'popup_checkout');
+
+    if(onepaquc_is_checkout_rendered() || !$is_popup_checkout){
+        return true;
     }
 
     // Return if the current page content already has a WooCommerce checkout form
@@ -429,6 +437,8 @@ function onepaquc_display_checkout_on_single_product()
 
 
 add_action('wp', 'onepaquc_display_checkout_on_single_product', 99);
+
+
 
 /**
  * Display admin notice when "Add to Cart on Page Load" is disabled
@@ -671,27 +681,54 @@ function onepaquc_force_woocommerce_checkout_mode($is_checkout)
         return $is_checkout;
     }
 
-    // (1) Current page has [plugincy_one_page_checkout] shortcode
-    $has_opc_shortcode = onepaquc_page_has_shortcode('plugincy_one_page_checkout');
-
-    // (2) Global setting: popup checkout
+    // Global setting: popup checkout
     $checkout_method   = get_option('rmenu_wc_checkout_method', 'direct_checkout');
     $is_popup_checkout = ($checkout_method === 'popup_checkout');
+
+    if(onepaquc_is_checkout_rendered() || $is_popup_checkout){
+        return true;
+    }
+
+    return $is_checkout;
+}
+
+function onepaquc_is_checkout_rendered(){
+    $post_id = 0;
+    if (function_exists('get_queried_object_id')) {
+        $post_id = (int) get_queried_object_id();
+    }
+    if (!$post_id && isset($GLOBALS['post']->ID)) {
+        $post_id = (int) $GLOBALS['post']->ID;
+    }
+
+    // (1) Current page has [plugincy_one_page_checkout] shortcode
+    $has_opc_shortcode = onepaquc_page_has_shortcode('plugincy_one_page_checkout');
+    $has_opcs_shortcode = onepaquc_page_has_shortcode('onepaquc_checkout');
+    $has_checkout_block = false;
+    if (function_exists('has_block')) {
+        $has_checkout_block = has_block('plugincy/one-page-checkout', $post_id ?: null) || has_block('wc/one-page-checkout', $post_id ?: null);
+    }
+
+    $has_elementor_widget = false;
+    if ($post_id && function_exists('get_post_meta')) {
+        $elementor_data = get_post_meta($post_id, '_elementor_data', true);
+        if (is_string($elementor_data) && $elementor_data !== '') {
+            $has_elementor_widget = (strpos($elementor_data, '"widgetType":"onepaquc_checkout"') !== false) || (strpos($elementor_data, '"widgetType":"plugincy"') !== false);
+        }
+    }
+    
+
+    
 
     // (3) Single product page & (global enable-all OR per-product enabled)
     $enable_all_opc    = (bool) get_option('onepaquc_checkout_enable_all', 0);
     $is_single_product = function_exists('is_product') && is_product();
+    
 
     $per_product_enabled = false;
     if ($is_single_product && !$enable_all_opc) {
         // Resolve current product ID safely
-        $product_id = 0;
-        if (function_exists('get_queried_object_id')) {
-            $product_id = (int) get_queried_object_id();
-        }
-        if (!$product_id && isset($GLOBALS['post']->ID)) {
-            $product_id = (int) $GLOBALS['post']->ID;
-        }
+        $product_id = $post_id;
         if ($product_id) {
             $per_product_enabled = (bool) get_post_meta($product_id, '_one_page_checkout', true);
         }
@@ -700,13 +737,15 @@ function onepaquc_force_woocommerce_checkout_mode($is_checkout)
     // Apply your OR conditions
     if (
         $has_opc_shortcode
-        || $is_popup_checkout
+        || $has_opcs_shortcode
+        || $has_checkout_block
+        || $has_elementor_widget
         || ($is_single_product && ($enable_all_opc || $per_product_enabled))
     ) {
         return true;
     }
 
-    return $is_checkout;
+    return false;
 }
 
 /**

@@ -501,6 +501,11 @@ function onepaquc_show_new_year_notice()
 .notice-dismiss {
     z-index:99999999;
 }
+p.onepaquc-ny-sub {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
 </style>';
 
     echo '<div class="notice notice-info is-dismissible" style="padding:0;border:none;background:transparent;box-shadow:none;">';
