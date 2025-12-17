@@ -867,7 +867,7 @@ class onepaquc_add_checkout_button_on_archive
 
         if (in_array('shop-page', $allowed_pages) && is_shop()) {
             $display = true;
-        } elseif (in_array('category-archives', $allowed_pages) && is_product_category()) {
+        } elseif (in_array('category-archives', $allowed_pages) && (is_product_category() || (is_product_taxonomy() && !is_product_tag()))) {
             $display = true;
         } elseif (in_array('tag-archives', $allowed_pages) && is_product_tag()) {
             $display = true;

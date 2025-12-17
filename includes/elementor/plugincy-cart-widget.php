@@ -847,7 +847,7 @@ function onepaquc_plugincy_cart_elementor_widget()
 
             $css .= '</style>';
 
-            echo wp_kses($css, $onepaquc_allowed_tags);
+            echo $css;
         }
     }
     // Register the widget

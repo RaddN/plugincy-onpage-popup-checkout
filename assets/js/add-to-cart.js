@@ -11,7 +11,12 @@
 
         init: function () {
             // Handle AJAX add to cart for archive/shop pages
-            $(document).on('click', '.rmenu-ajax-add-to-cart,.single_add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.product_type_variable),.add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.product_type_variable)', this.ajaxAddToCart);
+            $(document).on('click', '.rmenu-ajax-add-to-cart,.single_add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.product_type_variable),.add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.product_type_variable)', function(e) {
+                if ($(this).closest('form.grouped_form').length) {
+                    return;
+                }
+                RMENU_Add_To_Cart.ajaxAddToCart.call(this, e);
+            });
 
             // Handle quantity changes on archive pages
             $(document).on('change', '.rmenu-archive-quantity', this.updateAddToCartQuantity);

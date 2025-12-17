@@ -491,7 +491,7 @@ class onepaquc_add_variation_buttons_on_archive
             $container_class .= ' bottom-48';
         }
 
-        echo '<div class="' . esc_attr($container_class) . '" data-layout="' . esc_attr($layout) . '">';
+        echo '<a href="#"></a><div class="' . esc_attr($container_class) . '" data-layout="' . esc_attr($layout) . '">';
 
         if ($layout === 'combine') {
             foreach ($available_variations as $variation) {

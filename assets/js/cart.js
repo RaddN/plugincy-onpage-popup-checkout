@@ -794,7 +794,7 @@ jQuery(document).ready(function ($) {
         const data = {
             action: 'onepaquc_ajax_add_to_cart',
             product_id: productId,
-            nonce: onepaquc_wc_cart_params.rmenu_ajax_nonce
+            nonce: onepaquc_wc_cart_params.nonce || '',
         };
 
         jQuery.post(onepaquc_wc_cart_params.ajax_url, data, function (response) {
