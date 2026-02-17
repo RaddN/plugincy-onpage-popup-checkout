@@ -2104,7 +2104,7 @@ function onepaquc_cart_dashboard()
 
                             <div class="rmenu-settings-row">
                                 <div class="rmenu-settings-field">
-                                    <?php $product_pages_option = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', "tag-archives", 'search', "featured-products", "on-sale", "recent", "widgets", "shortcodes"]); ?>
+                                    <?php $product_pages_option = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']); ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
                                             <h4>Archive Pages</h4>
@@ -2122,10 +2122,25 @@ function onepaquc_cart_dashboard()
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_pages_option)); ?> />
                                                 <span class="rmenu-checkbox-label">Product Tag Archives</span>
                                             </label>
+
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="brand-archives" <?php checked(in_array('brand-archives', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Brand Archives</span>
+                                            </label>
+
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="attribute-archives" <?php checked(in_array('attribute-archives', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Product Attribute Archives</span>
+                                            </label>
                                         </div>
 
                                         <div class="rmenu-checkbox-column">
                                             <h4>Other Pages</h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="single" <?php checked(in_array('single', $product_pages_option)); ?> />
+                                                <span class="rmenu-checkbox-label">Single Product Page</span>
+                                            </label>
+
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="search" <?php checked(in_array('search', $product_pages_option)); ?> />
                                                 <span class="rmenu-checkbox-label">Search Results</span>

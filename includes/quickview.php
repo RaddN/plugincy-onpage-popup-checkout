@@ -113,30 +113,8 @@ class RMENU_Quick_View
         $this->is_btn_add_hook_works = true;
 
         // Check if current page is allowed
-        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', "tag-archives", 'search', "featured-products", "on-sale", "recent", "widgets", "shortcodes"]);
-        $display = false;
-
-        if (in_array('shop-page', $allowed_pages) && is_shop()) {
-            $display = true;
-        } elseif (in_array('category-archives', $allowed_pages) && is_product_category()) {
-            $display = true;
-        } elseif (in_array('tag-archives', $allowed_pages) && is_product_tag()) {
-            $display = true;
-        } elseif (in_array('search', $allowed_pages) && is_search()) {
-            $display = true;
-        } elseif (in_array('featured-products', $allowed_pages) && wc_get_loop_prop('is_featured')) {
-            $display = true;
-        } elseif (in_array('on-sale', $allowed_pages) && wc_get_loop_prop('is_on_sale')) {
-            $display = true;
-        } elseif (in_array('recent', $allowed_pages) && wc_get_loop_prop('is_recent')) {
-            $display = true;
-        } elseif (in_array('widgets', $allowed_pages) && (is_active_widget(false, false, 'woocommerce_products', true) || is_active_widget(false, false, 'woocommerce_top_rated_products', true))) {
-            $display = true;
-        } elseif (in_array('shortcodes', $allowed_pages) && is_singular()) {
-            $display = true;
-        }
-
-        if (!$display) {
+        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']);
+        if (!$this->is_allowed_quick_view_page($allowed_pages)) {
             return $link;
         }
 
@@ -163,37 +141,16 @@ class RMENU_Quick_View
 
         global $onepaquc_onepaquc_allowed_tags;
 
-        if (is_singular('product')) {
+        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']);
+
+        if (is_singular('product') && !in_array('single', (array) $allowed_pages, true)) {
             return;
         }
 
         $button_contents = $this->button_contents();
 
         // Check if current page is allowed
-        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', "tag-archives", 'search', "featured-products", "on-sale", "recent", "widgets", "shortcodes"]);
-        $display = false;
-
-        if (in_array('shop-page', $allowed_pages) && is_shop()) {
-            $display = true;
-        } elseif (in_array('category-archives', $allowed_pages) && is_product_category()) {
-            $display = true;
-        } elseif (in_array('tag-archives', $allowed_pages) && is_product_tag()) {
-            $display = true;
-        } elseif (in_array('search', $allowed_pages) && is_search()) {
-            $display = true;
-        } elseif (in_array('featured-products', $allowed_pages) && wc_get_loop_prop('is_featured')) {
-            $display = true;
-        } elseif (in_array('on-sale', $allowed_pages) && wc_get_loop_prop('is_on_sale')) {
-            $display = true;
-        } elseif (in_array('recent', $allowed_pages) && wc_get_loop_prop('is_recent')) {
-            $display = true;
-        } elseif (in_array('widgets', $allowed_pages) && (is_active_widget(false, false, 'woocommerce_products', true) || is_active_widget(false, false, 'woocommerce_top_rated_products', true))) {
-            $display = true;
-        } elseif (in_array('shortcodes', $allowed_pages) && is_singular()) {
-            $display = true;
-        }
-
-        if (!$display) {
+        if (!$this->is_allowed_quick_view_page($allowed_pages)) {
             return;
         }
 ?>
@@ -214,6 +171,11 @@ class RMENU_Quick_View
                 function initQuickViewButtons(container = $(document)) {
                     container.find(".product").each(function() {
                         let $this = $(this);
+
+                        // On single-product templates, target product cards in loops (related/upsells), not the main product block.
+                        if ($('body').hasClass('single-product') && !$this.closest('ul.products, .products').length) {
+                            return;
+                        }
 
                         // Skip if this product already has a quick view button or conflicting plugin button
                         if ($this.has(".rmenu-quick-view-overlay").length || $this.has(".opqvfw-btn").length) {
@@ -344,30 +306,8 @@ class RMENU_Quick_View
         $this->is_btn_add_hook_works = true;
 
         // Check if current page is allowed
-        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', "tag-archives", 'search', "featured-products", "on-sale", "recent", "widgets", "shortcodes"]);
-        $display = false;
-
-        if (in_array('shop-page', $allowed_pages) && is_shop()) {
-            $display = true;
-        } elseif (in_array('category-archives', $allowed_pages) && is_product_category()) {
-            $display = true;
-        } elseif (in_array('tag-archives', $allowed_pages) && is_product_tag()) {
-            $display = true;
-        } elseif (in_array('search', $allowed_pages) && is_search()) {
-            $display = true;
-        } elseif (in_array('featured-products', $allowed_pages) && wc_get_loop_prop('is_featured')) {
-            $display = true;
-        } elseif (in_array('on-sale', $allowed_pages) && wc_get_loop_prop('is_on_sale')) {
-            $display = true;
-        } elseif (in_array('recent', $allowed_pages) && wc_get_loop_prop('is_recent')) {
-            $display = true;
-        } elseif (in_array('widgets', $allowed_pages) && (is_active_widget(false, false, 'woocommerce_products', true) || is_active_widget(false, false, 'woocommerce_top_rated_products', true))) {
-            $display = true;
-        } elseif (in_array('shortcodes', $allowed_pages) && is_singular()) {
-            $display = true;
-        }
-
-        if (!$display) {
+        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']);
+        if (!$this->is_allowed_quick_view_page($allowed_pages)) {
             return;
         }
 
@@ -439,6 +379,100 @@ class RMENU_Quick_View
 
 
         echo wp_kses_post(apply_filters('rmenu_quick_view_button_html', $button_html, $product));
+    }
+
+    /**
+     * Determine whether quick view should be displayed on current page.
+     */
+    private function is_allowed_quick_view_page($allowed_pages)
+    {
+        $allowed_pages = is_array($allowed_pages) ? $allowed_pages : array();
+
+        if (in_array('shop-page', $allowed_pages, true) && is_shop()) {
+            return true;
+        }
+        if (in_array('category-archives', $allowed_pages, true) && is_product_category()) {
+            return true;
+        }
+        if (in_array('tag-archives', $allowed_pages, true) && is_product_tag()) {
+            return true;
+        }
+        if (in_array('brand-archives', $allowed_pages, true) && $this->is_product_brand_archive()) {
+            return true;
+        }
+        if (in_array('attribute-archives', $allowed_pages, true) && $this->is_product_attribute_archive()) {
+            return true;
+        }
+        if (in_array('single', $allowed_pages, true) && function_exists('is_product') && is_product()) {
+            return true;
+        }
+        if (in_array('search', $allowed_pages, true) && is_search()) {
+            return true;
+        }
+        if (in_array('featured-products', $allowed_pages, true) && wc_get_loop_prop('is_featured')) {
+            return true;
+        }
+        if (in_array('on-sale', $allowed_pages, true) && wc_get_loop_prop('is_on_sale')) {
+            return true;
+        }
+        if (in_array('recent', $allowed_pages, true) && wc_get_loop_prop('is_recent')) {
+            return true;
+        }
+        if (in_array('widgets', $allowed_pages, true) && (is_active_widget(false, false, 'woocommerce_products', true) || is_active_widget(false, false, 'woocommerce_top_rated_products', true))) {
+            return true;
+        }
+        if (in_array('shortcodes', $allowed_pages, true) && is_singular() && !(function_exists('is_product') && is_product())) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check whether current page is a product attribute archive.
+     */
+    private function is_product_attribute_archive()
+    {
+        if (!is_tax()) {
+            return false;
+        }
+
+        $queried_object = get_queried_object();
+        if (!($queried_object instanceof WP_Term)) {
+            return false;
+        }
+
+        return (0 === strpos($queried_object->taxonomy, 'pa_'));
+    }
+
+    /**
+     * Check whether current page is a product brand archive.
+     */
+    private function is_product_brand_archive()
+    {
+        if (!is_tax()) {
+            return false;
+        }
+
+        $queried_object = get_queried_object();
+        if (!($queried_object instanceof WP_Term)) {
+            return false;
+        }
+
+        $brand_taxonomies = apply_filters(
+            'onepaquc_quick_view_brand_taxonomies',
+            array('product_brand', 'pwb-brand', 'yith_product_brand')
+        );
+
+        if (!is_array($brand_taxonomies)) {
+            $brand_taxonomies = array('product_brand', 'pwb-brand', 'yith_product_brand');
+        }
+
+        if (in_array($queried_object->taxonomy, $brand_taxonomies, true)) {
+            return true;
+        }
+
+        return function_exists('is_product_taxonomy') && is_product_taxonomy() && (strpos($queried_object->taxonomy, 'brand') !== false);
     }
 
     public function button_contents()
