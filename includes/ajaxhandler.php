@@ -217,11 +217,9 @@ function onepaquc_ajax_add_to_cart()
     $variation_id = empty($_POST['variation_id']) ? 0 : absint($_POST['variation_id']);
     $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field', wp_unslash($_POST['variations'])) : array();
 
-    $product_status = get_post_status($product_id);
-
     $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations);
 
-    if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variations) && 'publish' === $product_status) {
+    if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variations)) {
 
         do_action('woocommerce_ajax_added_to_cart', $product_id);
 
