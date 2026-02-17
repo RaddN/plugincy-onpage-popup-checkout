@@ -793,25 +793,346 @@ require_once plugin_dir_path(__FILE__) . 'includes/elementor/one-page-checkout.p
 require_once plugin_dir_path(__FILE__) . 'includes/elementor/elementor-category.php';
 
 
-add_filter('woocommerce_checkout_fields', 'onepaquc_remove_required_checkout_fields');
+add_filter('woocommerce_checkout_fields', 'onepaquc_remove_required_checkout_fields', 999);
+add_filter('woocommerce_default_address_fields', 'onepaquc_remove_required_default_address_fields', 999);
+add_filter('woocommerce_billing_fields', 'onepaquc_remove_required_billing_fields', 999);
+add_filter('woocommerce_shipping_fields', 'onepaquc_remove_required_shipping_fields', 999);
+add_filter('woocommerce_shared_settings', 'onepaquc_remove_required_block_checkout_fields', 999);
+add_filter('woocommerce_checkout_fields', 'onepaquc_apply_custom_checkout_field_labels', 1000);
+add_filter('woocommerce_default_address_fields', 'onepaquc_apply_custom_default_address_field_labels', 1000);
 
+/**
+ * Return sanitized checkout field keys selected in admin as removable.
+ *
+ * @return array
+ */
+function onepaquc_get_removed_checkout_fields()
+{
+    $removed_fields = get_option('onepaquc_checkout_fields', []);
+    if (!is_array($removed_fields)) {
+        return [];
+    }
+
+    $removed_fields = array_map('sanitize_key', $removed_fields);
+    $removed_fields = array_filter($removed_fields, function ($field) {
+        return is_string($field) && $field !== '';
+    });
+
+    return array_values(array_unique($removed_fields));
+}
+
+/**
+ * Check whether a checkout field key matches one of the configured removable keys.
+ *
+ * @param string $field_key
+ * @param array  $removed_fields
+ * @return bool
+ */
+function onepaquc_is_removed_checkout_field($field_key, $removed_fields)
+{
+    if (!is_string($field_key) || $field_key === '' || !is_array($removed_fields) || empty($removed_fields)) {
+        return false;
+    }
+
+    foreach ($removed_fields as $removed_field) {
+        if ($removed_field !== '' && strpos($field_key, $removed_field) !== false) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Set selected fields as non-required in a flat field array.
+ *
+ * @param array $fields
+ * @param array $removed_fields
+ * @return array
+ */
+function onepaquc_mark_fields_not_required($fields, $removed_fields)
+{
+    if (!is_array($fields) || empty($fields) || empty($removed_fields)) {
+        return $fields;
+    }
+
+    foreach ($fields as $field_key => $field_config) {
+        if (!onepaquc_is_removed_checkout_field((string) $field_key, $removed_fields) || !is_array($field_config)) {
+            continue;
+        }
+
+        $fields[$field_key]['required'] = false;
+
+        if (isset($fields[$field_key]['validate']) && is_array($fields[$field_key]['validate'])) {
+            $fields[$field_key]['validate'] = array_values(array_diff($fields[$field_key]['validate'], ['required']));
+        }
+    }
+
+    return $fields;
+}
+
+/**
+ * Map checkout field keys to plugin label option keys.
+ *
+ * @return array
+ */
+function onepaquc_get_checkout_label_option_map()
+{
+    return [
+        'first_name'     => 'txt_first_name',
+        'last_name'      => 'txt_last_name',
+        'country'        => 'txt_country',
+        'address_1'      => 'txt_street',
+        'city'           => 'txt_city',
+        'state'          => 'txt_district',
+        'postcode'       => 'txt_postcode',
+        'phone'          => 'txt_phone_number',
+        'email'          => 'txt_email_address',
+        'order_comments' => 'txt_notes',
+    ];
+}
+
+/**
+ * Get a sanitized label value from plugin settings.
+ *
+ * @param string $option_key
+ * @return string
+ */
+function onepaquc_get_custom_checkout_label($option_key)
+{
+    $value = get_option($option_key, '');
+    if (!is_string($value)) {
+        return '';
+    }
+
+    $value = trim($value);
+    return $value === '' ? '' : sanitize_text_field($value);
+}
+
+/**
+ * Apply custom labels to classic/shortcode/Elementor checkout fields.
+ *
+ * @param array $fields
+ * @return array
+ */
+function onepaquc_apply_custom_checkout_field_labels($fields)
+{
+    if (!is_array($fields) || empty($fields)) {
+        return $fields;
+    }
+
+    $label_map = onepaquc_get_checkout_label_option_map();
+
+    foreach ($fields as $group_key => $group_fields) {
+        if (!is_array($group_fields)) {
+            continue;
+        }
+
+        foreach ($group_fields as $field_key => $field_config) {
+            if (!is_array($field_config)) {
+                continue;
+            }
+
+            $option_key = null;
+
+            if (isset($label_map[$field_key])) {
+                $option_key = $label_map[$field_key];
+            } else {
+                foreach ($label_map as $needle => $mapped_option) {
+                    if ($needle !== 'order_comments' && strpos((string) $field_key, $needle) !== false) {
+                        $option_key = $mapped_option;
+                        break;
+                    }
+                }
+            }
+
+            if (!$option_key) {
+                continue;
+            }
+
+            $custom_label = onepaquc_get_custom_checkout_label($option_key);
+            if ($custom_label === '') {
+                continue;
+            }
+
+            $fields[$group_key][$field_key]['label'] = $custom_label;
+        }
+    }
+
+    return $fields;
+}
+
+/**
+ * Apply custom labels to default address fields (shared base for multiple checkout flows).
+ *
+ * @param array $fields
+ * @return array
+ */
+function onepaquc_apply_custom_default_address_field_labels($fields)
+{
+    if (!is_array($fields) || empty($fields)) {
+        return $fields;
+    }
+
+    $label_map = onepaquc_get_checkout_label_option_map();
+    foreach ($fields as $field_key => $field_config) {
+        if (!is_array($field_config) || !isset($label_map[$field_key])) {
+            continue;
+        }
+
+        $custom_label = onepaquc_get_custom_checkout_label($label_map[$field_key]);
+        if ($custom_label === '') {
+            continue;
+        }
+
+        $fields[$field_key]['label'] = $custom_label;
+    }
+
+    return $fields;
+}
+
+/**
+ * Classic checkout fields (grouped array: billing/shipping/order/account).
+ *
+ * @param array $fields
+ * @return array
+ */
 function onepaquc_remove_required_checkout_fields($fields)
 {
-    if (get_option('onepaquc_checkout_fields')) {
-        $removed_fields = get_option('onepaquc_checkout_fields');
+    $removed_fields = onepaquc_get_removed_checkout_fields();
+    if (empty($removed_fields) || !is_array($fields)) {
+        return $fields;
+    }
 
-        foreach ($fields as $key => $field_group) {
-            foreach ($field_group as $field_key => $field) {
-                // Check if the field_key contains any of the removed fields
-                foreach ($removed_fields as $removed_field) {
-                    if (strpos($field_key, $removed_field) !== false) {
-                        $fields[$key][$field_key]['required'] = false;
-                    }
+    foreach ($fields as $group_key => $group_fields) {
+        if (!is_array($group_fields)) {
+            continue;
+        }
+        $fields[$group_key] = onepaquc_mark_fields_not_required($group_fields, $removed_fields);
+    }
+
+    return $fields;
+}
+
+/**
+ * Address defaults used by classic checkout and country locale logic.
+ *
+ * @param array $fields
+ * @return array
+ */
+function onepaquc_remove_required_default_address_fields($fields)
+{
+    $removed_fields = onepaquc_get_removed_checkout_fields();
+    return onepaquc_mark_fields_not_required($fields, $removed_fields);
+}
+
+/**
+ * Billing fields (flat array with keys like billing_email).
+ *
+ * @param array $fields
+ * @return array
+ */
+function onepaquc_remove_required_billing_fields($fields)
+{
+    $removed_fields = onepaquc_get_removed_checkout_fields();
+    return onepaquc_mark_fields_not_required($fields, $removed_fields);
+}
+
+/**
+ * Shipping fields (flat array with keys like shipping_city).
+ *
+ * @param array $fields
+ * @return array
+ */
+function onepaquc_remove_required_shipping_fields($fields)
+{
+    $removed_fields = onepaquc_get_removed_checkout_fields();
+    return onepaquc_mark_fields_not_required($fields, $removed_fields);
+}
+
+/**
+ * WooCommerce Blocks checkout fields are driven by shared settings (defaultFields/countryData).
+ * Mirror admin-selected removals there so Blocks and Elementor blocks respect the same setup.
+ *
+ * @param array $settings
+ * @return array
+ */
+function onepaquc_remove_required_block_checkout_fields($settings)
+{
+    if (!is_array($settings)) {
+        return $settings;
+    }
+
+    $removed_fields = onepaquc_get_removed_checkout_fields();
+    $has_removed_fields = !empty($removed_fields);
+
+    if (isset($settings['defaultFields']) && is_array($settings['defaultFields'])) {
+        $label_map = onepaquc_get_checkout_label_option_map();
+
+        foreach ($label_map as $field_key => $option_key) {
+            if (!isset($settings['defaultFields'][$field_key]) || !is_array($settings['defaultFields'][$field_key])) {
+                continue;
+            }
+
+            $custom_label = onepaquc_get_custom_checkout_label($option_key);
+            if ($custom_label === '') {
+                continue;
+            }
+
+            $settings['defaultFields'][$field_key]['label'] = $custom_label;
+            $settings['defaultFields'][$field_key]['optionalLabel'] = sprintf(
+                /* translators: %s: checkout field label. */
+                __('%s (optional)', 'one-page-quick-checkout-for-woocommerce'),
+                $custom_label
+            );
+        }
+
+        if ($has_removed_fields) {
+            foreach ($settings['defaultFields'] as $field_key => $field_config) {
+                if (!is_array($field_config) || !onepaquc_is_removed_checkout_field((string) $field_key, $removed_fields)) {
+                    continue;
+                }
+
+                $settings['defaultFields'][$field_key]['required'] = false;
+                $settings['defaultFields'][$field_key]['hidden']   = true;
+
+                if (
+                    !isset($settings['defaultFields'][$field_key]['optionalLabel'])
+                    && !empty($field_config['label'])
+                    && is_string($field_config['label'])
+                ) {
+                    $settings['defaultFields'][$field_key]['optionalLabel'] = sprintf(
+                        /* translators: %s: checkout field label. */
+                        __('%s (optional)', 'one-page-quick-checkout-for-woocommerce'),
+                        $field_config['label']
+                    );
                 }
             }
         }
     }
-    return $fields;
+
+    if ($has_removed_fields && isset($settings['countryData']) && is_array($settings['countryData'])) {
+        foreach ($settings['countryData'] as $country_code => $country_data) {
+            if (!is_array($country_data)) {
+                continue;
+            }
+
+            if (!isset($settings['countryData'][$country_code]['locale']) || !is_array($settings['countryData'][$country_code]['locale'])) {
+                $settings['countryData'][$country_code]['locale'] = [];
+            }
+
+            foreach ($removed_fields as $removed_field) {
+                if (!isset($settings['countryData'][$country_code]['locale'][$removed_field]) || !is_array($settings['countryData'][$country_code]['locale'][$removed_field])) {
+                    $settings['countryData'][$country_code]['locale'][$removed_field] = [];
+                }
+
+                $settings['countryData'][$country_code]['locale'][$removed_field]['required'] = false;
+                $settings['countryData'][$country_code]['locale'][$removed_field]['hidden']   = true;
+            }
+        }
+    }
+
+    return $settings;
 }
 
 // if (get_option('onepaquc_checkout_fields')) {

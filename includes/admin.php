@@ -3621,9 +3621,9 @@ function onepaquc_rmenu_fields()
     return [
         'hide_coupon_toggle'          => ['selector' => '.woocommerce-form-coupon-toggle, .col-form-coupon,.woocommerce-form-coupon-toggle, .col-form-coupon', 'title' => 'Hide Top Coupon'],
         'hide_customer_details_col2'  => ['selector' => ' .woocommerce-shipping-fields, .woocommerce-shipping-fields', 'title' => 'Hide Shipping Address'],
-        'hide_privacy_policy_text'    => ['selector' => '.woocommerce-privacy-policy-text,.woocommerce-privacy-policy-text', 'title' => 'Hide Privacy Policy Text'],
-        'hide_payment'                 => ['selector' => 'div#payment ul,div#payment ul', 'title' => 'Hide Payment Options'],
-        'hide_product'                 => ['selector' => 'table.shop_table,table.shop_table', 'title' => 'Hide Product Table']
+        'hide_privacy_policy_text'    => ['selector' => '.woocommerce-privacy-policy-text, .woocommerce-privacy-policy-text, .wp-block-woocommerce-checkout-terms-block .wc-block-checkout__terms .wc-block-components-checkbox__label, .wc-block-checkout__terms .wc-block-components-checkbox__label', 'title' => 'Hide Privacy Policy Text'],
+        'hide_payment'                 => ['selector' => 'div#payment ul, div#payment ul, .wp-block-woocommerce-checkout-payment-block, .wc-block-checkout__payment-method, .wc-block-components-checkout-payment-methods, .wc-block-checkout__no-payment-methods-notice', 'title' => 'Hide Payment Options'],
+        'hide_product'                 => ['selector' => 'table.shop_table, table.shop_table, .wp-block-woocommerce-checkout-order-summary-block, .wp-block-woocommerce-checkout-order-summary-cart-items-block, .wp-block-woocommerce-checkout-order-summary-totals-block, .wc-block-components-order-summary', 'title' => 'Hide Product Table']
 
     ];
 }
@@ -3631,8 +3631,8 @@ function onepaquc_rmenu_fields()
 function onepaquc_onpcheckout_heading()
 {
     return [
-        'hide_billing_details'          => ['selector' => '.woocommerce-billing-fields h3,.woocommerce-billing-fields h3', 'title' => 'Hide Billing details'],
+        'hide_billing_details'          => ['selector' => '.woocommerce-billing-fields h3,.woocommerce-billing-fields h3,.wc-block-checkout__billing-fields .wc-block-components-checkout-step__title,.wc-block-checkout__billing-fields .wc-block-components-checkout-step__description,.wp-block-woocommerce-checkout-billing-address-block .wc-block-components-checkout-step__title,.wp-block-woocommerce-checkout-billing-address-block .wc-block-components-checkout-step__description', 'title' => 'Hide Billing details'],
         'hide_additional_details'          => ['selector' => ' .woocommerce-additional-fields h3,.woocommerce-additional-fields h3', 'title' => 'Hide Additional Details'],
-        'hide_order_review_heading'   => ['selector' => 'h3#order_review_heading,h3#order_review_heading', 'title' => 'Hide Order Review Heading'],
+        'hide_order_review_heading'   => ['selector' => 'h3#order_review_heading, h3#order_review_heading, .wc-block-components-checkout-order-summary__title, .wc-block-components-checkout-order-summary__title-text, .wp-block-woocommerce-checkout-order-summary-heading-block', 'title' => 'Hide Order Review Heading'],
     ];
 }

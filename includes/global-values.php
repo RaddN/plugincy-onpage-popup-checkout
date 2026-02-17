@@ -44,18 +44,18 @@ $onepaquc_productpageformfields = [
 ];
 
 $onepaquc_rcheckoutformfields = [
-    'first_name' => ['title' => 'First Name', 'selector' => '#billing_first_name_field, #shipping_first_name_field'],
-    'last_name'  => ['title' => 'Last Name', 'selector' => '#billing_last_name_field, #shipping_last_name_field'],
-    'country'      => ['title' => 'Country', 'selector' => '#billing_country_field, #shipping_country_field'],
-    'state'      => ['title' => 'State / District', 'selector' => '#billing_state_field, #shipping_state_field'],
-    'city'       => ['title' => 'City', 'selector' => '#billing_city_field, #shipping_city_field'],
-    'postcode'   => ['title' => 'Zip Code', 'selector' => '#billing_postcode_field, #shipping_postcode_field'],
-    'address_1'  => ['title' => 'Address 1', 'selector' => '#billing_address_1_field, #shipping_address_1_field'],
-    'address_2'  => ['title' => 'Address 2', 'selector' => '#billing_address_2_field, #shipping_address_2_field'],
-    'phone'      => ['title' => 'Phone', 'selector' => '#billing_phone_field'],
-    'email'      => ['title' => 'Email', 'selector' => '#billing_email_field'],
-    'company'    => ['title' => 'Company', 'selector' => '#billing_company_field'],
-    'notes'     => ['title' => 'Notes', 'selector' => '#order_comments_field'],
+    'first_name' => ['title' => 'First Name', 'selector' => '#billing_first_name_field, #shipping_first_name_field, .wc-block-components-address-form__first_name'],
+    'last_name'  => ['title' => 'Last Name', 'selector' => '#billing_last_name_field, #shipping_last_name_field, .wc-block-components-address-form__last_name'],
+    'country'      => ['title' => 'Country', 'selector' => '#billing_country_field, #shipping_country_field, .wc-block-components-country-input, .wc-block-components-address-form__country'],
+    'state'      => ['title' => 'State / District', 'selector' => '#billing_state_field, #shipping_state_field, .wc-block-components-address-form__state, .wc-block-components-state-input'],
+    'city'       => ['title' => 'City', 'selector' => '#billing_city_field, #shipping_city_field, .wc-block-components-address-form__city'],
+    'postcode'   => ['title' => 'Zip Code', 'selector' => '#billing_postcode_field, #shipping_postcode_field, .wc-block-components-address-form__postcode'],
+    'address_1'  => ['title' => 'Address 1', 'selector' => '#billing_address_1_field, #shipping_address_1_field, .wc-block-components-address-form__address_1'],
+    'address_2'  => ['title' => 'Address 2', 'selector' => '#billing_address_2_field, #shipping_address_2_field, .wc-block-components-address-form__address_2, .wc-block-components-address-form__address_2-toggle'],
+    'phone'      => ['title' => 'Phone', 'selector' => '#billing_phone_field, .wc-block-components-address-form__phone'],
+    'email'      => ['title' => 'Email', 'selector' => '#billing_email_field, .wc-block-components-address-form__email, .wc-block-checkout__contact-fields .wc-block-components-checkout-step__title, .wc-block-checkout__contact-fields .wc-block-components-checkout-step__description, .wp-block-woocommerce-checkout-contact-information-block .wc-block-components-checkout-step__title, .wp-block-woocommerce-checkout-contact-information-block .wc-block-components-checkout-step__description'],
+    'company'    => ['title' => 'Company', 'selector' => '#billing_company_field, #shipping_company_field, .wc-block-components-address-form__company'],
+    'notes'     => ['title' => 'Notes', 'selector' => '#order_comments_field, .wc-block-checkout__order-notes, .wp-block-woocommerce-checkout-order-note-block, .wc-block-checkout__add-note'],
 ];
 
 global $onepaquc_onepaquc_allowed_tags;
