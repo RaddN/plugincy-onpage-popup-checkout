@@ -371,7 +371,7 @@ jQuery(document).ready(function ($) {
     var methodKey = $directbehave.rmenu_wc_checkout_method || 'direct_checkout';
 
     function directcheckout(product_id, product_type, $button) {
-        var $variation_id = $button.siblings('.archive-variations-container').find('.variation_id').val() ||
+        var $variation_id = $button.data('variation-id') || $button.siblings('.archive-variations-container').find('.variation_id').val() ||
             $button.siblings('.variation_id').val() || $button.closest('.product').find('.variation_id').val() ||
             $button.closest('.product').find('.archive-variations-container').find('.variation_id').val() || 0;
         var variations = {};

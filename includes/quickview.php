@@ -161,7 +161,7 @@ class RMENU_Quick_View
             return;
         }
 
-        global $onepaquc_allowed_tags;
+        global $onepaquc_onepaquc_allowed_tags;
 
         if (is_singular('product')) {
             return;
@@ -202,7 +202,7 @@ class RMENU_Quick_View
                 // Configuration variables
                 const quickViewConfig = {
                     buttonPos: "<?php echo esc_attr(get_option('rmenu_quick_view_button_position', 'image_overlay')); ?>",
-                    contents: '<?php echo wp_kses($button_contents['button_content'], $onepaquc_allowed_tags); ?>',
+                    contents: '<?php echo wp_kses($button_contents['button_content'], $onepaquc_onepaquc_allowed_tags); ?>',
                     buttonClass: "<?php echo esc_attr(implode(' ', $button_contents['button_classes'])); ?>",
                     allowedTypes: <?php echo wp_json_encode(get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"])); ?>
                 };

@@ -1,8 +1,8 @@
 <?php
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
-global $onepaquc_allowed_tags;
+global $onepaquc_onepaquc_allowed_tags;
 
-$onepaquc_allowed_tags = array(
+$onepaquc_onepaquc_allowed_tags = array(
     'a' => array(
         'href' => array(),
         'title' => array(),
@@ -25,6 +25,8 @@ $onepaquc_allowed_tags = array(
         'class' => array(),
         'style' => array(),
         'id' => array(),
+        'data-product-id' => array(),
+        'data-cart-item-key' => array(),
     ),
     'div' => array(
         'class' => array(),
@@ -39,6 +41,9 @@ $onepaquc_allowed_tags = array(
         'height' => array(), // Allow height attribute
         'style' => array(),
         'id' => array(),
+        'srcset' => array(),
+        'sizes' => array(),
+        'loading' => array(),
     ),
     'h1' => array(
         'class' => array(),
@@ -131,7 +136,7 @@ $onepaquc_allowed_tags = array(
         'defer' => array(),
         'charset' => array(),
     ), // Be cautious with scripts
-    
+
     // Style and Meta Tags
     'style' => array(
         'type' => array(),
@@ -159,12 +164,13 @@ $onepaquc_allowed_tags = array(
         'href' => array(),
         'target' => array(),
     ),
-    
+
     // Document Structure
     'html' => array(
         'lang' => array(),
         'dir' => array(),
         'class' => array(),
+        'style' => array(),
     ),
     'head' => array(),
     'body' => array(
@@ -176,43 +182,51 @@ $onepaquc_allowed_tags = array(
     'header' => array(
         'class' => array(),
         'id' => array(),
+        'style' => array(),
         'role' => array(),
     ),
     'footer' => array(
         'class' => array(),
         'id' => array(),
+        'style' => array(),
         'role' => array(),
     ),
     'nav' => array(
         'class' => array(),
+        'style' => array(),
         'id' => array(),
         'role' => array(),
     ),
     'main' => array(
         'class' => array(),
+        'style' => array(),
         'id' => array(),
         'role' => array(),
     ),
     'section' => array(
         'class' => array(),
         'id' => array(),
+        'style' => array(),
         'role' => array(),
     ),
     'article' => array(
         'class' => array(),
+        'style' => array(),
         'id' => array(),
         'role' => array(),
     ),
     'aside' => array(
         'class' => array(),
         'id' => array(),
+        'style' => array(),
         'role' => array(),
     ),
-    
+
     // Form Elements
     'form' => array(
         'action' => array(),
         'method' => array(),
+        'style' => array(),
         'enctype' => array(),
         'target' => array(),
         'name' => array(),
@@ -230,6 +244,7 @@ $onepaquc_allowed_tags = array(
         'type' => array(),
         'name' => array(),
         'value' => array(),
+        'style' => array(),
         'placeholder' => array(),
         'id' => array(),
         'class' => array(),
@@ -265,6 +280,7 @@ $onepaquc_allowed_tags = array(
         'class' => array(),
         'placeholder' => array(),
         'rows' => array(),
+        'style' => array(),
         'cols' => array(),
         'required' => array(),
         'disabled' => array(),
@@ -283,6 +299,7 @@ $onepaquc_allowed_tags = array(
         'multiple' => array(),
         'size' => array(),
         'required' => array(),
+        'style' => array(),
         'disabled' => array(),
         'autofocus' => array(),
         'form' => array(),
@@ -290,11 +307,13 @@ $onepaquc_allowed_tags = array(
     'option' => array(
         'value' => array(),
         'selected' => array(),
+        'style' => array(),
         'disabled' => array(),
         'label' => array(),
     ),
     'optgroup' => array(
         'label' => array(),
+        'style' => array(),
         'disabled' => array(),
     ),
     'button' => array(
@@ -302,6 +321,7 @@ $onepaquc_allowed_tags = array(
         'name' => array(),
         'value' => array(),
         'id' => array(),
+        'style' => array(),
         'class' => array(),
         'disabled' => array(),
         'form' => array(),
@@ -316,32 +336,38 @@ $onepaquc_allowed_tags = array(
         'form' => array(),
         'id' => array(),
         'class' => array(),
+        'style' => array(),
     ),
     'fieldset' => array(
         'disabled' => array(),
         'form' => array(),
+        'style' => array(),
         'name' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'legend' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'datalist' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'output' => array(
         'for' => array(),
         'form' => array(),
         'name' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'plugrogress' => array(
         'value' => array(),
         'max' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
@@ -350,17 +376,19 @@ $onepaquc_allowed_tags = array(
         'min' => array(),
         'max' => array(),
         'low' => array(),
+        'style' => array(),
         'high' => array(),
         'optimum' => array(),
         'id' => array(),
         'class' => array(),
     ),
-    
+
     // Media Elements
     'audio' => array(
         'src' => array(),
         'controls' => array(),
         'autoplay' => array(),
+        'style' => array(),
         'loop' => array(),
         'muted' => array(),
         'preload' => array(),
@@ -375,6 +403,7 @@ $onepaquc_allowed_tags = array(
         'loop' => array(),
         'muted' => array(),
         'preload' => array(),
+        'style' => array(),
         'poster' => array(),
         'width' => array(),
         'height' => array(),
@@ -384,6 +413,7 @@ $onepaquc_allowed_tags = array(
     ),
     'source' => array(
         'src' => array(),
+        'style' => array(),
         'type' => array(),
         'media' => array(),
         'sizes' => array(),
@@ -392,6 +422,7 @@ $onepaquc_allowed_tags = array(
     'track' => array(
         'kind' => array(),
         'src' => array(),
+        'style' => array(),
         'srclang' => array(),
         'label' => array(),
         'default' => array(),
@@ -401,12 +432,14 @@ $onepaquc_allowed_tags = array(
         'type' => array(),
         'width' => array(),
         'height' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'object' => array(
         'data' => array(),
         'type' => array(),
+        'style' => array(),
         'name' => array(),
         'width' => array(),
         'height' => array(),
@@ -417,12 +450,14 @@ $onepaquc_allowed_tags = array(
     'param' => array(
         'name' => array(),
         'value' => array(),
+        'style' => array(),
     ),
     'iframe' => array(
         'src' => array(),
         'srcdoc' => array(),
         'name' => array(),
         'width' => array(),
+        'style' => array(),
         'height' => array(),
         'sandbox' => array(),
         'allow' => array(),
@@ -431,214 +466,255 @@ $onepaquc_allowed_tags = array(
         'id' => array(),
         'class' => array(),
     ),
-    
+
     // Interactive Elements
     'details' => array(
         'open' => array(),
         'id' => array(),
         'class' => array(),
+        'style' => array(),
     ),
     'summary' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'dialog' => array(
         'open' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
-    
+
     // Text Content Elements
     'pre' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'code' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'kbd' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'samp' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'var' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'small' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'sub' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'sup' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'mark' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'del' => array(
         'datetime' => array(),
+        'style' => array(),
         'cite' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'ins' => array(
         'datetime' => array(),
+        'style' => array(),
         'cite' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'q' => array(
         'cite' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'cite' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'abbr' => array(
         'title' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'dfn' => array(
         'title' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'time' => array(
         'datetime' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'data' => array(
         'value' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'address' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
-    
+
     // Table Elements (Enhanced)
     'caption' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'thead' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'tbody' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'tfoot' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'colgroup' => array(
         'span' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
     'col' => array(
         'span' => array(),
+        'style' => array(),
         'id' => array(),
         'class' => array(),
     ),
-    
+
     // Definition Lists
     'dl' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'dt' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'dd' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
-    
+
     // Ruby Annotations
     'ruby' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'rt' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'rp' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
-    
+
     // Bidirectional Text
     'bdi' => array(
         'dir' => array(),
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'bdo' => array(
         'dir' => array(),
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
-    
+
     // Web Components
     'template' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'slot' => array(
         'name' => array(),
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
-    
+
     // Math and Science
     'math' => array(
         'display' => array(),
         'xmlns' => array(),
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
-    
+
     // Canvas and Graphics
     'canvas' => array(
         'width' => array(),
         'height' => array(),
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
-    
+
     // Obsolete but sometimes needed
     'center' => array(
         'id' => array(),
+        'style' => array(),
         'class' => array(),
     ),
     'font' => array(
         'size' => array(),
+        'style' => array(),
         'color' => array(),
         'face' => array(),
         'id' => array(),
         'class' => array(),
     ),
-    
+
     // SVG Tags
     'svg' => array(
         'xmlns' => array(),
@@ -653,7 +729,6 @@ $onepaquc_allowed_tags = array(
         'version' => array(),
         'x' => array(),
         'y' => array(),
-        'fill' => array(),
     ),
     'g' => array(
         'class' => array(),
@@ -814,11 +889,13 @@ $onepaquc_allowed_tags = array(
     'defs' => array(
         'class' => array(),
         'id' => array(),
+        'style' => array(),
     ),
     'symbol' => array(
         'id' => array(),
         'viewBox' => array(),
         'class' => array(),
+        'style' => array(),
         'preserveAspectRatio' => array(),
     ),
     'marker' => array(
@@ -827,6 +904,7 @@ $onepaquc_allowed_tags = array(
         'markerHeight' => array(),
         'refX' => array(),
         'refY' => array(),
+        'style' => array(),
         'orient' => array(),
         'markerUnits' => array(),
         'class' => array(),
@@ -835,6 +913,7 @@ $onepaquc_allowed_tags = array(
         'id' => array(),
         'x1' => array(),
         'y1' => array(),
+        'style' => array(),
         'x2' => array(),
         'y2' => array(),
         'gradientUnits' => array(),
@@ -845,6 +924,7 @@ $onepaquc_allowed_tags = array(
         'id' => array(),
         'x1' => array(),
         'y1' => array(),
+        'style' => array(),
         'x2' => array(),
         'y2' => array(),
         'gradientUnits' => array(),
@@ -855,6 +935,7 @@ $onepaquc_allowed_tags = array(
         'id' => array(),
         'cx' => array(),
         'cy' => array(),
+        'style' => array(),
         'r' => array(),
         'fx' => array(),
         'fy' => array(),
@@ -867,6 +948,7 @@ $onepaquc_allowed_tags = array(
         'cx' => array(),
         'cy' => array(),
         'r' => array(),
+        'style' => array(),
         'fx' => array(),
         'fy' => array(),
         'gradientUnits' => array(),
@@ -883,11 +965,13 @@ $onepaquc_allowed_tags = array(
     'clipPath' => array(
         'id' => array(),
         'class' => array(),
+        'style' => array(),
         'clipPathUnits' => array(),
     ),
     'mask' => array(
         'id' => array(),
         'class' => array(),
+        'style' => array(),
         'maskUnits' => array(),
         'maskContentUnits' => array(),
         'x' => array(),
@@ -900,6 +984,7 @@ $onepaquc_allowed_tags = array(
         'x' => array(),
         'y' => array(),
         'width' => array(),
+        'style' => array(),
         'height' => array(),
         'patternUnits' => array(),
         'patternContentUnits' => array(),
@@ -911,6 +996,7 @@ $onepaquc_allowed_tags = array(
         'id' => array(),
         'x' => array(),
         'y' => array(),
+        'style' => array(),
         'width' => array(),
         'height' => array(),
         'filterUnits' => array(),
@@ -919,18 +1005,21 @@ $onepaquc_allowed_tags = array(
     ),
     'feGaussianBlur' => array(
         'in' => array(),
+        'style' => array(),
         'stdDeviation' => array(),
         'result' => array(),
     ),
     'feOffset' => array(
         'in' => array(),
         'dx' => array(),
+        'style' => array(),
         'dy' => array(),
         'result' => array(),
     ),
     'feDropShadow' => array(
         'dx' => array(),
         'dy' => array(),
+        'style' => array(),
         'stdDeviation' => array(),
         'flood-color' => array(),
         'flood-opacity' => array(),
@@ -939,6 +1028,7 @@ $onepaquc_allowed_tags = array(
         'x' => array(),
         'y' => array(),
         'width' => array(),
+        'style' => array(),
         'height' => array(),
         'href' => array(),
         'xlink:href' => array(),
@@ -964,12 +1054,12 @@ class onepaquc_helper
 
     public function sec_head($headtag, $class, $icon, $title, $tooltip = '', $description = '')
     {
-        global $onepaquc_allowed_tags;
+        global $onepaquc_onepaquc_allowed_tags;
         echo '<' . esc_html($headtag) . ' class="' . esc_html($class) . '">';
 
         // Check if icon is not empty
         if (!empty($icon)) {
-            echo '<span class="plugincy_sec_icon">' . wp_kses($icon, $onepaquc_allowed_tags) . '</span>';
+            echo '<span class="plugincy_sec_icon">' . wp_kses($icon, $onepaquc_onepaquc_allowed_tags) . '</span>';
         }
 
         echo '<span class="plugincy_sec_title">' . esc_html($title);

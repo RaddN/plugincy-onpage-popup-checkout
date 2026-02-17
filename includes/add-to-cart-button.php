@@ -77,7 +77,6 @@ function onepaquc_apply_add_to_cart_styles()
         // Additional styles per button type
         switch ($button_style) {
             case 'rounded':
-                $css .= "border-radius: 30px{$important};";
                 $css .= "padding: 10px 25px{$important};";
                 $css .= "font-weight: 500{$important};";
                 $css .= "transition: all 0.3s ease{$important};";
@@ -150,7 +149,7 @@ function onepaquc_apply_add_to_cart_styles()
  */
 function onepaquc_add_icons_to_buttons()
 {
-    global $onepaquc_allowed_tags;
+    global $onepaquc_onepaquc_allowed_tags;
     $button_icon = get_option('rmenu_add_to_cart_icon', 'none');
     $icon_position = get_option('rmenu_add_to_cart_icon_position', 'left');
     $mobile_icon_only = get_option('rmenu_mobile_icon_only', 0);
@@ -182,8 +181,8 @@ function onepaquc_add_icons_to_buttons()
 ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButtons = document.querySelectorAll('.add_to_cart_button:not(.product_type_variable), .single_add_to_cart_button:not(.product_type_variable)');
-            const svgIcon = `<?php echo wp_kses($svg_icon, $onepaquc_allowed_tags); ?>`;
+            const addToCartButtons = document.querySelectorAll('.add_to_cart_button:not(.product_type_variable):not(.product_type_grouped):not(.product_type_external):not(.ast-select-options-trigger), .single_add_to_cart_button:not(.product_type_variable):not(.product_type_grouped):not(.product_type_external):not(.ast-select-options-trigger)');
+            const svgIcon = `<?php echo wp_kses($svg_icon, $onepaquc_onepaquc_allowed_tags); ?>`;
             const iconPosition = '<?php echo esc_attr($icon_position); ?>';
             const mobileIconOnly = <?php echo $mobile_icon_only ? 'true' : 'false'; ?>;
 

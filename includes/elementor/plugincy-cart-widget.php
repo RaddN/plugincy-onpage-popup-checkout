@@ -740,7 +740,7 @@ function onepaquc_plugincy_cart_elementor_widget()
          */
         private function generate_styles($settings)
         {
-            global $onepaquc_allowed_tags;
+            global $onepaquc_onepaquc_allowed_tags;
             $css = '<style>';
 
             // Cart Icon Styles

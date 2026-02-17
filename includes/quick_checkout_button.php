@@ -133,6 +133,61 @@ function onepaquc_should_display_button($product)
  * 
  * @return array Array with 'classes', 'style', 'icon', and 'additional_css' for the button
  */
+
+function onepaquc_get_direct_checkout_style_options()
+{
+    $button_style = get_option('rmenu_wc_checkout_style', 'alt');
+    if (!in_array($button_style, ['default', 'alt', 'custom'], true)) {
+        $button_style = 'alt';
+    }
+
+    $width_mode = get_option('rmenu_wc_checkout_width', 'auto');
+    if (!in_array($width_mode, ['auto', 'full', 'custom'], true)) {
+        $width_mode = 'auto';
+    }
+
+    $bg_color = sanitize_hex_color(get_option('rmenu_wc_checkout_color', '#000000'));
+    $text_color = sanitize_hex_color(get_option('rmenu_wc_checkout_text_color', '#ffffff'));
+    $hover_bg_color = sanitize_hex_color(get_option('rmenu_wc_checkout_hover_bg_color', '#222222'));
+    $hover_text_color = sanitize_hex_color(get_option('rmenu_wc_checkout_hover_text_color', '#ffffff'));
+
+    $bg_color = $bg_color ? $bg_color : '#000000';
+    $text_color = $text_color ? $text_color : '#ffffff';
+    $hover_bg_color = $hover_bg_color ? $hover_bg_color : '#222222';
+    $hover_text_color = $hover_text_color ? $hover_text_color : '#ffffff';
+
+    $border_radius = absint(get_option('rmenu_wc_checkout_border_radius', 4));
+    if ($border_radius > 50) {
+        $border_radius = 50;
+    }
+
+    $font_size = absint(get_option('rmenu_wc_checkout_font_size', 14));
+    if ($font_size < 10) {
+        $font_size = 14;
+    } elseif ($font_size > 30) {
+        $font_size = 30;
+    }
+
+    $custom_width = absint(get_option('rmenu_wc_checkout_custom_width', 220));
+    if ($custom_width < 50) {
+        $custom_width = 220;
+    } elseif ($custom_width > 500) {
+        $custom_width = 500;
+    }
+
+    return [
+        'button_style' => $button_style,
+        'bg_color' => $bg_color,
+        'text_color' => $text_color,
+        'hover_bg_color' => $hover_bg_color,
+        'hover_text_color' => $hover_text_color,
+        'border_radius' => $border_radius,
+        'font_size' => $font_size,
+        'width_mode' => $width_mode,
+        'custom_width' => $custom_width,
+    ];
+}
+
 function onepaquc_get_button_styling()
 {
     // Basic button classes
@@ -140,9 +195,10 @@ function onepaquc_get_button_styling()
     $style = "cursor:pointer;text-align: center;";
     $icon = '';
     $additional_css = '';
+    $style_options = onepaquc_get_direct_checkout_style_options();
 
     // Apply button style settings
-    $button_style = get_option('rmenu_wc_checkout_style', 'default');
+    $button_style = $style_options['button_style'];
 
     if ($button_style === 'alt') {
         $classes .= " alt-style";
@@ -150,9 +206,16 @@ function onepaquc_get_button_styling()
 
     // Apply color settings if not using default style
     if ($button_style !== 'default') {
-        $bg_color = get_option('rmenu_wc_checkout_color', '#000');
-        $text_color = get_option('rmenu_wc_checkout_text_color', '#ffffff');
+        $bg_color = $style_options['bg_color'];
+        $text_color = $style_options['text_color'];
         $style .= "background-color:{$bg_color};color:{$text_color};border-color:{$bg_color};";
+        $style .= "border-radius:{$style_options['border_radius']}px;font-size:{$style_options['font_size']}px;";
+
+        if ($style_options['width_mode'] === 'full') {
+            $style .= "width:100%;display:block;box-sizing:border-box;";
+        } elseif ($style_options['width_mode'] === 'custom') {
+            $style .= "width:{$style_options['custom_width']}px;max-width:100%;display:inline-block;box-sizing:border-box;";
+        }
     }
 
     // Handle button icon
@@ -206,8 +269,12 @@ function onepaquc_add_button_css()
 {
     $button_styling = onepaquc_get_button_styling();
     $additional_css = $button_styling['additional_css'];
+    $style_options = onepaquc_get_direct_checkout_style_options();
+    $hover_bg_color = sanitize_hex_color(get_option('rmenu_wc_checkout_hover_bg_color', '#222222'));
+    $hover_text_color = sanitize_hex_color(get_option('rmenu_wc_checkout_hover_text_color', '#ffffff'));
 
-    global $onepaquc_allowed_tags;
+
+    global $onepaquc_onepaquc_allowed_tags;
 
     // Start output buffer for CSS
     ob_start();
@@ -227,6 +294,23 @@ function onepaquc_add_button_css()
             letter-spacing: 1px;
             font-weight: 600;
         }
+
+        .direct-checkout-button:hover{
+            background-color: <?php echo esc_html($hover_bg_color); ?> !important;
+            border-color: <?php echo esc_html($hover_bg_color); ?> !important;
+            color: <?php echo esc_html($hover_text_color); ?> !important;
+        }
+        <?php if ($style_options['button_style'] !== 'default') : ?>
+
+        .direct-checkout-button:hover,
+        .direct-checkout-button:focus,
+        .direct-checkout-button:active {
+            background-color: <?php echo esc_html($style_options['hover_bg_color']); ?>;
+            color: <?php echo esc_html($style_options['hover_text_color']); ?>;
+            border-color: <?php echo esc_html($style_options['hover_bg_color']); ?>;
+        }
+
+        <?php endif; ?>
 
         /* Icon positioning styles */
         .opqcfw-btn .rmenu-icon {
@@ -262,7 +346,7 @@ function onepaquc_add_button_css()
 <?php
 
     // Output the CSS
-    echo wp_kses(ob_get_clean(), $onepaquc_allowed_tags);
+    echo wp_kses(ob_get_clean(), $onepaquc_onepaquc_allowed_tags);
 }
 
 // Add button CSS to head
@@ -331,7 +415,7 @@ function onepaquc_add_checkout_button_fallback()
 
 function onepaquc_render_checkout_button(): bool
 {
-    global $product, $onepaquc_allowed_tags;
+    global $product, $onepaquc_onepaquc_allowed_tags;
 
     if (!is_product() || !$product) {
         return false;
@@ -384,10 +468,10 @@ function onepaquc_render_checkout_button(): bool
     //     // Remove 'single_add_to_cart_button' and 'direct-checkout-button' from classes
     //     $button_classes = preg_replace('/\b(direct-checkout-button)\b/', '', $button_styling['classes']);
     //     $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
-    //     echo '<a class="' . esc_attr($button_classes) . ' onepaquc-checkout-btn" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
+    //     echo '<a class="' . esc_attr($button_classes) . ' onepaquc-checkout-btn" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_onepaquc_allowed_tags) . '</a>';
     // } else {
     // Output the button with fallback identifier
-    echo '<a class="' . esc_attr($button_styling['classes']) . ' onepaquc-checkout-btn" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
+    echo '<a class="' . esc_attr($button_styling['classes']) . ' onepaquc-checkout-btn" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_onepaquc_allowed_tags) . '</a>';
     // }
 
     // Optional: a tiny marker helps debugging/JS checks, doesn’t affect layout
@@ -403,7 +487,7 @@ function onepaquc_add_js_fallback()
         return;
     }
 
-    global $onepaquc_allowed_tags;
+    global $onepaquc_onepaquc_allowed_tags;
 
     global $product;
     if (!$product || !onepaquc_should_display_button($product)) {
@@ -464,11 +548,11 @@ function onepaquc_add_js_fallback()
                 //     var buttonClasses = '<?php //echo esc_js(preg_replace('/\b(direct-checkout-button)\b/', '', trim(preg_replace('/\s+/', ' ', $button_styling['classes'])))); 
                                             ?>';
                 //     buttonHtml = '<a class="' + buttonClasses + ' onepaquc-checkout-btn" style="<?php //echo esc_js($button_styling['style']); 
-                                                                                                    ?>"><?php //echo wp_kses($button_inner, $onepaquc_allowed_tags); 
+                                                                                                    ?>"><?php //echo wp_kses($button_inner, $onepaquc_onepaquc_allowed_tags); 
                                                                                                         ?></a>';
                 // <?php //else: 
                     ?>
-                buttonHtml = '<a class="<?php echo esc_js($button_styling['classes']); ?> onepaquc-checkout-btn" data-product-id="<?php echo esc_js($product_id); ?>" data-product-type="<?php echo esc_js($product_type); ?>" data-title="<?php echo esc_js($product_title); ?>" style="<?php echo esc_js($button_styling['style']); ?>"><?php echo wp_kses($button_inner, $onepaquc_allowed_tags); ?></a>';
+                buttonHtml = '<a class="<?php echo esc_js($button_styling['classes']); ?> onepaquc-checkout-btn" data-product-id="<?php echo esc_js($product_id); ?>" data-product-type="<?php echo esc_js($product_type); ?>" data-title="<?php echo esc_js($product_title); ?>" style="<?php echo esc_js($button_styling['style']); ?>"><?php echo wp_kses($button_inner, $onepaquc_onepaquc_allowed_tags); ?></a>';
                 <?php //endif; 
                 ?>
 
@@ -710,7 +794,7 @@ function onepaquc_add_checkout_button_to_add_to_cart_shortcode($link, $product)
  */
 function onepaquc_add_checkout_button_after_loop_item()
 {
-    global $product, $onepaquc_buy_now_button_in_loop, $onepaquc_allowed_tags;
+    global $product, $onepaquc_buy_now_button_in_loop, $onepaquc_onepaquc_allowed_tags;
 
     // Must have a product and pass display rules.
     if (! $product instanceof WC_Product || ! onepaquc_should_display_button($product)) {
@@ -761,8 +845,8 @@ function onepaquc_add_checkout_button_after_loop_item()
     }
 
     // Minimal safe default for KSES if not set elsewhere
-    if (empty($onepaquc_allowed_tags)) {
-        $onepaquc_allowed_tags = wp_kses_allowed_html('post');
+    if (empty($onepaquc_onepaquc_allowed_tags)) {
+        $onepaquc_onepaquc_allowed_tags = wp_kses_allowed_html('post');
     }
 
     // Output the button just after the loop item’s default content.
@@ -772,7 +856,7 @@ function onepaquc_add_checkout_button_after_loop_item()
         . ' data-product-type="' . esc_attr($product_type) . '"'
         . ' data-title="' . esc_attr($product->get_name()) . '"'
         . ' style="' . esc_attr($button_styles['style']) . '">'
-        . wp_kses($inner, $onepaquc_allowed_tags)
+        . wp_kses($inner, $onepaquc_onepaquc_allowed_tags)
         . '</a>';
     echo '</div>';
 }
@@ -853,7 +937,7 @@ class onepaquc_add_checkout_button_on_archive
             return;
         }
 
-        global $onepaquc_allowed_tags;
+        global $onepaquc_onepaquc_allowed_tags;
 
         // if isn't wc archive pages then return
         if (is_singular('product')) {
@@ -892,7 +976,7 @@ class onepaquc_add_checkout_button_on_archive
                 // Configuration variables
                 const quickCheckoutConfig = {
                     buttonPos: "<?php echo esc_attr(get_option('rmenu_wc_direct_checkout_position', 'overlay_thumbnail_hover')); ?>",
-                    contents: '<?php echo wp_kses($button_contents['button_content'], $onepaquc_allowed_tags); ?>',
+                    contents: '<?php echo wp_kses($button_contents['button_content'], $onepaquc_onepaquc_allowed_tags); ?>',
                     buttonClass: "<?php echo esc_attr($button_contents['button_classes']); ?>",
                     buttonStyle: "<?php echo esc_attr($button_contents['button_style']); ?>",
                     allowedTypes: <?php echo wp_json_encode(get_option('rmenu_show_quick_checkout_by_types', ['simple', 'variable', "grouped", "external"])); ?>
@@ -1047,7 +1131,7 @@ class onepaquc_add_checkout_button_on_archive
     public function onepaquc_add_checkout_button()
     {
         global $product;
-        global $onepaquc_allowed_tags;
+        global $onepaquc_onepaquc_allowed_tags;
 
         if (!onepaquc_should_display_button($product)) {
             return;
@@ -1109,10 +1193,10 @@ class onepaquc_add_checkout_button_on_archive
         //     // Remove 'single_add_to_cart_button' and 'direct-checkout-button' from classes
         //     $button_classes = preg_replace('/\b(direct-checkout-button)\b/', '', $button_styling['classes']);
         //     $button_classes = trim(preg_replace('/\s+/', ' ', $button_classes));
-        //     echo '<a class="' . esc_attr($button_classes) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
+        //     echo '<a class="' . esc_attr($button_classes) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_onepaquc_allowed_tags) . '</a>';
         // } else {
         // Output the button
-        echo '<a class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_allowed_tags) . '</a>';
+        echo '<a class="' . esc_attr($button_styling['classes']) . '" data-product-id="' . esc_attr($product_id) . '" data-product-type="' . esc_attr($product_type) . '" data-title="' . esc_html($product_title) . '" style="' . esc_attr($button_styling['style']) . '">' . wp_kses($button_inner, $onepaquc_onepaquc_allowed_tags) . '</a>';
         // }
     }
 }
@@ -1332,13 +1416,13 @@ function onepaquc_button_shortcode_handler($atts = [])
     }
 
     // Allow the same sanitization rules used elsewhere in the plugin
-    global $onepaquc_allowed_tags;
-    if (empty($onepaquc_allowed_tags)) {
+    global $onepaquc_onepaquc_allowed_tags;
+    if (empty($onepaquc_onepaquc_allowed_tags)) {
         // Minimal safe default if not set by theme/plugin
-        $onepaquc_allowed_tags = wp_kses_allowed_html('post');
+        $onepaquc_onepaquc_allowed_tags = wp_kses_allowed_html('post');
     }
 
-    return '<a' . $attr_html . '>' . wp_kses($inner, $onepaquc_allowed_tags) . '</a>';
+    return '<a' . $attr_html . '>' . wp_kses($inner, $onepaquc_onepaquc_allowed_tags) . '</a>';
 }
 
 /**

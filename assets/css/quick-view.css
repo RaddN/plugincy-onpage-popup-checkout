@@ -205,6 +205,7 @@
   z-index: 3;
   display: flex;
   justify-content: space-between;
+  pointer-events: none;
 }
 
 .rmenu-quick-view-prev,
@@ -221,6 +222,7 @@
   text-decoration: none;
   box-shadow: none;
   color: #fff;
+  pointer-events: auto;
 }
 
 .rmenu-quick-view-prev:hover,
