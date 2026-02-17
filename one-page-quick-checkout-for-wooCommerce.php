@@ -758,6 +758,105 @@ function onepaquc_is_checkout_rendered(){
 }
 
 /**
+ * Whether current request should bypass full-page caching.
+ */
+function onepaquc_should_bypass_cache_for_checkout()
+{
+    if (is_admin() || wp_doing_ajax()) {
+        return false;
+    }
+
+    if ((defined('REST_REQUEST') && REST_REQUEST) || (defined('DOING_CRON') && DOING_CRON)) {
+        return false;
+    }
+
+    return onepaquc_is_checkout_rendered();
+}
+
+/**
+ * Mark checkout-rendered requests as non-cacheable for popular cache plugins.
+ */
+function onepaquc_mark_checkout_request_nocache()
+{
+    if (!onepaquc_should_bypass_cache_for_checkout()) {
+        return;
+    }
+
+    if (!defined('DONOTCACHEPAGE')) {
+        define('DONOTCACHEPAGE', true);
+    }
+    if (!defined('DONOTCACHEOBJECT')) {
+        define('DONOTCACHEOBJECT', true);
+    }
+    if (!defined('DONOTCACHEDB')) {
+        define('DONOTCACHEDB', true);
+    }
+    if (!defined('DONOTMINIFY')) {
+        define('DONOTMINIFY', true);
+    }
+    if (!defined('DONOTROCKETOPTIMIZE')) {
+        define('DONOTROCKETOPTIMIZE', true);
+    }
+}
+add_action('wp', 'onepaquc_mark_checkout_request_nocache', 0);
+add_action('template_redirect', 'onepaquc_mark_checkout_request_nocache', 0);
+
+/**
+ * Send no-cache headers for checkout-rendered requests.
+ */
+function onepaquc_send_checkout_nocache_headers()
+{
+    if (!onepaquc_should_bypass_cache_for_checkout()) {
+        return;
+    }
+
+    nocache_headers();
+
+    if (!headers_sent()) {
+        header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+        header('Pragma: no-cache');
+        header('Expires: Wed, 11 Jan 1984 05:00:00 GMT');
+        header('Surrogate-Control: no-store');
+        header('X-Accel-Expires: 0');
+        header('X-LiteSpeed-Cache-Control: no-cache');
+    }
+}
+add_action('send_headers', 'onepaquc_send_checkout_nocache_headers', 0);
+
+/**
+ * Return false for "can cache?" style filters when checkout is rendered.
+ */
+function onepaquc_prevent_page_cache_when_checkout($can_cache = true)
+{
+    if (onepaquc_should_bypass_cache_for_checkout()) {
+        return false;
+    }
+
+    return $can_cache;
+}
+
+/**
+ * Return true for "bypass cache?" style filters when checkout is rendered.
+ */
+function onepaquc_bypass_page_cache_when_checkout($bypass_cache = false)
+{
+    if (onepaquc_should_bypass_cache_for_checkout()) {
+        return true;
+    }
+
+    return $bypass_cache;
+}
+
+// Popular cache plugin compatibility.
+add_filter('do_rocket_generate_caching_files', 'onepaquc_prevent_page_cache_when_checkout', 10, 1); // WP Rocket
+add_filter('do_createsupercache', 'onepaquc_prevent_page_cache_when_checkout', 10, 1); // WP Super Cache
+add_filter('w3tc_can_cache', 'onepaquc_prevent_page_cache_when_checkout', 10, 1); // W3 Total Cache
+add_filter('breeze_is_page_cache_allowed', 'onepaquc_prevent_page_cache_when_checkout', 10, 1); // Breeze
+add_filter('sgo_bypass_caching', 'onepaquc_bypass_page_cache_when_checkout', 10, 1); // SiteGround Optimizer
+add_filter('cache_enabler_bypass', 'onepaquc_bypass_page_cache_when_checkout', 10, 1); // Cache Enabler
+add_filter('litespeed_control_set_nocache', 'onepaquc_bypass_page_cache_when_checkout', 10, 1); // LiteSpeed Cache
+
+/**
  * Check if the current queried page content contains a shortcode.
  */
 function onepaquc_page_has_shortcode($shortcode_tag)
