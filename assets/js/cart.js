@@ -20,6 +20,16 @@ jQuery(document).ready(function ($) {
     let isUpdatingCart = false;
     let isUpdatingCheckout = false;
     $isonepagewidget = ($('.checkout-popup,#checkout-popup').length) ? $('.checkout-popup,#checkout-popup').data('isonepagewidget') : false;
+
+    function onepaqucPageHasCheckoutForm() {
+        return !!document.querySelector(
+            'form.checkout.woocommerce-checkout, ' +
+            'form.woocommerce-checkout, ' +
+            '.wp-block-woocommerce-checkout, ' +
+            '.wc-block-checkout'
+        );
+    }
+
     // Function to fetch and update cart contents
     function updateCartContent(isdrawer = true) {
         if (isUpdatingCart) return;
@@ -40,7 +50,7 @@ jQuery(document).ready(function ($) {
             success: function (response) {
                 if (response.success) {
                     $('.rmenu-cart').html(response.data.cart_html);
-                    if (isdrawer && response.data.cart_count !== 0) {
+                    if (isdrawer && response.data.cart_count !== 0 && !onepaqucPageHasCheckoutForm()) {
                         window.openCartDrawer();
                     }
                     isUpdatingCart = false;
@@ -264,12 +274,129 @@ jQuery(document).ready(function ($) {
         });
     }
 
+    function onepaqucIsBlocksQtyControl($el) {
+        return $el.closest('.onepaquc-block-qty-wrap').length > 0;
+    }
+
+    function onepaqucGetQtyBounds($input) {
+        var min = parseFloat($input.attr('min'));
+        var max = parseFloat($input.attr('max'));
+        var step = parseFloat($input.attr('step'));
+
+        if (!Number.isFinite(min)) {
+            min = 1;
+        }
+        if (!Number.isFinite(step) || step <= 0) {
+            step = 1;
+        }
+        if (!Number.isFinite(max) || max <= 0) {
+            max = null;
+        }
+
+        return {
+            min: min,
+            max: max,
+            step: step
+        };
+    }
+
+    function onepaqucNormalizeQty(value, min, max, step) {
+        var qty = parseFloat(value);
+        if (!Number.isFinite(qty)) {
+            qty = min;
+        }
+
+        if (qty < min) {
+            qty = min;
+        }
+        if (Number.isFinite(max) && qty > max) {
+            qty = max;
+        }
+
+        if (Number.isFinite(step) && step !== 1) {
+            qty = min + Math.round((qty - min) / step) * step;
+            qty = parseFloat(qty.toFixed(5));
+            if (qty < min) {
+                qty = min;
+            }
+            if (Number.isFinite(max) && qty > max) {
+                qty = max;
+            }
+        }
+
+        return qty;
+    }
+
+    function onepaqucGetBlocksCartDispatch() {
+        if (!window.wp || !window.wp.data || typeof window.wp.data.dispatch !== 'function') {
+            return null;
+        }
+        return window.wp.data.dispatch('wc/store/cart');
+    }
+
+    function onepaqucSetBlocksQtyLoading($wrap, isLoading) {
+        $wrap.toggleClass('is-loading', !!isLoading);
+        $wrap.find('button, input').prop('disabled', !!isLoading);
+    }
+
+    function onepaqucUpdateBlocksCartQuantity($wrap, quantity) {
+        var cartItemKey = $wrap.attr('data-cart-item');
+        if (!cartItemKey) {
+            return;
+        }
+
+        var $input = $wrap.find('.checkout-qty-input').first();
+        if (!$input.length) {
+            return;
+        }
+
+        var dispatch = onepaqucGetBlocksCartDispatch();
+        if (!dispatch || typeof dispatch.changeCartItemQuantity !== 'function') {
+            return;
+        }
+
+        var bounds = onepaqucGetQtyBounds($input);
+        var nextQty = onepaqucNormalizeQty(quantity, bounds.min, bounds.max, bounds.step);
+        var previousQty = parseFloat($input.attr('data-last-value'));
+        if (!Number.isFinite(previousQty)) {
+            previousQty = onepaqucNormalizeQty($input.val(), bounds.min, bounds.max, bounds.step);
+        }
+
+        if (nextQty === previousQty) {
+            $input.val(nextQty);
+            return;
+        }
+
+        $input.val(nextQty);
+        onepaqucSetBlocksQtyLoading($wrap, true);
+
+        dispatch.changeCartItemQuantity(cartItemKey, nextQty).then(function () {
+            $input.attr('data-last-value', nextQty);
+            // Keep plugin cart UI (drawer/count/totals) in sync with Blocks cart updates.
+            debouncedUpdate(false);
+        }).catch(function (error) {
+            $input.val(previousQty);
+            console.error('Failed to update block checkout quantity', error);
+        }).finally(function () {
+            onepaqucSetBlocksQtyLoading($wrap, false);
+        });
+    }
+
     // Handle the plus button click
     $(document).on('click', '.checkout-qty-plus', function () {
-        var input = $(this).prev('.checkout-qty-input');
+        var $button = $(this);
+        var input = $button.prev('.checkout-qty-input');
         var val = parseFloat(input.val());
         var max = parseFloat(input.attr('max'));
         var step = parseFloat(input.attr('step')) || 1;
+
+        if (onepaqucIsBlocksQtyControl($button)) {
+            var $wrap = $button.closest('.onepaquc-block-qty-wrap');
+            var plusBounds = onepaqucGetQtyBounds(input);
+            var nextPlusVal = onepaqucNormalizeQty(val + plusBounds.step, plusBounds.min, plusBounds.max, plusBounds.step);
+            onepaqucUpdateBlocksCartQuantity($wrap, nextPlusVal);
+            return;
+        }
 
         if (max && (max <= val)) {
             input.val(max);
@@ -283,10 +410,19 @@ jQuery(document).ready(function ($) {
 
     // Handle the minus button click
     $(document).on('click', '.checkout-qty-minus', function () {
-        var input = $(this).next('.checkout-qty-input');
+        var $button = $(this);
+        var input = $button.next('.checkout-qty-input');
         var val = parseFloat(input.val());
         var min = parseFloat(input.attr('min')) || 1;
         var step = parseFloat(input.attr('step')) || 1;
+
+        if (onepaqucIsBlocksQtyControl($button)) {
+            var $wrap = $button.closest('.onepaquc-block-qty-wrap');
+            var minusBounds = onepaqucGetQtyBounds(input);
+            var nextMinusVal = onepaqucNormalizeQty(val - minusBounds.step, minusBounds.min, minusBounds.max, minusBounds.step);
+            onepaqucUpdateBlocksCartQuantity($wrap, nextMinusVal);
+            return;
+        }
 
         if (min && (min >= val)) {
             input.val(min);
@@ -299,15 +435,25 @@ jQuery(document).ready(function ($) {
 
     // Handle direct input changes
     $(document).on('change', '.checkout-qty-input', function () {
-        var val = parseFloat($(this).val());
-        var min = parseFloat($(this).attr('min')) || 1;
+        var $input = $(this);
+        var val = parseFloat($input.val());
+        var min = parseFloat($input.attr('min')) || 1;
+
+        if (onepaqucIsBlocksQtyControl($input)) {
+            var $wrap = $input.closest('.onepaquc-block-qty-wrap');
+            var inputBounds = onepaqucGetQtyBounds($input);
+            var normalizedInputVal = onepaqucNormalizeQty(val, inputBounds.min, inputBounds.max, inputBounds.step);
+            onepaqucUpdateBlocksCartQuantity($wrap, normalizedInputVal);
+            return;
+        }
 
         if (val < min) {
-            $(this).val(min);
+            $input.val(min);
             val = min;
         }
 
-        updateQuantity($(this).closest('.checkout-qty-btn').data('cart-item'), val);
+        var cartItemKey = $input.attr('data-cart-item') || $input.closest('.checkout-quantity-control').find('.checkout-qty-btn').first().data('cart-item');
+        updateQuantity(cartItemKey, val);
     });
 
     // Handle click on remove item button
@@ -366,6 +512,125 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    var onepaqucBlocksQtyEnabled = String(onepaquc_wc_cart_params.blocks_quantity_control || '1') === '1';
+    var onepaqucBlocksLinkEnabled = String(onepaquc_wc_cart_params.blocks_link_product || '0') === '1';
+
+    function onepaqucEscapeHtml(value) {
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function onepaqucSupportsBlocksFeatures(args) {
+        return !!(args && args.context === 'summary' && args.cartItem);
+    }
+
+    function onepaqucCanRenderBlocksQtyControl(cartItem) {
+        if (!onepaqucBlocksQtyEnabled || !cartItem || !cartItem.key) {
+            return false;
+        }
+
+        if (cartItem.sold_individually) {
+            return false;
+        }
+
+        var limits = cartItem.quantity_limits || {};
+        return limits.editable !== false;
+    }
+
+    function onepaqucBuildBlocksQtyControl(cartItem) {
+        var limits = cartItem.quantity_limits || {};
+        var min = parseFloat(limits.minimum);
+        var max = parseFloat(limits.maximum);
+        var step = parseFloat(limits.multiple_of);
+        var quantity = parseFloat(cartItem.quantity);
+        var key = onepaqucEscapeHtml(cartItem.key);
+
+        if (!Number.isFinite(min)) {
+            min = 1;
+        }
+        if (!Number.isFinite(step) || step <= 0) {
+            step = 1;
+        }
+        if (!Number.isFinite(max) || max <= 0) {
+            max = null;
+        }
+
+        quantity = onepaqucNormalizeQty(quantity, min, max, step);
+        var itemName = String(cartItem.name || '');
+        var stripName = itemName.replace(/<[^>]*>/g, '').trim();
+        var safeName = onepaqucEscapeHtml(stripName);
+        var maxAttr = Number.isFinite(max) ? ' max="' + max + '"' : '';
+
+        return '' +
+            '<span class="checkout-quantity-control onepaquc-block-qty-wrap" data-cart-item="' + key + '">' +
+            '<button type="button" class="checkout-qty-btn checkout-qty-minus" data-cart-item="' + key + '" aria-label="Decrease quantity for ' + safeName + '">-</button>' +
+            '<input type="number" name="cart[' + key + '][qty]" class="checkout-qty-input" data-cart-item="' + key + '" data-last-value="' + quantity + '" value="' + quantity + '" min="' + min + '"' + maxAttr + ' step="' + step + '">' +
+            '<button type="button" class="checkout-qty-btn checkout-qty-plus" data-cart-item="' + key + '" aria-label="Increase quantity for ' + safeName + '">+</button>' +
+            '</span>';
+    }
+
+    function onepaqucBlocksItemNameFilter(defaultValue, extensions, args) {
+        if (!onepaqucSupportsBlocksFeatures(args)) {
+            return defaultValue;
+        }
+
+        var cartItem = args.cartItem || {};
+        var itemNameHtml = String(defaultValue || '');
+
+        if (onepaqucBlocksLinkEnabled && cartItem.permalink && !/<a[\s>]/i.test(itemNameHtml)) {
+            itemNameHtml = '<a class="onepaquc-block-product-link" href="' + onepaqucEscapeHtml(cartItem.permalink) + '">' + itemNameHtml + '</a>';
+        }
+
+        if (onepaqucCanRenderBlocksQtyControl(cartItem)) {
+            itemNameHtml += onepaqucBuildBlocksQtyControl(cartItem);
+        }
+
+        return itemNameHtml;
+    }
+
+    function onepaqucBlocksCartItemClassFilter(defaultValue, extensions, args) {
+        var className = String(defaultValue || '');
+        if (!onepaqucSupportsBlocksFeatures(args) || !onepaqucCanRenderBlocksQtyControl(args.cartItem)) {
+            return className;
+        }
+
+        if (className.indexOf('onepaquc-has-custom-qty-controls') !== -1) {
+            return className;
+        }
+
+        return (className ? className + ' ' : '') + 'onepaquc-has-custom-qty-controls';
+    }
+
+    (function onepaqucInitBlocksCheckoutCompatibility() {
+        if (!onepaqucBlocksQtyEnabled && !onepaqucBlocksLinkEnabled) {
+            return;
+        }
+
+        var blocksCheckoutApi = window.wc && window.wc.blocksCheckout ? window.wc.blocksCheckout : null;
+        if (!blocksCheckoutApi) {
+            return;
+        }
+
+        var registerCheckoutFilters = blocksCheckoutApi.registerCheckoutFilters || blocksCheckoutApi.__experimentalRegisterCheckoutFilters;
+        if (typeof registerCheckoutFilters !== 'function') {
+            return;
+        }
+
+        var filters = {
+            itemName: onepaqucBlocksItemNameFilter
+        };
+
+        if (onepaqucBlocksQtyEnabled) {
+            filters.cartItemClass = onepaqucBlocksCartItemClassFilter;
+        }
+
+        registerCheckoutFilters('onepaquc-checkout-features', filters);
+    })();
 
     var $directbehave = onepaquc_wc_cart_params.direct_checkout_behave;
     var methodKey = $directbehave.rmenu_wc_checkout_method || 'direct_checkout';

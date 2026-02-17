@@ -202,6 +202,8 @@ function onepaquc_cart_enqueue_scripts()
         'onepaquc_refresh_checkout_product_list' => esc_js(wp_create_nonce('onepaquc_refresh_checkout_product_list')),
         'get_variations_nonce' => esc_js(wp_create_nonce('get_variations_nonce')), // Add this line
         'direct_checkout_behave' => $direct_checkout_behave,
+        'blocks_quantity_control' => get_option('rmenu_quantity_control', '1'),
+        'blocks_link_product' => get_option('rmenu_link_product', '0'),
         'checkout_url' => wc_get_checkout_url(),
         'cart_url'     => wc_get_cart_url(),
         'nonce' => esc_js(wp_create_nonce('rmenu-ajax-nonce')),

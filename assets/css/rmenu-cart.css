@@ -595,6 +595,26 @@ table.one-page-checkout-product-table td {
 .checkout-product-name {
   flex: 1;
 }
+
+/* WooCommerce Blocks checkout support */
+.wc-block-components-order-summary-item.onepaquc-has-custom-qty-controls
+  .wc-block-components-order-summary-item__quantity {
+  display: none;
+}
+
+.wc-block-components-order-summary-item .onepaquc-block-product-link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.wc-block-components-order-summary-item .onepaquc-block-qty-wrap {
+  margin-top: 8px;
+}
+
+.wc-block-components-order-summary-item .onepaquc-block-qty-wrap.is-loading {
+  opacity: 0.65;
+}
+
 @media (max-width: 767px) {
   .one-page-checkout-container {
     padding: 15px;
