@@ -668,11 +668,14 @@ jQuery(document).ready(function ($) {
                 quantity = $qtyInput.val();
             } else {
                 var $qtyWrapper = $('.rmenu-quantity-wrapper[data-product_id="' + product_id + '"]');
+                var qtyByData = $button.data('quantity');
                 if ($qtyWrapper.length > 0) {
                     var $qtyField = $qtyWrapper.find('.rmenu-archive-quantity');
                     if ($qtyField.length > 0) {
                         quantity = $qtyField.val();
                     }
+                } else if (qtyByData) {
+                    quantity = qtyByData;
                 } else {
                     var $qtyById = $('#quantity_' + product_id);
                     if ($qtyById.length > 0) {
