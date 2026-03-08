@@ -41,6 +41,8 @@ function onepaquc_apply_add_to_cart_styles()
 
     // Add !important rule if force CSS is enabled
     $important = $force_css ? ' !important' : '';
+    $single_product_add_to_cart_selector = '.single .product .single_add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.opqcfw-btn)';
+    $single_product_add_to_cart_hover_selector = '.single .product .single_add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.opqcfw-btn):hover';
 
     // Start building CSS
     $css = '';
@@ -48,7 +50,7 @@ function onepaquc_apply_add_to_cart_styles()
     // Only apply custom styling if not using default WooCommerce style
     if ($button_style != 'default') {
         // Base button styles
-        $css .= '.single .product .single_add_to_cart_button,.woocommerce a.button.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit, .woocommerce a.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit.alt {';
+        $css .= $single_product_add_to_cart_selector . ',.woocommerce a.button.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit, .woocommerce a.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce button.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce input.button.alt.add_to_cart_button:not(.product_type_variable), .woocommerce #respond input#submit.alt {';
 
 
 
@@ -90,7 +92,7 @@ function onepaquc_apply_add_to_cart_styles()
         $css .= '}';
 
         // Hover styles
-        $css .= '.woocommerce a.button.add_to_cart_button:not(.product_type_variable):hover, .woocommerce button.button.add_to_cart_button:not(.product_type_variable):hover, .woocommerce input.button.add_to_cart_button:not(.product_type_variable):hover, .woocommerce #respond input#submit:not(.product_type_variable):hover, .woocommerce a.button.alt.add_to_cart_button:not(.product_type_variable):hover, .woocommerce button.button.alt.add_to_cart_button:not(.product_type_variable):hover, .woocommerce input.button.alt.add_to_cart_button:not(.product_type_variable):hover, .woocommerce #respond input#submit.alt:not(.product_type_variable):hover {';
+        $css .= $single_product_add_to_cart_hover_selector . ',.woocommerce a.button.add_to_cart_button:not(.product_type_variable):hover, .woocommerce button.button.add_to_cart_button:not(.product_type_variable):hover, .woocommerce input.button.add_to_cart_button:not(.product_type_variable):hover, .woocommerce #respond input#submit:not(.product_type_variable):hover, .woocommerce a.button.alt.add_to_cart_button:not(.product_type_variable):hover, .woocommerce button.button.alt.add_to_cart_button:not(.product_type_variable):hover, .woocommerce input.button.alt.add_to_cart_button:not(.product_type_variable):hover, .woocommerce #respond input#submit.alt:not(.product_type_variable):hover {';
 
         if ($button_style == 'minimal') {
             $css .= "background-color: {$bg_color}{$important};";
@@ -181,7 +183,7 @@ function onepaquc_add_icons_to_buttons()
 ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButtons = document.querySelectorAll('.add_to_cart_button:not(.product_type_variable):not(.product_type_grouped):not(.product_type_external):not(.ast-select-options-trigger), .single_add_to_cart_button:not(.product_type_variable):not(.product_type_grouped):not(.product_type_external):not(.ast-select-options-trigger)');
+            const addToCartButtons = document.querySelectorAll('.add_to_cart_button:not(.product_type_variable):not(.product_type_grouped):not(.product_type_external):not(.ast-select-options-trigger), .single_add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.opqcfw-btn):not(.product_type_variable):not(.product_type_grouped):not(.product_type_external):not(.ast-select-options-trigger)');
             const svgIcon = `<?php echo wp_kses($svg_icon, $onepaquc_onepaquc_allowed_tags); ?>`;
             const iconPosition = '<?php echo esc_attr($icon_position); ?>';
             const mobileIconOnly = <?php echo $mobile_icon_only ? 'true' : 'false'; ?>;

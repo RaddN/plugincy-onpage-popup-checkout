@@ -1203,7 +1203,7 @@ function onepaquc_cart_dashboard()
                     <div class="plugincy_row">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
                             <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-category"></span>', 'Checkout in Variable Product'); ?>
-                            <table class="form-table plugincy_table">
+                            <table class="form-table plugincy_table variable-product-table">
                                 <tr>
                                     <?php $onepaquc_helper->sec_head('th', '', '', 'Show Variation Selection in Archive pages', 'When enabled, the variation selection will be shown on archive pages.'); ?>
                                     <td class="rmenu-settings-control">
@@ -1258,7 +1258,7 @@ function onepaquc_cart_dashboard()
                                     // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
                                     const enableCheckout = document.querySelector('div#tab-4 input[name="rmenu_variation_show_archive"]');
 
-                                    const allinputFields = Array.from(document.querySelectorAll('div#tab-4 table:nth-of-type(1) input, div#tab-4 table:nth-of-type(1) select')).filter(
+                                    const allinputFields = Array.from(document.querySelectorAll('div#tab-4 table.variable-product-table input, div#tab-4 table.variable-product-table select')).filter(
                                         el => !(el.name === "rmenu_variation_show_archive")
                                     );
                                     toggleDisabledClass(!enableCheckout.checked, allinputFields); // Set initial state
