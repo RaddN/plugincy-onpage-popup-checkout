@@ -527,7 +527,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
 
             .cart-drawer .item-price {
                 margin: 0 0 10px;
-                color: var(--primary-color);
+                color: var(--cart-bg);
                 font-weight: 500;
             }
 
@@ -618,13 +618,18 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
             }
 
             .cart-drawer .apply-coupon-button {
-                background: var(--primary-color);
-                color: white;
+                background: var(--cart-bg);
+                color: var(--cart-text);
                 border: none;
                 border-radius: 0 4px 4px 0;
                 padding: 0 15px;
                 cursor: pointer;
                 font-weight: 500;
+            }
+
+            .cart-drawer .apply-coupon-button:hover {
+                background: var(--cart-hover-bg);
+                color: var(--cart-hover-text);
             }
 
             .cart-drawer .coupon-message {
@@ -701,8 +706,8 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
             .cart-drawer .checkout-button {
                 width: 100%;
                 padding: 12px;
-                background: var(--primary-color);
-                color: white;
+                background: var(--cart-bg);
+                color: var(--cart-text);
                 border: none;
                 border-radius: 6px;
                 font-size: 16px;
@@ -713,7 +718,8 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
             }
 
             .cart-drawer .checkout-button:hover {
-                background: color-mix(in srgb, var(--primary-color) 90%, black);
+                background: var(--cart-hover-bg);
+                color: var(--cart-hover-text);
             }
 
             .cart-drawer .you-may-also-like {
@@ -770,18 +776,23 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                 display: block;
                 margin-bottom: 8px;
                 font-size: 14px;
-                color: var(--primary-color);
+                color: var(--cart-bg);
             }
 
             .cart-drawer .add-to-cart-button {
                 width: 100%;
                 padding: 6px;
-                background: var(--primary-color);
-                color: white;
+                background: var(--cart-bg);
+                color: var(--cart-text);
                 border: none;
                 border-radius: 4px;
                 font-size: 12px;
                 cursor: pointer;
+            }
+
+            .cart-drawer .add-to-cart-button:hover {
+                background: var(--cart-hover-bg);
+                color: var(--cart-hover-text);
             }
 
             .cart-drawer .overlay {

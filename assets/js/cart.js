@@ -513,8 +513,24 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    var onepaqucBlocksQtyEnabled = String(onepaquc_wc_cart_params.blocks_quantity_control || '1') === '1';
-    var onepaqucBlocksLinkEnabled = String(onepaquc_wc_cart_params.blocks_link_product || '0') === '1';
+    function onepaqucParseSettingFlag(value, fallbackValue) {
+        if (typeof value === 'undefined' || value === null || value === '') {
+            return fallbackValue;
+        }
+
+        if (typeof value === 'boolean') {
+            return value;
+        }
+
+        if (typeof value === 'number') {
+            return value === 1;
+        }
+
+        return ['1', 'true', 'yes', 'on'].indexOf(String(value).toLowerCase()) !== -1;
+    }
+
+    var onepaqucBlocksQtyEnabled = onepaqucParseSettingFlag(onepaquc_wc_cart_params.blocks_quantity_control, true);
+    var onepaqucBlocksLinkEnabled = onepaqucParseSettingFlag(onepaquc_wc_cart_params.blocks_link_product, false);
 
     function onepaqucEscapeHtml(value) {
         return String(value || '')

@@ -181,7 +181,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.3.4</span></div>
+        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.3.5</span></div>
         <p style="max-width: 70%; margin:0 auto;">Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
 
         <div class="feature-grid">
@@ -2183,7 +2183,7 @@ function onepaquc_cart_dashboard()
                         <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-translation"></span>', 'Translations', ''); ?>
                         <table class="form-table plugincy_table">
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', '"Quick View" Text', 'Customize the text for the quick view button or link.'); ?>
+                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', '"View Full Details" Button Text', 'Change the text shown on the "View Full Details" button inside the Quick View popup.'); ?>
                                 <td class="rmenu-settings-control">
                                     <?php
                                     $details_text = get_option('rmenu_quick_view_details_text', '');
@@ -2742,7 +2742,7 @@ function onepaquc_cart_dashboard()
                                         </td>
                                     </tr>
 
-                                      <tr>
+                                    <tr>
                                         <th class="rmenu-settings-label">Button Icon</th>
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_add_to_cart_icon" class="rmenu-select">
@@ -2871,7 +2871,7 @@ function onepaquc_cart_dashboard()
 
                         <div class="rmenu-settings-row">
                             <div class="rmenu-settings-field" style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
-                                <label class="rmenu-settings-label">Button Display on Archive Pages
+                                <label class="rmenu-settings-label">Button Display
                                     <span class="tooltip">
                                         <span class="question-mark">?</span>
                                         <span class="tooltip-text">Control how Add to Cart buttons appear on product archive pages.</span>
@@ -3262,8 +3262,9 @@ function onepaquc_cart_dashboard()
                         </iframe>
                     </div>
                     <h3>Buy Now Button</h3>
-                    <p>Transform your WooCommerce store with instant purchase buttons that bypass the traditional cart process. Our plugin automatically adds buy now buttons on single product and archive pages, but you have complete control over placement and customization.</p>
-
+                    <p>
+                        Transform your <strong>WooCommerce store</strong> with <strong>instant purchase buttons</strong> that bypass the traditional <strong>cart process</strong>. Our plugin automatically adds <strong>buy now buttons</strong> on <strong>single product</strong> and <strong>archive pages</strong>, but you have complete control over placement and customization.
+                    </p>
                     <div class="tutorial-shortcode">
                         <h4>Basic Shortcode:</h4>
                         <code>[onepaquc_button]</code>
@@ -3284,7 +3285,9 @@ function onepaquc_cart_dashboard()
                         </iframe>
                     </div>
                     <h3>Buy Now Button Anywhere</h3>
-                    <p>You can use buy now button anywhere on your site with this shortcode.</p>
+                    <p>
+                        You can use <strong>buy now button</strong> anywhere on your <strong>site</strong> with this <strong>shortcode</strong>.
+                    </p>
                     <div class="tutorial-shortcode">
                         <h4>Shortcode:</h4>
                         <code>[onepaquc_button product_id="123" variation_id="456" qty="2"]</code>
@@ -3308,7 +3311,9 @@ function onepaquc_cart_dashboard()
                         </iframe>
                     </div>
                     <h3>One Page Checkout</h3>
-                    <p>You can use one page checkout anywhere on your site with this shortcode.</p>
+                    <p>
+                        You can use <strong>one page checkout</strong> anywhere on your <strong>site</strong> with this <strong>shortcode</strong>.
+                    </p>
                     <div class="tutorial-shortcode">
                         <h4>Shortcode:</h4>
                         <code>[onepaquc_checkout product_id="123" variation_id="456" qty="2" clear_cart="yes" auto_add="yes"]</code>
@@ -3331,7 +3336,9 @@ function onepaquc_cart_dashboard()
                         </iframe>
                     </div>
                     <h3>Floating Cart</h3>
-                    <p>A modern, stylish side-drawer cart that users can access from any page for improved convenience.</p>
+                    <p>
+                        A <strong>modern</strong>, <strong>stylish</strong> <strong>side-drawer cart</strong> that users can access from <strong>any page</strong> for improved convenience.
+                    </p>
                     <div class="tutorial-tips">
                         <h4>Floating Cart Benefits:</h4>
                         <ul>

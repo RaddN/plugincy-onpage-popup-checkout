@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) exit;
 /**
  * Renders the Floating Cart documentation page
  * 
- * @since  1.3.4
+ * @since  1.3.5
  * @return void
  */
 function onepaquc_cart_documentation()
