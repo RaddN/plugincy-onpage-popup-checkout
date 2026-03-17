@@ -9,6 +9,7 @@
  * Author URI: https://plugincy.com
  * license: GPL2
  * Text Domain: one-page-quick-checkout-for-woocommerce
+ * Domain Path: /languages
  * Requires Plugins: woocommerce
  */
 

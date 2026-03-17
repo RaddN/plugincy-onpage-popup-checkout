@@ -181,8 +181,8 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title">Welcome to One Page Quick Checkout for WooCommerce <span class="version-tag">v1.3.5</span></div>
-        <p style="max-width: 70%; margin:0 auto;">Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.</p>
+        <div class="welcome-title"> <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?> <span class="version-tag">v1.3.5</span> </div>
+        <p style="max-width: 70%; margin:0 auto;"> <?php esc_html_e( 'Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.', 'one-page-quick-checkout-for-woocommerce' ); ?> </p>
 
         <div class="feature-grid">
             <div class="feature-item">
@@ -191,8 +191,12 @@ function onepaquc_cart_dashboard()
                         <path d="M.214.186h.068a.057.057 0 0 1 .051.078L.184.611A.039.039 0 0 1 .109.596v-.26L.054.334A.06.06 0 0 1 0 .279V.057A.06.06 0 0 1 .057 0h.101a.06.06 0 0 1 .057.057z" />
                     </svg>
                 </div>
-                <h3>Fast Setup</h3>
-                <p>Configure your checkout in minutes with our intuitive options.</p>
+                <h3>
+        <?php esc_html_e('Fast Setup', 'one-page-quick-checkout-for-woocommerce'); ?>
+    </h3>
+    <p>
+        <?php esc_html_e('Configure your checkout in minutes with our intuitive options.', 'one-page-quick-checkout-for-woocommerce'); ?>
+    </p>
             </div>
             <div class="feature-item" style="background: #ebfcf1;">
                 <div class="feature-icon" style="background: #22c55e;">
@@ -237,45 +241,49 @@ function onepaquc_cart_dashboard()
         <div class="tabs">
             <div class="tab active" data-tab="4">
                 <span class="dashicons dashicons-cart"></span>
-                Direct Checkout
-            </div>
-            <div class="tab" data-tab="2">
-                <span class="dashicons dashicons-admin-page"></span>
-                One Page Checkout
-            </div>
-            <div class="tab" data-tab="9">
-                <span class="dashicons dashicons-archive"></span>
-                Floating Cart
-            </div>
+    <?php esc_html_e('Direct Checkout', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
 
-            <div class="tab" data-tab="7">
-                <span class="dashicons dashicons-visibility"></span>
-                Quick View
-            </div>
-            <div class="tab" data-tab="5">
-                <span class="dashicons dashicons-star-filled"></span>
-                Features
-            </div>
-            <div class="tab" data-tab="8">
-                <span class="dashicons dashicons-plus-alt"></span>
-                Add To Cart
-            </div>
-            <div class="tab" data-tab="1">
-                <span class="dashicons dashicons-forms"></span>
-                Checkout Form
-            </div>
+<div class="tab" data-tab="2">
+    <span class="dashicons dashicons-admin-page"></span>
+    <?php esc_html_e('One Page Checkout', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
+
+<div class="tab" data-tab="9">
+    <span class="dashicons dashicons-archive"></span>
+    <?php esc_html_e('Floating Cart', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
+
+<div class="tab" data-tab="7">
+    <span class="dashicons dashicons-visibility"></span>
+    <?php esc_html_e('Quick View', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
+
+<div class="tab" data-tab="5">
+    <span class="dashicons dashicons-star-filled"></span>
+    <?php esc_html_e('Features', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
+
+<div class="tab" data-tab="8">
+    <span class="dashicons dashicons-plus-alt"></span>
+    <?php esc_html_e('Add To Cart', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
+
+            <div class="tab" data-tab="1"> <span class="dashicons dashicons-forms"></span> <?php esc_html_e('Checkout Form', 'one-page-quick-checkout-for-woocommerce'); ?> </div>
             <div class="tab" data-tab="3">
-                <span class="dashicons dashicons-edit"></span>
-                Text Manage
-            </div>
-            <div class="tab" data-tab="6">
-                <span class="dashicons dashicons-admin-settings"></span>
-                Advanced Settings
-            </div>
-            <div class="tab" data-tab="100">
-                <span class="dashicons dashicons-admin-network"></span>
-                Plugin License
-            </div>
+    <span class="dashicons dashicons-edit"></span>
+    <?php esc_html_e('Text Manage', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
+
+<div class="tab" data-tab="6">
+    <span class="dashicons dashicons-admin-settings"></span>
+    <?php esc_html_e('Advanced Settings', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
+
+<div class="tab" data-tab="100">
+    <span class="dashicons dashicons-admin-network"></span>
+    <?php esc_html_e('Plugin License', 'one-page-quick-checkout-for-woocommerce'); ?>
+</div>
         </div>
         <script>
             function getCheckboxByName(name, scope = document) {
@@ -368,7 +376,7 @@ function onepaquc_cart_dashboard()
             <?php wp_nonce_field('onepaquc_cart_settings'); ?>
             <?php settings_fields('onepaquc_cart_settings'); ?>
             <div class="tab-content plugincy_card" id="tab-1" style="margin-top: 20px;">
-                <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-forms"></span>', 'Checkout Form Manage', 'Customize the checkout form fields and headings to enhance user experience.'); ?>
+                <?php $onepaquc_helper->sec_head( 'h2', 'plugincy_sec_head', '<span class="dashicons dashicons-forms"></span>', __('Checkout Form Manage', 'one-page-quick-checkout-for-woocommerce'), __('Customize the checkout form fields and headings to enhance user experience.', 'one-page-quick-checkout-for-woocommerce') ); ?>
                 <table class="form-table plugincy_table mb-4">
                     <tbody class="plugincy_grid">
                         <tr valign="top">
@@ -396,7 +404,7 @@ function onepaquc_cart_dashboard()
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '', 'Heading Manage', 'Customize the headings of the checkout form fields to enhance user experience.'); ?>
+                <?php $onepaquc_helper->sec_head( 'h3', 'plugincy_sec_head', '', __('Heading Manage', 'one-page-quick-checkout-for-woocommerce'), __('Customize the headings of the checkout form fields to enhance user experience.', 'one-page-quick-checkout-for-woocommerce') ); ?>
                 <table class="form-table plugincy_table">
                     <?php foreach (onepaquc_onpcheckout_heading() as $key => $field) : ?>
                         <tr valign="top">

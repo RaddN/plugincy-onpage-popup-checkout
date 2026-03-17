@@ -1,0 +1,2025 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 06:07+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.3; wp-6.9; php-8.2.29\n"
+"X-Domain: one-page-quick-checkout-for-woocommerce"
+
+#. %s: checkout field label.
+#: one-page-quick-checkout-for-wooCommerce.php:1204
+#: one-page-quick-checkout-for-wooCommerce.php:1225
+#, php-format
+msgid "%s (optional)"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:104
+#: includes/elementor/onepaquc-buy-button-widget.php:117
+msgid "(Use plugin default)"
+msgstr ""
+
+#: includes/trusted-badge.php:75
+msgid "Above Checkout Form"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:323
+msgid "Accent color for secondary elements"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:406
+msgid "Add a custom CSS ID"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:394
+msgid "Add custom CSS classes separated by spaces"
+msgstr ""
+
+#: includes/trusted-badge.php:137
+msgid "Add New Badge"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:281
+msgid "Add subtle shadow effects to elements"
+msgstr ""
+
+#: includes/quickview.php:738
+msgid "Add to cart"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:429
+msgid "Add your custom CSS styles here"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:239
+msgid "Adjust the rounded corners of elements"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:384
+msgid "Advanced"
+msgstr ""
+
+#: includes/trusted-badge.php:145
+msgid "Advanced: Custom HTML"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:108
+msgid "Arrow"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:201
+msgid "Attribute Terms"
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:48
+msgid "Auto add to cart"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:69
+msgid "Auto-pick Variation (default / first in-stock)"
+msgstr ""
+
+#: includes/trusted-badge.php:43
+msgid "Award"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:142
+#: includes/elementor/plugincy-cart-widget.php:207
+#: includes/elementor/plugincy-cart-widget.php:654
+msgid "Background Color"
+msgstr ""
+
+#: includes/trusted-badge.php:72
+msgid "Badge Position"
+msgstr ""
+
+#: includes/trusted-badge.php:84
+msgid "Badge Style"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:96
+msgid "Basket"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:169
+msgid "Behavior"
+msgstr ""
+
+#: includes/trusted-badge.php:76
+msgid "Below Checkout Form"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:152
+msgid "Border Color"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:225
+#: includes/elementor/onepaquc-buy-button-widget.php:157
+msgid "Border Radius"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:121
+msgid "Bottom"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:361
+msgid "Button Padding"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:335
+msgid "Button Style"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:352
+msgid "Button Typography"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:81
+msgid "Button UI"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:88
+msgid "Buy Now"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:19
+msgid "Buy Now Button"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:179
+msgid "By Attribute"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:143
+msgid "By Category & Tag"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:120
+msgid "By Product IDs"
+msgstr ""
+
+#: includes/trusted-badge.php:46
+msgid "Calculator"
+msgstr ""
+
+#: includes/trusted-badge.php:39
+#: includes/elementor/onepaquc-buy-button-widget.php:106
+#: includes/elementor/plugincy-cart-widget.php:94
+msgid "Cart"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:90
+#: includes/elementor/plugincy-cart-widget.php:139
+msgid "Cart Icon"
+msgstr ""
+
+#: templates/product-single-template.php:47
+msgid "Category"
+msgstr ""
+
+#: includes/trusted-badge.php:41
+msgid "Checkmark"
+msgstr ""
+
+#: one-page-quick-checkout-for-wooCommerce.php:192
+#: one-page-quick-checkout-for-wooCommerce.php:633
+#: includes/elementor/onepaquc-buy-button-widget.php:107
+msgid "Checkout"
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:158
+msgid "Checkout (Preview)"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:646
+msgid "Checkout Button"
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:112
+msgid "Checkout renderer not available."
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:40
+msgid "Checkout Settings"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:101
+msgid "Choose how products will be displayed on the checkout page"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:343
+msgid "Choose the appearance of checkout buttons"
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:60
+msgid "Clear cart before adding"
+msgstr ""
+
+#: includes/trusted-badge.php:47
+msgid "Clock"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:167
+#: includes/elementor/plugincy-cart-widget.php:356
+#: includes/elementor/plugincy-cart-widget.php:414
+#: includes/elementor/plugincy-cart-widget.php:594
+msgid "Color"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:297
+msgid "Colors & Buttons"
+msgstr ""
+
+#: admin/license-tab.php:446
+msgid "Contact Support"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:264
+msgid "Control the spacing between elements"
+msgstr ""
+
+#: includes/trusted-badge.php:40
+msgid "Credit Card"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:392
+msgid "CSS Classes"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:404
+msgid "CSS ID"
+msgstr ""
+
+#: admin/license-tab.php:356 admin/license-tab.php:376
+msgid "Current License Key"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:425
+msgid "Custom CSS"
+msgstr ""
+
+#: includes/trusted-badge.php:157
+msgid ""
+"Custom HTML for trust badges. You can use dashicons or include your own "
+"images."
+msgstr ""
+
+#: includes/trusted-badge.php:45
+msgid "Customer"
+msgstr ""
+
+#: admin/license-tab.php:406
+msgid "Deactivate License"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:60
+msgid "Detect Product from Context"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:89
+msgid "Display Template"
+msgstr ""
+
+#: includes/trusted-badge.php:67
+msgid "Display trust signals and security badges on the checkout page."
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:128
+msgid "DIV"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:179
+msgid "Drawer"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:104
+msgid "Drawer Position"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:250
+msgid "Element Spacing"
+msgstr ""
+
+#: includes/trusted-badge.php:49
+msgid "Email"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:275
+msgid "Enable Box Shadow"
+msgstr ""
+
+#: admin/product_edit_page_setup.php:22
+msgid "Enable one page checkout for this product"
+msgstr ""
+
+#: includes/trusted-badge.php:60
+msgid "Enable Trust Badges"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Enhance WooCommerce with popup checkout, cart drawer, and flexible checkout "
+"templates to boost conversions."
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:191
+msgid "Enter attribute name (e.g., color, size, brand)"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:204
+msgid "Enter attribute terms separated by commas (e.g., red,blue,green)"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:155
+msgid "Enter category slugs separated by commas (e.g., electronics,clothing)"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:132
+msgid "Enter specific product IDs separated by commas (e.g., 152,153,151,142)"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:168
+msgid "Enter tag slugs separated by commas (e.g., featured,sale)"
+msgstr ""
+
+#: admin/license-tab.php:431
+msgid "Enter your license key to download and activate the Pro version."
+msgstr ""
+
+#: includes/ajaxhandler.php:308
+msgid "Error adding product to cart"
+msgstr ""
+
+#: includes/quickview.php:742
+msgid "Error loading product information. Please try again."
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:126
+msgid "Extra CSS Classes"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:339
+msgid "Filled"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:37
+msgid "Floating Cart"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:318
+#: includes/elementor/plugincy-cart-widget.php:376
+#: includes/elementor/plugincy-cart-widget.php:556
+#: includes/elementor/plugincy-cart-widget.php:663
+msgid "Font Size"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:181
+msgid "Force Display"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:81
+#: includes/elementor/plugincy-cart-widget.php:82
+msgid "General Settings"
+msgstr ""
+
+#: one-page-quick-checkout-for-wooCommerce.php:1275
+msgid "Get Pro"
+msgstr ""
+
+#: includes/trusted-badge.php:88
+msgid "Grid (2 columns)"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:121
+msgid "H1"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:122
+msgid "H2"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:123
+msgid "H3"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:124
+msgid "H4"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:125
+msgid "H5"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:126
+msgid "H6"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:287
+#: includes/elementor/plugincy-cart-widget.php:454
+msgid "Height"
+msgstr ""
+
+#: admin/license-tab.php:426
+msgid "Hide license key"
+msgstr ""
+
+#: includes/trusted-badge.php:87
+msgid "Horizontal Row"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://plugincy.com"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://plugincy.com/one-page-quick-checkout-for-woocommerce/"
+msgstr ""
+
+#: includes/trusted-badge.php:151
+msgid "I want to use custom HTML instead"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:100
+msgid "Icon"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:113
+msgid "Icon Position"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:147
+msgid "Icon Size"
+msgstr ""
+
+#: includes/trusted-badge.php:113 includes/trusted-badge.php:176
+msgid "Icon:"
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:66
+msgid "If enabled and a Product ID is set, the cart will be emptied first."
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:77
+msgid ""
+"If set, this product will be added to the cart. For variations, also set "
+"Variation ID."
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:133
+msgid "Inline Style (advanced)"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:217
+msgid "Layout & Spacing"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:49
+msgid "Leave empty to detect from current product/loop."
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:118
+#: includes/elementor/plugincy-cart-widget.php:108
+msgid "Left"
+msgstr ""
+
+#: admin/license-tab.php:370
+msgid "License Active but Pro Plugin Not Running!"
+msgstr ""
+
+#: admin/license-tab.php:380
+msgid ""
+"License is valid but Pro plugin is not active. Click below to reinstall and "
+"activate the Pro plugin."
+msgstr ""
+
+#: admin/license-tab.php:412
+msgid "License Key"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:338
+#: includes/elementor/plugincy-cart-widget.php:396
+#: includes/elementor/plugincy-cart-widget.php:576
+#: includes/elementor/plugincy-cart-widget.php:683
+msgid "Line Height"
+msgstr ""
+
+#: includes/trusted-badge.php:36
+msgid "Lock"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:308
+msgid "Main theme color for buttons and highlights"
+msgstr ""
+
+#: admin/license-tab.php:452
+msgid "Manage Your Licenses"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:236
+#: includes/elementor/plugincy-cart-widget.php:623
+msgid "Margin"
+msgstr ""
+
+#: templates/product-single-template.php:42
+msgid "Modify & complete order below"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:41
+msgid "Multi Product One Page Checkout"
+msgstr ""
+
+#: includes/trusted-badge.php:166 includes/trusted-badge.php:192
+msgid "New Badge"
+msgstr ""
+
+#: includes/trusted-badge.php:77
+msgid "Next to Payment Methods"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:278
+#: includes/elementor/onepaquc-buy-button-widget.php:63
+#: includes/elementor/onepaquc-buy-button-widget.php:72
+#: includes/elementor/onepaquc-buy-button-widget.php:184
+#: includes/elementor/onepaquc-checkout-widget.php:51
+#: includes/elementor/onepaquc-checkout-widget.php:63
+msgid "No"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:105
+msgid "None"
+msgstr ""
+
+#: admin/product_edit_page_setup.php:21
+msgid "One Page Checkout"
+msgstr ""
+
+#. Name of the plugin
+msgid "One Page Quick Checkout for WooCommerce"
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:18
+msgid "One-Page Checkout"
+msgstr ""
+
+#: includes/quickview.php:741
+msgid "Out of stock"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:340
+msgid "Outlined"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:127
+msgid "P"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:216
+#: includes/elementor/plugincy-cart-widget.php:474
+#: includes/elementor/plugincy-cart-widget.php:525
+#: includes/elementor/plugincy-cart-widget.php:603
+msgid "Padding"
+msgstr ""
+
+#: includes/trusted-badge.php:48
+msgid "Phone"
+msgstr ""
+
+#: includes/ajaxhandler.php:416
+msgid "Placeholder"
+msgstr ""
+
+#: includes/one-page-checkout-shortcode.php:67
+msgid "Please provide product IDs, category, tags, or attribute terms."
+msgstr ""
+
+#: includes/blocks/one-page-checkout.php:202
+#: includes/blocks/one-page-checkout.php:343
+#: includes/elementor/elementor-category.php:81
+msgid "Plugincy"
+msgstr ""
+
+#. Author of the plugin
+msgid "plugincy"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:418
+msgid "Plugincy Custom CSS"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:99
+msgid "Pricing Table"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:305
+msgid "Primary Color"
+msgstr ""
+
+#: includes/trusted-badge.php:38
+msgid "Privacy"
+msgstr ""
+
+#: admin/license-tab.php:348
+msgid "Pro Version Activated!"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:40
+msgid "Product"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:97
+msgid "Product Accordion"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:188
+msgid "Product Attribute"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:152
+msgid "Product Categories"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:45
+#: includes/elementor/onepaquc-checkout-widget.php:73
+msgid "Product ID"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:129
+msgid "Product IDs"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:259
+msgid "Product Image"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:94
+msgid "Product List"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:368
+msgid "Product Price"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:111
+msgid "Product Query"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:95
+msgid "Product Single"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:96
+msgid "Product Slider"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:93
+msgid "Product Table"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:98
+msgid "Product Tabs"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:165
+msgid "Product Tags"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:310
+msgid "Product Title"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:117
+msgid "Product Title Tag"
+msgstr ""
+
+#: templates/product-accordion-template.php:7
+#: templates/product-list-template.php:10
+#: templates/product-slider-template.php:11
+#: templates/product-table-template.php:11
+#: templates/product-tabs-template.php:7
+msgid "Products"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:93
+#: includes/elementor/onepaquc-checkout-widget.php:97
+#: includes/elementor/plugincy-cart-widget.php:426
+msgid "Quantity"
+msgstr ""
+
+#: admin/license-tab.php:394
+msgid "Reinstall & Activate Pro Plugin"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:497
+msgid "Remove Button"
+msgstr ""
+
+#: one-page-quick-checkout-for-wooCommerce.php:683
+msgid "Remove this item"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:194
+msgid "Renderer not available."
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:119
+#: includes/elementor/plugincy-cart-widget.php:109
+msgid "Right"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:320
+msgid "Secondary Color"
+msgstr ""
+
+#: includes/quickview.php:739
+msgid "Select options"
+msgstr ""
+
+#: one-page-quick-checkout-for-wooCommerce.php:1274
+msgid "Settings"
+msgstr ""
+
+#: includes/trusted-badge.php:37
+msgid "Shield"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:95
+msgid "Shopping Bag"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:174
+msgid "Show For Types (comma-separated)"
+msgstr ""
+
+#: admin/license-tab.php:415 admin/license-tab.php:426
+msgid "Show license key"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:505
+msgid "Size"
+msgstr ""
+
+#: templates/product-single-template.php:46
+msgid "SKU"
+msgstr ""
+
+#: includes/trusted-badge.php:44
+msgid "Star"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:548
+msgid "Subtotal"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:86
+msgid "Text"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:147
+#: includes/elementor/plugincy-cart-widget.php:701
+msgid "Text Color"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:341
+msgid "Text Only"
+msgstr ""
+
+#: includes/trusted-badge.php:127 includes/trusted-badge.php:190
+msgid "Text:"
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:159
+msgid "The checkout form appears on the front end when the cart is not empty."
+msgstr ""
+
+#: includes/trusted-badge.php:42
+msgid "Thumbs Up"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:120
+msgid "Top"
+msgstr ""
+
+#: includes/trusted-badge.php:95
+msgid "Trust Badge Items"
+msgstr ""
+
+#: includes/trusted-badge.php:57
+msgid "Trust Badges Configuration"
+msgstr ""
+
+#: includes/elementor/onepaquc-buy-button-widget.php:53
+msgid "Variation ID"
+msgstr ""
+
+#: includes/elementor/onepaquc-checkout-widget.php:84
+msgid "Variation ID (optional)"
+msgstr ""
+
+#: includes/trusted-badge.php:89
+msgid "Vertical List"
+msgstr ""
+
+#: includes/trusted-badge.php:50
+msgid "Website"
+msgstr ""
+
+#: includes/elementor/plugincy-cart-widget.php:187
+#: includes/elementor/plugincy-cart-widget.php:267
+#: includes/elementor/plugincy-cart-widget.php:434
+msgid "Width"
+msgstr ""
+
+#: includes/elementor/one-page-checkout.php:277
+#: includes/elementor/onepaquc-buy-button-widget.php:62
+#: includes/elementor/onepaquc-buy-button-widget.php:71
+#: includes/elementor/onepaquc-buy-button-widget.php:183
+#: includes/elementor/onepaquc-checkout-widget.php:50
+#: includes/elementor/onepaquc-checkout-widget.php:62
+msgid "Yes"
+msgstr ""
+
+#: admin/license-tab.php:370
+msgid "You have a valid license but the Pro plugin is not active."
+msgstr ""
+
+#: admin/license-tab.php:348
+msgid "Your license is active and the Pro plugin is running."
+msgstr ""
+
+#: admin/license-tab.php:360
+msgid "Your license is currently active."
+msgstr ""
+
+msgid "Contribute to Plugincy"
+msgstr ""
+
+msgid "Cart Text Changes"
+msgstr ""
+
+msgid "Your Cart"
+msgstr ""
+
+msgid "Subtotal "
+msgstr ""
+
+msgid "Place order"
+msgstr ""
+
+msgid "Billing details"
+msgstr ""
+
+msgid "Email address"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Country / Region"
+msgstr ""
+
+msgid "Street address"
+msgstr ""
+
+msgid "Town / City"
+msgstr ""
+
+msgid "District"
+msgstr ""
+
+msgid "Postcode / ZIP"
+msgstr ""
+
+msgid "Phone "
+msgstr ""
+
+msgid "Order notes"
+msgstr ""
+
+msgid "Product "
+msgstr ""
+
+msgid "Shipping"
+msgstr ""
+
+msgid "Additional information"
+msgstr ""
+
+msgid "Your order"
+msgstr ""
+
+msgid "Ship to a different address?"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+msgid "selected "
+msgstr ""
+
+msgid "You may also like"
+msgstr ""
+
+msgid "Total "
+msgstr ""
+
+msgid "Discount "
+msgstr ""
+
+msgid "Place Order Button"
+msgstr ""
+
+msgid "Woocommerce privacy policy text"
+msgstr ""
+
+msgid "Have a coupon?"
+msgstr ""
+
+msgid "If you have a coupon code, please apply it below."
+msgstr ""
+
+msgid "Complete your purchase using the form below."
+msgstr ""
+
+msgid "Save Changes"
+msgstr ""
+
+msgid "Tutorials"
+msgstr ""
+
+msgid ""
+"Learn how to use our plugin features with these step-by-step video tutorials."
+"\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Buy Now Button\n"
+msgstr ""
+
+msgid ""
+"Transform your WooCommerce store with instant purchase buttons that bypass "
+"the traditional cart process. Our plugin automatically adds buy now buttons "
+"on single product and archive pages, but you have complete control over "
+"placement and customization.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Basic Shortcode:\n"
+msgstr ""
+
+msgid ""
+"This shortcode will display a buy now button for the current product when "
+"used on product pages.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Buy Now Button Anywhere\n"
+msgstr ""
+
+msgid ""
+"You can use buy now button anywhere on your site with this shortcode.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Shortcode:\n"
+msgstr ""
+
+msgid ""
+"Tips:\n"
+msgstr ""
+
+msgid ""
+"Use our widget or block (Buy Now Button) for easier implementation.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"One Page Checkout\n"
+msgstr ""
+
+msgid ""
+"You can use one page checkout anywhere on your site with this shortcode.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Use our widget or block (One-page checkout) for easier implementation.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Floating Cart\n"
+msgstr ""
+
+msgid ""
+"A modern, stylish side-drawer cart that users can access from any page for "
+"improved convenience.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Floating Cart Benefits:\n"
+msgstr ""
+
+msgid ""
+"Reduced Abandonment: Customers can review their cart without losing their "
+"place on your site\n"
+msgstr ""
+
+msgid ""
+"Improved UX: No page reloads or redirects needed to manage cart contents\n"
+msgstr ""
+
+msgid ""
+"Mobile Friendly: Touch-optimized interface perfect for mobile shopping\n"
+msgstr ""
+
+msgid ""
+"Sales Boost: Easy access to cart encourages completion of purchases\n"
+msgstr ""
+
+msgid "Checkout Form Manage"
+msgstr ""
+
+msgid ""
+"Remove checkout fields\n"
+msgstr ""
+
+msgid "Select fields to remove"
+msgstr ""
+
+msgid "First Name"
+msgstr ""
+
+msgid "Last Name"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "State / District"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Zip Code"
+msgstr ""
+
+msgid ""
+"Address 1\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Address 2\n"
+"\n"
+msgstr ""
+
+msgid "Company"
+msgstr ""
+
+msgid "Notes"
+msgstr ""
+
+msgid ""
+"Hide Top Coupon\n"
+msgstr ""
+
+msgid ""
+"Hide Shipping Address\n"
+msgstr ""
+
+msgid ""
+"Hide Privacy Policy Text\n"
+msgstr ""
+
+msgid ""
+"Hide Payment Options\n"
+msgstr ""
+
+msgid ""
+"Hide Product Table\n"
+msgstr ""
+
+msgid "Heading Manage"
+msgstr ""
+
+msgid ""
+"Hide Billing details\n"
+msgstr ""
+
+msgid ""
+"Hide Additional Details\n"
+msgstr ""
+
+msgid ""
+"Hide Order Review Heading\n"
+msgstr ""
+
+msgid ""
+"Customize the checkout form fields and headings to enhance user experience."
+msgstr ""
+
+msgid ""
+"Customize the headings of the checkout form fields to enhance user "
+"experience."
+msgstr ""
+
+msgid "Checkout Form"
+msgstr ""
+
+msgid "Plugin License"
+msgstr ""
+
+msgid "Advanced Settings"
+msgstr ""
+
+msgid "Pro Features only"
+msgstr ""
+
+msgid "Text Manage"
+msgstr ""
+
+msgid "You can find 'Product' in the checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'First Name' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid "You can find 'Last Name' in the checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'Country' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid "You can find 'State / District' in the checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'City' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Zip Code' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Your Cart' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid "You can find 'Subtotal' in the checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'Place order' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Billing details' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Email address' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid "You can find 'First name' in the checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'Last name' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid "You can find 'Street address' in the checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'Country / Region' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid "You can find 'Town / City' in the checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'District' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Postcode / ZIP' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Phone' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Order notes' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Shipping' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Additional information' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Your order' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Ship to a different address?' in the checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'Select All' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'selected' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'You may also like' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Total' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Discount' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Place Order Button' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'Woocommerce privacy policy text' in the checkout form or "
+"drawer."
+msgstr ""
+
+msgid ""
+"You can find 'Have a coupon?' in the checkout form or drawer.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"You can find 'If you have a coupon code, please apply it below.' in the "
+"checkout form or drawer."
+msgstr ""
+
+msgid ""
+"You can find 'Complete your purchase using the form below.' in the checkout "
+"form or drawer."
+msgstr ""
+
+msgid "Add To Cart"
+msgstr ""
+
+msgid "WooCommerce Add To Cart"
+msgstr ""
+
+msgid ""
+"Easily modify the Add to Cart button text, style, and functionality for a "
+"more engaging shopping experience.\n"
+"\n"
+msgstr ""
+
+msgid " Button Behavior"
+msgstr ""
+
+msgid " Advanced"
+msgstr ""
+
+msgid "Customizable Add to Cart"
+msgstr ""
+
+msgid "Button Text"
+msgstr ""
+
+msgid "Variable Product Button Text"
+msgstr ""
+
+msgid "Read More Button Text"
+msgstr ""
+
+msgid "Grouped Product Button Text"
+msgstr ""
+
+msgid ""
+"Text Color\n"
+msgstr ""
+
+msgid ""
+"Button Color\n"
+msgstr ""
+
+msgid "Hover Background Color"
+msgstr ""
+
+msgid "Hover Text Color"
+msgstr ""
+
+msgid "Button Font Size"
+msgstr ""
+
+msgid "Button Icon"
+msgstr ""
+
+msgid "Button Width"
+msgstr ""
+
+msgid ""
+"\n"
+"Custom Style\n"
+msgstr ""
+
+msgid ""
+"\n"
+"Auto\n"
+msgstr ""
+
+msgid ""
+"\n"
+"No Icon\n"
+msgstr ""
+
+msgid ""
+"Add custom CSS for advanced button styling. Use the class ."
+"product_type_simple.add_to_cart_button to target the button."
+msgstr ""
+
+msgid ""
+"Enable or disable custom Add to Cart styling and functionality.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Customize the text displayed on the Add to Cart button for simple products.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Customize the text displayed on the Add to Cart button for variable products."
+"\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Customize the text displayed on the Read More button.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Customize the text displayed on the Add to Cart button for grouped products."
+msgstr ""
+
+msgid "Display Settings"
+msgstr ""
+
+msgid "Button Display "
+msgstr ""
+
+msgid ""
+"Default (WooCommerce Setting)\n"
+"\n"
+msgstr ""
+
+msgid "Always Show"
+msgstr ""
+
+msgid "Always Hide"
+msgstr ""
+
+msgid "Add To Cart Behavior"
+msgstr ""
+
+msgid "Enable AJAX Add to Cart"
+msgstr ""
+
+msgid "Default Quantity"
+msgstr ""
+
+msgid "Quantity Selector on Archives"
+msgstr ""
+
+msgid "Redirect After Add to Cart"
+msgstr ""
+
+msgid ""
+"\n"
+"No Redirect\n"
+msgstr ""
+
+msgid "Notification Style "
+msgstr ""
+
+msgid "Notifications "
+msgstr ""
+
+msgid "Success Message"
+msgstr ""
+
+msgid "Show View Cart Link"
+msgstr ""
+
+msgid "Show Checkout Link"
+msgstr ""
+
+msgid "Notification Duration"
+msgstr ""
+
+msgid "Control how Add to Cart buttons appear on product archive pages."
+msgstr ""
+
+msgid ""
+"Control how Add to Cart buttons behave on product archive pages.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Add products to cart without page reload using AJAX.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Set the default quantity when adding products to cart from archive pages."
+msgstr ""
+
+msgid ""
+"Display quantity selector on shop/archive pages before adding to cart.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Choose whether to redirect customers after adding products to cart.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Customize how notifications are displayed when products are added to cart.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Choose how to display notifications when products are added to cart.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Customize the success message shown after adding to cart. Use {product} as a "
+"placeholder for the product name.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Display a 'View Cart' link in the notification message.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Display a 'Checkout' link in the notification message.\n"
+"\n"
+msgstr ""
+
+msgid "How long to display the notification for (in milliseconds)."
+msgstr ""
+
+msgid "Mobile Settings"
+msgstr ""
+
+msgid "Advanced Options"
+msgstr ""
+
+msgid "Sticky Add to Cart on Mobile"
+msgstr ""
+
+msgid "Mobile Button Text"
+msgstr ""
+
+msgid "Mobile Button Size"
+msgstr ""
+
+msgid "Mobile Button Icon Only"
+msgstr ""
+
+msgid "Disable continue shopping button"
+msgstr ""
+
+msgid "Compatibility Settings"
+msgstr ""
+
+msgid "Force Button CSS"
+msgstr ""
+
+msgid ""
+"Keep the Add to Cart button visible at the bottom of the screen on mobile "
+"devices.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Set a different button text for mobile devices. Leave empty to use the "
+"default text.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Choose button size optimization for mobile devices.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Show only the icon (without text) on mobile devices to save space.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"WooCommerce shows a continue shopping button after a product is added to "
+"cart, with this option you can disable that link so user remain on checkout "
+"page.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Use !important CSS rules to override theme styling (use only if needed)."
+msgstr ""
+
+msgid ""
+"\n"
+"Same as Desktop\n"
+msgstr ""
+
+msgid "Features"
+msgstr ""
+
+msgid "Manage Features"
+msgstr ""
+
+msgid "Product Quantity Controller"
+msgstr ""
+
+msgid "At Least One Product in Cart"
+msgstr ""
+
+msgid "Link Product Name in Checkout Page"
+msgstr ""
+
+msgid "Remove Product Button"
+msgstr ""
+
+msgid "Disable Cart Page"
+msgstr ""
+
+msgid "Add Image Before Product"
+msgstr ""
+
+msgid "Force Login Before Checkout"
+msgstr ""
+
+msgid ""
+"Enhance your WooCommerce checkout experience with these powerful features."
+msgstr ""
+
+msgid ""
+"Enable 'Product Quantity Controller' to manage product quantities in the "
+"checkout form."
+msgstr ""
+
+msgid ""
+"Enable \"At Least One Product in Cart\" to add at least one product in the "
+"cart.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Enable \"Link Product Name in Checkout Page\" to make the product names "
+"clickable, redirecting customers to the product page.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Enable \"Disable Cart Page\" to remove the cart page from your WooCommerce "
+"store. This will redirect customers directly to the checkout page.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Enable 'Add Image Before Product' to display product images before their "
+"titles in the checkout form."
+msgstr ""
+
+msgid "Quick View"
+msgstr ""
+
+msgid "Enable Quick View"
+msgstr ""
+
+msgid "Button Position"
+msgstr ""
+
+msgid ""
+"\n"
+"After Add to Cart Button\n"
+msgstr ""
+
+msgid ""
+"\n"
+"Button\n"
+msgstr ""
+
+msgid ""
+"Add custom CSS for advanced button styling. Use the class .opqvfw-btn to "
+"target the button and .opqvfw-modal to target the modal."
+msgstr ""
+
+msgid "WooCommerce Quick View"
+msgstr ""
+
+msgid ""
+"Manage the quick view settings for your WooCommerce products.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Enable Custom Quick View in the general settings tab to access these options."
+"\n"
+msgstr ""
+
+msgid "Popup Manage"
+msgstr ""
+
+msgid "Quick View Content"
+msgstr ""
+
+msgid "Product Gallery"
+msgstr ""
+
+msgid "Product Rating"
+msgstr ""
+
+msgid "Short Description"
+msgstr ""
+
+msgid "Add to Cart Button"
+msgstr ""
+
+msgid "Product Meta"
+msgstr ""
+
+msgid "Social Sharing"
+msgstr ""
+
+msgid "View Details Link"
+msgstr ""
+
+msgid "Modal Size"
+msgstr ""
+
+msgid "Small"
+msgstr ""
+
+msgid "Loading Effect  "
+msgstr ""
+
+msgid "Fade"
+msgstr ""
+
+msgid "Simple Products"
+msgstr ""
+
+msgid "Product Types"
+msgstr ""
+
+msgid "Variable Products"
+msgstr ""
+
+msgid "Grouped Products"
+msgstr ""
+
+msgid "External/Affiliate Products"
+msgstr ""
+
+msgid "Archive Pages"
+msgstr ""
+
+msgid "Main Shop Page"
+msgstr ""
+
+msgid "Product Category Archives"
+msgstr ""
+
+msgid "Product Tag Archives"
+msgstr ""
+
+msgid "Product Brand Archives"
+msgstr ""
+
+msgid "Product Attribute Archives"
+msgstr ""
+
+msgid "Other Pages"
+msgstr ""
+
+msgid "Single Product Page"
+msgstr ""
+
+msgid "Search Results"
+msgstr ""
+
+msgid "Featured Products"
+msgstr ""
+
+msgid "On-Sale Products"
+msgstr ""
+
+msgid "Recent Products"
+msgstr ""
+
+msgid "Widgets & Shortcodes"
+msgstr ""
+
+msgid "Widgets"
+msgstr ""
+
+msgid "Shortcodes"
+msgstr ""
+
+msgid "Translations"
+msgstr ""
+
+msgid "\"View Full Details\" Button Text"
+msgstr ""
+
+msgid "Choose the size of the quick view modal popup"
+msgstr ""
+
+msgid "Choose the animation effect when opening the quick view modal."
+msgstr ""
+
+msgid ""
+"Change the text shown on the \"View Full Details\" button inside the Quick "
+"View popup."
+msgstr ""
+
+msgid "Mobile Optimization"
+msgstr ""
+
+msgid "Close on Add to Cart"
+msgstr ""
+
+msgid "Keyboard Navigation"
+msgstr ""
+
+msgid "Analytics Integration"
+msgstr ""
+
+msgid "Track Quick View Events"
+msgstr ""
+
+msgid "Event Category"
+msgstr ""
+
+msgid "Event Action"
+msgstr ""
+
+msgid "Load Scripts On"
+msgstr ""
+
+msgid "Theme Compatibility Mode"
+msgstr ""
+
+msgid "All Pages"
+msgstr ""
+
+msgid "Floating Cart Settings"
+msgstr ""
+
+msgid ""
+"Configure the appearance and behavior of your floating cart. Enable the "
+"floating cart to provide users with quick access to their cart from any page "
+"on your site.\n"
+"\n"
+msgstr ""
+
+msgid "Enable Sticky Cart"
+msgstr ""
+
+msgid "Cart Checkout Behavior"
+msgstr ""
+
+msgid ""
+"\n"
+"Direct Checkout\n"
+msgstr ""
+
+msgid "Position Settings"
+msgstr ""
+
+msgid "Top Position"
+msgstr ""
+
+msgid "Left Position"
+msgstr ""
+
+msgid "Button Style Settings"
+msgstr ""
+
+msgid "Hover Background"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "One Page Checkout in Single Product"
+msgstr ""
+
+msgid "Enable One Page Checkout"
+msgstr ""
+
+msgid "Enable for All Products"
+msgstr ""
+
+msgid "Form Position"
+msgstr ""
+
+msgid "Empty Cart on Page Load"
+msgstr ""
+
+msgid "Add to Cart on Page Load"
+msgstr ""
+
+msgid "Hide Add to Cart Button"
+msgstr ""
+
+msgid "Checkout Layout"
+msgstr ""
+
+msgid ""
+"\n"
+"Two Columns (Product & Checkout)\n"
+msgstr ""
+
+msgid "Multi-product One Page Checkout"
+msgstr ""
+
+msgid "WooCommerce Direct Checkout"
+msgstr ""
+
+msgid ""
+"Enable direct checkout to allow customers to bypass the cart and proceed "
+"directly to checkout, streamlining the purchasing process.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Checkout in Variable Product\n"
+msgstr ""
+
+msgid "Show Variation Selection in Archive pages"
+msgstr ""
+
+msgid "Variation Selection Layout"
+msgstr ""
+
+msgid "Show Variation Title"
+msgstr ""
+
+msgid "Hide Select Option Button"
+msgstr ""
+
+msgid "Enable for Guest Checkout"
+msgstr ""
+
+msgid "Enable Direct Checkout"
+msgstr ""
+
+msgid "Button Position on Archive Page"
+msgstr ""
+
+msgid "Button Position on Single Page"
+msgstr ""
+
+msgid ""
+"Error, duplicate 1: \n"
+"After Add to Cart Button\n"
+msgstr ""
+
+msgid ""
+"Error, duplicate 2: Error, duplicate 1: \n"
+"After Add to Cart Button\n"
+msgstr ""
+
+msgid "Upsells"
+msgstr ""
+
+msgid "Quick Checkout Behavior"
+msgstr ""
+
+msgid "Checkout Method"
+msgstr ""
+
+msgid "Clear Cart Before Adding"
+msgstr ""
+
+msgid "Show Confirmation Dialog"
+msgstr ""
+
+msgid ""
+"Add custom CSS for advanced button styling. Use the class .opqcfw-btn to "
+"target the button."
+msgstr ""
+
+msgid ""
+"Welcome to One Page Quick Checkout for WooCommerce\n"
+msgstr ""
+
+msgid ""
+"Thank you for installing One Page Quick Checkout for WooCommerce! Streamline "
+"your WooCommerce checkout process and boost your conversion rates with our "
+"easy-to-configure solution.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Fast Setup\n"
+msgstr ""
+
+msgid ""
+"Configure your checkout in minutes with our intuitive options.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Mobile Friendly\n"
+msgstr ""
+
+msgid ""
+"Responsive design works perfectly on all devices.\n"
+"\n"
+msgstr ""
+
+msgid ""
+"Payment Gateways\n"
+msgstr ""
+
+msgid ""
+"Supports all major payment processors.\n"
+"\n"
+msgstr ""
+
+msgid "View Demo"
+msgstr ""
+
+msgid ""
+"Upgrade to Pro\n"
+msgstr ""
+
+msgid "View Documentation"
+msgstr ""
+
+msgid "Get Support"
+msgstr ""
