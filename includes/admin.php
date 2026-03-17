@@ -278,6 +278,10 @@ function onepaquc_cart_dashboard()
             </div>
         </div>
         <script>
+            function getCheckboxByName(name, scope = document) {
+                return scope.querySelector(`input[type="checkbox"][name="${name}"]`);
+            }
+
             function toggleDisabledClass(isDisabled, allinputFields) {
                 if (!Array.isArray(allinputFields)) {
                     if (isDisabled) {
@@ -525,7 +529,7 @@ function onepaquc_cart_dashboard()
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                            const enableCheckout = document.querySelector('div#tab-2 input[name="onpage_checkout_enable"]');
+                            const enableCheckout = getCheckboxByName('onpage_checkout_enable', document.querySelector('div#tab-2'));
 
                             const allinputFields = Array.from(document.querySelectorAll('div#tab-2 table:nth-of-type(1) input')).filter(
                                 el => !(el.name === "onpage_checkout_enable")
@@ -693,7 +697,7 @@ function onepaquc_cart_dashboard()
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         // if the "Enable floating cart" checkbox is checked
-                        const enableCheckout = document.querySelector('div#tab-9 input[name="rmenu_enable_sticky_cart"]');
+                        const enableCheckout = getCheckboxByName('rmenu_enable_sticky_cart', document.querySelector('div#tab-9'));
 
                         const allinputFields = Array.from(document.querySelectorAll('div#tab-9 input,div#tab-9 select')).filter(
                             el => !(el.name === "rmenu_enable_sticky_cart")
@@ -970,7 +974,7 @@ function onepaquc_cart_dashboard()
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     const checkoutMethodSelect = document.getElementById('rmenu-checkout-method');
-                                    const stickyCartCheckbox = document.querySelector('input[name="rmenu_enable_sticky_cart"]');
+                                    const stickyCartCheckbox = getCheckboxByName('rmenu_enable_sticky_cart');
                                     const sideCartOption = checkoutMethodSelect.querySelector('option[value="side_cart"]');
 
                                     function updateSideCartOption() {
@@ -1230,7 +1234,7 @@ function onepaquc_cart_dashboard()
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const variationLayoutSelect = document.querySelector('select[name="rmenu_variation_layout"]');
-                                        const variationTitleSwitch = document.querySelector('input[name="rmenu_show_variation_title"]');
+                                        const variationTitleSwitch = getCheckboxByName('rmenu_show_variation_title');
 
                                         // Initial check
                                         setTimeout(() => {
@@ -1256,7 +1260,7 @@ function onepaquc_cart_dashboard()
                             <script>
                                 document.addEventListener('DOMContentLoaded', function() {
                                     // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                                    const enableCheckout = document.querySelector('div#tab-4 input[name="rmenu_variation_show_archive"]');
+                                    const enableCheckout = getCheckboxByName('rmenu_variation_show_archive', document.querySelector('div#tab-4'));
 
                                     const allinputFields = Array.from(document.querySelectorAll('div#tab-4 table.variable-product-table input, div#tab-4 table.variable-product-table select')).filter(
                                         el => !(el.name === "rmenu_variation_show_archive")
@@ -1542,7 +1546,7 @@ function onepaquc_cart_dashboard()
                         // Tab click handler for direct checkout settings tabs
                         const tabItems = document.querySelectorAll('#tab-4 .rmenu-settings-tab-item');
                         const tabContents = document.querySelectorAll('#tab-4 .tab-content');
-                        const enableDirectCheckout = document.querySelector('input[name="rmenu_add_direct_checkout_button"]');
+                        const enableDirectCheckout = getCheckboxByName('rmenu_add_direct_checkout_button');
                         const typeCheckboxes = document.querySelectorAll('input[name="rmenu_show_quick_checkout_by_types[]"]');
                         const highlightSection = document.getElementById('rmenu-direct-button-display-section');
                         const highlight_enableSection = document.getElementById('rmenu-direct-checkout-enable-field');
@@ -1645,7 +1649,7 @@ function onepaquc_cart_dashboard()
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                    const enableCheckout = document.querySelector('div#tab-4 input[name="rmenu_add_direct_checkout_button"]');
+                    const enableCheckout = getCheckboxByName('rmenu_add_direct_checkout_button', document.querySelector('div#tab-4'));
 
                     const allinputFields = Array.from(document.querySelectorAll('div#tab-4 input, div#tab-4 select')).filter(
                         el => !(el.name === "rmenu_add_direct_checkout_button")
@@ -2340,7 +2344,7 @@ function onepaquc_cart_dashboard()
                         // Tab click handler for Add To Cart settings tabs
                         const tabItems = document.querySelectorAll('#tab-7 .rmenu-settings-tab-item');
                         const tabContents = document.querySelectorAll('#tab-7 > .tab-content');
-                        const enableCustomQuickView = document.querySelector('input[name="rmenu_enable_quick_view"]');
+                        const enableCustomQuickView = getCheckboxByName('rmenu_enable_quick_view');
                         const highlight_quick_view_enable_Section = document.querySelector('#rmenu-quick-view-enable-field');
                         const highlight_popup_content_element_Section = document.querySelector('#rmenu-quick-view-content-elements');
                         const highlight_quick_view_display_Section = document.querySelector('#quick-display');
@@ -2517,7 +2521,7 @@ function onepaquc_cart_dashboard()
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                    const enableCheckout = document.querySelector('div#tab-7 input[name="rmenu_enable_quick_view"]');
+                    const enableCheckout = getCheckboxByName('rmenu_enable_quick_view', document.querySelector('div#tab-7'));
                     // if rmenu_quick_view_display_type is icon, disable the rmenu_quick_view_button_text
                     const quickViewDisplayType = document.querySelector('div#tab-7 select[name="rmenu_quick_view_display_type"]');
                     const quickViewButtonText = document.querySelector('div#tab-7 input[name="rmenu_quick_view_button_text"]');
@@ -3002,14 +3006,14 @@ function onepaquc_cart_dashboard()
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
-                            const checkbox = document.querySelector('input[name="rmenu_enable_ajax_add_to_cart"]');
+                            const checkbox = getCheckboxByName('rmenu_enable_ajax_add_to_cart');
                             const redirect_atc = document.querySelector('select[name="rmenu_redirect_after_add"]');
                             const settingsInputs = Array.from(document.querySelectorAll('#add_to_cart_behave input, #add_to_cart_behave select, #add_to_cart_notification input, #add_to_cart_notification select')).filter(
                                 el => !(el.name === "rmenu_enable_ajax_add_to_cart")
                             );
 
                             function updateSettings() {
-                                const enabled_checkbox = document.querySelector('input[name="rmenu_enable_ajax_add_to_cart"]').checked;
+                                const enabled_checkbox = getCheckboxByName('rmenu_enable_ajax_add_to_cart').checked;
 
                                 toggleDisabledClass(!enabled_checkbox, settingsInputs);
 
@@ -3165,7 +3169,7 @@ function onepaquc_cart_dashboard()
                                 const tabId = tab.getAttribute('data-tab');
                                 const highlight_add_to_cart_enable_Section = document.querySelector('#rmenu-enable-custom-add-to-cart');
                                 // If "Enable Custom Add to Cart" is not enabled, show a popup message and prevent tab switching
-                                const enableCustomAddToCart = document.querySelector('input[name="rmenu_enable_custom_add_to_cart"]');
+                                const enableCustomAddToCart = getCheckboxByName('rmenu_enable_custom_add_to_cart');
 
                                 if (tabId !== "general-settings" && enableCustomAddToCart && !enableCustomAddToCart.checked) {
                                     showDirectCheckoutWarning(
@@ -3212,7 +3216,7 @@ function onepaquc_cart_dashboard()
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                    const enableCheckout = document.querySelector('div#tab-8 input[name="rmenu_enable_custom_add_to_cart"]');
+                    const enableCheckout = getCheckboxByName('rmenu_enable_custom_add_to_cart', document.querySelector('div#tab-8'));
                     const btn_display = document.querySelector('select[name="rmenu_add_to_cart_catalog_display"]');
                     const btn_display_hidden = btn_display && btn_display.value === 'hide';
 
