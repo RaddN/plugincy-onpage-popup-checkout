@@ -1908,8 +1908,7 @@ msgstr ""
 
 msgid ""
 "Enable direct checkout to allow customers to bypass the cart and proceed "
-"directly to checkout, streamlining the purchasing process.\n"
-"\n"
+"directly to checkout, streamlining the purchasing process."
 msgstr ""
 
 msgid "Checkout in Variable Product"
