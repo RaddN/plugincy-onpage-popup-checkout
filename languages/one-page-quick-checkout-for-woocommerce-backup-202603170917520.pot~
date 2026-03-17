@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:25+0000\n"
+"POT-Creation-Date: 2026-03-17 08:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -1353,8 +1353,7 @@ msgid ""
 "Text Color\n"
 msgstr ""
 
-msgid ""
-"Button Color\n"
+msgid "Button Color"
 msgstr ""
 
 msgid "Hover Background Color"
@@ -1851,9 +1850,7 @@ msgstr ""
 msgid "Cart Checkout Behavior"
 msgstr ""
 
-msgid ""
-"\n"
-"Direct Checkout\n"
+msgid "Direct Checkout"
 msgstr ""
 
 msgid "Position Settings"
@@ -1911,12 +1908,10 @@ msgstr ""
 
 msgid ""
 "Enable direct checkout to allow customers to bypass the cart and proceed "
-"directly to checkout, streamlining the purchasing process.\n"
-"\n"
+"directly to checkout, streamlining the purchasing process."
 msgstr ""
 
-msgid ""
-"Checkout in Variable Product\n"
+msgid "Checkout in Variable Product"
 msgstr ""
 
 msgid "Show Variation Selection in Archive pages"
@@ -2213,4 +2208,126 @@ msgid "Set the left position of the floating cart."
 msgstr ""
 
 msgid "Configure the style of the floating cart button."
+msgstr ""
+
+msgid "Button"
+msgstr ""
+
+msgid ""
+"Icon Only\n"
+msgstr ""
+
+msgid "Text with Icon"
+msgstr ""
+
+msgid ""
+"After Product Image\n"
+msgstr ""
+
+msgid ""
+"After Add to Cart Button\n"
+msgstr ""
+
+msgid ""
+"Enable or disable the quick view functionality across your WooCommerce store."
+msgstr ""
+
+msgid "Customize the text displayed on the quick view button."
+msgstr ""
+
+msgid "Choose where to display the quick view button on product listings."
+msgstr ""
+
+msgid "Choose how the quick view trigger should appear to customers."
+msgstr ""
+
+msgid ""
+"When enabled, the quick view functionality will be optimized for mobile "
+"devices."
+msgstr ""
+
+msgid ""
+"When enabled, the quick view popup will automatically close after adding a "
+"product to cart."
+msgstr ""
+
+msgid ""
+"When enabled, customers can use keyboard arrows to navigate between products "
+"in quick view and ESC to close."
+msgstr ""
+
+msgid ""
+"Track when customers use quick view in Google Analytics or other analytics "
+"tools."
+msgstr ""
+
+msgid "The event category name used for analytics tracking."
+msgstr ""
+
+msgid "The event action name used for analytics tracking."
+msgstr ""
+
+msgid ""
+"Control where quick view scripts are loaded to improve compatibility and "
+"performance."
+msgstr ""
+
+msgid "Enable this if you experience display issues with your theme."
+msgstr ""
+
+msgid ""
+"Enable \"Product Quantity Controller\" to manage product quantities in the "
+"checkout form."
+msgstr ""
+
+msgid ""
+"Enable \"At Least One Product in Cart\" to add at least one product in the "
+"cart."
+msgstr ""
+
+msgid ""
+"Enable \"Link Product Name in Checkout Page\" to make the product names "
+"clickable, redirecting customers to the product page."
+msgstr ""
+
+msgid ""
+"Enable \"Disable Cart Page\" to remove the cart page from your WooCommerce "
+"store. This will redirect customers directly to the checkout page."
+msgstr ""
+
+msgid ""
+"Enable \"Add Image Before Product\" to display product images before their "
+"titles in the checkout form."
+msgstr ""
+
+msgid "Enable or disable custom Add to Cart styling and functionality."
+msgstr ""
+
+msgid "Plus Icon"
+msgstr ""
+
+msgid "Shopping Bag Icon"
+msgstr ""
+
+msgid "Basket Icon"
+msgstr ""
+
+msgid ""
+"Customize the text displayed on the Add to Cart button for simple products."
+msgstr ""
+
+msgid ""
+"Customize the text displayed on the Add to Cart button for variable products."
+msgstr ""
+
+msgid "Customize the text displayed on the Read More button."
+msgstr ""
+
+msgid "Single Product Pages"
+msgstr ""
+
+msgid "Product Pages"
+msgstr ""
+
+msgid "Others"
 msgstr ""

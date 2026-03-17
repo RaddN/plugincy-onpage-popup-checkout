@@ -467,12 +467,30 @@ function onepaquc_cart_dashboard()
 
                 <div class="plugincy_row">
                     <div class="plugincy_col-5 plugincy_card">
-                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<svg fill="#fff" height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve">
-                                    <path d="M8.424 2.56H7.57v.426a.855.855 0 0 1-1.708 0V2.56H4.156v.426a.855.855 0 0 1-1.708 0V2.56h-.85c0 4.266-.426 7.68-.426 7.68h7.68c-.002 0-.428-3.414-.428-7.68m-5.12.854c.236 0 .426-.19.426-.426v-.854c0-.708.572-1.28 1.28-1.28s1.28.572 1.28 1.28v.854a.425.425 0 1 0 .852 0v-.854C7.144.956 6.188 0 5.01 0S2.876.956 2.876 2.134v.854a.43.43 0 0 0 .428.426" />
-                                </svg>', 'One Page Checkout in Single Product', 'Configure one-page checkout for individual product pages. Enable one-page checkout for specific products from the WooCommerce product edit screen.'); ?>
+                        <?php 
+$onepaquc_helper->sec_head(
+    'h2', 
+    'plugincy_sec_head', 
+    '<svg fill="#fff" height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve">
+        <path d="M8.424 2.56H7.57v.426a.855.855 0 0 1-1.708 0V2.56H4.156v.426a.855.855 0 0 1-1.708 0V2.56h-.85c0 4.266-.426 7.68-.426 7.68h7.68c-.002 0-.428-3.414-.428-7.68m-5.12.854c.236 0 .426-.19.426-.426v-.854c0-.708.572-1.28 1.28-1.28s1.28.572 1.28 1.28v.854a.425.425 0 1 0 .852 0v-.854C7.144.956 6.188 0 5.01 0S2.876.956 2.876 2.134v.854a.43.43 0 0 0 .428.426" />
+    </svg>', 
+    __('One Page Checkout in Single Product', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Configure one-page checkout for individual product pages. Enable one-page checkout for specific products from the WooCommerce product edit screen.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                         <table class="form-table plugincy_table">
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable One Page Checkout', 'Enable one-page checkout for single product page.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Enable One Page Checkout', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Enable one-page checkout for single product page.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td>
                                     <?php
                                     $onepaquc_helper->switcher('onpage_checkout_enable');
@@ -480,14 +498,32 @@ function onepaquc_cart_dashboard()
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable for All Products', 'Enable one-page checkout for all products without individual selection.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Enable for All Products', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Enable one-page checkout for all products without individual selection.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_enable_all', 0); ?>
 
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Form Position', 'Set the priority of the one-page checkout form. The default value is 9, but not all values work with every theme. So, adjust it based on your theme.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Form Position', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Set the priority of the one-page checkout form. The default value is 9, but not all values work with every theme. So, adjust it based on your theme.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td>
                                     <?php
                                     // Get the saved value or default to 9 if not set or empty
@@ -500,7 +536,16 @@ function onepaquc_cart_dashboard()
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Empty Cart on Page Load', 'Clear existing cart items when the one-page checkout product page loads.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Empty Cart on Page Load', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Clear existing cart items when the one-page checkout product page loads.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_cart_empty', 0); ?>
                                 </td>
@@ -509,19 +554,46 @@ function onepaquc_cart_dashboard()
                             </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Add to Cart on Page Load', 'Automatically add the product to cart when the page loads.'); ?>
+                                <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Add to Cart on Page Load', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Automatically add the product to cart when the page loads.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_cart_add', 1, "If you turn it off one page checkout will not work properly."); ?>
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Hide Add to Cart Button', 'Hide the regular Add to Cart button on one-page checkout product pages.'); ?>
+                                <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Hide Add to Cart Button', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Hide the regular Add to Cart button on one-page checkout product pages.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_hide_cart_button', 0); ?>
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Checkout Layout', 'Select the layout for the one-page checkout form.'); ?>
+                                <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Checkout Layout', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Select the layout for the one-page checkout form.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td class="pro-only">
                                     <select disabled name="onpage_checkout_layout">
                                         <option value="two_column" <?php selected(get_option('onpage_checkout_layout', 'two_column'), 'two_column'); ?>>Two Columns (Product & Checkout)</option>
@@ -549,16 +621,43 @@ function onepaquc_cart_dashboard()
                         });
                     </script>
                     <div class="plugincy_col-5 plugincy_card">
-                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-forms"></span>', 'Multi-product One Page Checkout', 'Configure settings for the multi-product one-page checkout shortcode. Use: [plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"]'); ?>
+                        <?php 
+$onepaquc_helper->sec_head(
+    'h2', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-forms"></span>', 
+    __('Multi-product One Page Checkout', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Configure settings for the multi-product one-page checkout shortcode. Use: [plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"]', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                         <table class="form-table plugincy_table">
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Empty Cart on Page Load', 'Clear existing cart items when a multi-product one-page checkout page loads.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Empty Cart on Page Load', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Clear existing cart items when a multi-product one-page checkout page loads.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_empty'); ?>
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Add to Cart on Page Load', 'Automatically add the first product to cart when the page loads.'); ?>
+                                <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Add to Cart on Page Load', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Automatically add the first product to cart when the page loads.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_add'); ?>
                                 </td>
@@ -569,24 +668,56 @@ function onepaquc_cart_dashboard()
             </div>
             <div class="tab-content" id="tab-9">
                 <div class="mb-4">
-                    <?php $onepaquc_helper->sec_head('h2', '', '<span class="dashicons dashicons-cart"></span>', 'Floating Cart Settings', ''); ?>
-                    <p class="description">Configure the appearance and behavior of your floating cart. Enable the floating cart to provide users with quick access to their cart from any page on your site.</p>
-                </div>
+    <?php 
+    $onepaquc_helper->sec_head(
+        'h2', 
+        '', 
+        '<span class="dashicons dashicons-cart"></span>', 
+        __('Floating Cart Settings', 'one-page-quick-checkout-for-woocommerce'), 
+        ''
+    ); 
+    ?>
+    <p class="description">
+        <?php esc_html_e(
+            'Configure the appearance and behavior of your floating cart. Enable the floating cart to provide users with quick access to their cart from any page on your site.',
+            'one-page-quick-checkout-for-woocommerce'
+        ); ?>
+    </p>
+</div>
+
 
                 <div class="plugincy_row mb-4">
                     <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', 'General settings for the floating cart.'); ?>
+                        <?php $onepaquc_helper->sec_head( 'h2', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', __('General Settings', 'one-page-quick-checkout-for-woocommerce'), __('General settings for the floating cart.', 'one-page-quick-checkout-for-woocommerce') ); ?>
 
                         <table class="form-table plugincy_table">
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable Sticky Cart', 'Enable or disable the sticky cart functionality.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Enable Sticky Cart', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Enable or disable the sticky cart functionality.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td class="rmenu-settings-control">
                                     <?php $onepaquc_helper->switcher('rmenu_enable_sticky_cart', 0); ?>
                                 </td>
                             </tr>
 
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Cart Checkout Behavior', 'Choose the behavior of the cart checkout process.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Cart Checkout Behavior', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Choose the behavior of the cart checkout process.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td class="pro-only">
                                     <select name="rmenu_cart_checkout_behavior" class="rmenu-select">
                                         <option value="direct_checkout" <?php selected(get_option('rmenu_cart_checkout_behavior', 'direct_checkout'), 'direct_checkout'); ?>>Direct Checkout</option>
@@ -602,17 +733,43 @@ function onepaquc_cart_dashboard()
                     </div>
 
                     <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-move"></span>', 'Position Settings', 'Configure the position of the floating cart.'); ?>
+                        <?php 
+$onepaquc_helper->sec_head(
+    'h2', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-move"></span>', 
+    __('Position Settings', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Configure the position of the floating cart.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
 
                         <table class="form-table plugincy_table">
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Top Position', 'Set the top position of the floating cart.'); ?>
+                                <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Top Position', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Set the top position of the floating cart.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
                                 <td class="rmenu-settings-control">
                                     <input type="text" name="rmenu_cart_top_position" value="<?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>" class="regular-text" />
                                 </td>
                             </tr>
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Left Position', 'Set the left position of the floating cart.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    '',
+    '',
+    __( 'Left Position', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Set the left position of the floating cart.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                                 <td class="rmenu-settings-control">
                                     <input type="text" name="rmenu_cart_left_position" value="<?php echo esc_attr(get_option('rmenu_cart_left_position', '100%')); ?>" class="regular-text" />
                                 </td>
@@ -622,45 +779,77 @@ function onepaquc_cart_dashboard()
                 </div>
 
                 <div class="rmenu-settings-section plugincy_card">
-                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style Settings', 'Configure the style of the floating cart button.'); ?>
+                    <?php 
+$onepaquc_helper->sec_head(
+    'h2', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-admin-appearance"></span>', 
+    __('Button Style Settings', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Configure the style of the floating cart button.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
 
                     <div class="rmenu-settings-row rmenu-settings-row-columns">
                         <div class="rmenu-settings-column">
                             <div class="rmenu-settings-field plugincy_row items_center">
-                                <label class="rmenu-settings-label">Background Color</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>" class="rmenu-color-picker" />
-                                </div>
-                            </div>
+    <label class="rmenu-settings-label">
+        <?php esc_html_e( 'Background Color', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    </label>
+    <div class="rmenu-settings-control">
+        <input type="color" 
+               name="rmenu_cart_bg_color" 
+               value="<?php echo esc_attr( get_option( 'rmenu_cart_bg_color', '#96588a' ) ); ?>" 
+               class="rmenu-color-picker" />
+    </div>
+</div>
+
                         </div>
 
                         <div class="rmenu-settings-column">
                             <div class="rmenu-settings-field plugincy_row items_center">
-                                <label class="rmenu-settings-label">Text Color</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                </div>
-                            </div>
+    <label class="rmenu-settings-label">
+        <?php esc_html_e( 'Text Color', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    </label>
+    <div class="rmenu-settings-control">
+        <input type="color" 
+               name="rmenu_cart_text_color" 
+               value="<?php echo esc_attr( get_option( 'rmenu_cart_text_color', '#ffffff' ) ); ?>" 
+               class="rmenu-color-picker" />
+    </div>
+</div>
+
                         </div>
                     </div>
 
                     <div class="rmenu-settings-row rmenu-settings-row-columns">
                         <div class="rmenu-settings-column">
                             <div class="rmenu-settings-field plugincy_row items_center">
-                                <label class="rmenu-settings-label">Hover Background</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_hover_bg" value="<?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>" class="rmenu-color-picker" />
-                                </div>
-                            </div>
+    <label class="rmenu-settings-label">
+        <?php esc_html_e( 'Hover Background', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    </label>
+    <div class="rmenu-settings-control">
+        <input type="color" 
+               name="rmenu_cart_hover_bg" 
+               value="<?php echo esc_attr( get_option( 'rmenu_cart_hover_bg', '#f8f8f8' ) ); ?>" 
+               class="rmenu-color-picker" />
+    </div>
+</div>
+
                         </div>
 
                         <div class="rmenu-settings-column">
                             <div class="rmenu-settings-field plugincy_row items_center">
-                                <label class="rmenu-settings-label">Hover Text Color</label>
-                                <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_hover_text" value="<?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>" class="rmenu-color-picker" />
-                                </div>
-                            </div>
+    <label class="rmenu-settings-label">
+        <?php esc_html_e( 'Hover Text Color', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    </label>
+    <div class="rmenu-settings-control">
+        <input type="color" 
+               name="rmenu_cart_hover_text" 
+               value="<?php echo esc_attr( get_option( 'rmenu_cart_hover_text', '#000000' ) ); ?>" 
+               class="rmenu-color-picker" />
+    </div>
+</div>
                         </div>
                     </div>
 
@@ -3661,7 +3850,10 @@ $onepaquc_helper->sec_head(
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <h3><?php esc_html_e( 'Buy Now Button Anywhere', 'one-page-quick-checkout-for-woocommerce' ); ?></h3>
+                    <h3>
+    <?php esc_html_e('Buy Now Button Anywhere', 'one-page-quick-checkout-for-woocommerce'); ?>
+</h3>
+
 <p>
     <?php 
     echo wp_kses_post(
@@ -3702,14 +3894,15 @@ $onepaquc_helper->sec_head(
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <h3>One Page Checkout</h3>
+                    <h3><?php esc_html_e( 'One Page Checkout', 'one-page-quick-checkout-for-woocommerce' ); ?></h3>
                     <p>
                         You can use <strong>one page checkout</strong> anywhere on your <strong>site</strong> with this <strong>shortcode</strong>.
                     </p>
                     <div class="tutorial-shortcode">
-                        <h4>Shortcode:</h4>
-                        <code>[onepaquc_checkout product_id="123" variation_id="456" qty="2" clear_cart="yes" auto_add="yes"]</code>
-                    </div>
+    <h4><?php esc_html_e( 'Shortcode:', 'one-page-quick-checkout-for-woocommerce' ); ?></h4>
+    <code>[onepaquc_checkout product_id="123" variation_id="456" qty="2" clear_cart="yes" auto_add="yes"]</code>
+</div>
+
                     <div class="tutorial-tips">
                         <h4>Tips:</h4>
                         <p>Use our widget or block (One-page checkout) for easier implementation.</p>
@@ -3727,17 +3920,31 @@ $onepaquc_helper->sec_head(
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <h3>Floating Cart</h3>
+                    <h3><?php esc_html_e( 'Floating Cart', 'one-page-quick-checkout-for-woocommerce' ); ?></h3>
+
                     <p>
                         A <strong>modern</strong>, <strong>stylish</strong> <strong>side-drawer cart</strong> that users can access from <strong>any page</strong> for improved convenience.
                     </p>
                     <div class="tutorial-tips">
-                        <h4>Floating Cart Benefits:</h4>
+                        <h4><?php esc_html_e( 'Floating Cart Benefits:', 'one-page-quick-checkout-for-woocommerce' ); ?></h4>
+
                         <ul>
-                            <li><strong>Reduced Abandonment:</strong> Customers can review their cart without losing their place on your site</li>
-                            <li><strong>Improved UX:</strong> No page reloads or redirects needed to manage cart contents</li>
-                            <li><strong>Mobile Friendly:</strong> Touch-optimized interface perfect for mobile shopping</li>
-                            <li><strong>Sales Boost:</strong> Easy access to cart encourages completion of purchases</li>
+                             <li>
+        <strong><?php esc_html_e( 'Reduced Abandonment:', 'one-page-quick-checkout-for-woocommerce' ); ?></strong>
+        <?php esc_html_e( 'Customers can review their cart without losing their place on your site', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    </li>
+    <li>
+        <strong><?php esc_html_e( 'Improved UX:', 'one-page-quick-checkout-for-woocommerce' ); ?></strong>
+        <?php esc_html_e( 'No page reloads or redirects needed to manage cart contents', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    </li>
+    <li>
+        <strong><?php esc_html_e( 'Mobile Friendly:', 'one-page-quick-checkout-for-woocommerce' ); ?></strong>
+        <?php esc_html_e( 'Touch-optimized interface perfect for mobile shopping', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    </li>
+    <li>
+        <strong><?php esc_html_e( 'Sales Boost:', 'one-page-quick-checkout-for-woocommerce' ); ?></strong>
+        <?php esc_html_e( 'Easy access to cart encourages completion of purchases', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    </li>
                         </ul>
                     </div>
                 </div>
