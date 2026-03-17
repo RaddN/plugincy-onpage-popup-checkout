@@ -1086,6 +1086,7 @@ $onepaquc_helper->sec_head(
     </option>
 </select>
 
+
                                         </div>
                                     </td>
                                 </tr>
@@ -2298,34 +2299,75 @@ $onepaquc_helper->sec_head(
             </div>
             <div class="tab-content" id="tab-7">
                 <div class="plugincy_nav_card mb-4">
-                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-visibility"></span>', 'WooCommerce Quick View', '', 'Manage the quick view settings for your WooCommerce products.'); ?>
+                    <?php 
+$onepaquc_helper->sec_head(
+    'h2', 
+    'plugincy_sec_head2', 
+    '<span class="dashicons dashicons-visibility"></span>', 
+    __('WooCommerce Quick View', 'one-page-quick-checkout-for-woocommerce'), 
+    '', 
+    __('Manage the quick view settings for your WooCommerce products.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                     <div class="rmenu-settings-tabs">
-                        <ul class="rmenu-settings-tab-list">
-                            <li class="rmenu-settings-tab-item active" data-tab="quick-general-settings">
-                                <span class="dashicons dashicons-admin-generic"></span> General Settings
-                            </li>
-                            <li class="rmenu-settings-tab-item" data-tab="quick-popup">
-                                <span class="dashicons dashicons-admin-comments"></span> Popup Manage
-                            </li>
-                            <li class="rmenu-settings-tab-item" data-tab="quick-advanced">
-                                <span class="dashicons dashicons-admin-tools"></span> Advanced
-                            </li>
-                        </ul>
-                    </div>
+    <ul class="rmenu-settings-tab-list">
+        <li class="rmenu-settings-tab-item active" data-tab="quick-general-settings">
+            <span class="dashicons dashicons-admin-generic"></span>
+            <?php esc_html_e('General Settings', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </li>
+        <li class="rmenu-settings-tab-item" data-tab="quick-popup">
+            <span class="dashicons dashicons-admin-comments"></span>
+            <?php esc_html_e('Popup Manage', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </li>
+        <li class="rmenu-settings-tab-item" data-tab="quick-advanced">
+            <span class="dashicons dashicons-admin-tools"></span>
+            <?php esc_html_e('Advanced', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </li>
+    </ul>
+</div>
+
                 </div>
                 <div class="tab-content" id="quick-general-settings" style="padding: 0;">
                     <div class="plugincy_row">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', ''); ?>
+                           <?php 
+$onepaquc_helper->sec_head(
+    'h3', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-admin-generic"></span>', 
+    __('General Settings', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
                             <table class="form-table plugincy_table">
                                 <tr id="rmenu-quick-view-enable-field">
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Enable Quick View', 'Enable or disable the quick view functionality across your WooCommerce store.'); ?>
+                                    <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Enable Quick View', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Enable or disable the quick view functionality across your WooCommerce store.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_enable_quick_view', 0); ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Text', 'Customize the text displayed on the quick view button.'); ?>
+                                    <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Button Text', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Customize the text displayed on the quick view button.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                                     <td class="rmenu-settings-control">
                                         <?php
                                         $quick_view_button_text = get_option('rmenu_quick_view_button_text', '');
@@ -2337,7 +2379,16 @@ $onepaquc_helper->sec_head(
                                     </td>
                                 </tr>
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Position', 'Choose where to display the quick view button on product listings.'); ?>
+                                    <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Button Position', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Choose where to display the quick view button on product listings.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                                     <td class="rmenu-settings-control">
                                         <select name="rmenu_quick_view_button_position" class="rmenu-select">
                                             <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_image'); ?>>After Product Image</option>
@@ -2357,12 +2408,30 @@ $onepaquc_helper->sec_head(
                                     </td>
                                 </tr>
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Display Type', 'Choose how the quick view trigger should appear to customers.'); ?>
+                                   <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Display Type', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Choose how the quick view trigger should appear to customers.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                                     <td class="rmenu-settings-control">
                                         <select name="rmenu_quick_view_display_type" class="rmenu-select">
-                                            <option value="button" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'button'); ?>>Button</option>
-                                            <option value="icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'icon'); ?>>Icon Only</option>
-                                            <option value="text_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'text_icon'); ?>>Text with Icon</option>
+                                            <option value="button" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'button'); ?>>
+    <?php esc_html_e('Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
+<option value="icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'icon'); ?>>
+    <?php esc_html_e('Icon Only', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
+<option value="text_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'text_icon'); ?>>
+    <?php esc_html_e('Text with Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
                                             <!-- <option value="hover_icon" <?php //selected(get_option('rmenu_quick_view_display_type', 'icon'), 'hover_icon'); 
                                                                             ?>>Hover Icon</option> -->
                                         </select>
@@ -2372,17 +2441,42 @@ $onepaquc_helper->sec_head(
                         </div>
 
                         <div class="rmenu-settings-section quick-view-button-style plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
+                            <?php 
+$onepaquc_helper->sec_head(
+    'h3', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-admin-appearance"></span>', 
+    __('Button Style', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
 
                             <table class="form-table plugincy_table">
                                 <tbody class="plugincy_grid">
                                     <tr style="grid-column: span 2;">
-                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Button Style', ''); ?>
+                                        <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Button Style', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_quick_view_button_style" class="rmenu-select" id="rmenu-qv-style-select">
-                                                <option value="default" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
-                                                <option value="alt" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'alt'); ?>>Alternative Style</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                                <option value="default" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'default'); ?>>
+    <?php esc_html_e('Default WooCommerce Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+<option value="alt" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'alt'); ?>>
+    <?php esc_html_e('Alternative Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+<option value="custom" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'custom'); ?>>
+    <?php esc_html_e('Custom Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
                                             </select>
                                         </td>
                                     </tr>
@@ -2404,7 +2498,16 @@ $onepaquc_helper->sec_head(
                                     </tr>
 
                                     <tr>
-                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Text Color', ''); ?>
+                                        <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Text Color', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
                                         <td class="rmenu-settings-control">
                                             <input type="color" name="rmenu_quick_view_text_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
                                         </td>
@@ -2433,11 +2536,29 @@ $onepaquc_helper->sec_head(
                                         </td>
                                     </tr>
                                     <tr id="rmenu-qv-custom-css-row" style="<?php echo (get_option('rmenu_quick_view_button_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
-                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Custom CSS', ''); ?>
+                                        <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Custom CSS', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
                                         <td class="rmenu-settings-control">
-                                            <textarea name="rmenu_quick_view_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_css', '')); ?></textarea>
-                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.</p>
-                                        </td>
+    <textarea name="rmenu_quick_view_custom_css" 
+              class="rmenu-textarea-code" 
+              rows="6"><?php echo esc_textarea( get_option( 'rmenu_quick_view_custom_css', '' ) ); ?></textarea>
+    <p class="rmenu-field-description">
+        <?php 
+        echo wp_kses_post( 
+            __( 'Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.', 'one-page-quick-checkout-for-woocommerce' ) 
+        ); 
+        ?>
+    </p>
+</td>
+
                                     </tr>
                                 </tbody>
                             </table>
