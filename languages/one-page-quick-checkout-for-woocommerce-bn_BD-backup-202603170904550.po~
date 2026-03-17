@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-17 04:47+0000\n"
-"PO-Revision-Date: 2026-03-17 08:26+0000\n"
+"PO-Revision-Date: 2026-03-17 09:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -34,11 +34,6 @@ msgid ""
 "\n"
 "Custom Style\n"
 msgstr "কাস্টম স্টাইল"
-
-msgid ""
-"\n"
-"Direct Checkout\n"
-msgstr "সরাসরি চেকআউট"
 
 msgid ""
 "\n"
@@ -470,8 +465,9 @@ msgstr "চেকআউট ফর্ম পরিচালনা"
 msgid "Checkout Icon"
 msgstr "চেকআউট আইকন"
 
-msgid ""
-"Checkout in Variable Product\n"
+#| msgid ""
+#| "Checkout in Variable Product\n"
+msgid "Checkout in Variable Product"
 msgstr "পরিবর্তনশীল পণ্যের জন্য চেকআউট"
 
 msgid "Checkout Layout"
@@ -685,7 +681,7 @@ msgstr "বর্তমান লাইসেন্স কী"
 
 #: includes/elementor/one-page-checkout.php:425
 msgid "Custom CSS"
-msgstr "কাস্টম সিএসএস"
+msgstr "কাস্টম CSS"
 
 #: includes/trusted-badge.php:157
 msgid ""
@@ -801,6 +797,9 @@ msgstr "ডিফল্ট WooCommerce স্টাইল"
 #: includes/elementor/onepaquc-buy-button-widget.php:60
 msgid "Detect Product from Context"
 msgstr "প্রসঙ্গ থেকে পণ্য সনাক্ত করুন"
+
+msgid "Direct Checkout"
+msgstr "সরাসরি চেকআউট"
 
 msgid "Disable Cart Page"
 msgstr "কার্ট পৃষ্ঠা অক্ষম করুন"
@@ -1546,6 +1545,11 @@ msgstr "অর্ডার নোট"
 msgid "Other Pages"
 msgstr "অন্যান্য পৃষ্ঠাগুলি"
 
+#, fuzzy
+#| msgid "others"
+msgid "Others"
+msgstr "অন্যান্য "
+
 #: includes/quickview.php:741
 msgid "Out of stock"
 msgstr "স্টক শেষ"
@@ -1699,6 +1703,9 @@ msgstr "পণ্য তালিকা"
 
 msgid "Product Meta"
 msgstr "পণ্য মেটা"
+
+msgid "Product Pages"
+msgstr "পণ্যের পৃষ্ঠা"
 
 #: includes/elementor/plugincy-cart-widget.php:368
 msgid "Product Price"

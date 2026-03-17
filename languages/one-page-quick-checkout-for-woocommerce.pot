@@ -1353,8 +1353,7 @@ msgid ""
 "Text Color\n"
 msgstr ""
 
-msgid ""
-"Button Color\n"
+msgid "Button Color"
 msgstr ""
 
 msgid "Hover Background Color"
@@ -1851,9 +1850,7 @@ msgstr ""
 msgid "Cart Checkout Behavior"
 msgstr ""
 
-msgid ""
-"\n"
-"Direct Checkout\n"
+msgid "Direct Checkout"
 msgstr ""
 
 msgid "Position Settings"
@@ -1915,8 +1912,7 @@ msgid ""
 "\n"
 msgstr ""
 
-msgid ""
-"Checkout in Variable Product\n"
+msgid "Checkout in Variable Product"
 msgstr ""
 
 msgid "Show Variation Selection in Archive pages"
