@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-17 04:47+0000\n"
-"PO-Revision-Date: 2026-03-17 08:48+0000\n"
+"PO-Revision-Date: 2026-03-17 08:26+0000\n"
 "Last-Translator: \n"
-"Language-Team: বাংলা\n"
+"Language-Team: Bengali (Bangladesh)\n"
 "Language: bn_BD\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -685,7 +685,7 @@ msgstr "বর্তমান লাইসেন্স কী"
 
 #: includes/elementor/one-page-checkout.php:425
 msgid "Custom CSS"
-msgstr "কাস্টম CSS"
+msgstr "কাস্টম সিএসএস"
 
 #: includes/trusted-badge.php:157
 msgid ""
@@ -1546,11 +1546,6 @@ msgstr "অর্ডার নোট"
 msgid "Other Pages"
 msgstr "অন্যান্য পৃষ্ঠাগুলি"
 
-#, fuzzy
-#| msgid "others"
-msgid "Others"
-msgstr "অন্যান্য "
-
 #: includes/quickview.php:741
 msgid "Out of stock"
 msgstr "স্টক শেষ"
@@ -1704,9 +1699,6 @@ msgstr "পণ্য তালিকা"
 
 msgid "Product Meta"
 msgstr "পণ্য মেটা"
-
-msgid "Product Pages"
-msgstr "পণ্যের পৃষ্ঠা"
 
 #: includes/elementor/plugincy-cart-widget.php:368
 msgid "Product Price"
@@ -1967,7 +1959,7 @@ msgid "Single Product Page"
 msgstr "একক পণ্য পাতা"
 
 msgid "Single Product Pages"
-msgstr "একক পণ্য পৃষ্ঠা"
+msgstr ""
 
 #: includes/elementor/plugincy-cart-widget.php:505
 msgid "Size"
