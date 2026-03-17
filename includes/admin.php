@@ -2290,7 +2290,16 @@ $onepaquc_helper->sec_head(
                 <?php onepaquc_trust_badges_settings_content(); ?>
                 <table style="padding-top: 1rem;">
                     <tr valign="top" style="display: flex; gap: 51px;">
-                        <?php $onepaquc_helper->sec_head('th', '', '', 'Contribute to Plugincy', 'We collect non-sensitive technical details from your website, like the PHP version and features usage, to help us troubleshoot issues faster, make informed development decisions, and build features that truly benefit you. <a href="https://plugincy.com/usage-tracking/" target="_blank" style="color:#fff;">Learn more…</a>'); ?>
+                        <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    '', 
+    '', 
+    __('Contribute to Plugincy', 'one-page-quick-checkout-for-woocommerce'), 
+    __('We collect non-sensitive technical details from your website, like the PHP version and features usage, to help us troubleshoot issues faster, make informed development decisions, and build features that truly benefit you. <a href="https://plugincy.com/usage-tracking/" target="_blank" style="color:#fff;">Learn more…</a>', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                         <td>
                             <?php $onepaquc_helper->switcher('rmenu_allow_analytics', 1); ?>
                         </td>

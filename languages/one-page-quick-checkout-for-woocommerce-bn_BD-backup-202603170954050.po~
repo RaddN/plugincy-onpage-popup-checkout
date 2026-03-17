@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-17 04:47+0000\n"
-"PO-Revision-Date: 2026-03-17 09:05+0000\n"
+"PO-Revision-Date: 2026-03-17 09:53+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -274,7 +274,7 @@ msgstr "পুরস্কার"
 #: includes/elementor/plugincy-cart-widget.php:207
 #: includes/elementor/plugincy-cart-widget.php:654
 msgid "Background Color"
-msgstr "পটভূমির রঙ"
+msgstr "ব্যাকগ্রউন্ডের রঙ"
 
 #: includes/trusted-badge.php:72
 msgid "Badge Position"
@@ -594,6 +594,13 @@ msgstr "সামঞ্জস্যতা সেটিংস"
 
 msgid "Complete your purchase using the form below."
 msgstr "নিচের ফর্মটি ব্যবহার করে আপনার কেনাকাটা সম্পন্ন করুন।"
+
+msgid ""
+"Configure one-page checkout for individual product pages. Enable one-page "
+"checkout for specific products from the WooCommerce product edit screen."
+msgstr ""
+"একক পণ্যের পৃষ্ঠার জন্য এক-পৃষ্ঠার চেকআউট কনফিগার করুন এবং WooCommerce পণ্য "
+"সম্পাদনা স্ক্রিন থেকে নির্দিষ্ট পণ্যের জন্য এক-পৃষ্ঠার চেকআউট সক্রিয় করুন।"
 
 msgid ""
 "Configure settings for the multi-product one-page checkout shortcode. Use:\n"
@@ -961,9 +968,14 @@ msgstr ""
 msgid "Enable Direct Checkout"
 msgstr "সরাসরি চেকআউট সক্ষম করুন"
 
+#, fuzzy
+#| msgid ""
+#| "Enable direct checkout to allow customers to bypass the cart and proceed "
+#| "directly to checkout, streamlining the purchasing process."
 msgid ""
 "Enable direct checkout to allow customers to bypass the cart and proceed "
-"directly to checkout, streamlining the purchasing process."
+"directly to checkout, streamlining the purchasing process.\n"
+"\n"
 msgstr ""
 "কার্ট এড়িয়ে গ্রাহকদের সরাসরি চেকআউটে যাওয়ার অনুমতি দিতে সরাসরি চেকআউট "
 "সক্ষম করুন, যা ক্রয় প্রক্রিয়াটিকে সুগম করে।"
@@ -2179,6 +2191,13 @@ msgstr "বিস্তারিত দেখুন লিঙ্ক"
 
 msgid "View Documentation"
 msgstr "ডকুমেন্টেশন দেখুন"
+
+msgid ""
+"We collect non-sensitive technical details from your website, like the PHP "
+"version and features usage, to help us troubleshoot issues faster, make "
+"informed development decisions, and build features that truly benefit you. "
+"Learn more..."
+msgstr ""
 
 #: includes/trusted-badge.php:50
 msgid "Website"
