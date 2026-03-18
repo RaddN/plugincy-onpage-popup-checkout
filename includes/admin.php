@@ -3583,20 +3583,35 @@ $onepaquc_helper->sec_head(
             </script>
             <div class="tab-content" id="tab-8">
                 <div class="plugincy_nav_card mb-4">
-                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-cart"></span>', 'WooCommerce Add To Cart', '', 'Easily modify the Add to Cart button text, style, and functionality for a more engaging shopping experience.'); ?>
+                    <?php 
+$onepaquc_helper->sec_head(
+    'h2',
+    'plugincy_sec_head2',
+    '<span class="dashicons dashicons-cart"></span>',
+    __( 'WooCommerce Add To Cart', 'one-page-quick-checkout-for-woocommerce' ),
+    '',
+    __( 'Easily modify the Add to Cart button text, style, and functionality for a more engaging shopping experience.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
                     <div class="rmenu-settings-tabs">
-                        <ul class="rmenu-settings-tab-list">
-                            <li class="rmenu-settings-tab-item active" data-tab="general-settings">
-                                <span class="dashicons dashicons-admin-generic"></span> General Settings
-                            </li>
-                            <li class="rmenu-settings-tab-item" data-tab="button-behavior">
-                                <span class="dashicons dashicons-controls-play"></span> Button Behavior
-                            </li>
-                            <li class="rmenu-settings-tab-item" data-tab="advanced">
-                                <span class="dashicons dashicons-admin-tools"></span> Advanced
-                            </li>
-                        </ul>
-                    </div>
+    <ul class="rmenu-settings-tab-list">
+        <li class="rmenu-settings-tab-item active" data-tab="general-settings">
+            <span class="dashicons dashicons-admin-generic"></span> 
+            <?php esc_html_e( 'General Settings', 'one-page-quick-checkout-for-woocommerce' ); ?>
+        </li>
+        <li class="rmenu-settings-tab-item" data-tab="button-behavior">
+            <span class="dashicons dashicons-controls-play"></span> 
+           <?php esc_html_e( 'Button Behavior', 'one-page-quick-checkout-for-woocommerce' ); ?>
+
+        </li>
+        <li class="rmenu-settings-tab-item" data-tab="advanced">
+            <span class="dashicons dashicons-admin-tools"></span> 
+            <?php esc_html_e( 'Advanced', 'one-page-quick-checkout-for-woocommerce' ); ?>
+        </li>
+    </ul>
+</div>
+
                 </div>
 
                 <div class="tab-content" id="general-settings" style="padding: 0;">
