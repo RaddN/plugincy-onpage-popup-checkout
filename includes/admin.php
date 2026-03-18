@@ -2182,39 +2182,92 @@ $onepaquc_helper->sec_head(
                 });
             </script>
             <div class="tab-content plugincy_card" id="tab-5" style="margin-top: 20px;">
-                <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-star-filled"></span>', 'Manage Features', 'Enhance your WooCommerce checkout experience with these powerful features.'); ?>
+               <?php 
+$onepaquc_helper->sec_head(
+    'h2', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-star-filled"></span>', 
+    __('Manage Features', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Enhance your WooCommerce checkout experience with these powerful features.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                 <table class="form-table plugincy_table">
                     <tbody style="display: grid; grid-template-columns: repeat(auto-fill, minmax(410px, 1fr));">
                         <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Product Quantity Controller', 'Enable "Product Quantity Controller" to manage product quantities in the checkout form.'); ?>
-                            <td>
-                                <?php $onepaquc_helper->switcher('rmenu_quantity_control', 1); ?>
-                            </td>
-                        </tr>
-                        <tr valign="top" class="pro-only top-50">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Remove Product Button', 'Enable "Remove Product Button" to allow customers to remove products from the checkout form.'); ?>
-                            <td>
-                                <?php $onepaquc_helper->switcher('rmenu_remove_product', 0); ?>
-                            </td>
-                        </tr>
-                        <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Add Image Before Product', 'Enable "Add Image Before Product" to display product images before their titles in the checkout form.'); ?>
-                            <td>
-                                <?php $onepaquc_helper->switcher('rmenu_add_img_before_product', 0); ?>
-                            </td>
-                        </tr>
-                        <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'At Least One Product in Cart', 'Enable "At Least One Product in Cart" to add at least one product in the cart.'); ?>
-                            <td>
-                                <?php $onepaquc_helper->switcher('rmenu_at_one_product_cart', 0); ?>
-                            </td>
-                        </tr>
-                        <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Disable Cart Page', 'Enable "Disable Cart Page" to remove the cart page from your WooCommerce store. This will redirect customers directly to the checkout page.'); ?>
-                            <td>
-                                <?php $onepaquc_helper->switcher('rmenu_disable_cart_page', 0); ?>
-                            </td>
-                        </tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            '', 
+            '', 
+            __('Product Quantity Controller', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Enable "Product Quantity Controller" to manage product quantities in the checkout form.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td>
+            <?php $onepaquc_helper->switcher('rmenu_quantity_control', 1); ?>
+        </td>
+    </tr>
+
+    <tr valign="top" class="pro-only top-50">
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            '', 
+            '', 
+            __('Remove Product Button', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Enable "Remove Product Button" to allow customers to remove products from the checkout form.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td>
+            <?php $onepaquc_helper->switcher('rmenu_remove_product', 0); ?>
+        </td>
+    </tr>
+
+    <tr valign="top">
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            '', 
+            '', 
+            __('Add Image Before Product', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Enable "Add Image Before Product" to display product images before their titles in the checkout form.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td>
+            <?php $onepaquc_helper->switcher('rmenu_add_img_before_product', 0); ?>
+        </td>
+    </tr>
+
+    <tr valign="top">
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            '', 
+            '', 
+            __('At Least One Product in Cart', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Enable "At Least One Product in Cart" to add at least one product in the cart.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td>
+            <?php $onepaquc_helper->switcher('rmenu_at_one_product_cart', 0); ?>
+        </td>
+    </tr>
+
+    <tr valign="top">
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            '', 
+            '', 
+            __('Disable Cart Page', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Enable "Disable Cart Page" to remove the cart page from your WooCommerce store. This will redirect customers directly to the checkout page.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td>
+            <?php $onepaquc_helper->switcher('rmenu_disable_cart_page', 0); ?>
+        </td>
+    </tr>
                         <!-- <tr valign="top" class="pro-only top-50">
                         <th scope="row">Express Checkout Options</th>
                         <td>
@@ -2258,17 +2311,35 @@ $onepaquc_helper->sec_head(
                         </td>
                     </tr> -->
                         <tr valign="top" class="pro-only top-50">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Force Login Before Checkout', 'Enable "Force Login Before Checkout" to require customers to log in before they can access the checkout page.'); ?>
-                            <td>
-                                <?php $onepaquc_helper->switcher('rmenu_force_login', 0); ?>
-                            </td>
-                        </tr>
-                        <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Link Product Name in Checkout Page', 'Enable "Link Product Name in Checkout Page" to make the product names clickable, redirecting customers to the product page.'); ?>
-                            <td>
-                                <?php $onepaquc_helper->switcher('rmenu_link_product', 1); ?>
-                            </td>
-                        </tr>
+    <?php 
+    $onepaquc_helper->sec_head(
+        'th', 
+        '', 
+        '', 
+        __('Force Login Before Checkout', 'one-page-quick-checkout-for-woocommerce'), 
+        __('Enable "Force Login Before Checkout" to require customers to log in before they can access the checkout page.', 'one-page-quick-checkout-for-woocommerce')
+    ); 
+    ?>
+    <td>
+        <?php $onepaquc_helper->switcher('rmenu_force_login', 0); ?>
+    </td>
+</tr>
+
+<tr valign="top">
+    <?php 
+    $onepaquc_helper->sec_head(
+        'th', 
+        '', 
+        '', 
+        __('Link Product Name in Checkout Page', 'one-page-quick-checkout-for-woocommerce'), 
+        __('Enable "Link Product Name in Checkout Page" to make the product names clickable, redirecting customers to the product page.', 'one-page-quick-checkout-for-woocommerce')
+    ); 
+    ?>
+    <td>
+        <?php $onepaquc_helper->switcher('rmenu_link_product', 1); ?>
+    </td>
+</tr>
+
                         <!-- <tr valign="top" class="pro-only top-50">
                         <th scope="row">Enable Captcha on Checkout Page</th>
                         <td>

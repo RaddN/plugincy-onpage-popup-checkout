@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-17 04:47+0000\n"
-"PO-Revision-Date: 2026-03-17 09:18+0000\n"
+"PO-Revision-Date: 2026-03-18 04:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.3; wp-6.9; php-8.2.29\n"
+"X-Loco-Version: 2.8.3; wp-6.9.4; php-8.2.29\n"
 "X-Domain: one-page-quick-checkout-for-woocommerce"
 
 msgid ""
@@ -274,7 +274,7 @@ msgstr "পুরস্কার"
 #: includes/elementor/plugincy-cart-widget.php:207
 #: includes/elementor/plugincy-cart-widget.php:654
 msgid "Background Color"
-msgstr "পটভূমির রঙ"
+msgstr "ব্যাকগ্রউন্ডের রঙ"
 
 #: includes/trusted-badge.php:72
 msgid "Badge Position"
@@ -638,6 +638,9 @@ msgstr ""
 #: admin/license-tab.php:446
 msgid "Contact Support"
 msgstr "সহায়তার জন্য যোগাযোগ করুন"
+
+msgid "Content Elements"
+msgstr "বিষয়বস্তুর উপাদানসমূহ"
 
 msgid "Contribute to Plugincy"
 msgstr "Plugincy-তে অবদান রাখুন"
@@ -2191,6 +2194,17 @@ msgstr "বিস্তারিত দেখুন লিঙ্ক"
 
 msgid "View Documentation"
 msgstr "ডকুমেন্টেশন দেখুন"
+
+msgid ""
+"We collect non-sensitive technical details from your website, like the PHP "
+"version and features usage, to help us troubleshoot issues faster, make "
+"informed development decisions, and build features that truly benefit you. "
+"Learn more..."
+msgstr ""
+"আমরা আপনার ওয়েবসাইট থেকে অ-সংবেদনশীল প্রযুক্তিগত তথ্য সংগ্রহ করি, যেমন PHP "
+"সংস্করণ এবং ফিচার ব্যবহারের তথ্য, যাতে আমরা দ্রুত সমস্যার সমাধান করতে পারি, "
+"উন্নয়ন সংক্রান্ত সিদ্ধান্তগুলো সচেতনভাবে নিতে পারি এবং এমন ফিচার তৈরি করতে "
+"পারি যা সত্যিই আপনার জন্য উপকারী। আরও জানুন..."
 
 #: includes/trusted-badge.php:50
 msgid "Website"
