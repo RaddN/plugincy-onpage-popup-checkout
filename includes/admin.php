@@ -2400,7 +2400,10 @@ $onepaquc_helper->sec_head(
 
                                     <td class="rmenu-settings-control">
                                         <select name="rmenu_quick_view_button_position" class="rmenu-select">
-                                            <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_image'); ?>>After Product Image</option>
+                                           <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_image'); ?>>
+    <?php esc_html_e('After Product Image', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
                                             <!-- <option disabled value="before_title" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'before_title'); 
                                                                                         ?>>Before Product Title (Pro Features)</option>
                                         <option disabled value="after_title" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_title'); 
@@ -2411,8 +2414,16 @@ $onepaquc_helper->sec_head(
                                                                                 ?>>After Product Price (Pro Features)</option>
                                         <option disabled value="before_add_to_cart" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'before_add_to_cart'); 
                                                                                     ?>>Before Add to Cart Button (Pro Features)</option> -->
-                                            <option value="after_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
-                                            <option value="image_overlay" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'image_overlay'); ?>>Overlay on Product Image</option>
+                                            <option value="after_add_to_cart" 
+    <?php selected( get_option( 'rmenu_quick_view_button_position', 'image_overlay' ), 'after_add_to_cart' ); ?>>
+    <?php esc_html_e( 'After Add to Cart Button', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</option>
+
+<option value="image_overlay" 
+    <?php selected( get_option( 'rmenu_quick_view_button_position', 'image_overlay' ), 'image_overlay' ); ?>>
+    <?php esc_html_e( 'Overlay on Product Image', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</option>
+
                                         </select>
                                     </td>
                                 </tr>
