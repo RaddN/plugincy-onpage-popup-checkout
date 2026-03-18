@@ -2448,6 +2448,7 @@ $onepaquc_helper->sec_head(
     <?php esc_html_e('Icon Only', 'one-page-quick-checkout-for-woocommerce'); ?>
 </option>
 
+
 <option value="text_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'text_icon'); ?>>
     <?php esc_html_e('Text with Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
 </option>
@@ -2572,10 +2573,14 @@ $onepaquc_helper->sec_head(
               rows="6"><?php echo esc_textarea( get_option( 'rmenu_quick_view_custom_css', '' ) ); ?></textarea>
     <p class="rmenu-field-description">
         <?php 
-        echo wp_kses_post( 
-            __( 'Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.', 'one-page-quick-checkout-for-woocommerce' ) 
-        ); 
-        ?>
+echo wp_kses_post( 
+    __( 
+        'Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.', 
+        'one-page-quick-checkout-for-woocommerce' 
+    ) 
+); 
+?>
+
     </p>
 </td>
 
@@ -2627,49 +2632,63 @@ $onepaquc_helper->sec_head(
                 <div class="tab-content" id="quick-popup" style="padding: 0;">
                     <div class="plugincy_row mb-4">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-visibility"></span>', 'Quick View Content', ''); ?>
+                            <?php 
+$onepaquc_helper->sec_head(
+    'h3',
+    'plugincy_sec_head',
+    '<span class="dashicons dashicons-visibility"></span>',
+    __( 'Quick View Content', 'one-page-quick-checkout-for-woocommerce' ),
+    ''
+); 
+?>
+
                             <div class="rmenu-settings-row" id="rmenu-quick-view-content-elements">
                                 <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Content Elements</label>
+                                    <label class="rmenu-settings-label">
+    <?php esc_html_e( 'Content Elements', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</label>
+
                                     <?php $content_elements_option = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']); ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="image" <?php checked(in_array('image', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Image</span>
-                                            </label>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="image" <?php checked( in_array( 'image', $content_elements_option ) ); ?> />
+        <span class="rmenu-checkbox-label"><?php esc_html_e( 'Product Image', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+    </label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="gallery" <?php checked(in_array('gallery', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Gallery</span>
-                                            </label>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="gallery" <?php checked( in_array( 'gallery', $content_elements_option ) ); ?> />
+        <span class="rmenu-checkbox-label"><?php esc_html_e( 'Product Gallery', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+    </label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="title" <?php checked(in_array('title', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Title</span>
-                                            </label>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="title" <?php checked( in_array( 'title', $content_elements_option ) ); ?> />
+        <span class="rmenu-checkbox-label"><?php esc_html_e( 'Product Title', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+    </label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="rating" <?php checked(in_array('rating', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Rating</span>
-                                            </label>
-                                        </div>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="rating" <?php checked( in_array( 'rating', $content_elements_option ) ); ?> />
+        <span class="rmenu-checkbox-label"><?php esc_html_e( 'Product Rating', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+    </label>
+</div>
+
 
                                         <div class="rmenu-checkbox-column">
                                             <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="price" <?php checked(in_array('price', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Price</span>
-                                            </label>
+    <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="price" <?php checked( in_array( 'price', $content_elements_option ) ); ?> />
+    <span class="rmenu-checkbox-label"><?php esc_html_e( 'Product Price', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+</label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="excerpt" <?php checked(in_array('excerpt', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Short Description</span>
-                                            </label>
+<label class="rmenu-checkbox-container">
+    <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="excerpt" <?php checked( in_array( 'excerpt', $content_elements_option ) ); ?> />
+    <span class="rmenu-checkbox-label"><?php esc_html_e( 'Short Description', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+</label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="add_to_cart" <?php checked(in_array('add_to_cart', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Add to Cart Button</span>
-                                            </label>
+<label class="rmenu-checkbox-container">
+    <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="add_to_cart" <?php checked( in_array( 'add_to_cart', $content_elements_option ) ); ?> />
+    <span class="rmenu-checkbox-label"><?php esc_html_e( 'Add to Cart Button', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+</label>
+
 
                                             <!-- <label class="rmenu-checkbox-container">
                                         <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="quantity" <?php //checked(in_array('quantity', $content_elements_option)); 
@@ -2680,19 +2699,20 @@ $onepaquc_helper->sec_head(
 
                                         <div class="rmenu-checkbox-column">
                                             <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="meta" <?php checked(in_array('meta', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Meta</span>
-                                            </label>
+    <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="meta" <?php checked( in_array( 'meta', $content_elements_option ) ); ?> />
+    <span class="rmenu-checkbox-label"><?php esc_html_e( 'Product Meta', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+</label>
 
-                                            <label class="rmenu-checkbox-container pro-only">
-                                                <input disabled type="checkbox" name="rmenu_quick_view_content_elements[]" value="sharing" <?php checked(in_array('sharing', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Social Sharing</span>
-                                            </label>
+<label class="rmenu-checkbox-container pro-only">
+    <input disabled type="checkbox" name="rmenu_quick_view_content_elements[]" value="sharing" <?php checked( in_array( 'sharing', $content_elements_option ) ); ?> />
+    <span class="rmenu-checkbox-label"><?php esc_html_e( 'Social Sharing', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+</label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" id="view_details_checkbox" name="rmenu_quick_view_content_elements[]" value="view_details" <?php checked(in_array('view_details', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">View Details Link</span>
-                                            </label>
+<label class="rmenu-checkbox-container">
+    <input type="checkbox" id="view_details_checkbox" name="rmenu_quick_view_content_elements[]" value="view_details" <?php checked( in_array( 'view_details', $content_elements_option ) ); ?> />
+    <span class="rmenu-checkbox-label"><?php esc_html_e( 'View Details Link', 'one-page-quick-checkout-for-woocommerce' ); ?></span>
+</label>
+
 
                                             <!-- <label class="rmenu-checkbox-container pro-only">
                                         <input disabled type="checkbox" name="rmenu_quick_view_content_elements[]" value="attributes" <?php //checked(in_array('attributes', $content_elements_option)); 
@@ -2707,17 +2727,37 @@ $onepaquc_helper->sec_head(
                             <table class="form-table plugincy_table">
                                 <tbody class="plugincy_grid">
                                     <tr>
-                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Modal Size', 'Choose the size of the quick view modal popup.'); ?>
-                                        <td class="rmenu-settings-control pro-only">
-                                            <select disabled name="rmenu_quick_view_modal_size" class="rmenu-select">
-                                                <option value="small" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'small'); ?>>Small</option>
-                                                <option value="medium" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'medium'); ?>>Medium</option>
-                                                <option value="large" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'large'); ?>>Large</option>
-                                                <option value="full" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'full'); ?>>Full Width</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'custom'); ?>>Custom</option>
-                                            </select>
-                                        </td>
-                                    </tr>
+    <?php 
+$onepaquc_helper->sec_head(
+    'th',
+    'rmenu-settings-label',
+    '',
+    __( 'Modal Size', 'one-page-quick-checkout-for-woocommerce' ),
+    __( 'Choose the size of the quick view modal popup.', 'one-page-quick-checkout-for-woocommerce' )
+); 
+?>
+
+    <td class="rmenu-settings-control pro-only">
+        <select disabled name="rmenu_quick_view_modal_size" class="rmenu-select">
+            <option value="small" <?php selected( get_option( 'rmenu_quick_view_modal_size', 'medium' ), 'small' ); ?>>
+                <?php esc_html_e( 'Small', 'one-page-quick-checkout-for-woocommerce' ); ?>
+            </option>
+            <option value="medium" <?php selected( get_option( 'rmenu_quick_view_modal_size', 'medium' ), 'medium' ); ?>>
+                <?php esc_html_e( 'Medium', 'one-page-quick-checkout-for-woocommerce' ); ?>
+            </option>
+            <option value="large" <?php selected( get_option( 'rmenu_quick_view_modal_size', 'medium' ), 'large' ); ?>>
+                <?php esc_html_e( 'Large', 'one-page-quick-checkout-for-woocommerce' ); ?>
+            </option>
+            <option value="full" <?php selected( get_option( 'rmenu_quick_view_modal_size', 'medium' ), 'full' ); ?>>
+                <?php esc_html_e( 'Full Width', 'one-page-quick-checkout-for-woocommerce' ); ?>
+            </option>
+            <option value="custom" <?php selected( get_option( 'rmenu_quick_view_modal_size', 'medium' ), 'custom' ); ?>>
+                <?php esc_html_e( 'Custom', 'one-page-quick-checkout-for-woocommerce' ); ?>
+            </option>
+        </select>
+    </td>
+</tr>
+
 
                                     <tr id="rmenu-custom-size-row" style="<?php echo (get_option('rmenu_quick_view_modal_size', 'medium') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
                                         <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Custom Width', 'Custom width in pixels (e.g., 800).'); ?>
@@ -2733,45 +2773,83 @@ $onepaquc_helper->sec_head(
                                     </tr>
 
                                     <tr>
-                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Loading Effect', 'Choose the animation effect when opening the quick view modal.'); ?>
-                                        <td class="rmenu-settings-control pro-only">
-                                            <select disabled name="rmenu_quick_view_loading_effect" class="rmenu-select">
-                                                <option value="fade" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'fade'); ?>>Fade</option>
-                                                <option value="slide" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'slide'); ?>>Slide</option>
-                                                <option value="zoom" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'zoom'); ?>>Zoom</option>
-                                                <option value="none" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'none'); ?>>None</option>
-                                            </select>
-                                        </td>
-                                    </tr>
+    <?php 
+    $onepaquc_helper->sec_head(
+        'th', 
+        'rmenu-settings-label', 
+        '', 
+        __('Loading Effect', 'one-page-quick-checkout-for-woocommerce'), 
+        __('Choose the animation effect when opening the quick view modal.', 'one-page-quick-checkout-for-woocommerce')
+    ); 
+    ?>
+    <td class="rmenu-settings-control pro-only">
+        <select disabled name="rmenu_quick_view_loading_effect" class="rmenu-select">
+            <option value="fade" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'fade'); ?>>
+                <?php esc_html_e('Fade', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </option>
+            <option value="slide" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'slide'); ?>>
+                <?php esc_html_e('Slide', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </option>
+            <option value="zoom" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'zoom'); ?>>
+                <?php esc_html_e('Zoom', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </option>
+            <option value="none" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'none'); ?>>
+                <?php esc_html_e('None', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </option>
+        </select>
+    </td>
+</tr>
+
                                 </tbody>
                             </table>
                         </div>
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-layout"></span>', 'Display Settings', ''); ?>
+                            <?php 
+$onepaquc_helper->sec_head(
+    'h3', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-layout"></span>', 
+    __('Display Settings', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
                             <div class="rmenu-settings-row">
                                 <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Product Types</label>
+                                    <label class="rmenu-settings-label">
+    <?php esc_html_e( 'Product Types', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</label>
+
                                     <?php $product_types_option = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]); ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Simple Products</span>
-                                        </label>
+    <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
+    <span class="rmenu-checkbox-label">
+        <?php esc_html_e('Simple Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+    </span>
+</label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Variable Products</span>
-                                        </label>
+<label class="rmenu-checkbox-container">
+    <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
+    <span class="rmenu-checkbox-label">
+        <?php esc_html_e('Variable Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+    </span>
+</label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Grouped Products</span>
-                                        </label>
+<label class="rmenu-checkbox-container">
+    <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
+    <span class="rmenu-checkbox-label">
+        <?php esc_html_e('Grouped Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+    </span>
+</label>
 
-                                        <label class="rmenu-checkbox-container">
-                                            <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">External/Affiliate Products</span>
-                                        </label>
+<label class="rmenu-checkbox-container">
+    <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
+    <span class="rmenu-checkbox-label">
+        <?php esc_html_e('External/Affiliate Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+    </span>
+</label>
+
                                     </div>
                                 </div>
                             </div>
@@ -2781,83 +2859,131 @@ $onepaquc_helper->sec_head(
                                     <?php $product_pages_option = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']); ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
-                                            <h4>Archive Pages</h4>
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Main Shop Page</span>
-                                            </label>
+    <h4><?php esc_html_e('Archive Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Category Archives</span>
-                                            </label>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Main Shop Page', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Tag Archives</span>
-                                            </label>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Product Category Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="brand-archives" <?php checked(in_array('brand-archives', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Brand Archives</span>
-                                            </label>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Product Tag Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="attribute-archives" <?php checked(in_array('attribute-archives', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Attribute Archives</span>
-                                            </label>
-                                        </div>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="brand-archives" <?php checked(in_array('brand-archives', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Product Brand Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
 
-                                        <div class="rmenu-checkbox-column">
-                                            <h4>Other Pages</h4>
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="single" <?php checked(in_array('single', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Single Product Page</span>
-                                            </label>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="attribute-archives" <?php checked(in_array('attribute-archives', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Product Attribute Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
+</div>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="search" <?php checked(in_array('search', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Search Results</span>
-                                            </label>
-
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Featured Products</span>
-                                            </label>
-
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">On-Sale Products</span>
-                                            </label>
-
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="recent" <?php checked(in_array('recent', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Recent Products</span>
-                                            </label>
-                                        </div>
 
                                         <div class="rmenu-checkbox-column">
-                                            <h4>Widgets & Shortcodes</h4>
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="widgets" <?php checked(in_array('widgets', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Widgets</span>
-                                            </label>
+    <h4><?php esc_html_e('Other Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
 
-                                            <label class="rmenu-checkbox-container">
-                                                <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Shortcodes</span>
-                                            </label>
-                                        </div>
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="single" <?php checked(in_array('single', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Single Product Page', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
+
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="search" <?php checked(in_array('search', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Search Results', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
+
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Featured Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
+
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('On-Sale Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
+
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="recent" <?php checked(in_array('recent', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Recent Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
+</div>
+
+
+                                        <div class="rmenu-checkbox-column">
+    <h4><?php esc_html_e('Widgets & Shortcodes', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
+
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="widgets" <?php checked(in_array('widgets', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Widgets', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
+
+    <label class="rmenu-checkbox-container">
+        <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_pages_option)); ?> />
+        <span class="rmenu-checkbox-label">
+            <?php esc_html_e('Shortcodes', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </span>
+    </label>
+</div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="rmenu-settings-section plugincy_card">
-                        <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-translation"></span>', 'Translations', ''); ?>
+                        <?php 
+$onepaquc_helper->sec_head(
+    'h3', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-translation"></span>', 
+    __('Translations', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
                         <table class="form-table plugincy_table">
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', '"View Full Details" Button Text', 'Change the text shown on the "View Full Details" button inside the Quick View popup.'); ?>
+                               <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    'rmenu-settings-label', 
+    '', 
+    __('"View Full Details" Button Text', 'one-page-quick-checkout-for-woocommerce'), 
+    __('Change the text shown on the "View Full Details" button inside the Quick View popup.', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
                                 <td class="rmenu-settings-control">
                                     <?php
                                     $details_text = get_option('rmenu_quick_view_details_text', '');
@@ -2894,88 +3020,197 @@ $onepaquc_helper->sec_head(
                 <div class="tab-content" id="quick-advanced" style="padding: 0;">
                     <div class="plugincy_row mb-4">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-tools"></span>', 'Advanced Options', ''); ?>
+                           <?php 
+$onepaquc_helper->sec_head(
+    'h3', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-admin-tools"></span>', 
+    __('Advanced Options', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
 
                             <table class="form-table plugincy_table">
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Mobile Optimization', 'When enabled, the quick view functionality will be optimized for mobile devices.'); ?>
-                                    <td class="rmenu-settings-control pro-only">
-                                        <?php $onepaquc_helper->switcher('rmenu_quick_view_mobile_optimize', 1); ?>
-                                    </td>
-                                </tr>
+    <tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Mobile Optimization', 'one-page-quick-checkout-for-woocommerce'), 
+            __('When enabled, the quick view functionality will be optimized for mobile devices.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control pro-only">
+            <?php $onepaquc_helper->switcher('rmenu_quick_view_mobile_optimize', 1); ?>
+        </td>
+    </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Close on Add to Cart', 'When enabled, the quick view popup will automatically close after adding a product to cart.'); ?>
-                                    <td class="rmenu-settings-control pro-only">
-                                        <?php $onepaquc_helper->switcher('rmenu_quick_view_close_on_add', 0); ?>
-                                    </td>
-                                </tr>
+    <tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Close on Add to Cart', 'one-page-quick-checkout-for-woocommerce'), 
+            __('When enabled, the quick view popup will automatically close after adding a product to cart.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control pro-only">
+            <?php $onepaquc_helper->switcher('rmenu_quick_view_close_on_add', 0); ?>
+        </td>
+    </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Keyboard Navigation', 'When enabled, customers can use keyboard arrows to navigate between products in quick view and ESC to close.'); ?>
-                                    <td class="rmenu-settings-control">
-                                        <?php $onepaquc_helper->switcher('rmenu_quick_view_keyboard_nav', 1); ?>
-                                    </td>
-                                </tr>
-                            </table>
+    <tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Keyboard Navigation', 'one-page-quick-checkout-for-woocommerce'), 
+            __('When enabled, customers can use keyboard arrows to navigate between products in quick view and ESC to close.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control">
+            <?php $onepaquc_helper->switcher('rmenu_quick_view_keyboard_nav', 1); ?>
+        </td>
+    </tr>
+</table>
+
                         </div>
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-analytics"></span>', 'Analytics Integration', ''); ?>
+                           <?php 
+$onepaquc_helper->sec_head(
+    'h3', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-analytics"></span>', 
+    __('Analytics Integration', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
 
                             <table class="form-table plugincy_table">
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Track Quick View Events', 'Track when customers use quick view in Google Analytics or other analytics tools.'); ?>
-                                    <td class="rmenu-settings-control pro-only">
-                                        <?php $onepaquc_helper->switcher('rmenu_quick_view_track_events', 0); ?>
-                                    </td>
-                                </tr>
+    <tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Track Quick View Events', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Track when customers use quick view in Google Analytics or other analytics tools.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control pro-only">
+            <?php $onepaquc_helper->switcher('rmenu_quick_view_track_events', 0); ?>
+        </td>
+    </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Event Category', 'The event category name used for analytics tracking.'); ?>
-                                    <td class="rmenu-settings-control pro-only">
-                                        <input disabled type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'one-page-quick-checkout-for-woocommerce')); ?>" class="regular-text" />
-                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
-                                    </td>
-                                </tr>
+    <tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Event Category', 'one-page-quick-checkout-for-woocommerce'), 
+            __('The event category name used for analytics tracking.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control pro-only">
+            <input disabled type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'one-page-quick-checkout-for-woocommerce')); ?>" class="regular-text" />
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </td>
+    </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Event Action', 'The event action name used for analytics tracking.'); ?>
-                                    <td class="rmenu-settings-control pro-only">
-                                        <input disabled type="text" name="rmenu_quick_view_event_action" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_action', 'Quick View')); ?>" class="regular-text" />
-                                        <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
-                                    </td>
-                                </tr>
-                            </table>
+    <tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Event Action', 'one-page-quick-checkout-for-woocommerce'), 
+            __('The event action name used for analytics tracking.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control pro-only">
+            <input disabled type="text" name="rmenu_quick_view_event_action" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_action', 'Quick View')); ?>" class="regular-text" />
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </td>
+    </tr>
+</table>
+
                         </div>
                     </div>
 
                     <div class="rmenu-settings-section plugincy_card">
-                        <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'Compatibility Settings'); ?>
-                        <table class="form-table plugincy_table">
-                            <tr>
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Load Scripts On', 'Control where quick view scripts are loaded to improve compatibility and performance.'); ?>
-                                <td class="rmenu-settings-control pro-only">
-                                    <select disabled name="rmenu_quick_view_load_scripts" class="rmenu-select">
-                                        <option value="all" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'all'); ?>>All Pages</option>
-                                        <option value="wc-only" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'wc-only'); ?>>WooCommerce Pages Only</option>
-                                        <option value="specific" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'specific'); ?>>Specific Pages Only</option>
-                                    </select>
-                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
-                                </td>
-                            </tr>
-                            <tr class="rmenu-settings-row" id="rmenu-specific-pages-row" style="<?php echo (get_option('rmenu_quick_view_load_scripts', 'wc-only') == 'specific') ? 'display:block;' : 'display:none;'; ?>">
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Specific Pages IDs', 'Enter the IDs of the specific pages where you want to load the quick view.'); ?>
-                                <td class="rmenu-settings-control pro-only">
-                                    <input disabled type="text" name="rmenu_quick_view_specific_pages" value="<?php echo esc_attr(get_option('rmenu_quick_view_specific_pages', '')); ?>" class="regular-text" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Theme Compatibility Mode', 'Enable this if you experience display issues with your theme.'); ?>
-                                <td class="rmenu-settings-control">
-                                    <?php $onepaquc_helper->switcher('rmenu_quick_view_theme_compat', 0); ?>
-                                </td>
-                            <tr>
-                        </table>
+                        <?php 
+$onepaquc_helper->sec_head(
+    'h3', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-admin-generic"></span>', 
+    __('Compatibility Settings', 'one-page-quick-checkout-for-woocommerce')
+); 
+?>
+
+                       <table class="form-table plugincy_table">
+    <tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Load Scripts On', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Control where quick view scripts are loaded to improve compatibility and performance.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control pro-only">
+            <select disabled name="rmenu_quick_view_load_scripts" class="rmenu-select">
+                <option value="all" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'all'); ?>>
+                    <?php esc_html_e('All Pages', 'one-page-quick-checkout-for-woocommerce'); ?>
+                </option>
+                <option value="wc-only" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'wc-only'); ?>>
+                    <?php esc_html_e('WooCommerce Pages Only', 'one-page-quick-checkout-for-woocommerce'); ?>
+                </option>
+                <option value="specific" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'specific'); ?>>
+                    <?php esc_html_e('Specific Pages Only', 'one-page-quick-checkout-for-woocommerce'); ?>
+                </option>
+            </select>
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </td>
+    </tr>
+
+    <tr class="rmenu-settings-row" id="rmenu-specific-pages-row" style="<?php echo (get_option('rmenu_quick_view_load_scripts', 'wc-only') == 'specific') ? 'display:block;' : 'display:none;'; ?>">
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Specific Pages IDs', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Enter the IDs of the specific pages where you want to load the quick view.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control pro-only">
+            <input disabled type="text" name="rmenu_quick_view_specific_pages" value="<?php echo esc_attr(get_option('rmenu_quick_view_specific_pages', '')); ?>" class="regular-text" />
+        </td>
+    </tr>
+
+    <tr>
+        <?php 
+        $onepaquc_helper->sec_head(
+            'th', 
+            'rmenu-settings-label', 
+            '', 
+            __('Theme Compatibility Mode', 'one-page-quick-checkout-for-woocommerce'), 
+            __('Enable this if you experience display issues with your theme.', 'one-page-quick-checkout-for-woocommerce')
+        ); 
+        ?>
+        <td class="rmenu-settings-control">
+            <?php $onepaquc_helper->switcher('rmenu_quick_view_theme_compat', 0); ?>
+        </td>
+    </tr>
+</table>
+
                     </div>
                 </div>
 
