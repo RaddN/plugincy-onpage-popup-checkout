@@ -3601,14 +3601,15 @@ $onepaquc_helper->sec_head(
             <?php esc_html_e( 'General Settings', 'one-page-quick-checkout-for-woocommerce' ); ?>
         </li>
         <li class="rmenu-settings-tab-item" data-tab="button-behavior">
-            <span class="dashicons dashicons-controls-play"></span> 
-           <?php esc_html_e( 'Button Behavior', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    <span class="dashicons dashicons-controls-play"></span> 
+    <?php esc_html_e( 'Button Behavior', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</li>
 
-        </li>
-        <li class="rmenu-settings-tab-item" data-tab="advanced">
-            <span class="dashicons dashicons-admin-tools"></span> 
-            <?php esc_html_e( 'Advanced', 'one-page-quick-checkout-for-woocommerce' ); ?>
-        </li>
+<li class="rmenu-settings-tab-item" data-tab="advanced">
+    <span class="dashicons dashicons-admin-tools"></span> 
+    <?php esc_html_e( 'Advanced', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</li>
+
     </ul>
 </div>
 
@@ -3617,62 +3618,140 @@ $onepaquc_helper->sec_head(
                 <div class="tab-content" id="general-settings" style="padding: 0;">
                     <div class="plugincy_row">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', ''); ?>
+    <?php 
+    $onepaquc_helper->sec_head(
+        'h3', 
+        'plugincy_sec_head', 
+        '<span class="dashicons dashicons-admin-generic"></span>', 
+        __('General Settings', 'one-page-quick-checkout-for-woocommerce'), 
+        ''
+    ); 
+    ?>
 
-                            <table class="form-table plugincy_table">
-                                <tr id="rmenu-enable-custom-add-to-cart">
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Customizable Add to Cart', 'Enable or disable custom Add to Cart styling and functionality.'); ?>
-                                    <td class="rmenu-settings-control">
-                                        <?php $onepaquc_helper->switcher('rmenu_enable_custom_add_to_cart', 1); ?>
-                                    </td>
-                                </tr>
+    <table class="form-table plugincy_table">
+        <tr id="rmenu-enable-custom-add-to-cart">
+            <?php 
+            $onepaquc_helper->sec_head(
+                'th', 
+                '', 
+                '', 
+                __('Customizable Add to Cart', 'one-page-quick-checkout-for-woocommerce'), 
+                __('Enable or disable custom Add to Cart styling and functionality.', 'one-page-quick-checkout-for-woocommerce')
+            ); 
+            ?>
+            <td class="rmenu-settings-control">
+                <?php $onepaquc_helper->switcher('rmenu_enable_custom_add_to_cart', 1); ?>
+            </td>
+        </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Button Text', 'Customize the text displayed on the Add to Cart button for simple products.'); ?>
-                                    <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(get_option('txt-add-to-cart', 'Add to Cart')); ?>" class="regular-text" />
-                                    </td>
-                                </tr>
+        <tr>
+            <?php 
+            $onepaquc_helper->sec_head(
+                'th', 
+                'rmenu-settings-label', 
+                '', 
+                __('Button Text', 'one-page-quick-checkout-for-woocommerce'), 
+                __('Customize the text displayed on the Add to Cart button for simple products.', 'one-page-quick-checkout-for-woocommerce')
+            ); 
+            ?>
+            <td class="rmenu-settings-control">
+                <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(get_option('txt-add-to-cart', __('Add to Cart', 'one-page-quick-checkout-for-woocommerce'))); ?>" class="regular-text" />
+            </td>
+        </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Variable Product Button Text', 'Customize the text displayed on the Add to Cart button for variable products.'); ?>
-                                    <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-select-options" value="<?php echo esc_attr(get_option('txt-select-options', 'Select Options')); ?>" class="regular-text" />
-                                    </td>
-                                </tr>
+        <tr>
+            <?php 
+            $onepaquc_helper->sec_head(
+                'th', 
+                'rmenu-settings-label', 
+                '', 
+                __('Variable Product Button Text', 'one-page-quick-checkout-for-woocommerce'), 
+                __('Customize the text displayed on the Add to Cart button for variable products.', 'one-page-quick-checkout-for-woocommerce')
+            ); 
+            ?>
+            <td class="rmenu-settings-control">
+                <input type="text" name="txt-select-options" value="<?php echo esc_attr(get_option('txt-select-options', __('Select Options', 'one-page-quick-checkout-for-woocommerce'))); ?>" class="regular-text" />
+            </td>
+        </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Read More Button Text', 'Customize the text displayed on the Read More button.'); ?>
-                                    <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-read-more" value="<?php echo esc_attr(get_option('txt-read-more', 'Read More')); ?>" class="regular-text" />
-                                    </td>
-                                </tr>
+        <tr>
+            <?php 
+            $onepaquc_helper->sec_head(
+                'th', 
+                'rmenu-settings-label', 
+                '', 
+                __('Read More Button Text', 'one-page-quick-checkout-for-woocommerce'), 
+                __('Customize the text displayed on the Read More button.', 'one-page-quick-checkout-for-woocommerce')
+            ); 
+            ?>
+            <td class="rmenu-settings-control">
+                <input type="text" name="txt-read-more" value="<?php echo esc_attr(get_option('txt-read-more', __('Read More', 'one-page-quick-checkout-for-woocommerce'))); ?>" class="regular-text" />
+            </td>
+        </tr>
 
-                                <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Grouped Product Button Text', 'Customize the text displayed on the Add to Cart button for grouped products.'); ?>
-                                    <td class="rmenu-settings-control">
-                                        <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', 'View Products')); ?>" class="regular-text" />
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+        <tr>
+            <?php 
+            $onepaquc_helper->sec_head(
+                'th', 
+                'rmenu-settings-label', 
+                '', 
+                __('Grouped Product Button Text', 'one-page-quick-checkout-for-woocommerce'), 
+                __('Customize the text displayed on the Add to Cart button for grouped products.', 'one-page-quick-checkout-for-woocommerce')
+            ); 
+            ?>
+            <td class="rmenu-settings-control">
+                <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', __('View Products', 'one-page-quick-checkout-for-woocommerce'))); ?>" class="regular-text" />
+            </td>
+        </tr>
+    </table>
+</div>
+
 
                         <div class="rmenu-settings-section button-style-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
+                           <?php 
+$onepaquc_helper->sec_head(
+    'h3', 
+    'plugincy_sec_head', 
+    '<span class="dashicons dashicons-admin-appearance"></span>', 
+    __('Button Style', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
 
                             <table class="form-table plugincy_table">
                                 <tbody class="plugincy_grid">
                                     <tr style="grid-column: span 2;">
-                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Button Style', ''); ?>
-                                        <td class="rmenu-settings-control">
-                                            <select name="rmenu_add_to_cart_style" class="rmenu-select" id="rmenu-atc-style-select">
-                                                <option value="default" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
-                                                <option disabled value="modern" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'modern'); ?>>Modern Style (Pro Feature)</option>
-                                                <option value="rounded" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'rounded'); ?>>Rounded Style</option>
-                                                <option disabled value="minimal" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'minimal'); ?>>Minimal Style (Pro Feature)</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'custom'); ?>>Custom Style</option>
-                                            </select>
-                                        </td>
+                                       <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    'rmenu-settings-label', 
+    '', 
+    __('Button Style', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+<td class="rmenu-settings-control">
+    <select name="rmenu_add_to_cart_style" class="rmenu-select" id="rmenu-atc-style-select">
+        <option value="default" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'default'); ?>>
+            <?php esc_html_e('Default WooCommerce Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option disabled value="modern" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'modern'); ?>>
+            <?php esc_html_e('Modern Style (Pro Feature)', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="rounded" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'rounded'); ?>>
+    <?php esc_html_e('Rounded Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
+        <option disabled value="minimal" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'minimal'); ?>>
+            <?php esc_html_e('Minimal Style (Pro Feature)', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="custom" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'custom'); ?>>
+            <?php esc_html_e('Custom Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+    </select>
+</td>
+
                                     </tr>
                                     <tr>
                                         <th class="rmenu-settings-label">
@@ -3684,26 +3763,62 @@ $onepaquc_helper->sec_head(
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <th class="rmenu-settings-label">Text Color</th>
-                                        <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                        </td>
-                                    </tr>
+                                   <tr>
+    <?php 
+    $onepaquc_helper->sec_head(
+        'th', 
+        'rmenu-settings-label', 
+        '', 
+        __('Text Color', 'one-page-quick-checkout-for-woocommerce'), 
+        ''
+    ); 
+    ?>
+    <td class="rmenu-settings-control">
+        <input type="color" 
+               name="rmenu_add_to_cart_text_color" 
+               value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>" 
+               class="rmenu-color-picker" />
+    </td>
+</tr>
+
 
                                     <tr>
-                                        <th class="rmenu-settings-label">Hover Background Color</th>
-                                        <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>" class="rmenu-color-picker" />
-                                        </td>
-                                    </tr>
+    <?php 
+    $onepaquc_helper->sec_head(
+        'th', 
+        'rmenu-settings-label', 
+        '', 
+        __('Hover Background Color', 'one-page-quick-checkout-for-woocommerce'), 
+        ''
+    ); 
+    ?>
+    <td class="rmenu-settings-control">
+        <input type="color" 
+               name="rmenu_add_to_cart_hover_bg_color" 
+               value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>" 
+               class="rmenu-color-picker" />
+    </td>
+</tr>
+
 
                                     <tr>
-                                        <th class="rmenu-settings-label">Hover Text Color</th>
-                                        <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-                                        </td>
-                                    </tr>
+    <?php 
+    $onepaquc_helper->sec_head(
+        'th', 
+        'rmenu-settings-label', 
+        '', 
+        __('Hover Text Color', 'one-page-quick-checkout-for-woocommerce'), 
+        ''
+    ); 
+    ?>
+    <td class="rmenu-settings-control">
+        <input type="color" 
+               name="rmenu_add_to_cart_hover_text_color" 
+               value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" 
+               class="rmenu-color-picker" />
+    </td>
+</tr>
+
 
                                     <tr>
                                         <th class="rmenu-settings-label">
@@ -3732,9 +3847,18 @@ $onepaquc_helper->sec_head(
     </th>
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_add_to_cart_width" class="rmenu-select">
-                                                <option value="auto" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'auto'); ?>>Auto</option>
-                                                <option value="full" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'full'); ?>>Full Width</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'custom'); ?>>Custom Width</option>
+                                               <option value="auto" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'auto'); ?>>
+    <?php esc_html_e('Auto', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
+<option value="full" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'full'); ?>>
+    <?php esc_html_e('Full Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
+<option value="custom" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'custom'); ?>>
+    <?php esc_html_e('Custom Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+</option>
+
                                             </select>
                                         </td>
                                     </tr>
@@ -3748,35 +3872,86 @@ $onepaquc_helper->sec_head(
                                     </tr>
 
                                     <tr>
-                                        <th class="rmenu-settings-label">Button Icon</th>
-                                        <td class="rmenu-settings-control">
-                                            <select name="rmenu_add_to_cart_icon" class="rmenu-select">
-                                                <option value="none" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); ?>>No Icon</option>
-                                                <option value="cart" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); ?>>Cart Icon</option>
-                                                <option value="plus" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); ?>>Plus Icon</option>
-                                                <option value="bag" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); ?>>Shopping Bag Icon</option>
-                                                <option value="basket" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); ?>>Basket Icon</option>
-                                            </select>
-                                        </td>
+                                        <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    'rmenu-settings-label', 
+    '', 
+    __('Button Icon', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+<td class="rmenu-settings-control">
+    <select name="rmenu_add_to_cart_icon" class="rmenu-select">
+        <option value="none" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); ?>>
+            <?php esc_html_e('No Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="cart" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); ?>>
+            <?php esc_html_e('Cart Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="plus" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); ?>>
+            <?php esc_html_e('Plus Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="bag" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); ?>>
+            <?php esc_html_e('Shopping Bag Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="basket" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); ?>>
+            <?php esc_html_e('Basket Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+    </select>
+</td>
+
                                     </tr>
                                     <tr id="rmenu-atc-icon-position-row" style="<?php echo (get_option('rmenu_add_to_cart_icon', 'none') == 'none') ? 'display:none;' : 'display:block;'; ?>">
-                                        <th class="rmenu-settings-label">Icon Position</th>
+                                       <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    'rmenu-settings-label', 
+    '', 
+    __('Icon Position', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
                                         <td class="rmenu-settings-control">
-                                            <select name="rmenu_add_to_cart_icon_position" class="rmenu-select">
-                                                <option value="left" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); ?>>Left</option>
-                                                <option value="right" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); ?>>Right</option>
-                                                <option value="top" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'top'); ?>>Top</option>
-                                                <option value="bottom" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
-                                            </select>
-                                        </td>
+    <select name="rmenu_add_to_cart_icon_position" class="rmenu-select">
+        <option value="left" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); ?>>
+            <?php esc_html_e('Left', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="right" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); ?>>
+            <?php esc_html_e('Right', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="top" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'top'); ?>>
+            <?php esc_html_e('Top', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+        <option value="bottom" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'bottom'); ?>>
+            <?php esc_html_e('Bottom', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </option>
+    </select>
+</td>
+
                                     </tr>
 
                                     <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-atc-custom-css-row" style="<?php echo (get_option('rmenu_add_to_cart_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
-                                        <th class="rmenu-settings-label">Custom CSS</th>
+                                        <?php 
+$onepaquc_helper->sec_head(
+    'th', 
+    'rmenu-settings-label', 
+    '', 
+    __('Custom CSS', 'one-page-quick-checkout-for-woocommerce'), 
+    ''
+); 
+?>
+
                                         <td class="rmenu-settings-control">
-                                            <textarea name="rmenu_add_to_cart_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_add_to_cart_custom_css', '')); ?></textarea>
-                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.product_type_simple.add_to_cart_button</code> to target the button.</p>
-                                        </td>
+    <textarea name="rmenu_add_to_cart_custom_css" 
+              class="rmenu-textarea-code" 
+              rows="6"><?php echo esc_textarea(get_option('rmenu_add_to_cart_custom_css', '')); ?></textarea>
+    <p class="rmenu-field-description">
+        <?php esc_html_e('Add custom CSS for advanced button styling. Use the class <code>.product_type_simple.add_to_cart_button</code> to target the button.', 'one-page-quick-checkout-for-woocommerce'); ?>
+    </p>
+</td>
+
                                     </tr>
                                 </tbody>
                             </table>
