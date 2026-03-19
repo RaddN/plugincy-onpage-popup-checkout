@@ -380,7 +380,10 @@ function onepaquc_cart_dashboard()
                 <table class="form-table plugincy_table mb-4">
                     <tbody class="plugincy_grid">
                         <tr valign="top">
-                            <th scope="row">Remove checkout fields</th>
+                            <th scope="row">
+    <?php esc_html_e( 'Remove checkout fields', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</th>
+
                             <td>
                                 <!-- multiple select options -->
                                 <select class="remove_checkout_fields chosen_select select2-hidden-accessible enhanced" name="onepaquc_checkout_fields[]" id="qlwcdc_remove_checkout_fields" multiple>
@@ -4877,13 +4880,28 @@ add_action('wp_enqueue_scripts', 'onepaquc_cart_custom_css', 9999999);
 function onepaquc_rmenu_fields()
 {
     return [
-        'hide_coupon_toggle'          => ['selector' => '.woocommerce-form-coupon-toggle, .col-form-coupon,.woocommerce-form-coupon-toggle, .col-form-coupon', 'title' => 'Hide Top Coupon'],
-        'hide_customer_details_col2'  => ['selector' => ' .woocommerce-shipping-fields, .woocommerce-shipping-fields', 'title' => 'Hide Shipping Address'],
-        'hide_privacy_policy_text'    => ['selector' => '.woocommerce-privacy-policy-text, .woocommerce-privacy-policy-text, .wp-block-woocommerce-checkout-terms-block .wc-block-checkout__terms .wc-block-components-checkbox__label, .wc-block-checkout__terms .wc-block-components-checkbox__label', 'title' => 'Hide Privacy Policy Text'],
-        'hide_payment'                 => ['selector' => 'div#payment ul, div#payment ul, .wp-block-woocommerce-checkout-payment-block, .wc-block-checkout__payment-method, .wc-block-components-checkout-payment-methods, .wc-block-checkout__no-payment-methods-notice', 'title' => 'Hide Payment Options'],
-        'hide_product'                 => ['selector' => 'table.shop_table, table.shop_table, .wp-block-woocommerce-checkout-order-summary-block, .wp-block-woocommerce-checkout-order-summary-cart-items-block, .wp-block-woocommerce-checkout-order-summary-totals-block, .wc-block-components-order-summary', 'title' => 'Hide Product Table']
+    'hide_coupon_toggle' => [
+        'selector' => '.woocommerce-form-coupon-toggle, .col-form-coupon,.woocommerce-form-coupon-toggle, .col-form-coupon',
+        'title'    => __( 'Hide Top Coupon', 'one-page-quick-checkout-for-woocommerce' ),
+    ],
+    'hide_customer_details_col2' => [
+        'selector' => ' .woocommerce-shipping-fields, .woocommerce-shipping-fields',
+        'title'    => __( 'Hide Shipping Address', 'one-page-quick-checkout-for-woocommerce' ),
+    ],
+    'hide_privacy_policy_text' => [
+        'selector' => '.woocommerce-privacy-policy-text, .woocommerce-privacy-policy-text, .wp-block-woocommerce-checkout-terms-block .wc-block-checkout__terms .wc-block-components-checkbox__label, .wc-block-checkout__terms .wc-block-components-checkbox__label',
+        'title'    => __( 'Hide Privacy Policy Text', 'one-page-quick-checkout-for-woocommerce' ),
+    ],
+    'hide_payment' => [
+        'selector' => 'div#payment ul, div#payment ul, .wp-block-woocommerce-checkout-payment-block, .wc-block-checkout__payment-method, .wc-block-components-checkout-payment-methods, .wc-block-checkout__no-payment-methods-notice',
+        'title'    => __( 'Hide Payment Options', 'one-page-quick-checkout-for-woocommerce' ),
+    ],
+    'hide_product' => [
+        'selector' => 'table.shop_table, table.shop_table, .wp-block-woocommerce-checkout-order-summary-block, .wp-block-woocommerce-checkout-order-summary-cart-items-block, .wp-block-woocommerce-checkout-order-summary-totals-block, .wc-block-components-order-summary',
+        'title'    => __( 'Hide Product Table', 'one-page-quick-checkout-for-woocommerce' ),
+    ],
+];
 
-    ];
 }
 
 function onepaquc_onpcheckout_heading()
