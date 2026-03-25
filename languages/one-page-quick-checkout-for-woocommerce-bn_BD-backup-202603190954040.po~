@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-17 04:47+0000\n"
-"PO-Revision-Date: 2026-03-17 09:54+0000\n"
+"PO-Revision-Date: 2026-03-19 09:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.3; wp-6.9; php-8.2.29\n"
+"X-Loco-Version: 2.8.3; wp-6.9.4; php-8.2.29\n"
 "X-Domain: one-page-quick-checkout-for-woocommerce"
 
 msgid ""
@@ -639,6 +639,9 @@ msgstr ""
 msgid "Contact Support"
 msgstr "সহায়তার জন্য যোগাযোগ করুন"
 
+msgid "Content Elements"
+msgstr "বিষয়বস্তুর উপাদানসমূহ"
+
 msgid "Contribute to Plugincy"
 msgstr "Plugincy-তে অবদান রাখুন"
 
@@ -885,8 +888,8 @@ msgid ""
 "Enable \"Add Image Before Product\" to display product images before their "
 "titles in the checkout form."
 msgstr ""
-"চেকআউট ফর্মে পণ্যের শিরোনামের আগে পণ্যের ছবি প্রদর্শন করতে \"Add Image "
-"Before Product\" সক্ষম করুন।"
+"চেকআউট ফর্মে শিরোনামের আগে পণ্যের ছবি প্রদর্শনের জন্য \"পণ্যের আগে ছবি যোগ "
+"করুন\" সক্রিয় করুন।"
 
 msgid ""
 "Enable \"At Least One Product in Cart\" to add at least one product in the "
@@ -1550,6 +1553,9 @@ msgstr "WooCommerce এর জন্য এক পৃষ্ঠার দ্র�
 #: includes/elementor/onepaquc-checkout-widget.php:18
 msgid "One-Page Checkout"
 msgstr "এক-পৃষ্ঠার চেকআউট"
+
+msgid "Onpage Checkout"
+msgstr "অন-পেজ চেকআউট"
 
 msgid "Order notes"
 msgstr "অর্ডার নোট"

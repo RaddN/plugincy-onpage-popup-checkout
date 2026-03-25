@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-17 04:47+0000\n"
-"PO-Revision-Date: 2026-03-18 04:41+0000\n"
+"PO-Revision-Date: 2026-03-19 09:58+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -854,6 +854,9 @@ msgstr "জেলা"
 msgid "DIV"
 msgstr "ডিআইভি"
 
+msgid "Documentation"
+msgstr "নথিপত্র "
+
 #: includes/elementor/plugincy-cart-widget.php:179
 msgid "Drawer"
 msgstr "ড্রয়ার"
@@ -1187,7 +1190,7 @@ msgstr "ফ্লোটিং কার্টের জন্য সাধার
 
 #: one-page-quick-checkout-for-wooCommerce.php:1275
 msgid "Get Pro"
-msgstr "প্রো পান"
+msgstr "প্রো তে আপগ্রেড করুন"
 
 msgid "Get Support"
 msgstr "সহায়তা পান"
@@ -1553,6 +1556,9 @@ msgstr "WooCommerce এর জন্য এক পৃষ্ঠার দ্র�
 #: includes/elementor/onepaquc-checkout-widget.php:18
 msgid "One-Page Checkout"
 msgstr "এক-পৃষ্ঠার চেকআউট"
+
+msgid "Onpage Checkout"
+msgstr "অন-পেজ চেকআউট"
 
 msgid "Order notes"
 msgstr "অর্ডার নোট"
@@ -2139,6 +2145,9 @@ msgstr "ট্রাস্ট ব্যাজ কনফিগারেশন"
 
 msgid "Tutorials"
 msgstr "টিউটোরিয়াল"
+
+msgid "Unlock Premium Features"
+msgstr "প্রিমিয়াম ফিচারগুলো আনলক করুন"
 
 msgid ""
 "Upgrade to Pro\n"

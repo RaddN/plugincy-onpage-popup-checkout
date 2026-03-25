@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-17 04:47+0000\n"
-"PO-Revision-Date: 2026-03-18 04:25+0000\n"
+"PO-Revision-Date: 2026-03-19 09:55+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -854,6 +854,9 @@ msgstr "জেলা"
 msgid "DIV"
 msgstr "ডিআইভি"
 
+msgid "Documentation"
+msgstr "নথিপত্র "
+
 #: includes/elementor/plugincy-cart-widget.php:179
 msgid "Drawer"
 msgstr "ড্রয়ার"
@@ -888,8 +891,8 @@ msgid ""
 "Enable \"Add Image Before Product\" to display product images before their "
 "titles in the checkout form."
 msgstr ""
-"চেকআউট ফর্মে পণ্যের শিরোনামের আগে পণ্যের ছবি প্রদর্শন করতে \"Add Image "
-"Before Product\" সক্ষম করুন।"
+"চেকআউট ফর্মে শিরোনামের আগে পণ্যের ছবি প্রদর্শনের জন্য \"পণ্যের আগে ছবি যোগ "
+"করুন\" সক্রিয় করুন।"
 
 msgid ""
 "Enable \"At Least One Product in Cart\" to add at least one product in the "
@@ -1187,7 +1190,7 @@ msgstr "ফ্লোটিং কার্টের জন্য সাধার
 
 #: one-page-quick-checkout-for-wooCommerce.php:1275
 msgid "Get Pro"
-msgstr "প্রো পান"
+msgstr "প্রো তে আপগ্রেড করুন"
 
 msgid "Get Support"
 msgstr "সহায়তা পান"
@@ -1553,6 +1556,9 @@ msgstr "WooCommerce এর জন্য এক পৃষ্ঠার দ্র�
 #: includes/elementor/onepaquc-checkout-widget.php:18
 msgid "One-Page Checkout"
 msgstr "এক-পৃষ্ঠার চেকআউট"
+
+msgid "Onpage Checkout"
+msgstr "অন-পেজ চেকআউট"
 
 msgid "Order notes"
 msgstr "অর্ডার নোট"

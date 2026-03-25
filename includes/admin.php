@@ -10,31 +10,34 @@ function onepaquc_cart_menu()
 {
 
     add_menu_page(
-        'Onpage Checkout',
-        'Onpage Checkout',
-        'manage_options',
-        'onepaquc_cart',
-        'onepaquc_cart_dashboard',
-        'dashicons-cart', // Shopping cart icon
-        '55.50'
-    );
-    add_submenu_page(
-        'onepaquc_cart',
-        'Documentation',
-        'Documentation',
-        'manage_options',
-        'onepaquc_cart_documentation',
-        'onepaquc_cart_documentation'
-    );
+    __( 'Onpage Checkout', 'one-page-quick-checkout-for-woocommerce' ), // Page title
+    __( 'Onpage Checkout', 'one-page-quick-checkout-for-woocommerce' ), // Menu title
+    'manage_options',
+    'onepaquc_cart',
+    'onepaquc_cart_dashboard',
+    'dashicons-cart', // Shopping cart icon
+    '55.50'
+);
+
+   add_submenu_page(
+    'onepaquc_cart',
+    __( 'Documentation', 'one-page-quick-checkout-for-woocommerce' ), // Page title
+    __( 'Documentation', 'one-page-quick-checkout-for-woocommerce' ), // Menu title
+    'manage_options',
+    'onepaquc_cart_documentation',
+    'onepaquc_cart_documentation'
+);
+
 
     add_submenu_page(
-        'onepaquc_cart',
-        'Get Pro',
-        'Get Pro',
-        'manage_options',
-        'onepaquc_cart_get_pro',
-        'onepaquc_cart_get_pro'
-    );
+    'onepaquc_cart',
+    __( 'Get Pro', 'one-page-quick-checkout-for-woocommerce' ), // Page title
+    __( 'Get Pro', 'one-page-quick-checkout-for-woocommerce' ), // Menu title
+    'manage_options',
+    'onepaquc_cart_get_pro',
+    'onepaquc_cart_get_pro'
+);
+
 }
 
 
@@ -43,11 +46,17 @@ function onepaquc_cart_get_pro()
 {
 ?>
     <div class="wrap">
-        <h1>Upgrade to Onepage Checkout Pro</h1>
+       <h1>
+    <?php esc_html_e( 'Upgrade to Onepage Checkout Pro', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</h1>
+
 
 
         <div class="onepaquc-pro-banner" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin: 20px 0;">
-            <h2 style="color: white; margin-top: 0;">🚀 Unlock Premium Features</h2>
+            <h2 style="color: white; margin-top: 0;">
+    <?php esc_html_e( '🚀 Unlock Premium Features', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</h2>
+
             <p style="font-size: 18px; margin-bottom: 30px;">Take your checkout experience to the next level with our premium features designed to boost conversions and enhance user experience.</p>
             <a target="_blank" href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button button-primary button-hero" style="background: #ff6b6b; border-color: #ff6b6b; text-shadow: none; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);">Get Pro Version</a>
         </div>
@@ -181,8 +190,18 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title"> <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?> <span class="version-tag">v1.3.5</span> </div>
-        <p style="max-width: 70%; margin:0 auto;"> <?php esc_html_e( 'Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.', 'one-page-quick-checkout-for-woocommerce' ); ?> </p>
+        <div class="welcome-title">
+    <?php esc_html_e( 'Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce' ); ?>
+    <span class="version-tag">v1.3.5</span>
+</div>
+
+        <p style="max-width: 70%; margin:0 auto;">
+    <?php esc_html_e(
+        'Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.',
+        'one-page-quick-checkout-for-woocommerce'
+    ); ?>
+</p>
+
 
         <div class="feature-grid">
             <div class="feature-item">
@@ -192,7 +211,8 @@ function onepaquc_cart_dashboard()
                     </svg>
                 </div>
                 <h3>
-        <?php esc_html_e('Fast Setup', 'one-page-quick-checkout-for-woocommerce'); ?>
+        <?php esc_html_e( 'Fast Setup', 'one-page-quick-checkout-for-woocommerce' ); ?>
+
     </h3>
     <p>
         <?php esc_html_e('Configure your checkout in minutes with our intuitive options.', 'one-page-quick-checkout-for-woocommerce'); ?>
@@ -231,7 +251,10 @@ function onepaquc_cart_dashboard()
 
     </div>
 
-    <h1 style="padding-top: 3rem;">Dashboard</h1>
+    <h1 style="padding-top: 3rem;">
+    <?php esc_html_e( 'Dashboard', 'one-page-quick-checkout-for-woocommerce' ); ?>
+</h1>
+
     <?php
     // if (get_option('onepaquc_validity_days') === "0" || !get_option('onepaquc_api_key')) {
     //     echo "<p style='color:red;'>To use the plugin please active your API key first.</p>";

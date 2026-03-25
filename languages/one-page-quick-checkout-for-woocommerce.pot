@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-18 04:24+0000\n"
+"POT-Creation-Date: 2026-03-19 09:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -2346,4 +2346,13 @@ msgid ""
 msgstr ""
 
 msgid "Content Elements"
+msgstr ""
+
+msgid "Onpage Checkout"
+msgstr ""
+
+msgid "Documentation"
+msgstr ""
+
+msgid "Unlock Premium Features"
 msgstr ""
