@@ -1259,7 +1259,7 @@ function onepaquc_remove_required_block_checkout_fields($settings)
 //     foreach ($checkout_fields as $field) {
 //         if (isset($onepaquc_rcheckoutformfields[$field])) {
 //             $selector = $onepaquc_rcheckoutformfields[$field]['selector'];
-//             $custom_css .= "{$selector} { display: none !important; }\n";
+//             $custom_css .= "{$selector} { display: none !important; }";
 //         }
 //     }
 // }

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 09:53+0000\n"
+"POT-Creation-Date: 2026-03-25 11:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -960,8 +960,6 @@ msgstr ""
 
 msgid ""
 "Learn how to use our plugin features with these step-by-step video tutorials."
-"\n"
-"\n"
 msgstr ""
 
 msgid ""
@@ -972,92 +970,69 @@ msgid ""
 "Transform your WooCommerce store with instant purchase buttons that bypass "
 "the traditional cart process. Our plugin automatically adds buy now buttons "
 "on single product and archive pages, but you have complete control over "
-"placement and customization.\n"
-"\n"
+"placement and customization."
 msgstr ""
 
-msgid ""
-"Basic Shortcode:\n"
+msgid "Basic Shortcode:"
 msgstr ""
 
 msgid ""
 "This shortcode will display a buy now button for the current product when "
-"used on product pages.\n"
-"\n"
+"used on product pages."
+msgstr ""
+
+msgid "Buy Now Button Anywhere"
 msgstr ""
 
 msgid ""
-"Buy Now Button Anywhere\n"
+"You can use <strong>buy now button</strong> anywhere on your <strong>"
+"site</strong> with this <strong>shortcode</strong>."
 msgstr ""
 
-msgid ""
-"You can use buy now button anywhere on your site with this shortcode.\n"
-"\n"
+msgid "Shortcode:"
 msgstr ""
 
-msgid ""
-"Shortcode:\n"
+msgid "Tips:"
 msgstr ""
 
-msgid ""
-"Tips:\n"
+msgid "Use our widget or block (Buy Now Button) for easier implementation."
 msgstr ""
 
-msgid ""
-"Use our widget or block (Buy Now Button) for easier implementation.\n"
-"\n"
-msgstr ""
-
-msgid ""
-"One Page Checkout\n"
-msgstr ""
-
-msgid ""
-"You can use one page checkout anywhere on your site with this shortcode.\n"
-"\n"
-msgstr ""
-
-msgid ""
-"Use our widget or block (One-page checkout) for easier implementation.\n"
-"\n"
-msgstr ""
-
-msgid ""
-"Floating Cart\n"
+msgid "Use our widget or block (One-page checkout) for easier implementation."
 msgstr ""
 
 msgid ""
 "A modern, stylish side-drawer cart that users can access from any page for "
-"improved convenience.\n"
-"\n"
+"improved convenience."
+msgstr ""
+
+msgid "Floating Cart Benefits:"
 msgstr ""
 
 msgid ""
-"Floating Cart Benefits:\n"
+"<strong>Reduced Abandonment:</strong>Customers can review their cart without "
+"losing their place on your site"
 msgstr ""
 
 msgid ""
-"Reduced Abandonment: Customers can review their cart without losing their "
-"place on your site\n"
+"<strong>Improved UX:</strong> No page reloads or redirects needed to manage "
+"cart contents"
 msgstr ""
 
 msgid ""
-"Improved UX: No page reloads or redirects needed to manage cart contents\n"
+"<strong>Mobile Friendly:</strong> Touch-optimized interface perfect for "
+"mobile shopping"
 msgstr ""
 
 msgid ""
-"Mobile Friendly: Touch-optimized interface perfect for mobile shopping\n"
-msgstr ""
-
-msgid ""
-"Sales Boost: Easy access to cart encourages completion of purchases\n"
+"<strong>Sales Boost:</strong> Easy access to cart encourages completion of "
+"purchases"
 msgstr ""
 
 msgid "Checkout Form Manage"
 msgstr ""
 
-msgid ""
-"Remove checkout fields\n"
+msgid "Remove checkout fields"
 msgstr ""
 
 msgid "Select fields to remove"
@@ -1081,14 +1056,10 @@ msgstr ""
 msgid "Zip Code"
 msgstr ""
 
-msgid ""
-"Address 1\n"
-"\n"
+msgid "Address 1"
 msgstr ""
 
-msgid ""
-"Address 2\n"
-"\n"
+msgid "Address 2"
 msgstr ""
 
 msgid "Company"
@@ -1097,39 +1068,31 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-msgid ""
-"Hide Top Coupon\n"
+msgid "Hide Top Coupon"
 msgstr ""
 
-msgid ""
-"Hide Shipping Address\n"
+msgid "Hide Shipping Address"
 msgstr ""
 
-msgid ""
-"Hide Privacy Policy Text\n"
+msgid "Hide Privacy Policy Text"
 msgstr ""
 
-msgid ""
-"Hide Payment Options\n"
+msgid "Hide Payment Options"
 msgstr ""
 
-msgid ""
-"Hide Product Table\n"
+msgid "Hide Product Table"
 msgstr ""
 
 msgid "Heading Manage"
 msgstr ""
 
-msgid ""
-"Hide Billing details\n"
+msgid "Hide Billing details"
 msgstr ""
 
-msgid ""
-"Hide Additional Details\n"
+msgid "Hide Additional Details"
 msgstr ""
 
-msgid ""
-"Hide Order Review Heading\n"
+msgid "Hide Order Review Heading"
 msgstr ""
 
 msgid ""
@@ -1159,141 +1122,95 @@ msgstr ""
 msgid "You can find 'Product' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'First Name' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'First Name' in the checkout form or drawer."
 msgstr ""
 
 msgid "You can find 'Last Name' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Country' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Country' in the checkout form or drawer."
 msgstr ""
 
 msgid "You can find 'State / District' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'City' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'City' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Zip Code' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Zip Code' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Your Cart' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Your Cart' in the checkout form or drawer."
 msgstr ""
 
 msgid "You can find 'Subtotal' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Place order' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Place order' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Billing details' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Billing details' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Email address' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Email address' in the checkout form or drawer."
 msgstr ""
 
 msgid "You can find 'First name' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Last name' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Last name' in the checkout form or drawer."
 msgstr ""
 
 msgid "You can find 'Street address' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Country / Region' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Country / Region' in the checkout form or drawer."
 msgstr ""
 
 msgid "You can find 'Town / City' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'District' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'District' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Postcode / ZIP' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Postcode / ZIP' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Phone' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Phone' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Order notes' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Order notes' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Shipping' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Shipping' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Additional information' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Additional information' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Your order' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Your order' in the checkout form or drawer."
 msgstr ""
 
 msgid ""
 "You can find 'Ship to a different address?' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Select All' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Select All' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'selected' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'selected' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'You may also like' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'You may also like' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Total' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Total' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Discount' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Discount' in the checkout form or drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Place Order Button' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Place Order Button' in the checkout form or drawer."
 msgstr ""
 
 msgid ""
@@ -1301,9 +1218,7 @@ msgid ""
 "drawer."
 msgstr ""
 
-msgid ""
-"You can find 'Have a coupon?' in the checkout form or drawer.\n"
-"\n"
+msgid "You can find 'Have a coupon?' in the checkout form or drawer."
 msgstr ""
 
 msgid ""
@@ -1324,11 +1239,10 @@ msgstr ""
 
 msgid ""
 "Easily modify the Add to Cart button text, style, and functionality for a "
-"more engaging shopping experience.\n"
-"\n"
+"more engaging shopping experience."
 msgstr ""
 
-msgid " Button Behavior"
+msgid "Button Behavior"
 msgstr ""
 
 msgid " Advanced"
@@ -1347,10 +1261,6 @@ msgid "Read More Button Text"
 msgstr ""
 
 msgid "Grouped Product Button Text"
-msgstr ""
-
-msgid ""
-"Text Color\n"
 msgstr ""
 
 msgid "Button Color"
@@ -1372,44 +1282,22 @@ msgid "Button Width"
 msgstr ""
 
 msgid ""
-"\n"
-"Custom Style\n"
-msgstr ""
-
-msgid ""
-"\n"
-"Auto\n"
-msgstr ""
-
-msgid ""
-"\n"
-"No Icon\n"
-msgstr ""
-
-msgid ""
 "Add custom CSS for advanced button styling. Use the class ."
 "product_type_simple.add_to_cart_button to target the button."
 msgstr ""
 
-msgid ""
-"Enable or disable custom Add to Cart styling and functionality.\n"
-"\n"
+msgid "Enable or disable custom Add to Cart styling and functionality."
 msgstr ""
 
 msgid ""
-"Customize the text displayed on the Add to Cart button for simple products.\n"
-"\n"
+"Customize the text displayed on the Add to Cart button for simple products."
 msgstr ""
 
 msgid ""
 "Customize the text displayed on the Add to Cart button for variable products."
-"\n"
-"\n"
 msgstr ""
 
-msgid ""
-"Customize the text displayed on the Read More button.\n"
-"\n"
+msgid "Customize the text displayed on the Read More button."
 msgstr ""
 
 msgid ""
@@ -1419,12 +1307,10 @@ msgstr ""
 msgid "Display Settings"
 msgstr ""
 
-msgid "Button Display "
+msgid "Button Display"
 msgstr ""
 
-msgid ""
-"Default (WooCommerce Setting)\n"
-"\n"
+msgid "Default (WooCommerce Setting)"
 msgstr ""
 
 msgid "Always Show"
@@ -1448,15 +1334,10 @@ msgstr ""
 msgid "Redirect After Add to Cart"
 msgstr ""
 
-msgid ""
-"\n"
-"No Redirect\n"
+msgid "Notification Style"
 msgstr ""
 
-msgid "Notification Style "
-msgstr ""
-
-msgid "Notifications "
+msgid "Notifications"
 msgstr ""
 
 msgid "Success Message"
@@ -1474,54 +1355,38 @@ msgstr ""
 msgid "Control how Add to Cart buttons appear on product archive pages."
 msgstr ""
 
-msgid ""
-"Control how Add to Cart buttons behave on product archive pages.\n"
-"\n"
+msgid "Control how Add to Cart buttons behave on product archive pages."
 msgstr ""
 
-msgid ""
-"Add products to cart without page reload using AJAX.\n"
-"\n"
+msgid "Add products to cart without page reload using AJAX."
 msgstr ""
 
 msgid ""
 "Set the default quantity when adding products to cart from archive pages."
 msgstr ""
 
-msgid ""
-"Display quantity selector on shop/archive pages before adding to cart.\n"
-"\n"
+msgid "Display quantity selector on shop/archive pages before adding to cart."
+msgstr ""
+
+msgid "Choose whether to redirect customers after adding products to cart."
 msgstr ""
 
 msgid ""
-"Choose whether to redirect customers after adding products to cart.\n"
-"\n"
+"Customize how notifications are displayed when products are added to cart."
 msgstr ""
 
-msgid ""
-"Customize how notifications are displayed when products are added to cart.\n"
-"\n"
-msgstr ""
-
-msgid ""
-"Choose how to display notifications when products are added to cart.\n"
-"\n"
+msgid "Choose how to display notifications when products are added to cart."
 msgstr ""
 
 msgid ""
 "Customize the success message shown after adding to cart. Use {product} as a "
-"placeholder for the product name.\n"
-"\n"
+"placeholder for the product name."
 msgstr ""
 
-msgid ""
-"Display a 'View Cart' link in the notification message.\n"
-"\n"
+msgid "Display a 'View Cart' link in the notification message."
 msgstr ""
 
-msgid ""
-"Display a 'Checkout' link in the notification message.\n"
-"\n"
+msgid "Display a 'Checkout' link in the notification message."
 msgstr ""
 
 msgid "How long to display the notification for (in milliseconds)."
@@ -1556,40 +1421,28 @@ msgstr ""
 
 msgid ""
 "Keep the Add to Cart button visible at the bottom of the screen on mobile "
-"devices.\n"
-"\n"
+"devices."
 msgstr ""
 
 msgid ""
 "Set a different button text for mobile devices. Leave empty to use the "
-"default text.\n"
-"\n"
+"default text."
 msgstr ""
 
-msgid ""
-"Choose button size optimization for mobile devices.\n"
-"\n"
+msgid "Choose button size optimization for mobile devices."
 msgstr ""
 
-msgid ""
-"Show only the icon (without text) on mobile devices to save space.\n"
-"\n"
+msgid "Show only the icon (without text) on mobile devices to save space."
 msgstr ""
 
 msgid ""
 "WooCommerce shows a continue shopping button after a product is added to "
 "cart, with this option you can disable that link so user remain on checkout "
-"page.\n"
-"\n"
+"page."
 msgstr ""
 
 msgid ""
 "Use !important CSS rules to override theme styling (use only if needed)."
-msgstr ""
-
-msgid ""
-"\n"
-"Same as Desktop\n"
 msgstr ""
 
 msgid "Features"
@@ -1630,20 +1483,17 @@ msgstr ""
 
 msgid ""
 "Enable \"At Least One Product in Cart\" to add at least one product in the "
-"cart.\n"
-"\n"
+"cart."
 msgstr ""
 
 msgid ""
 "Enable \"Link Product Name in Checkout Page\" to make the product names "
-"clickable, redirecting customers to the product page.\n"
-"\n"
+"clickable, redirecting customers to the product page."
 msgstr ""
 
 msgid ""
 "Enable \"Disable Cart Page\" to remove the cart page from your WooCommerce "
-"store. This will redirect customers directly to the checkout page.\n"
-"\n"
+"store. This will redirect customers directly to the checkout page."
 msgstr ""
 
 msgid ""
@@ -1661,16 +1511,6 @@ msgid "Button Position"
 msgstr ""
 
 msgid ""
-"\n"
-"After Add to Cart Button\n"
-msgstr ""
-
-msgid ""
-"\n"
-"Button\n"
-msgstr ""
-
-msgid ""
 "Add custom CSS for advanced button styling. Use the class .opqvfw-btn to "
 "target the button and .opqvfw-modal to target the modal."
 msgstr ""
@@ -1678,14 +1518,11 @@ msgstr ""
 msgid "WooCommerce Quick View"
 msgstr ""
 
-msgid ""
-"Manage the quick view settings for your WooCommerce products.\n"
-"\n"
+msgid "Manage the quick view settings for your WooCommerce products."
 msgstr ""
 
 msgid ""
 "Enable Custom Quick View in the general settings tab to access these options."
-"\n"
 msgstr ""
 
 msgid "Popup Manage"
@@ -1840,8 +1677,7 @@ msgstr ""
 msgid ""
 "Configure the appearance and behavior of your floating cart. Enable the "
 "floating cart to provide users with quick access to their cart from any page "
-"on your site.\n"
-"\n"
+"on your site."
 msgstr ""
 
 msgid "Enable Sticky Cart"
@@ -1895,11 +1731,6 @@ msgstr ""
 msgid "Checkout Layout"
 msgstr ""
 
-msgid ""
-"\n"
-"Two Columns (Product & Checkout)\n"
-msgstr ""
-
 msgid "Multi-product One Page Checkout"
 msgstr ""
 
@@ -1908,8 +1739,7 @@ msgstr ""
 
 msgid ""
 "Enable direct checkout to allow customers to bypass the cart and proceed "
-"directly to checkout, streamlining the purchasing process.\n"
-"\n"
+"directly to checkout, streamlining the purchasing process."
 msgstr ""
 
 msgid "Checkout in Variable Product"
@@ -1941,12 +1771,12 @@ msgstr ""
 
 msgid ""
 "Error, duplicate 1: \n"
-"After Add to Cart Button\n"
+"After Add to Cart Button"
 msgstr ""
 
 msgid ""
 "Error, duplicate 2: Error, duplicate 1: \n"
-"After Add to Cart Button\n"
+"After Add to Cart Button"
 msgstr ""
 
 msgid "Upsells"
@@ -1969,49 +1799,37 @@ msgid ""
 "target the button."
 msgstr ""
 
-msgid ""
-"Welcome to One Page Quick Checkout for WooCommerce\n"
+msgid "Welcome to One Page Quick Checkout for WooCommerce"
 msgstr ""
 
 msgid ""
 "Thank you for installing One Page Quick Checkout for WooCommerce! Streamline "
 "your WooCommerce checkout process and boost your conversion rates with our "
-"easy-to-configure solution.\n"
-"\n"
+"easy-to-configure solution."
 msgstr ""
 
-msgid ""
-"Fast Setup\n"
+msgid "Fast Setup"
 msgstr ""
 
-msgid ""
-"Configure your checkout in minutes with our intuitive options.\n"
-"\n"
+msgid "Configure your checkout in minutes with our intuitive options."
 msgstr ""
 
-msgid ""
-"Mobile Friendly\n"
+msgid "Mobile Friendly"
 msgstr ""
 
-msgid ""
-"Responsive design works perfectly on all devices.\n"
-"\n"
+msgid "Responsive design works perfectly on all devices."
 msgstr ""
 
-msgid ""
-"Payment Gateways\n"
+msgid "Payment Gateways"
 msgstr ""
 
-msgid ""
-"Supports all major payment processors.\n"
-"\n"
+msgid "Supports all major payment processors."
 msgstr ""
 
 msgid "View Demo"
 msgstr ""
 
-msgid ""
-"Upgrade to Pro\n"
+msgid "Upgrade to Pro"
 msgstr ""
 
 msgid "View Documentation"
@@ -2065,8 +1883,7 @@ msgstr ""
 msgid "Redirect to Cart Page"
 msgstr ""
 
-msgid ""
-"Popup Checkout (Pro Features)\n"
+msgid "Popup Checkout (Pro Features)"
 msgstr ""
 
 msgid "Side Cart Slide-in"
@@ -2214,19 +2031,13 @@ msgstr ""
 msgid "Button"
 msgstr ""
 
-msgid ""
-"Icon Only\n"
+msgid "Icon Only"
 msgstr ""
 
 msgid "Text with Icon"
 msgstr ""
 
-msgid ""
-"After Product Image\n"
-msgstr ""
-
-msgid ""
-"After Add to Cart Button\n"
+msgid "After Product Image"
 msgstr ""
 
 msgid ""
@@ -2282,26 +2093,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Enable \"At Least One Product in Cart\" to add at least one product in the "
-"cart."
-msgstr ""
-
-msgid ""
-"Enable \"Link Product Name in Checkout Page\" to make the product names "
-"clickable, redirecting customers to the product page."
-msgstr ""
-
-msgid ""
-"Enable \"Disable Cart Page\" to remove the cart page from your WooCommerce "
-"store. This will redirect customers directly to the checkout page."
-msgstr ""
-
-msgid ""
 "Enable \"Add Image Before Product\" to display product images before their "
 "titles in the checkout form."
-msgstr ""
-
-msgid "Enable or disable custom Add to Cart styling and functionality."
 msgstr ""
 
 msgid "Plus Icon"
@@ -2311,17 +2104,6 @@ msgid "Shopping Bag Icon"
 msgstr ""
 
 msgid "Basket Icon"
-msgstr ""
-
-msgid ""
-"Customize the text displayed on the Add to Cart button for simple products."
-msgstr ""
-
-msgid ""
-"Customize the text displayed on the Add to Cart button for variable products."
-msgstr ""
-
-msgid "Customize the text displayed on the Read More button."
 msgstr ""
 
 msgid "Single Product Pages"
@@ -2352,4 +2134,73 @@ msgid "Onpage Checkout"
 msgstr ""
 
 msgid "Documentation"
+msgstr ""
+
+msgid "Unlock Premium Features"
+msgstr ""
+
+msgid "Two Columns (Product & Checkout)"
+msgstr ""
+
+msgid "One Column (Stacked)"
+msgstr ""
+
+msgid "Product First, Then Checkout"
+msgstr ""
+
+msgid "Display Type"
+msgstr ""
+
+msgid "Eye Icon"
+msgstr ""
+
+msgid "Search Icon"
+msgstr ""
+
+msgid "Zoom Icon"
+msgstr ""
+
+msgid "Preview Icon"
+msgstr ""
+
+msgid "Rounded Style"
+msgstr ""
+
+msgid "Modern Style (Pro Feature)"
+msgstr ""
+
+msgid "Minimal Style (Pro Feature)"
+msgstr ""
+
+msgid "Checkout Page"
+msgstr ""
+
+msgid "Cart Page"
+msgstr ""
+
+msgid "No Redirect"
+msgstr ""
+
+msgid "Default WooCommerce Notices"
+msgstr ""
+
+msgid "Popup Message"
+msgstr ""
+
+msgid "Toast Notification"
+msgstr ""
+
+msgid "Mini Cart Preview"
+msgstr ""
+
+msgid "Settings to ensure compatibility with various themes and plugins."
+msgstr ""
+
+msgid "Same as Desktop"
+msgstr ""
+
+msgid "Larger"
+msgstr ""
+
+msgid "Smaller"
 msgstr ""
