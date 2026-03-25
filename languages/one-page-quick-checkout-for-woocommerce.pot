@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 08:30+0000\n"
+"POT-Creation-Date: 2026-03-19 09:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -1908,7 +1908,8 @@ msgstr ""
 
 msgid ""
 "Enable direct checkout to allow customers to bypass the cart and proceed "
-"directly to checkout, streamlining the purchasing process."
+"directly to checkout, streamlining the purchasing process.\n"
+"\n"
 msgstr ""
 
 msgid "Checkout in Variable Product"
@@ -2330,4 +2331,28 @@ msgid "Product Pages"
 msgstr ""
 
 msgid "Others"
+msgstr ""
+
+msgid ""
+"Configure one-page checkout for individual product pages. Enable one-page "
+"checkout for specific products from the WooCommerce product edit screen."
+msgstr ""
+
+msgid ""
+"We collect non-sensitive technical details from your website, like the PHP "
+"version and features usage, to help us troubleshoot issues faster, make "
+"informed development decisions, and build features that truly benefit you. "
+"Learn more..."
+msgstr ""
+
+msgid "Content Elements"
+msgstr ""
+
+msgid "Onpage Checkout"
+msgstr ""
+
+msgid "Documentation"
+msgstr ""
+
+msgid "Unlock Premium Features"
 msgstr ""

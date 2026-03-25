@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-17 04:47+0000\n"
-"PO-Revision-Date: 2026-03-17 08:48+0000\n"
+"PO-Revision-Date: 2026-03-19 09:54+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.8.3; wp-6.9; php-8.2.29\n"
+"X-Loco-Version: 2.8.3; wp-6.9.4; php-8.2.29\n"
 "X-Domain: one-page-quick-checkout-for-woocommerce"
 
 msgid ""
@@ -34,9 +34,6 @@ msgid ""
 "\n"
 "Custom Style\n"
 msgstr "কাস্টম স্টাইল"
-
-msgid "Direct Checkout"
-msgstr "সরাসরি চেকআউট"
 
 msgid ""
 "\n"
@@ -277,7 +274,7 @@ msgstr "পুরস্কার"
 #: includes/elementor/plugincy-cart-widget.php:207
 #: includes/elementor/plugincy-cart-widget.php:654
 msgid "Background Color"
-msgstr "পটভূমির রঙ"
+msgstr "ব্যাকগ্রউন্ডের রঙ"
 
 #: includes/trusted-badge.php:72
 msgid "Badge Position"
@@ -334,8 +331,9 @@ msgstr "অ্যাড টু কার্ট বাটনের নিচে"
 msgid "Button"
 msgstr "বাটন"
 
-msgid ""
-"Button Color\n"
+#| msgid ""
+#| "Button Color\n"
+msgid "Button Color"
 msgstr "বাটনের রঙ"
 
 msgid "Button Display "
@@ -468,8 +466,9 @@ msgstr "চেকআউট ফর্ম পরিচালনা"
 msgid "Checkout Icon"
 msgstr "চেকআউট আইকন"
 
-msgid ""
-"Checkout in Variable Product\n"
+#| msgid ""
+#| "Checkout in Variable Product\n"
+msgid "Checkout in Variable Product"
 msgstr "পরিবর্তনশীল পণ্যের জন্য চেকআউট"
 
 msgid "Checkout Layout"
@@ -597,6 +596,13 @@ msgid "Complete your purchase using the form below."
 msgstr "নিচের ফর্মটি ব্যবহার করে আপনার কেনাকাটা সম্পন্ন করুন।"
 
 msgid ""
+"Configure one-page checkout for individual product pages. Enable one-page "
+"checkout for specific products from the WooCommerce product edit screen."
+msgstr ""
+"একক পণ্যের পৃষ্ঠার জন্য এক-পৃষ্ঠার চেকআউট কনফিগার করুন এবং WooCommerce পণ্য "
+"সম্পাদনা স্ক্রিন থেকে নির্দিষ্ট পণ্যের জন্য এক-পৃষ্ঠার চেকআউট সক্রিয় করুন।"
+
+msgid ""
 "Configure settings for the multi-product one-page checkout shortcode. Use:\n"
 "[plugincy_one_page_checkout product_ids=\"152,153,151,142\" "
 "template=\"product-tabs\"]"
@@ -632,6 +638,9 @@ msgstr ""
 #: admin/license-tab.php:446
 msgid "Contact Support"
 msgstr "সহায়তার জন্য যোগাযোগ করুন"
+
+msgid "Content Elements"
+msgstr "বিষয়বস্তুর উপাদানসমূহ"
 
 msgid "Contribute to Plugincy"
 msgstr "Plugincy-তে অবদান রাখুন"
@@ -800,6 +809,9 @@ msgstr "ডিফল্ট WooCommerce স্টাইল"
 msgid "Detect Product from Context"
 msgstr "প্রসঙ্গ থেকে পণ্য সনাক্ত করুন"
 
+msgid "Direct Checkout"
+msgstr "সরাসরি চেকআউট"
+
 msgid "Disable Cart Page"
 msgstr "কার্ট পৃষ্ঠা অক্ষম করুন"
 
@@ -842,6 +854,9 @@ msgstr "জেলা"
 msgid "DIV"
 msgstr "ডিআইভি"
 
+msgid "Documentation"
+msgstr "নথিপত্র "
+
 #: includes/elementor/plugincy-cart-widget.php:179
 msgid "Drawer"
 msgstr "ড্রয়ার"
@@ -876,8 +891,8 @@ msgid ""
 "Enable \"Add Image Before Product\" to display product images before their "
 "titles in the checkout form."
 msgstr ""
-"চেকআউট ফর্মে পণ্যের শিরোনামের আগে পণ্যের ছবি প্রদর্শন করতে \"Add Image "
-"Before Product\" সক্ষম করুন।"
+"চেকআউট ফর্মে শিরোনামের আগে পণ্যের ছবি প্রদর্শনের জন্য \"পণ্যের আগে ছবি যোগ "
+"করুন\" সক্রিয় করুন।"
 
 msgid ""
 "Enable \"At Least One Product in Cart\" to add at least one product in the "
@@ -959,6 +974,10 @@ msgstr ""
 msgid "Enable Direct Checkout"
 msgstr "সরাসরি চেকআউট সক্ষম করুন"
 
+#, fuzzy
+#| msgid ""
+#| "Enable direct checkout to allow customers to bypass the cart and proceed "
+#| "directly to checkout, streamlining the purchasing process."
 msgid ""
 "Enable direct checkout to allow customers to bypass the cart and proceed "
 "directly to checkout, streamlining the purchasing process.\n"
@@ -1537,6 +1556,9 @@ msgstr "WooCommerce এর জন্য এক পৃষ্ঠার দ্র�
 #: includes/elementor/onepaquc-checkout-widget.php:18
 msgid "One-Page Checkout"
 msgstr "এক-পৃষ্ঠার চেকআউট"
+
+msgid "Onpage Checkout"
+msgstr "অন-পেজ চেকআউট"
 
 msgid "Order notes"
 msgstr "অর্ডার নোট"
@@ -2178,6 +2200,17 @@ msgstr "বিস্তারিত দেখুন লিঙ্ক"
 
 msgid "View Documentation"
 msgstr "ডকুমেন্টেশন দেখুন"
+
+msgid ""
+"We collect non-sensitive technical details from your website, like the PHP "
+"version and features usage, to help us troubleshoot issues faster, make "
+"informed development decisions, and build features that truly benefit you. "
+"Learn more..."
+msgstr ""
+"আমরা আপনার ওয়েবসাইট থেকে অ-সংবেদনশীল প্রযুক্তিগত তথ্য সংগ্রহ করি, যেমন PHP "
+"সংস্করণ এবং ফিচার ব্যবহারের তথ্য, যাতে আমরা দ্রুত সমস্যার সমাধান করতে পারি, "
+"উন্নয়ন সংক্রান্ত সিদ্ধান্তগুলো সচেতনভাবে নিতে পারি এবং এমন ফিচার তৈরি করতে "
+"পারি যা সত্যিই আপনার জন্য উপকারী। আরও জানুন..."
 
 #: includes/trusted-badge.php:50
 msgid "Website"

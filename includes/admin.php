@@ -10,27 +10,29 @@ function onepaquc_cart_menu()
 {
 
     add_menu_page(
-        'Onpage Checkout',
-        'Onpage Checkout',
+        __('Onpage Checkout', 'one-page-quick-checkout-for-woocommerce'), // Page title
+        __('Onpage Checkout', 'one-page-quick-checkout-for-woocommerce'), // Menu title
         'manage_options',
         'onepaquc_cart',
         'onepaquc_cart_dashboard',
         'dashicons-cart', // Shopping cart icon
         '55.50'
     );
+
     add_submenu_page(
         'onepaquc_cart',
-        'Documentation',
-        'Documentation',
+        __('Documentation', 'one-page-quick-checkout-for-woocommerce'), // Page title
+        __('Documentation', 'one-page-quick-checkout-for-woocommerce'), // Menu title
         'manage_options',
         'onepaquc_cart_documentation',
         'onepaquc_cart_documentation'
     );
 
+
     add_submenu_page(
         'onepaquc_cart',
-        'Get Pro',
-        'Get Pro',
+        __('Get Pro', 'one-page-quick-checkout-for-woocommerce'), // Page title
+        __('Get Pro', 'one-page-quick-checkout-for-woocommerce'), // Menu title
         'manage_options',
         'onepaquc_cart_get_pro',
         'onepaquc_cart_get_pro'
@@ -43,11 +45,17 @@ function onepaquc_cart_get_pro()
 {
 ?>
     <div class="wrap">
-        <h1>Upgrade to Onepage Checkout Pro</h1>
+        <h1>
+            <?php esc_html_e('Upgrade to Onepage Checkout Pro', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </h1>
+
 
 
         <div class="onepaquc-pro-banner" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin: 20px 0;">
-            <h2 style="color: white; margin-top: 0;">🚀 Unlock Premium Features</h2>
+            <h2 style="color: white; margin-top: 0;">
+                <?php esc_html_e('🚀 Unlock Premium Features', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </h2>
+
             <p style="font-size: 18px; margin-bottom: 30px;">Take your checkout experience to the next level with our premium features designed to boost conversions and enhance user experience.</p>
             <a target="_blank" href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button button-primary button-hero" style="background: #ff6b6b; border-color: #ff6b6b; text-shadow: none; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);">Get Pro Version</a>
         </div>
@@ -181,57 +189,77 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title"> <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?> <span class="version-tag">v1.3.6</span> </div>
-        <p style="max-width: 70%; margin:0 auto;"> <?php esc_html_e( 'Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.', 'one-page-quick-checkout-for-woocommerce' ); ?> </p>
+        <<<<<<< HEAD
+            <div class="welcome-title"> <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?> <span class="version-tag">v1.3.6</span>
+    </div>
+    <p style="max-width: 70%; margin:0 auto;"> <?php esc_html_e('Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.', 'one-page-quick-checkout-for-woocommerce'); ?> </p>
+    =======
+    <div class="welcome-title">
+        <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?>
+        <span class="version-tag">v1.3.5</span>
+    </div>
 
-        <div class="feature-grid">
-            <div class="feature-item">
-                <div class="feature-icon">
-                    <svg fill="#fff" width="30" height="30" viewBox="-0.282 -0.132 0.9 0.9" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin" class="jam jam-thunder-f">
-                        <path d="M.214.186h.068a.057.057 0 0 1 .051.078L.184.611A.039.039 0 0 1 .109.596v-.26L.054.334A.06.06 0 0 1 0 .279V.057A.06.06 0 0 1 .057 0h.101a.06.06 0 0 1 .057.057z" />
-                    </svg>
-                </div>
-                <h3>
-        <?php esc_html_e('Fast Setup', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </h3>
-    <p>
-        <?php esc_html_e('Configure your checkout in minutes with our intuitive options.', 'one-page-quick-checkout-for-woocommerce'); ?>
+    <p style="max-width: 70%; margin:0 auto;">
+        <?php esc_html_e(
+            'Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.',
+            'one-page-quick-checkout-for-woocommerce'
+        ); ?>
     </p>
-            </div>
-            <div class="feature-item" style="background: #ebfcf1;">
-                <div class="feature-icon" style="background: #22c55e;">
-                    <svg width="30" height="30" viewBox="0 0 0.75 0.75" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#fff" d="M.563 0a.075.075 0 0 1 .075.075v.6A.075.075 0 0 1 .563.75H.188A.075.075 0 0 1 .113.675v-.6A.075.075 0 0 1 .188 0zm.022.577h-.42v.098a.02.02 0 0 0 .022.022h.375A.02.02 0 0 0 .584.675zM.375.6a.037.037 0 1 1 0 .075.037.037 0 0 1 0-.075M.563.053H.188a.02.02 0 0 0-.022.022v.45h.42v-.45A.02.02 0 0 0 .564.053" />
-                    </svg>
-                </div>
-                <h3>Mobile Friendly</h3>
-                <p>Responsive design works perfectly on all devices.</p>
-            </div>
-            <div class="feature-item" style="background: #f8f2ff;">
-                <div class="feature-icon" style="background: #a855f7;">
-                    <svg width="30" height="30" viewBox="0 0 0.9 0.9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M.075.319h.75m-.6.3H.3m.094 0h.15" stroke="#fff" stroke-width=".056" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M.241.131h.417c.134 0 .167.033.167.165v.308c0 .132-.033.165-.167.165H.241C.108.769.074.736.074.605V.297c0-.132.033-.165.167-.165" stroke="#fff" stroke-width=".056" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </div>
-                <h3>Payment Gateways</h3>
-                <p>Supports all major payment processors.</p>
-            </div>
-        </div>
 
-        <div class="button-row">
-            <a href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" target="_blank" class="button" style="background: #ff5a36; color: #fff;">
-                <span class="dashicons dashicons-star-filled" style=" margin-right: 5px; "></span>
-                <?php echo esc_html__('Upgrade to Pro', 'one-page-quick-checkout-for-woocommerce'); ?>
-            </a>
-            <a target="_blank" href="https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ed8936;color: white;"><span class="dashicons dashicons-visibility" style=" margin-right: 5px; "></span> View Demo</a>
-            <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button"><span class="dashicons dashicons-book" style=" margin-right: 5px; "></span> View Documentation</a>
-            <a href="https://plugincy.com/support" target="_blank" class="button button-secondary"><span class="dashicons dashicons-sos" style=" margin-right: 5px; "></span> Get Support</a>
+    >>>>>>> Tanveer
+
+    <div class="feature-grid">
+        <div class="feature-item">
+            <div class="feature-icon">
+                <svg fill="#fff" width="30" height="30" viewBox="-0.282 -0.132 0.9 0.9" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin" class="jam jam-thunder-f">
+                    <path d="M.214.186h.068a.057.057 0 0 1 .051.078L.184.611A.039.039 0 0 1 .109.596v-.26L.054.334A.06.06 0 0 1 0 .279V.057A.06.06 0 0 1 .057 0h.101a.06.06 0 0 1 .057.057z" />
+                </svg>
+            </div>
+            <h3>
+                <?php esc_html_e('Fast Setup', 'one-page-quick-checkout-for-woocommerce'); ?>
+
+            </h3>
+            <p>
+                <?php esc_html_e('Configure your checkout in minutes with our intuitive options.', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </p>
         </div>
+        <div class="feature-item" style="background: #ebfcf1;">
+            <div class="feature-icon" style="background: #22c55e;">
+                <svg width="30" height="30" viewBox="0 0 0.75 0.75" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#fff" d="M.563 0a.075.075 0 0 1 .075.075v.6A.075.075 0 0 1 .563.75H.188A.075.075 0 0 1 .113.675v-.6A.075.075 0 0 1 .188 0zm.022.577h-.42v.098a.02.02 0 0 0 .022.022h.375A.02.02 0 0 0 .584.675zM.375.6a.037.037 0 1 1 0 .075.037.037 0 0 1 0-.075M.563.053H.188a.02.02 0 0 0-.022.022v.45h.42v-.45A.02.02 0 0 0 .564.053" />
+                </svg>
+            </div>
+            <h3>Mobile Friendly</h3>
+            <p>Responsive design works perfectly on all devices.</p>
+        </div>
+        <div class="feature-item" style="background: #f8f2ff;">
+            <div class="feature-icon" style="background: #a855f7;">
+                <svg width="30" height="30" viewBox="0 0 0.9 0.9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M.075.319h.75m-.6.3H.3m.094 0h.15" stroke="#fff" stroke-width=".056" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M.241.131h.417c.134 0 .167.033.167.165v.308c0 .132-.033.165-.167.165H.241C.108.769.074.736.074.605V.297c0-.132.033-.165.167-.165" stroke="#fff" stroke-width=".056" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <h3>Payment Gateways</h3>
+            <p>Supports all major payment processors.</p>
+        </div>
+    </div>
+
+    <div class="button-row">
+        <a href="https://plugincy.com/one-page-quick-checkout-for-woocommerce/" target="_blank" class="button" style="background: #ff5a36; color: #fff;">
+            <span class="dashicons dashicons-star-filled" style=" margin-right: 5px; "></span>
+            <?php echo esc_html__('Upgrade to Pro', 'one-page-quick-checkout-for-woocommerce'); ?>
+        </a>
+        <a target="_blank" href="https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/" class="button" style="background: #ed8936;color: white;"><span class="dashicons dashicons-visibility" style=" margin-right: 5px; "></span> View Demo</a>
+        <a target="_blank" href="https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/" class="button"><span class="dashicons dashicons-book" style=" margin-right: 5px; "></span> View Documentation</a>
+        <a href="https://plugincy.com/support" target="_blank" class="button button-secondary"><span class="dashicons dashicons-sos" style=" margin-right: 5px; "></span> Get Support</a>
+    </div>
 
     </div>
 
-    <h1 style="padding-top: 3rem;">Dashboard</h1>
+    <h1 style="padding-top: 3rem;">
+        <?php esc_html_e('Dashboard', 'one-page-quick-checkout-for-woocommerce'); ?>
+    </h1>
+
     <?php
     // if (get_option('onepaquc_validity_days') === "0" || !get_option('onepaquc_api_key')) {
     //     echo "<p style='color:red;'>To use the plugin please active your API key first.</p>";
@@ -241,49 +269,49 @@ function onepaquc_cart_dashboard()
         <div class="tabs">
             <div class="tab active" data-tab="4">
                 <span class="dashicons dashicons-cart"></span>
-    <?php esc_html_e('Direct Checkout', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+                <?php esc_html_e('Direct Checkout', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
 
-<div class="tab" data-tab="2">
-    <span class="dashicons dashicons-admin-page"></span>
-    <?php esc_html_e('One Page Checkout', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+            <div class="tab" data-tab="2">
+                <span class="dashicons dashicons-admin-page"></span>
+                <?php esc_html_e('One Page Checkout', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
 
-<div class="tab" data-tab="9">
-    <span class="dashicons dashicons-archive"></span>
-    <?php esc_html_e('Floating Cart', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+            <div class="tab" data-tab="9">
+                <span class="dashicons dashicons-archive"></span>
+                <?php esc_html_e('Floating Cart', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
 
-<div class="tab" data-tab="7">
-    <span class="dashicons dashicons-visibility"></span>
-    <?php esc_html_e('Quick View', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+            <div class="tab" data-tab="7">
+                <span class="dashicons dashicons-visibility"></span>
+                <?php esc_html_e('Quick View', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
 
-<div class="tab" data-tab="5">
-    <span class="dashicons dashicons-star-filled"></span>
-    <?php esc_html_e('Features', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+            <div class="tab" data-tab="5">
+                <span class="dashicons dashicons-star-filled"></span>
+                <?php esc_html_e('Features', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
 
-<div class="tab" data-tab="8">
-    <span class="dashicons dashicons-plus-alt"></span>
-    <?php esc_html_e('Add To Cart', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+            <div class="tab" data-tab="8">
+                <span class="dashicons dashicons-plus-alt"></span>
+                <?php esc_html_e('Add To Cart', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
 
             <div class="tab" data-tab="1"> <span class="dashicons dashicons-forms"></span> <?php esc_html_e('Checkout Form', 'one-page-quick-checkout-for-woocommerce'); ?> </div>
             <div class="tab" data-tab="3">
-    <span class="dashicons dashicons-edit"></span>
-    <?php esc_html_e('Text Manage', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+                <span class="dashicons dashicons-edit"></span>
+                <?php esc_html_e('Text Manage', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
 
-<div class="tab" data-tab="6">
-    <span class="dashicons dashicons-admin-settings"></span>
-    <?php esc_html_e('Advanced Settings', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+            <div class="tab" data-tab="6">
+                <span class="dashicons dashicons-admin-settings"></span>
+                <?php esc_html_e('Advanced Settings', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
 
-<div class="tab" data-tab="100">
-    <span class="dashicons dashicons-admin-network"></span>
-    <?php esc_html_e('Plugin License', 'one-page-quick-checkout-for-woocommerce'); ?>
-</div>
+            <div class="tab" data-tab="100">
+                <span class="dashicons dashicons-admin-network"></span>
+                <?php esc_html_e('Plugin License', 'one-page-quick-checkout-for-woocommerce'); ?>
+            </div>
         </div>
         <script>
             function getCheckboxByName(name, scope = document) {
@@ -376,11 +404,14 @@ function onepaquc_cart_dashboard()
             <?php wp_nonce_field('onepaquc_cart_settings'); ?>
             <?php settings_fields('onepaquc_cart_settings'); ?>
             <div class="tab-content plugincy_card" id="tab-1" style="margin-top: 20px;">
-                <?php $onepaquc_helper->sec_head( 'h2', 'plugincy_sec_head', '<span class="dashicons dashicons-forms"></span>', __('Checkout Form Manage', 'one-page-quick-checkout-for-woocommerce'), __('Customize the checkout form fields and headings to enhance user experience.', 'one-page-quick-checkout-for-woocommerce') ); ?>
+                <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-forms"></span>', __('Checkout Form Manage', 'one-page-quick-checkout-for-woocommerce'), __('Customize the checkout form fields and headings to enhance user experience.', 'one-page-quick-checkout-for-woocommerce')); ?>
                 <table class="form-table plugincy_table mb-4">
                     <tbody class="plugincy_grid">
                         <tr valign="top">
-                            <th scope="row">Remove checkout fields</th>
+                            <th scope="row">
+                                <?php esc_html_e('Remove checkout fields', 'one-page-quick-checkout-for-woocommerce'); ?>
+                            </th>
+
                             <td>
                                 <!-- multiple select options -->
                                 <select class="remove_checkout_fields chosen_select select2-hidden-accessible enhanced" name="onepaquc_checkout_fields[]" id="qlwcdc_remove_checkout_fields" multiple>
@@ -404,7 +435,7 @@ function onepaquc_cart_dashboard()
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?php $onepaquc_helper->sec_head( 'h3', 'plugincy_sec_head', '', __('Heading Manage', 'one-page-quick-checkout-for-woocommerce'), __('Customize the headings of the checkout form fields to enhance user experience.', 'one-page-quick-checkout-for-woocommerce') ); ?>
+                <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '', __('Heading Manage', 'one-page-quick-checkout-for-woocommerce'), __('Customize the headings of the checkout form fields to enhance user experience.', 'one-page-quick-checkout-for-woocommerce')); ?>
                 <table class="form-table plugincy_table">
                     <?php foreach (onepaquc_onpcheckout_heading() as $key => $field) : ?>
                         <tr valign="top">
@@ -467,12 +498,30 @@ function onepaquc_cart_dashboard()
 
                 <div class="plugincy_row">
                     <div class="plugincy_col-5 plugincy_card">
-                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<svg fill="#fff" height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve">
-                                    <path d="M8.424 2.56H7.57v.426a.855.855 0 0 1-1.708 0V2.56H4.156v.426a.855.855 0 0 1-1.708 0V2.56h-.85c0 4.266-.426 7.68-.426 7.68h7.68c-.002 0-.428-3.414-.428-7.68m-5.12.854c.236 0 .426-.19.426-.426v-.854c0-.708.572-1.28 1.28-1.28s1.28.572 1.28 1.28v.854a.425.425 0 1 0 .852 0v-.854C7.144.956 6.188 0 5.01 0S2.876.956 2.876 2.134v.854a.43.43 0 0 0 .428.426" />
-                                </svg>', 'One Page Checkout in Single Product', 'Configure one-page checkout for individual product pages. Enable one-page checkout for specific products from the WooCommerce product edit screen.'); ?>
+                        <?php
+                        $onepaquc_helper->sec_head(
+                            'h2',
+                            'plugincy_sec_head',
+                            '<svg fill="#fff" height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve">
+        <path d="M8.424 2.56H7.57v.426a.855.855 0 0 1-1.708 0V2.56H4.156v.426a.855.855 0 0 1-1.708 0V2.56h-.85c0 4.266-.426 7.68-.426 7.68h7.68c-.002 0-.428-3.414-.428-7.68m-5.12.854c.236 0 .426-.19.426-.426v-.854c0-.708.572-1.28 1.28-1.28s1.28.572 1.28 1.28v.854a.425.425 0 1 0 .852 0v-.854C7.144.956 6.188 0 5.01 0S2.876.956 2.876 2.134v.854a.43.43 0 0 0 .428.426" />
+    </svg>',
+                            __('One Page Checkout in Single Product', 'one-page-quick-checkout-for-woocommerce'),
+                            __('Configure one-page checkout for individual product pages. Enable one-page checkout for specific products from the WooCommerce product edit screen.', 'one-page-quick-checkout-for-woocommerce')
+                        );
+                        ?>
+
                         <table class="form-table plugincy_table">
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable One Page Checkout', 'Enable one-page checkout for single product page.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Enable One Page Checkout', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Enable one-page checkout for single product page.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td>
                                     <?php
                                     $onepaquc_helper->switcher('onpage_checkout_enable');
@@ -480,14 +529,32 @@ function onepaquc_cart_dashboard()
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable for All Products', 'Enable one-page checkout for all products without individual selection.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Enable for All Products', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Enable one-page checkout for all products without individual selection.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_enable_all', 0); ?>
 
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Form Position', 'Set the priority of the one-page checkout form. The default value is 9, but not all values work with every theme. So, adjust it based on your theme.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Form Position', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Set the priority of the one-page checkout form. The default value is 9, but not all values work with every theme. So, adjust it based on your theme.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td>
                                     <?php
                                     // Get the saved value or default to 9 if not set or empty
@@ -500,7 +567,16 @@ function onepaquc_cart_dashboard()
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Empty Cart on Page Load', 'Clear existing cart items when the one-page checkout product page loads.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Empty Cart on Page Load', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Clear existing cart items when the one-page checkout product page loads.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_cart_empty', 0); ?>
                                 </td>
@@ -509,19 +585,46 @@ function onepaquc_cart_dashboard()
                             </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Add to Cart on Page Load', 'Automatically add the product to cart when the page loads.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Add to Cart on Page Load', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Automatically add the product to cart when the page loads.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_cart_add', 1, "If you turn it off one page checkout will not work properly."); ?>
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Hide Add to Cart Button', 'Hide the regular Add to Cart button on one-page checkout product pages.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Hide Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Hide the regular Add to Cart button on one-page checkout product pages.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_hide_cart_button', 0); ?>
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Checkout Layout', 'Select the layout for the one-page checkout form.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Checkout Layout', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Select the layout for the one-page checkout form.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td class="pro-only">
                                     <select disabled name="onpage_checkout_layout">
                                         <option value="two_column" <?php selected(get_option('onpage_checkout_layout', 'two_column'), 'two_column'); ?>>Two Columns (Product & Checkout)</option>
@@ -549,16 +652,43 @@ function onepaquc_cart_dashboard()
                         });
                     </script>
                     <div class="plugincy_col-5 plugincy_card">
-                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-forms"></span>', 'Multi-product One Page Checkout', 'Configure settings for the multi-product one-page checkout shortcode. Use: [plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"]'); ?>
+                        <?php
+                        $onepaquc_helper->sec_head(
+                            'h2',
+                            'plugincy_sec_head',
+                            '<span class="dashicons dashicons-forms"></span>',
+                            __('Multi-product One Page Checkout', 'one-page-quick-checkout-for-woocommerce'),
+                            __('Configure settings for the multi-product one-page checkout shortcode. Use: [plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"]', 'one-page-quick-checkout-for-woocommerce')
+                        );
+                        ?>
+
                         <table class="form-table plugincy_table">
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Empty Cart on Page Load', 'Clear existing cart items when a multi-product one-page checkout page loads.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Empty Cart on Page Load', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Clear existing cart items when a multi-product one-page checkout page loads.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_empty'); ?>
                                 </td>
                             </tr>
                             <tr valign="top">
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Add to Cart on Page Load', 'Automatically add the first product to cart when the page loads.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Add to Cart on Page Load', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Automatically add the first product to cart when the page loads.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td>
                                     <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_add'); ?>
                                 </td>
@@ -569,30 +699,62 @@ function onepaquc_cart_dashboard()
             </div>
             <div class="tab-content" id="tab-9">
                 <div class="mb-4">
-                    <?php $onepaquc_helper->sec_head('h2', '', '<span class="dashicons dashicons-cart"></span>', 'Floating Cart Settings', ''); ?>
-                    <p class="description">Configure the appearance and behavior of your floating cart. Enable the floating cart to provide users with quick access to their cart from any page on your site.</p>
+                    <?php
+                    $onepaquc_helper->sec_head(
+                        'h2',
+                        '',
+                        '<span class="dashicons dashicons-cart"></span>',
+                        __('Floating Cart Settings', 'one-page-quick-checkout-for-woocommerce'),
+                        ''
+                    );
+                    ?>
+                    <p class="description">
+                        <?php esc_html_e(
+                            'Configure the appearance and behavior of your floating cart. Enable the floating cart to provide users with quick access to their cart from any page on your site.',
+                            'one-page-quick-checkout-for-woocommerce'
+                        ); ?>
+                    </p>
                 </div>
+
 
                 <div class="plugincy_row mb-4">
                     <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', 'General settings for the floating cart.'); ?>
+                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', __('General Settings', 'one-page-quick-checkout-for-woocommerce'), __('General settings for the floating cart.', 'one-page-quick-checkout-for-woocommerce')); ?>
 
                         <table class="form-table plugincy_table">
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Enable Sticky Cart', 'Enable or disable the sticky cart functionality.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Enable Sticky Cart', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Enable or disable the sticky cart functionality.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td class="rmenu-settings-control">
                                     <?php $onepaquc_helper->switcher('rmenu_enable_sticky_cart', 0); ?>
                                 </td>
                             </tr>
 
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Cart Checkout Behavior', 'Choose the behavior of the cart checkout process.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Cart Checkout Behavior', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Choose the behavior of the cart checkout process.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td class="pro-only">
                                     <select name="rmenu_cart_checkout_behavior" class="rmenu-select">
                                         <option value="direct_checkout" <?php selected(get_option('rmenu_cart_checkout_behavior', 'direct_checkout'), 'direct_checkout'); ?>>Direct Checkout</option>
                                         <option disabled value="pro" <?php selected(get_option('rmenu_cart_checkout_behavior', 'side_cart'), 'pro'); ?>>
-    <?php esc_html_e('Popup Checkout (Pro Features)', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                            <?php esc_html_e('Popup Checkout (Pro Features)', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </option>
 
                                     </select>
                                     <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
@@ -602,17 +764,43 @@ function onepaquc_cart_dashboard()
                     </div>
 
                     <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                        <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-move"></span>', 'Position Settings', 'Configure the position of the floating cart.'); ?>
+                        <?php
+                        $onepaquc_helper->sec_head(
+                            'h2',
+                            'plugincy_sec_head',
+                            '<span class="dashicons dashicons-move"></span>',
+                            __('Position Settings', 'one-page-quick-checkout-for-woocommerce'),
+                            __('Configure the position of the floating cart.', 'one-page-quick-checkout-for-woocommerce')
+                        );
+                        ?>
+
 
                         <table class="form-table plugincy_table">
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Top Position', 'Set the top position of the floating cart.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Top Position', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Set the top position of the floating cart.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
                                 <td class="rmenu-settings-control">
                                     <input type="text" name="rmenu_cart_top_position" value="<?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>" class="regular-text" />
                                 </td>
                             </tr>
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', '', '', 'Left Position', 'Set the left position of the floating cart.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    '',
+                                    '',
+                                    __('Left Position', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Set the left position of the floating cart.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td class="rmenu-settings-control">
                                     <input type="text" name="rmenu_cart_left_position" value="<?php echo esc_attr(get_option('rmenu_cart_left_position', '100%')); ?>" class="regular-text" />
                                 </td>
@@ -622,43 +810,75 @@ function onepaquc_cart_dashboard()
                 </div>
 
                 <div class="rmenu-settings-section plugincy_card">
-                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style Settings', 'Configure the style of the floating cart button.'); ?>
+                    <?php
+                    $onepaquc_helper->sec_head(
+                        'h2',
+                        'plugincy_sec_head',
+                        '<span class="dashicons dashicons-admin-appearance"></span>',
+                        __('Button Style Settings', 'one-page-quick-checkout-for-woocommerce'),
+                        __('Configure the style of the floating cart button.', 'one-page-quick-checkout-for-woocommerce')
+                    );
+                    ?>
+
 
                     <div class="rmenu-settings-row rmenu-settings-row-columns">
                         <div class="rmenu-settings-column">
                             <div class="rmenu-settings-field plugincy_row items_center">
-                                <label class="rmenu-settings-label">Background Color</label>
+                                <label class="rmenu-settings-label">
+                                    <?php esc_html_e('Background Color', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                </label>
                                 <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>" class="rmenu-color-picker" />
+                                    <input type="color"
+                                        name="rmenu_cart_bg_color"
+                                        value="<?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>"
+                                        class="rmenu-color-picker" />
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="rmenu-settings-column">
                             <div class="rmenu-settings-field plugincy_row items_center">
-                                <label class="rmenu-settings-label">Text Color</label>
+                                <label class="rmenu-settings-label">
+                                    <?php esc_html_e('Text Color', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                </label>
                                 <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                    <input type="color"
+                                        name="rmenu_cart_text_color"
+                                        value="<?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>"
+                                        class="rmenu-color-picker" />
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
                     <div class="rmenu-settings-row rmenu-settings-row-columns">
                         <div class="rmenu-settings-column">
                             <div class="rmenu-settings-field plugincy_row items_center">
-                                <label class="rmenu-settings-label">Hover Background</label>
+                                <label class="rmenu-settings-label">
+                                    <?php esc_html_e('Hover Background', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                </label>
                                 <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_hover_bg" value="<?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>" class="rmenu-color-picker" />
+                                    <input type="color"
+                                        name="rmenu_cart_hover_bg"
+                                        value="<?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>"
+                                        class="rmenu-color-picker" />
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="rmenu-settings-column">
                             <div class="rmenu-settings-field plugincy_row items_center">
-                                <label class="rmenu-settings-label">Hover Text Color</label>
+                                <label class="rmenu-settings-label">
+                                    <?php esc_html_e('Hover Text Color', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                </label>
                                 <div class="rmenu-settings-control">
-                                    <input type="color" name="rmenu_cart_hover_text" value="<?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>" class="rmenu-color-picker" />
+                                    <input type="color"
+                                        name="rmenu_cart_hover_text"
+                                        value="<?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>"
+                                        class="rmenu-color-picker" />
                                 </div>
                             </div>
                         </div>
@@ -666,9 +886,9 @@ function onepaquc_cart_dashboard()
 
                     <div class="rmenu-settings-row">
                         <div class="rmenu-settings-field plugincy_row items_center">
-                           <label class="rmenu-settings-label">
-    <?php esc_html_e('Border Radius', 'one-page-quick-checkout-for-woocommerce'); ?>
-</label>
+                            <label class="rmenu-settings-label">
+                                <?php esc_html_e('Border Radius', 'one-page-quick-checkout-for-woocommerce'); ?>
+                            </label>
 
                             <div class="rmenu-settings-control">
                                 <input type="text" name="rmenu_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_cart_border_radius', '5px 0 0 5px')); ?>" placeholder="0px 0px 0px 0px" />
@@ -735,18 +955,18 @@ function onepaquc_cart_dashboard()
             </div>
             <div class="tab-content active" id="tab-4">
                 <div class="plugincy_nav_card mb-4">
-                    <?php 
-$onepaquc_helper->sec_head(
-    'h2',
-    'plugincy_sec_head2',
-    '<svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" xml:space="preserve" width="16" height="16">
+                    <?php
+                    $onepaquc_helper->sec_head(
+                        'h2',
+                        'plugincy_sec_head2',
+                        '<svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" xml:space="preserve" width="16" height="16">
         <path d="M13.984 5.25a.73.73 0 0 0-.65-.402H9.662l1.898-3.796A.727.727 0 0 0 10.909 0H6.545a.73.73 0 0 0-.65.402L2.016 8.16a.727.727 0 0 0 .65 1.052h3.949L5.349 15.12a.726.726 0 0 0 .41.814.73.73 0 0 0 .883-.226l7.273-9.697a.73.73 0 0 0 .069-.762" />
     </svg>',
-    __( 'WooCommerce Direct Checkout', 'one-page-quick-checkout-for-woocommerce' ),
-    '',
-    __( 'Enable direct checkout to allow customers to bypass the cart and proceed directly to checkout, streamlining the purchasing process.', 'one-page-quick-checkout-for-woocommerce' )
-); 
-?>
+                        __('WooCommerce Direct Checkout', 'one-page-quick-checkout-for-woocommerce'),
+                        '',
+                        __('Enable direct checkout to allow customers to bypass the cart and proceed directly to checkout, streamlining the purchasing process.', 'one-page-quick-checkout-for-woocommerce')
+                    );
+                    ?>
 
                     <div class="rmenu-settings-tabs">
                         <ul class="rmenu-settings-tab-list">
@@ -759,31 +979,31 @@ $onepaquc_helper->sec_head(
                 <div class="tab-content" id="direct-general-settings" style="padding: 0;">
                     <div class="plugincy_row mb-4">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                           <?php $onepaquc_helper->sec_head( 'h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', __('General Settings', 'one-page-quick-checkout-for-woocommerce'), '' ); ?>
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', __('General Settings', 'one-page-quick-checkout-for-woocommerce'), ''); ?>
                             <table class="form-table plugincy_table">
                                 <tr valign="top">
-                                    <?php 
-$onepaquc_helper->sec_head(
-    'th', 
-    '', 
-    '', 
-    __('Enable Direct Checkout', 'one-page-quick-checkout-for-woocommerce'), 
-    __('Enable or disable the direct checkout functionality across your WooCommerce store.', 'one-page-quick-checkout-for-woocommerce')
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Enable Direct Checkout', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Enable or disable the direct checkout functionality across your WooCommerce store.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     <td><?php $onepaquc_helper->switcher('rmenu_add_direct_checkout_button'); ?></td>
                                 </tr>
                                 <tr>
-                                    <?php 
-$onepaquc_helper->sec_head(
-    'th', 
-    '', 
-    '', 
-    __('Button Text', 'one-page-quick-checkout-for-woocommerce'), 
-    __('Customize the text displayed on the direct checkout button.', 'one-page-quick-checkout-for-woocommerce')
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Button Text', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Customize the text displayed on the direct checkout button.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     </th>
                                     <td>
@@ -800,102 +1020,103 @@ $onepaquc_helper->sec_head(
                                 </tr>
 
                                 <tr>
-                                    <?php 
-$onepaquc_helper->sec_head(
-    'th', 
-    '', 
-    '', 
-    __('Button Position on Archive Page', 'one-page-quick-checkout-for-woocommerce'), 
-    __('Choose where to display the direct checkout button on product pages.', 'one-page-quick-checkout-for-woocommerce')
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Button Position on Archive Page', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Choose where to display the direct checkout button on product pages.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     <td>
                                         <div class="rmenu-settings-control">
                                             <select name="rmenu_wc_direct_checkout_position" class="rmenu-select">
                                                 <option value="overlay_thumbnail" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'overlay_thumbnail'); ?>>
-    <?php esc_html_e('Overlay on Product Image', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                    <?php esc_html_e('Overlay on Product Image', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="overlay_thumbnail_hover" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'overlay_thumbnail_hover'); ?>>
-    <?php esc_html_e('Overlay on Product Image Hover', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="overlay_thumbnail_hover" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'overlay_thumbnail_hover'); ?>>
+                                                    <?php esc_html_e('Overlay on Product Image Hover', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="after_product" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product'); ?>>
-    <?php esc_html_e('After Product', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="after_product" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product'); ?>>
+                                                    <?php esc_html_e('After Product', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="after_product_title" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_title'); ?>>
-    <?php esc_html_e('After Product Title', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="after_product_title" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_title'); ?>>
+                                                    <?php esc_html_e('After Product Title', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="before_product_title" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'before_product_title'); ?>>
-    <?php esc_html_e('Before Product Title', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="before_product_title" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'before_product_title'); ?>>
+                                                    <?php esc_html_e('Before Product Title', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="after_product_excerpt" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_excerpt'); ?>>
-    <?php esc_html_e('After Product Excerpt', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="after_product_excerpt" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_excerpt'); ?>>
+                                                    <?php esc_html_e('After Product Excerpt', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="after_product_rating" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_rating'); ?>>
-    <?php esc_html_e('After Product Rating', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="after_product_rating" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_rating'); ?>>
+                                                    <?php esc_html_e('After Product Rating', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="after_product_price" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_price'); ?>>
-    <?php esc_html_e('After Product Price', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="after_product_price" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_product_price'); ?>>
+                                                    <?php esc_html_e('After Product Price', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="after_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_add_to_cart'); ?>>
-    <?php esc_html_e('After Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="after_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'after_add_to_cart'); ?>>
+                                                    <?php esc_html_e('After Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="before_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'before_add_to_cart'); ?>>
-    <?php esc_html_e('Before Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="before_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'before_add_to_cart'); ?>>
+                                                    <?php esc_html_e('Before Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="bottom_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'bottom_add_to_cart'); ?>>
-    <?php esc_html_e('Bottom of Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="bottom_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'bottom_add_to_cart'); ?>>
+                                                    <?php esc_html_e('Bottom of Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="replace_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'replace_add_to_cart'); ?>>
-    <?php esc_html_e('Replace Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="replace_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_position', 'after_add_to_cart'), 'replace_add_to_cart'); ?>>
+                                                    <?php esc_html_e('Replace Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
                                             </select>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <?php 
-$onepaquc_helper->sec_head(
-    'th', 
-    '', 
-    '', 
-    __('Button Position on Single Page', 'one-page-quick-checkout-for-woocommerce'), 
-    __('Choose where to display the direct checkout button on single pages.', 'one-page-quick-checkout-for-woocommerce')
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Button Position on Single Page', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Choose where to display the direct checkout button on single pages.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     </th>
                                     <td>
                                         <div class="rmenu-settings-control">
-                                           <select name="rmenu_wc_direct_checkout_single_position" class="rmenu-select">
-    <option value="after_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'after_add_to_cart'); ?>>
-        <?php esc_html_e('After Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </option>
+                                            <select name="rmenu_wc_direct_checkout_single_position" class="rmenu-select">
+                                                <option value="after_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'after_add_to_cart'); ?>>
+                                                    <?php esc_html_e('After Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-    <option value="before_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'before_add_to_cart'); ?>>
-        <?php esc_html_e('Before Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </option>
+                                                <option value="before_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'before_add_to_cart'); ?>>
+                                                    <?php esc_html_e('Before Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-    <option value="bottom_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'bottom_add_to_cart'); ?>>
-        <?php esc_html_e('Bottom of Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </option>
+                                                <option value="bottom_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'bottom_add_to_cart'); ?>>
+                                                    <?php esc_html_e('Bottom of Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-    <option value="replace_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'replace_add_to_cart'); ?>>
-        <?php esc_html_e('Replace Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </option>
-</select>
+                                                <option value="replace_add_to_cart" <?php selected(get_option('rmenu_wc_direct_checkout_single_position', 'after_add_to_cart'), 'replace_add_to_cart'); ?>>
+                                                    <?php esc_html_e('Replace Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                            </select>
+
 
                                         </div>
                                     </td>
@@ -903,35 +1124,35 @@ $onepaquc_helper->sec_head(
                             </table>
                         </div>
                         <div class="rmenu-settings-section plugincy_col-5 plugincy_card" id="rmenu-direct-button-display-section">
-                           <?php $onepaquc_helper->sec_head( 'h3', 'plugincy_sec_head', '<span class="dashicons dashicons-visibility"></span>', __('Display Settings', 'one-page-quick-checkout-for-woocommerce'), '' ); ?>
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-visibility"></span>', __('Display Settings', 'one-page-quick-checkout-for-woocommerce'), ''); ?>
 
                             <div class="rmenu-settings-row">
                                 <div class="rmenu-settings-field">
                                     <label class="rmenu-settings-label">
-    <?php esc_html_e('Product Types', 'one-page-quick-checkout-for-woocommerce'); ?>
-</label>
+                                        <?php esc_html_e('Product Types', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                    </label>
 
-<?php 
-$product_types_option = get_option(
-    'rmenu_show_quick_checkout_by_types', 
-    ["simple", "variable", "external"]
-); 
-?>
+                                    <?php
+                                    $product_types_option = get_option(
+                                        'rmenu_show_quick_checkout_by_types',
+                                        ["simple", "variable", "external"]
+                                    );
+                                    ?>
 
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <label class="rmenu-checkbox-container">
-    <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
-    <span class="rmenu-checkbox-label">
-        <?php esc_html_e('Simple Products', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </span>
-</label>
+                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">
+                                                <?php esc_html_e('Simple Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </span>
+                                        </label>
 
-<label class="rmenu-checkbox-container">
-    <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
-    <span class="rmenu-checkbox-label">
-        <?php esc_html_e('Variable Products', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </span>
-</label>
+                                        <label class="rmenu-checkbox-container">
+                                            <input type="checkbox" name="rmenu_show_quick_checkout_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
+                                            <span class="rmenu-checkbox-label">
+                                                <?php esc_html_e('Variable Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </span>
+                                        </label>
 
 
                                         <!-- <label class="rmenu-checkbox-container pro-only">
@@ -954,90 +1175,91 @@ $product_types_option = get_option(
                                     <?php $product_types_option = get_option('rmenu_show_quick_checkout_by_page', ["single", "related", "upsells", "shop-page", "category-archives", "tag-archives", "featured-products", "on-sale", "recent", "widgets", "shortcodes"]); ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
-   <h4><?php esc_html_e('Product Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="single" <?php checked(in_array('single', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('Single Product Pages', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
+                                            <h4><?php esc_html_e('Product Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="single" <?php checked(in_array('single', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Single Product Pages', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
 
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="upsells" <?php checked(in_array('upsells', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('Upsells', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="upsells" <?php checked(in_array('upsells', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Upsells', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
 
-    <!-- Example for Pro-only option -->
-    <!--
+                                            <!-- Example for Pro-only option -->
+                                            <!--
     <label class="rmenu-checkbox-container pro-only">
-        <input disabled type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="cross-sells" <?php //checked(in_array('cross-sells', $product_types_option)); ?> />
+        <input disabled type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="cross-sells" <?php //checked(in_array('cross-sells', $product_types_option)); 
+                                                                                                        ?> />
         <span class="rmenu-checkbox-label">
             <?php esc_html_e('Cross-sells (Pro Features)', 'one-page-quick-checkout-for-woocommerce'); ?>
         </span>
     </label>
     -->
-</div>
+                                        </div>
 
 
                                         <div class="rmenu-checkbox-column">
-    <h4><?php esc_html_e('Archive Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
+                                            <h4><?php esc_html_e('Archive Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
 
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('Main Shop Page', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Main Shop Page', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
 
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('Product Category Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Product Category Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
 
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('Product Tag Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
-</div>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Product Tag Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
+                                        </div>
 
 
                                         <div class="rmenu-checkbox-column">
-    <h4><?php esc_html_e('Others', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
+                                            <h4><?php esc_html_e('Others', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
 
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('Featured Products', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Featured Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
 
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('On-Sale Products', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('On-Sale Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
 
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="recent" <?php checked(in_array('recent', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('Recent Products', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="recent" <?php checked(in_array('recent', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Recent Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
 
-    <label class="rmenu-checkbox-container">
-        <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_types_option)); ?> />
-        <span class="rmenu-checkbox-label">
-            <?php esc_html_e('Other Pages', 'one-page-quick-checkout-for-woocommerce'); ?>
-        </span>
-    </label>
-</div>
+                                            <label class="rmenu-checkbox-container">
+                                                <input type="checkbox" name="rmenu_show_quick_checkout_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_types_option)); ?> />
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Other Pages', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
+                                            </label>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -1046,72 +1268,74 @@ $product_types_option = get_option(
                     </div>
                     <div class="plugincy_row">
                         <div class="plugincy_col-5 items_center  space_between plugincy_card">
-                            <?php $onepaquc_helper->sec_head( 'h3', 'plugincy_sec_head', '<span class="dashicons dashicons-cart"></span>', __('Quick Checkout Behavior', 'one-page-quick-checkout-for-woocommerce'), '' ); ?>
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-cart"></span>', __('Quick Checkout Behavior', 'one-page-quick-checkout-for-woocommerce'), ''); ?>
 
                             <table class="form-table plugincy_table">
                                 <tr>
-                                    <?php 
-$onepaquc_helper->sec_head(
-    'th', 
-    'rmenu-settings-label', 
-    '', 
-    __('Checkout Method', 'one-page-quick-checkout-for-woocommerce'), 
-    __('Choose how the quick checkout process should behave when a customer clicks the button.', 'one-page-quick-checkout-for-woocommerce')
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Checkout Method', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Choose how the quick checkout process should behave when a customer clicks the button.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     </th>
                                     <td class="rmenu-settings-control">
                                         <select name="rmenu_wc_checkout_method" class="rmenu-select" id="rmenu-checkout-method">
                                             <option value="direct_checkout" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'direct_checkout'); ?>>
-    <?php esc_html_e('Redirect to Checkout', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <?php esc_html_e('Redirect to Checkout', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
 
-<option value="ajax_add" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'ajax_add'); ?>>
-    <?php esc_html_e('AJAX Add to Cart', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                            <option value="ajax_add" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'ajax_add'); ?>>
+                                                <?php esc_html_e('AJAX Add to Cart', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
 
-<?php
-$disable_cart_page = get_option('rmenu_disable_cart_page', '0');
-?>
-<?php if (!$disable_cart_page) : ?>
-    <option value="cart_redirect" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'cart_redirect'); ?>>
-        <?php esc_html_e('Redirect to Cart Page', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </option>
-<?php else : ?>
-    <option value="cart_redirect" disabled <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'cart_redirect'); ?>>
-        <?php esc_html_e('Redirect to Cart Page (Disabled)', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </option>
-<?php endif; ?>
+                                            <?php
+                                            $disable_cart_page = get_option('rmenu_disable_cart_page', '0');
+                                            ?>
+                                            <?php if (!$disable_cart_page) : ?>
+                                                <option value="cart_redirect" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'cart_redirect'); ?>>
+                                                    <?php esc_html_e('Redirect to Cart Page', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                            <?php else : ?>
+                                                <option value="cart_redirect" disabled <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'cart_redirect'); ?>>
+                                                    <?php esc_html_e('Redirect to Cart Page (Disabled)', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                            <?php endif; ?>
 
-<option disabled value="popup_checkout_pro" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'popup_checkout_pro'); ?>>
-    <?php esc_html_e('Popup Checkout (Pro Features)', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                            <option disabled value="popup_checkout_pro" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'popup_checkout_pro'); ?>>
+                                                <?php esc_html_e('Popup Checkout (Pro Features)', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
 
-</option>
+                                            </option>
 
-<!-- <option disabled value="advanced_pro" <?php //selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'advanced_pro'); ?>>
-    <?php //esc_html_e('Advanced Checkout (Pro Features)', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            <!-- <option disabled value="advanced_pro" <?php //selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'advanced_pro'); 
+                                                                                        ?>>
+    <?php //esc_html_e('Advanced Checkout (Pro Features)', 'one-page-quick-checkout-for-woocommerce'); 
+    ?>
 </option> -->
 
-<option value="side_cart" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'side_cart'); ?>>
-    <?php esc_html_e('Side Cart Slide-in', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                            <option value="side_cart" <?php selected(get_option('rmenu_wc_checkout_method', 'direct_checkout'), 'side_cart'); ?>>
+                                                <?php esc_html_e('Side Cart Slide-in', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
 
                                         </select>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                   <?php 
-$onepaquc_helper->sec_head(
-    'th', 
-    'rmenu-settings-label', 
-    '', 
-    __('Clear Cart Before Adding', 'one-page-quick-checkout-for-woocommerce'), 
-    __('When enabled, the cart will be emptied before adding the new product. This creates a single-product checkout experience.', 'one-page-quick-checkout-for-woocommerce')
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Clear Cart Before Adding', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, the cart will be emptied before adding the new product. This creates a single-product checkout experience.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_wc_clear_cart', 0); ?>
@@ -1147,15 +1371,15 @@ $onepaquc_helper->sec_head(
                     </div> -->
 
                                 <tr>
-                                    <?php 
-$onepaquc_helper->sec_head(
-    'th', 
-    'rmenu-settings-label', 
-    '', 
-    __('Show Confirmation Dialog', 'one-page-quick-checkout-for-woocommerce'), 
-    __('When enabled, customers will see a confirmation dialog before proceeding to checkout.', 'one-page-quick-checkout-for-woocommerce')
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Show Confirmation Dialog', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, customers will see a confirmation dialog before proceeding to checkout.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_wc_add_confirmation', 0); ?>
@@ -1194,54 +1418,54 @@ $onepaquc_helper->sec_head(
 
                         </div>
                         <div class="rmenu-settings-section direct-button-style-section plugincy_card plugincy_col-5">
-                            <?php 
-$onepaquc_helper->sec_head(
-    'h3', 
-    'plugincy_sec_head', 
-    '<span class="dashicons dashicons-admin-appearance"></span>', 
-    __('Button Style', 'one-page-quick-checkout-for-woocommerce'), 
-    '' 
-); 
-?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-admin-appearance"></span>',
+                                __('Button Style', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
 
 
                             <table class="form-table plugincy_table">
                                 <tbody class="plugincy_grid">
                                     <tr style="grid-column: span 2;">
                                         <th class="rmenu-settings-label">
-    <?php esc_html_e('Button Style', 'one-page-quick-checkout-for-woocommerce'); ?>
-</th>
+                                            <?php esc_html_e('Button Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
 
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_wc_checkout_style" class="rmenu-select" id="rmenu-style-select">
                                                 <option value="default" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'default'); ?>>
-    <?php esc_html_e('Default WooCommerce Style', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                    <?php esc_html_e('Default WooCommerce Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="alt" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'alt'); ?>>
-    <?php esc_html_e('Alternative Style', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="alt" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'alt'); ?>>
+                                                    <?php esc_html_e('Alternative Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="custom" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'custom'); ?>>
-    <?php esc_html_e('Custom Style', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="custom" <?php selected(get_option('rmenu_wc_checkout_style', 'default'), 'custom'); ?>>
+                                                    <?php esc_html_e('Custom Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="rmenu-settings-label">
-    <?php esc_html_e('Button Color', 'one-page-quick-checkout-for-woocommerce'); ?>
-</th>
+                                            <?php esc_html_e('Button Color', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
 
                                         <td class="rmenu-settings-control">
                                             <input type="color" name="rmenu_wc_checkout_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_color', '#000')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
                                     <tr>
-                                       <th class="rmenu-settings-label">
-    <?php esc_html_e('Text Color', 'one-page-quick-checkout-for-woocommerce'); ?>
-</th>
+                                        <th class="rmenu-settings-label">
+                                            <?php esc_html_e('Text Color', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
 
                                         <td class="rmenu-settings-control">
                                             <input type="color" name="rmenu_wc_checkout_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
@@ -1250,25 +1474,25 @@ $onepaquc_helper->sec_head(
 
                                     <tr>
                                         <th class="rmenu-settings-label">
-        <?php esc_html_e('Hover Background Color', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </th>
-    <td class="rmenu-settings-control">
-        <input type="color" name="rmenu_wc_checkout_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_hover_bg_color', '#222222')); ?>" class="rmenu-color-picker" />
-    </td>
-</tr>
+                                            <?php esc_html_e('Hover Background Color', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_wc_checkout_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_hover_bg_color', '#222222')); ?>" class="rmenu-color-picker" />
+                                        </td>
+                                    </tr>
 
-<tr>
-    <th class="rmenu-settings-label">
-        <?php esc_html_e('Hover Text Color', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </th>
-    <td class="rmenu-settings-control">
-        <input type="color" name="rmenu_wc_checkout_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
-    </td>
+                                    <tr>
+                                        <th class="rmenu-settings-label">
+                                            <?php esc_html_e('Hover Text Color', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="color" name="rmenu_wc_checkout_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th class="rmenu-settings-label">
-    <?php esc_html_e('Border Radius', 'one-page-quick-checkout-for-woocommerce'); ?>
-</th>
+                                            <?php esc_html_e('Border Radius', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
 
                                         <td class="rmenu-settings-control">
                                             <input type="number" name="rmenu_wc_checkout_border_radius" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_border_radius', '4')); ?>" class="small-text" min="0" max="50" step="1" />
@@ -1277,31 +1501,31 @@ $onepaquc_helper->sec_head(
                                     </tr>
                                     <tr>
                                         <th class="rmenu-settings-label">
-        <?php esc_html_e('Button Font Size', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </th>
-    <td class="rmenu-settings-control">
-        <input type="number" name="rmenu_wc_checkout_font_size" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_font_size', '14')); ?>" class="small-text" min="10" max="30" step="1" />
-        <span class="rmenu-unit">px</span>
-    </td>
-</tr>
+                                            <?php esc_html_e('Button Font Size', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="number" name="rmenu_wc_checkout_font_size" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_font_size', '14')); ?>" class="small-text" min="10" max="30" step="1" />
+                                            <span class="rmenu-unit">px</span>
+                                        </td>
+                                    </tr>
 
-<tr>
-    <th class="rmenu-settings-label">
-        <?php esc_html_e('Button Width', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </th>
+                                    <tr>
+                                        <th class="rmenu-settings-label">
+                                            <?php esc_html_e('Button Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_wc_checkout_width" class="rmenu-select">
                                                 <option value="auto" <?php selected(get_option('rmenu_wc_checkout_width', 'auto'), 'auto'); ?>>
-    <?php esc_html_e('Auto', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                    <?php esc_html_e('Auto', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="full" <?php selected(get_option('rmenu_wc_checkout_width', 'auto'), 'full'); ?>>
-    <?php esc_html_e('Full Width', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="full" <?php selected(get_option('rmenu_wc_checkout_width', 'auto'), 'full'); ?>>
+                                                    <?php esc_html_e('Full Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
-<option value="custom" <?php selected(get_option('rmenu_wc_checkout_width', 'auto'), 'custom'); ?>>
-    <?php esc_html_e('Custom Width', 'one-page-quick-checkout-for-woocommerce'); ?>
-</option>
+                                                <option value="custom" <?php selected(get_option('rmenu_wc_checkout_width', 'auto'), 'custom'); ?>>
+                                                    <?php esc_html_e('Custom Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
 
                                             </select>
                                         </td>
@@ -1317,66 +1541,66 @@ $onepaquc_helper->sec_head(
 
                                     <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:flex;' : 'display:none;'; ?> grid-column: span 2;">
                                         <th class="rmenu-settings-label">
-    <?php esc_html_e( 'Custom CSS', 'one-page-quick-checkout-for-woocommerce' ); ?>
-</th>
+                                            <?php esc_html_e('Custom CSS', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
 
                                         <td class="rmenu-settings-control" style="max-width: 100% !important;">
-    <textarea name="rmenu_wc_checkout_custom_css" class="rmenu-textarea-code" rows="6">
+                                            <textarea name="rmenu_wc_checkout_custom_css" class="rmenu-textarea-code" rows="6">
         <?php echo esc_textarea(get_option('rmenu_wc_checkout_custom_css', '')); ?>
     </textarea>
-    <p class="rmenu-field-description">
-        <?php esc_html_e(
-            'Add custom CSS for advanced button styling. Use the class .opqcfw-btn to target the button.',
-            'one-page-quick-checkout-for-woocommerce'
-        ); ?>
-    </p>
-</td>
+                                            <p class="rmenu-field-description">
+                                                <?php esc_html_e(
+                                                    'Add custom CSS for advanced button styling. Use the class .opqcfw-btn to target the button.',
+                                                    'one-page-quick-checkout-for-woocommerce'
+                                                ); ?>
+                                            </p>
+                                        </td>
 
                                     </tr>
 
                                     <tr>
-    <th class="rmenu-settings-label">
-        <?php esc_html_e( 'Button Icon', 'one-page-quick-checkout-for-woocommerce' ); ?>
-    </th>
-    <td class="rmenu-settings-control">
-        <select name="rmenu_wc_checkout_icon" class="rmenu-select">
-            <option value="none" <?php selected( get_option( 'rmenu_wc_checkout_icon', 'none' ), 'none' ); ?>>
-                <?php esc_html_e( 'No Icon', 'one-page-quick-checkout-for-woocommerce' ); ?>
-            </option>
-            <option value="cart" <?php selected( get_option( 'rmenu_wc_checkout_icon', 'none' ), 'cart' ); ?>>
-                <?php esc_html_e( 'Cart Icon', 'one-page-quick-checkout-for-woocommerce' ); ?>
-            </option>
-            <option value="checkout" <?php selected( get_option( 'rmenu_wc_checkout_icon', 'none' ), 'checkout' ); ?>>
-                <?php esc_html_e( 'Checkout Icon', 'one-page-quick-checkout-for-woocommerce' ); ?>
-            </option>
-            <option value="arrow" <?php selected( get_option( 'rmenu_wc_checkout_icon', 'none' ), 'arrow' ); ?>>
-                <?php esc_html_e( 'Arrow Icon', 'one-page-quick-checkout-for-woocommerce' ); ?>
-            </option>
-        </select>
-    </td>
-</tr>
+                                        <th class="rmenu-settings-label">
+                                            <?php esc_html_e('Button Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_wc_checkout_icon" class="rmenu-select">
+                                                <option value="none" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'none'); ?>>
+                                                    <?php esc_html_e('No Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="cart" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'cart'); ?>>
+                                                    <?php esc_html_e('Cart Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="checkout" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'checkout'); ?>>
+                                                    <?php esc_html_e('Checkout Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="arrow" <?php selected(get_option('rmenu_wc_checkout_icon', 'none'), 'arrow'); ?>>
+                                                    <?php esc_html_e('Arrow Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                            </select>
+                                        </td>
+                                    </tr>
 
                                     <tr>
-    <th class="rmenu-settings-label">
-        <?php esc_html_e( 'Icon Position', 'one-page-quick-checkout-for-woocommerce' ); ?>
-    </th>
-    <td class="rmenu-settings-control">
-        <select name="rmenu_wc_checkout_icon_position" class="rmenu-select">
-            <option value="left" <?php selected( get_option( 'rmenu_wc_checkout_icon_position', 'left' ), 'left' ); ?>>
-                <?php esc_html_e( 'Left', 'one-page-quick-checkout-for-woocommerce' ); ?>
-            </option>
-            <option value="right" <?php selected( get_option( 'rmenu_wc_checkout_icon_position', 'left' ), 'right' ); ?>>
-                <?php esc_html_e( 'Right', 'one-page-quick-checkout-for-woocommerce' ); ?>
-            </option>
-            <option value="top" <?php selected( get_option( 'rmenu_wc_checkout_icon_position', 'left' ), 'top' ); ?>>
-                <?php esc_html_e( 'Top', 'one-page-quick-checkout-for-woocommerce' ); ?>
-            </option>
-            <option value="bottom" <?php selected( get_option( 'rmenu_wc_checkout_icon_position', 'left' ), 'bottom' ); ?>>
-                <?php esc_html_e( 'Bottom', 'one-page-quick-checkout-for-woocommerce' ); ?>
-            </option>
-        </select>
-    </td>
-</tr>
+                                        <th class="rmenu-settings-label">
+                                            <?php esc_html_e('Icon Position', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
+                                        <td class="rmenu-settings-control">
+                                            <select name="rmenu_wc_checkout_icon_position" class="rmenu-select">
+                                                <option value="left" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'left'); ?>>
+                                                    <?php esc_html_e('Left', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="right" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'right'); ?>>
+                                                    <?php esc_html_e('Right', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="top" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'top'); ?>>
+                                                    <?php esc_html_e('Top', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="bottom" <?php selected(get_option('rmenu_wc_checkout_icon_position', 'left'), 'bottom'); ?>>
+                                                    <?php esc_html_e('Bottom', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                            </select>
+                                        </td>
+                                    </tr>
 
                                 </tbody>
                             </table>
@@ -1480,65 +1704,65 @@ $onepaquc_helper->sec_head(
                 <div class="tab-content" id="direct-advanced" style="padding: 0;">
                     <div class="plugincy_row">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php 
-$onepaquc_helper->sec_head(
-    'h3',
-    'plugincy_sec_head',
-    '<span class="dashicons dashicons-category"></span>',
-    __( 'Checkout in Variable Product', 'one-page-quick-checkout-for-woocommerce' )
-); 
-?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-category"></span>',
+                                __('Checkout in Variable Product', 'one-page-quick-checkout-for-woocommerce')
+                            );
+                            ?>
 
                             <table class="form-table plugincy_table variable-product-table">
                                 <tr>
-                                   <?php 
-$onepaquc_helper->sec_head(
-    'th',
-    '',
-    '',
-    __( 'Show Variation Selection in Archive pages', 'one-page-quick-checkout-for-woocommerce' ),
-    __( 'When enabled, the variation selection will be shown on archive pages.', 'one-page-quick-checkout-for-woocommerce' )
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Show Variation Selection in Archive pages', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, the variation selection will be shown on archive pages.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_variation_show_archive', 1); ?>
                                     </td>
                                 </tr>
                                 <tr>
-    <?php 
-    $onepaquc_helper->sec_head(
-        'th',
-        '',
-        '',
-        __( 'Variation Selection Layout', 'one-page-quick-checkout-for-woocommerce' ),
-        __( 'Choose variation selection Layout.', 'one-page-quick-checkout-for-woocommerce' )
-    ); 
-    ?>
-    <td>
-        <div class="rmenu-settings-control">
-            <select name="rmenu_variation_layout" class="rmenu-select">
-                <option value="combine" <?php selected( get_option( 'rmenu_variation_layout', 'separate' ), 'combine' ); ?>>
-                    <?php esc_html_e( 'Combine', 'one-page-quick-checkout-for-woocommerce' ); ?>
-                </option>
-                <option value="separate" <?php selected( get_option( 'rmenu_variation_layout', 'separate' ), 'separate' ); ?>>
-                    <?php esc_html_e( 'Separate', 'one-page-quick-checkout-for-woocommerce' ); ?>
-                </option>
-            </select>
-        </div>
-    </td>
-</tr>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Variation Selection Layout', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Choose variation selection Layout.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
+                                    <td>
+                                        <div class="rmenu-settings-control">
+                                            <select name="rmenu_variation_layout" class="rmenu-select">
+                                                <option value="combine" <?php selected(get_option('rmenu_variation_layout', 'separate'), 'combine'); ?>>
+                                                    <?php esc_html_e('Combine', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="separate" <?php selected(get_option('rmenu_variation_layout', 'separate'), 'separate'); ?>>
+                                                    <?php esc_html_e('Separate', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
 
                                 <tr>
-                                   <?php 
-$onepaquc_helper->sec_head(
-    'th',
-    '',
-    '',
-    __( 'Show Variation Title', 'one-page-quick-checkout-for-woocommerce' ),
-    __( 'When enabled, the variation title will be shown on archive pages.', 'one-page-quick-checkout-for-woocommerce' )
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Show Variation Title', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, the variation title will be shown on archive pages.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_show_variation_title', 0); ?>
@@ -1562,15 +1786,15 @@ $onepaquc_helper->sec_head(
                                     });
                                 </script>
                                 <tr>
-                                    <?php 
-$onepaquc_helper->sec_head(
-    'th',
-    '',
-    '',
-    __( 'Hide Select Option Button', 'one-page-quick-checkout-for-woocommerce' ),
-    __( 'When enabled, the select option button will be hidden on variable product pages.', 'one-page-quick-checkout-for-woocommerce' )
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Hide Select Option Button', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, the select option button will be hidden on variable product pages.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     <td class="rmenu-settings-control">
                                         <div class="rmenu-settings-control pro-only">
@@ -1596,7 +1820,7 @@ $onepaquc_helper->sec_head(
                         </div>
 
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head( 'h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-tools"></span>', __('Advanced Options', 'one-page-quick-checkout-for-woocommerce') ); ?>
+                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-tools"></span>', __('Advanced Options', 'one-page-quick-checkout-for-woocommerce')); ?>
 
                             <!-- <div class="rmenu-settings-row">
                             <div class="rmenu-settings-field">
@@ -1613,15 +1837,15 @@ $onepaquc_helper->sec_head(
                         </div> -->
                             <table class="form-table plugincy_table">
                                 <tr>
-                                    <?php 
-$onepaquc_helper->sec_head(
-    'th',
-    '',
-    '',
-    __( 'Enable for Guest Checkout', 'one-page-quick-checkout-for-woocommerce' ),
-    __( 'When enabled, the direct checkout button will be available for guest users. When disabled, only logged-in users will see the button.', 'one-page-quick-checkout-for-woocommerce' )
-); 
-?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Enable for Guest Checkout', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, the direct checkout button will be available for guest users. When disabled, only logged-in users will see the button.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
 
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_wc_checkout_guest_enabled', 1); ?>
@@ -1992,35 +2216,88 @@ $onepaquc_helper->sec_head(
                 });
             </script>
             <div class="tab-content plugincy_card" id="tab-5" style="margin-top: 20px;">
-                <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-star-filled"></span>', 'Manage Features', 'Enhance your WooCommerce checkout experience with these powerful features.'); ?>
+                <?php
+                $onepaquc_helper->sec_head(
+                    'h2',
+                    'plugincy_sec_head',
+                    '<span class="dashicons dashicons-star-filled"></span>',
+                    __('Manage Features', 'one-page-quick-checkout-for-woocommerce'),
+                    __('Enhance your WooCommerce checkout experience with these powerful features.', 'one-page-quick-checkout-for-woocommerce')
+                );
+                ?>
+
                 <table class="form-table plugincy_table">
                     <tbody style="display: grid; grid-template-columns: repeat(auto-fill, minmax(410px, 1fr));">
                         <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Product Quantity Controller', 'Enable "Product Quantity Controller" to manage product quantities in the checkout form.'); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'th',
+                                '',
+                                '',
+                                __('Product Quantity Controller', 'one-page-quick-checkout-for-woocommerce'),
+                                __('Enable "Product Quantity Controller" to manage product quantities in the checkout form.', 'one-page-quick-checkout-for-woocommerce')
+                            );
+                            ?>
                             <td>
                                 <?php $onepaquc_helper->switcher('rmenu_quantity_control', 1); ?>
                             </td>
                         </tr>
+
                         <tr valign="top" class="pro-only top-50">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Remove Product Button', 'Enable "Remove Product Button" to allow customers to remove products from the checkout form.'); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'th',
+                                '',
+                                '',
+                                __('Remove Product Button', 'one-page-quick-checkout-for-woocommerce'),
+                                __('Enable "Remove Product Button" to allow customers to remove products from the checkout form.', 'one-page-quick-checkout-for-woocommerce')
+                            );
+                            ?>
                             <td>
                                 <?php $onepaquc_helper->switcher('rmenu_remove_product', 0); ?>
                             </td>
                         </tr>
+
                         <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Add Image Before Product', 'Enable "Add Image Before Product" to display product images before their titles in the checkout form.'); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'th',
+                                '',
+                                '',
+                                __('Add Image Before Product', 'one-page-quick-checkout-for-woocommerce'),
+                                __('Enable "Add Image Before Product" to display product images before their titles in the checkout form.', 'one-page-quick-checkout-for-woocommerce')
+                            );
+                            ?>
                             <td>
                                 <?php $onepaquc_helper->switcher('rmenu_add_img_before_product', 0); ?>
                             </td>
                         </tr>
+
                         <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'At Least One Product in Cart', 'Enable "At Least One Product in Cart" to add at least one product in the cart.'); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'th',
+                                '',
+                                '',
+                                __('At Least One Product in Cart', 'one-page-quick-checkout-for-woocommerce'),
+                                __('Enable "At Least One Product in Cart" to add at least one product in the cart.', 'one-page-quick-checkout-for-woocommerce')
+                            );
+                            ?>
                             <td>
                                 <?php $onepaquc_helper->switcher('rmenu_at_one_product_cart', 0); ?>
                             </td>
                         </tr>
+
                         <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Disable Cart Page', 'Enable "Disable Cart Page" to remove the cart page from your WooCommerce store. This will redirect customers directly to the checkout page.'); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'th',
+                                '',
+                                '',
+                                __('Disable Cart Page', 'one-page-quick-checkout-for-woocommerce'),
+                                __('Enable "Disable Cart Page" to remove the cart page from your WooCommerce store. This will redirect customers directly to the checkout page.', 'one-page-quick-checkout-for-woocommerce')
+                            );
+                            ?>
                             <td>
                                 <?php $onepaquc_helper->switcher('rmenu_disable_cart_page', 0); ?>
                             </td>
@@ -2068,17 +2345,35 @@ $onepaquc_helper->sec_head(
                         </td>
                     </tr> -->
                         <tr valign="top" class="pro-only top-50">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Force Login Before Checkout', 'Enable "Force Login Before Checkout" to require customers to log in before they can access the checkout page.'); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'th',
+                                '',
+                                '',
+                                __('Force Login Before Checkout', 'one-page-quick-checkout-for-woocommerce'),
+                                __('Enable "Force Login Before Checkout" to require customers to log in before they can access the checkout page.', 'one-page-quick-checkout-for-woocommerce')
+                            );
+                            ?>
                             <td>
                                 <?php $onepaquc_helper->switcher('rmenu_force_login', 0); ?>
                             </td>
                         </tr>
+
                         <tr valign="top">
-                            <?php $onepaquc_helper->sec_head('th', '', '', 'Link Product Name in Checkout Page', 'Enable "Link Product Name in Checkout Page" to make the product names clickable, redirecting customers to the product page.'); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'th',
+                                '',
+                                '',
+                                __('Link Product Name in Checkout Page', 'one-page-quick-checkout-for-woocommerce'),
+                                __('Enable "Link Product Name in Checkout Page" to make the product names clickable, redirecting customers to the product page.', 'one-page-quick-checkout-for-woocommerce')
+                            );
+                            ?>
                             <td>
                                 <?php $onepaquc_helper->switcher('rmenu_link_product', 1); ?>
                             </td>
                         </tr>
+
                         <!-- <tr valign="top" class="pro-only top-50">
                         <th scope="row">Enable Captcha on Checkout Page</th>
                         <td>
@@ -2100,7 +2395,16 @@ $onepaquc_helper->sec_head(
                 <?php onepaquc_trust_badges_settings_content(); ?>
                 <table style="padding-top: 1rem;">
                     <tr valign="top" style="display: flex; gap: 51px;">
-                        <?php $onepaquc_helper->sec_head('th', '', '', 'Contribute to Plugincy', 'We collect non-sensitive technical details from your website, like the PHP version and features usage, to help us troubleshoot issues faster, make informed development decisions, and build features that truly benefit you. <a href="https://plugincy.com/usage-tracking/" target="_blank" style="color:#fff;">Learn more…</a>'); ?>
+                        <?php
+                        $onepaquc_helper->sec_head(
+                            'th',
+                            '',
+                            '',
+                            __('Contribute to Plugincy', 'one-page-quick-checkout-for-woocommerce'),
+                            __('We collect non-sensitive technical details from your website, like the PHP version and features usage, to help us troubleshoot issues faster, make informed development decisions, and build features that truly benefit you. <a href="https://plugincy.com/usage-tracking/" target="_blank" style="color:#fff;">Learn more…</a>', 'one-page-quick-checkout-for-woocommerce')
+                        );
+                        ?>
+
                         <td>
                             <?php $onepaquc_helper->switcher('rmenu_allow_analytics', 1); ?>
                         </td>
@@ -2109,34 +2413,75 @@ $onepaquc_helper->sec_head(
             </div>
             <div class="tab-content" id="tab-7">
                 <div class="plugincy_nav_card mb-4">
-                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-visibility"></span>', 'WooCommerce Quick View', '', 'Manage the quick view settings for your WooCommerce products.'); ?>
+                    <?php
+                    $onepaquc_helper->sec_head(
+                        'h2',
+                        'plugincy_sec_head2',
+                        '<span class="dashicons dashicons-visibility"></span>',
+                        __('WooCommerce Quick View', 'one-page-quick-checkout-for-woocommerce'),
+                        '',
+                        __('Manage the quick view settings for your WooCommerce products.', 'one-page-quick-checkout-for-woocommerce')
+                    );
+                    ?>
+
                     <div class="rmenu-settings-tabs">
                         <ul class="rmenu-settings-tab-list">
                             <li class="rmenu-settings-tab-item active" data-tab="quick-general-settings">
-                                <span class="dashicons dashicons-admin-generic"></span> General Settings
+                                <span class="dashicons dashicons-admin-generic"></span>
+                                <?php esc_html_e('General Settings', 'one-page-quick-checkout-for-woocommerce'); ?>
                             </li>
                             <li class="rmenu-settings-tab-item" data-tab="quick-popup">
-                                <span class="dashicons dashicons-admin-comments"></span> Popup Manage
+                                <span class="dashicons dashicons-admin-comments"></span>
+                                <?php esc_html_e('Popup Manage', 'one-page-quick-checkout-for-woocommerce'); ?>
                             </li>
                             <li class="rmenu-settings-tab-item" data-tab="quick-advanced">
-                                <span class="dashicons dashicons-admin-tools"></span> Advanced
+                                <span class="dashicons dashicons-admin-tools"></span>
+                                <?php esc_html_e('Advanced', 'one-page-quick-checkout-for-woocommerce'); ?>
                             </li>
                         </ul>
                     </div>
+
                 </div>
                 <div class="tab-content" id="quick-general-settings" style="padding: 0;">
                     <div class="plugincy_row">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', ''); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-admin-generic"></span>',
+                                __('General Settings', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
+
                             <table class="form-table plugincy_table">
                                 <tr id="rmenu-quick-view-enable-field">
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Enable Quick View', 'Enable or disable the quick view functionality across your WooCommerce store.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Enable Quick View', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Enable or disable the quick view functionality across your WooCommerce store.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
+
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_enable_quick_view', 0); ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Text', 'Customize the text displayed on the quick view button.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Button Text', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Customize the text displayed on the quick view button.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
+
                                     <td class="rmenu-settings-control">
                                         <?php
                                         $quick_view_button_text = get_option('rmenu_quick_view_button_text', '');
@@ -2148,10 +2493,22 @@ $onepaquc_helper->sec_head(
                                     </td>
                                 </tr>
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Button Position', 'Choose where to display the quick view button on product listings.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Button Position', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Choose where to display the quick view button on product listings.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
+
                                     <td class="rmenu-settings-control">
                                         <select name="rmenu_quick_view_button_position" class="rmenu-select">
-                                            <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_image'); ?>>After Product Image</option>
+                                            <option value="after_image" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_image'); ?>>
+                                                <?php esc_html_e('After Product Image', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
+
                                             <!-- <option disabled value="before_title" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'before_title'); 
                                                                                         ?>>Before Product Title (Pro Features)</option>
                                         <option disabled value="after_title" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_title'); 
@@ -2162,18 +2519,45 @@ $onepaquc_helper->sec_head(
                                                                                 ?>>After Product Price (Pro Features)</option>
                                         <option disabled value="before_add_to_cart" <?php //selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'before_add_to_cart'); 
                                                                                     ?>>Before Add to Cart Button (Pro Features)</option> -->
-                                            <option value="after_add_to_cart" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_add_to_cart'); ?>>After Add to Cart Button</option>
-                                            <option value="image_overlay" <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'image_overlay'); ?>>Overlay on Product Image</option>
+                                            <option value="after_add_to_cart"
+                                                <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'after_add_to_cart'); ?>>
+                                                <?php esc_html_e('After Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
+
+                                            <option value="image_overlay"
+                                                <?php selected(get_option('rmenu_quick_view_button_position', 'image_overlay'), 'image_overlay'); ?>>
+                                                <?php esc_html_e('Overlay on Product Image', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
+
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Display Type', 'Choose how the quick view trigger should appear to customers.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Display Type', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Choose how the quick view trigger should appear to customers.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
+
                                     <td class="rmenu-settings-control">
                                         <select name="rmenu_quick_view_display_type" class="rmenu-select">
-                                            <option value="button" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'button'); ?>>Button</option>
-                                            <option value="icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'icon'); ?>>Icon Only</option>
-                                            <option value="text_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'text_icon'); ?>>Text with Icon</option>
+                                            <option value="button" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'button'); ?>>
+                                                <?php esc_html_e('Button', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
+
+                                            <option value="icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'icon'); ?>>
+                                                <?php esc_html_e('Icon Only', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
+
+
+                                            <option value="text_icon" <?php selected(get_option('rmenu_quick_view_display_type', 'icon'), 'text_icon'); ?>>
+                                                <?php esc_html_e('Text with Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </option>
+
                                             <!-- <option value="hover_icon" <?php //selected(get_option('rmenu_quick_view_display_type', 'icon'), 'hover_icon'); 
                                                                             ?>>Hover Icon</option> -->
                                         </select>
@@ -2183,31 +2567,56 @@ $onepaquc_helper->sec_head(
                         </div>
 
                         <div class="rmenu-settings-section quick-view-button-style plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-admin-appearance"></span>',
+                                __('Button Style', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
+
 
                             <table class="form-table plugincy_table">
                                 <tbody class="plugincy_grid">
                                     <tr style="grid-column: span 2;">
-                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Button Style', ''); ?>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            '',
+                                            '',
+                                            __('Button Style', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
+
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_quick_view_button_style" class="rmenu-select" id="rmenu-qv-style-select">
-                                                <option value="default" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
-                                                <option value="alt" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'alt'); ?>>Alternative Style</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                                <option value="default" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'default'); ?>>
+                                                    <?php esc_html_e('Default WooCommerce Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="alt" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'alt'); ?>>
+                                                    <?php esc_html_e('Alternative Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="custom" <?php selected(get_option('rmenu_quick_view_button_style', 'default'), 'custom'); ?>>
+                                                    <?php esc_html_e('Custom Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+
                                             </select>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <?php 
-$onepaquc_helper->sec_head(
-    'th', 
-    '', 
-    '', 
-    __('Button Color', 'one-page-quick-checkout-for-woocommerce'), 
-    '' 
-); 
-?>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            '',
+                                            '',
+                                            __('Button Color', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
 
                                         <td class="rmenu-settings-control">
                                             <input type="color" name="rmenu_quick_view_button_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_button_color', '#000')); ?>" class="rmenu-color-picker" />
@@ -2215,7 +2624,16 @@ $onepaquc_helper->sec_head(
                                     </tr>
 
                                     <tr>
-                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Text Color', ''); ?>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            '',
+                                            '',
+                                            __('Text Color', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
+
                                         <td class="rmenu-settings-control">
                                             <input type="color" name="rmenu_quick_view_text_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
                                         </td>
@@ -2244,11 +2662,33 @@ $onepaquc_helper->sec_head(
                                         </td>
                                     </tr>
                                     <tr id="rmenu-qv-custom-css-row" style="<?php echo (get_option('rmenu_quick_view_button_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
-                                        <?php $onepaquc_helper->sec_head('th', '', '', 'Custom CSS', ''); ?>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            '',
+                                            '',
+                                            __('Custom CSS', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
+
                                         <td class="rmenu-settings-control">
-                                            <textarea name="rmenu_quick_view_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_css', '')); ?></textarea>
-                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.</p>
+                                            <textarea name="rmenu_quick_view_custom_css"
+                                                class="rmenu-textarea-code"
+                                                rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_css', '')); ?></textarea>
+                                            <p class="rmenu-field-description">
+                                                <?php
+                                                echo wp_kses_post(
+                                                    __(
+                                                        'Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.',
+                                                        'one-page-quick-checkout-for-woocommerce'
+                                                    )
+                                                );
+                                                ?>
+
+                                            </p>
                                         </td>
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -2297,49 +2737,63 @@ $onepaquc_helper->sec_head(
                 <div class="tab-content" id="quick-popup" style="padding: 0;">
                     <div class="plugincy_row mb-4">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-visibility"></span>', 'Quick View Content', ''); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-visibility"></span>',
+                                __('Quick View Content', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
+
                             <div class="rmenu-settings-row" id="rmenu-quick-view-content-elements">
                                 <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Content Elements</label>
+                                    <label class="rmenu-settings-label">
+                                        <?php esc_html_e('Content Elements', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                    </label>
+
                                     <?php $content_elements_option = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']); ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="image" <?php checked(in_array('image', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Image</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Product Image', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="gallery" <?php checked(in_array('gallery', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Gallery</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Product Gallery', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="title" <?php checked(in_array('title', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Title</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Product Title', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="rating" <?php checked(in_array('rating', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Rating</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Product Rating', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
                                         </div>
+
 
                                         <div class="rmenu-checkbox-column">
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="price" <?php checked(in_array('price', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Price</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Product Price', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="excerpt" <?php checked(in_array('excerpt', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Short Description</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Short Description', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="add_to_cart" <?php checked(in_array('add_to_cart', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Add to Cart Button</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
+
 
                                             <!-- <label class="rmenu-checkbox-container">
                                         <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="quantity" <?php //checked(in_array('quantity', $content_elements_option)); 
@@ -2351,18 +2805,19 @@ $onepaquc_helper->sec_head(
                                         <div class="rmenu-checkbox-column">
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_quick_view_content_elements[]" value="meta" <?php checked(in_array('meta', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Meta</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Product Meta', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container pro-only">
                                                 <input disabled type="checkbox" name="rmenu_quick_view_content_elements[]" value="sharing" <?php checked(in_array('sharing', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Social Sharing</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('Social Sharing', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" id="view_details_checkbox" name="rmenu_quick_view_content_elements[]" value="view_details" <?php checked(in_array('view_details', $content_elements_option)); ?> />
-                                                <span class="rmenu-checkbox-label">View Details Link</span>
+                                                <span class="rmenu-checkbox-label"><?php esc_html_e('View Details Link', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                                             </label>
+
 
                                             <!-- <label class="rmenu-checkbox-container pro-only">
                                         <input disabled type="checkbox" name="rmenu_quick_view_content_elements[]" value="attributes" <?php //checked(in_array('attributes', $content_elements_option)); 
@@ -2377,17 +2832,37 @@ $onepaquc_helper->sec_head(
                             <table class="form-table plugincy_table">
                                 <tbody class="plugincy_grid">
                                     <tr>
-                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Modal Size', 'Choose the size of the quick view modal popup.'); ?>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Modal Size', 'one-page-quick-checkout-for-woocommerce'),
+                                            __('Choose the size of the quick view modal popup.', 'one-page-quick-checkout-for-woocommerce')
+                                        );
+                                        ?>
+
                                         <td class="rmenu-settings-control pro-only">
                                             <select disabled name="rmenu_quick_view_modal_size" class="rmenu-select">
-                                                <option value="small" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'small'); ?>>Small</option>
-                                                <option value="medium" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'medium'); ?>>Medium</option>
-                                                <option value="large" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'large'); ?>>Large</option>
-                                                <option value="full" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'full'); ?>>Full Width</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'custom'); ?>>Custom</option>
+                                                <option value="small" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'small'); ?>>
+                                                    <?php esc_html_e('Small', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="medium" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'medium'); ?>>
+                                                    <?php esc_html_e('Medium', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="large" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'large'); ?>>
+                                                    <?php esc_html_e('Large', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="full" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'full'); ?>>
+                                                    <?php esc_html_e('Full Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="custom" <?php selected(get_option('rmenu_quick_view_modal_size', 'medium'), 'custom'); ?>>
+                                                    <?php esc_html_e('Custom', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
                                             </select>
                                         </td>
                                     </tr>
+
 
                                     <tr id="rmenu-custom-size-row" style="<?php echo (get_option('rmenu_quick_view_modal_size', 'medium') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
                                         <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Custom Width', 'Custom width in pixels (e.g., 800).'); ?>
@@ -2403,45 +2878,83 @@ $onepaquc_helper->sec_head(
                                     </tr>
 
                                     <tr>
-                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Loading Effect', 'Choose the animation effect when opening the quick view modal.'); ?>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Loading Effect', 'one-page-quick-checkout-for-woocommerce'),
+                                            __('Choose the animation effect when opening the quick view modal.', 'one-page-quick-checkout-for-woocommerce')
+                                        );
+                                        ?>
                                         <td class="rmenu-settings-control pro-only">
                                             <select disabled name="rmenu_quick_view_loading_effect" class="rmenu-select">
-                                                <option value="fade" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'fade'); ?>>Fade</option>
-                                                <option value="slide" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'slide'); ?>>Slide</option>
-                                                <option value="zoom" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'zoom'); ?>>Zoom</option>
-                                                <option value="none" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'none'); ?>>None</option>
+                                                <option value="fade" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'fade'); ?>>
+                                                    <?php esc_html_e('Fade', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="slide" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'slide'); ?>>
+                                                    <?php esc_html_e('Slide', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="zoom" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'zoom'); ?>>
+                                                    <?php esc_html_e('Zoom', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="none" <?php selected(get_option('rmenu_quick_view_loading_effect', 'fade'), 'none'); ?>>
+                                                    <?php esc_html_e('None', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
                                             </select>
                                         </td>
                                     </tr>
+
                                 </tbody>
                             </table>
                         </div>
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-layout"></span>', 'Display Settings', ''); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-layout"></span>',
+                                __('Display Settings', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
+
                             <div class="rmenu-settings-row">
                                 <div class="rmenu-settings-field">
-                                    <label class="rmenu-settings-label">Product Types</label>
+                                    <label class="rmenu-settings-label">
+                                        <?php esc_html_e('Product Types', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                    </label>
+
                                     <?php $product_types_option = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]); ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <label class="rmenu-checkbox-container">
                                             <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Simple Products</span>
+                                            <span class="rmenu-checkbox-label">
+                                                <?php esc_html_e('Simple Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </span>
                                         </label>
 
                                         <label class="rmenu-checkbox-container">
                                             <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="variable" <?php checked(in_array('variable', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Variable Products</span>
+                                            <span class="rmenu-checkbox-label">
+                                                <?php esc_html_e('Variable Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </span>
                                         </label>
 
                                         <label class="rmenu-checkbox-container">
                                             <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="grouped" <?php checked(in_array('grouped', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">Grouped Products</span>
+                                            <span class="rmenu-checkbox-label">
+                                                <?php esc_html_e('Grouped Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </span>
                                         </label>
 
                                         <label class="rmenu-checkbox-container">
                                             <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="external" <?php checked(in_array('external', $product_types_option)); ?> />
-                                            <span class="rmenu-checkbox-label">External/Affiliate Products</span>
+                                            <span class="rmenu-checkbox-label">
+                                                <?php esc_html_e('External/Affiliate Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </span>
                                         </label>
+
                                     </div>
                                 </div>
                             </div>
@@ -2451,83 +2964,131 @@ $onepaquc_helper->sec_head(
                                     <?php $product_pages_option = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']); ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
-                                            <h4>Archive Pages</h4>
+                                            <h4><?php esc_html_e('Archive Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
+
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shop-page" <?php checked(in_array('shop-page', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Main Shop Page</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Main Shop Page', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="category-archives" <?php checked(in_array('category-archives', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Category Archives</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Product Category Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="tag-archives" <?php checked(in_array('tag-archives', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Tag Archives</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Product Tag Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="brand-archives" <?php checked(in_array('brand-archives', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Brand Archives</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Product Brand Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="attribute-archives" <?php checked(in_array('attribute-archives', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Product Attribute Archives</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Product Attribute Archives', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
                                         </div>
 
+
                                         <div class="rmenu-checkbox-column">
-                                            <h4>Other Pages</h4>
+                                            <h4><?php esc_html_e('Other Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
+
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="single" <?php checked(in_array('single', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Single Product Page</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Single Product Page', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="search" <?php checked(in_array('search', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Search Results</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Search Results', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="featured-products" <?php checked(in_array('featured-products', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Featured Products</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Featured Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="on-sale" <?php checked(in_array('on-sale', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">On-Sale Products</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('On-Sale Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="recent" <?php checked(in_array('recent', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Recent Products</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Recent Products', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
                                         </div>
 
+
                                         <div class="rmenu-checkbox-column">
-                                            <h4>Widgets & Shortcodes</h4>
+                                            <h4><?php esc_html_e('Widgets & Shortcodes', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
+
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="widgets" <?php checked(in_array('widgets', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Widgets</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Widgets', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
 
                                             <label class="rmenu-checkbox-container">
                                                 <input type="checkbox" name="rmenu_show_quick_view_by_page[]" value="shortcodes" <?php checked(in_array('shortcodes', $product_pages_option)); ?> />
-                                                <span class="rmenu-checkbox-label">Shortcodes</span>
+                                                <span class="rmenu-checkbox-label">
+                                                    <?php esc_html_e('Shortcodes', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </span>
                                             </label>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="rmenu-settings-section plugincy_card">
-                        <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-translation"></span>', 'Translations', ''); ?>
+                        <?php
+                        $onepaquc_helper->sec_head(
+                            'h3',
+                            'plugincy_sec_head',
+                            '<span class="dashicons dashicons-translation"></span>',
+                            __('Translations', 'one-page-quick-checkout-for-woocommerce'),
+                            ''
+                        );
+                        ?>
+
                         <table class="form-table plugincy_table">
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', '"View Full Details" Button Text', 'Change the text shown on the "View Full Details" button inside the Quick View popup.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    'rmenu-settings-label',
+                                    '',
+                                    __('"View Full Details" Button Text', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Change the text shown on the "View Full Details" button inside the Quick View popup.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
+
                                 <td class="rmenu-settings-control">
                                     <?php
                                     $details_text = get_option('rmenu_quick_view_details_text', '');
@@ -2564,44 +3125,103 @@ $onepaquc_helper->sec_head(
                 <div class="tab-content" id="quick-advanced" style="padding: 0;">
                     <div class="plugincy_row mb-4">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-tools"></span>', 'Advanced Options', ''); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-admin-tools"></span>',
+                                __('Advanced Options', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
+
 
                             <table class="form-table plugincy_table">
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Mobile Optimization', 'When enabled, the quick view functionality will be optimized for mobile devices.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Mobile Optimization', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, the quick view functionality will be optimized for mobile devices.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control pro-only">
                                         <?php $onepaquc_helper->switcher('rmenu_quick_view_mobile_optimize', 1); ?>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Close on Add to Cart', 'When enabled, the quick view popup will automatically close after adding a product to cart.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Close on Add to Cart', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, the quick view popup will automatically close after adding a product to cart.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control pro-only">
                                         <?php $onepaquc_helper->switcher('rmenu_quick_view_close_on_add', 0); ?>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Keyboard Navigation', 'When enabled, customers can use keyboard arrows to navigate between products in quick view and ESC to close.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Keyboard Navigation', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('When enabled, customers can use keyboard arrows to navigate between products in quick view and ESC to close.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_quick_view_keyboard_nav', 1); ?>
                                     </td>
                                 </tr>
                             </table>
+
                         </div>
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-analytics"></span>', 'Analytics Integration', ''); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-analytics"></span>',
+                                __('Analytics Integration', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
+
 
                             <table class="form-table plugincy_table">
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Track Quick View Events', 'Track when customers use quick view in Google Analytics or other analytics tools.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Track Quick View Events', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Track when customers use quick view in Google Analytics or other analytics tools.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control pro-only">
                                         <?php $onepaquc_helper->switcher('rmenu_quick_view_track_events', 0); ?>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Event Category', 'The event category name used for analytics tracking.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Event Category', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('The event category name used for analytics tracking.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control pro-only">
                                         <input disabled type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'one-page-quick-checkout-for-woocommerce')); ?>" class="regular-text" />
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
@@ -2609,43 +3229,93 @@ $onepaquc_helper->sec_head(
                                 </tr>
 
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Event Action', 'The event action name used for analytics tracking.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Event Action', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('The event action name used for analytics tracking.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control pro-only">
                                         <input disabled type="text" name="rmenu_quick_view_event_action" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_action', 'Quick View')); ?>" class="regular-text" />
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                     </td>
                                 </tr>
                             </table>
+
                         </div>
                     </div>
 
                     <div class="rmenu-settings-section plugincy_card">
-                        <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'Compatibility Settings'); ?>
+                        <?php
+                        $onepaquc_helper->sec_head(
+                            'h3',
+                            'plugincy_sec_head',
+                            '<span class="dashicons dashicons-admin-generic"></span>',
+                            __('Compatibility Settings', 'one-page-quick-checkout-for-woocommerce')
+                        );
+                        ?>
+
                         <table class="form-table plugincy_table">
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Load Scripts On', 'Control where quick view scripts are loaded to improve compatibility and performance.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    'rmenu-settings-label',
+                                    '',
+                                    __('Load Scripts On', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Control where quick view scripts are loaded to improve compatibility and performance.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
                                 <td class="rmenu-settings-control pro-only">
                                     <select disabled name="rmenu_quick_view_load_scripts" class="rmenu-select">
-                                        <option value="all" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'all'); ?>>All Pages</option>
-                                        <option value="wc-only" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'wc-only'); ?>>WooCommerce Pages Only</option>
-                                        <option value="specific" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'specific'); ?>>Specific Pages Only</option>
+                                        <option value="all" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'all'); ?>>
+                                            <?php esc_html_e('All Pages', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </option>
+                                        <option value="wc-only" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'wc-only'); ?>>
+                                            <?php esc_html_e('WooCommerce Pages Only', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </option>
+                                        <option value="specific" <?php selected(get_option('rmenu_quick_view_load_scripts', 'wc-only'), 'specific'); ?>>
+                                            <?php esc_html_e('Specific Pages Only', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </option>
                                     </select>
                                     <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                 </td>
                             </tr>
+
                             <tr class="rmenu-settings-row" id="rmenu-specific-pages-row" style="<?php echo (get_option('rmenu_quick_view_load_scripts', 'wc-only') == 'specific') ? 'display:block;' : 'display:none;'; ?>">
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Specific Pages IDs', 'Enter the IDs of the specific pages where you want to load the quick view.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    'rmenu-settings-label',
+                                    '',
+                                    __('Specific Pages IDs', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Enter the IDs of the specific pages where you want to load the quick view.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
                                 <td class="rmenu-settings-control pro-only">
                                     <input disabled type="text" name="rmenu_quick_view_specific_pages" value="<?php echo esc_attr(get_option('rmenu_quick_view_specific_pages', '')); ?>" class="regular-text" />
                                 </td>
                             </tr>
+
                             <tr>
-                                <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Theme Compatibility Mode', 'Enable this if you experience display issues with your theme.'); ?>
+                                <?php
+                                $onepaquc_helper->sec_head(
+                                    'th',
+                                    'rmenu-settings-label',
+                                    '',
+                                    __('Theme Compatibility Mode', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Enable this if you experience display issues with your theme.', 'one-page-quick-checkout-for-woocommerce')
+                                );
+                                ?>
                                 <td class="rmenu-settings-control">
                                     <?php $onepaquc_helper->switcher('rmenu_quick_view_theme_compat', 0); ?>
                                 </td>
-                            <tr>
+                            </tr>
                         </table>
+
                     </div>
                 </div>
 
@@ -2947,86 +3617,180 @@ $onepaquc_helper->sec_head(
             </script>
             <div class="tab-content" id="tab-8">
                 <div class="plugincy_nav_card mb-4">
-                    <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head2', '<span class="dashicons dashicons-cart"></span>', 'WooCommerce Add To Cart', '', 'Easily modify the Add to Cart button text, style, and functionality for a more engaging shopping experience.'); ?>
+                    <?php
+                    $onepaquc_helper->sec_head(
+                        'h2',
+                        'plugincy_sec_head2',
+                        '<span class="dashicons dashicons-cart"></span>',
+                        __('WooCommerce Add To Cart', 'one-page-quick-checkout-for-woocommerce'),
+                        '',
+                        __('Easily modify the Add to Cart button text, style, and functionality for a more engaging shopping experience.', 'one-page-quick-checkout-for-woocommerce')
+                    );
+                    ?>
+
                     <div class="rmenu-settings-tabs">
                         <ul class="rmenu-settings-tab-list">
                             <li class="rmenu-settings-tab-item active" data-tab="general-settings">
-                                <span class="dashicons dashicons-admin-generic"></span> General Settings
+                                <span class="dashicons dashicons-admin-generic"></span>
+                                <?php esc_html_e('General Settings', 'one-page-quick-checkout-for-woocommerce'); ?>
                             </li>
                             <li class="rmenu-settings-tab-item" data-tab="button-behavior">
-                                <span class="dashicons dashicons-controls-play"></span> Button Behavior
+                                <span class="dashicons dashicons-controls-play"></span>
+                                <?php esc_html_e('Button Behavior', 'one-page-quick-checkout-for-woocommerce'); ?>
                             </li>
+
                             <li class="rmenu-settings-tab-item" data-tab="advanced">
-                                <span class="dashicons dashicons-admin-tools"></span> Advanced
+                                <span class="dashicons dashicons-admin-tools"></span>
+                                <?php esc_html_e('Advanced', 'one-page-quick-checkout-for-woocommerce'); ?>
                             </li>
+
                         </ul>
                     </div>
+
                 </div>
 
                 <div class="tab-content" id="general-settings" style="padding: 0;">
                     <div class="plugincy_row">
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-generic"></span>', 'General Settings', ''); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-admin-generic"></span>',
+                                __('General Settings', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
 
                             <table class="form-table plugincy_table">
                                 <tr id="rmenu-enable-custom-add-to-cart">
-                                    <?php $onepaquc_helper->sec_head('th', '', '', 'Customizable Add to Cart', 'Enable or disable custom Add to Cart styling and functionality.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        '',
+                                        '',
+                                        __('Customizable Add to Cart', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Enable or disable custom Add to Cart styling and functionality.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control">
                                         <?php $onepaquc_helper->switcher('rmenu_enable_custom_add_to_cart', 1); ?>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Button Text', 'Customize the text displayed on the Add to Cart button for simple products.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Button Text', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Customize the text displayed on the Add to Cart button for simple products.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(get_option('txt-add-to-cart', 'Add to Cart')); ?>" class="regular-text" />
+                                        <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(get_option('txt-add-to-cart', __('Add to Cart', 'one-page-quick-checkout-for-woocommerce'))); ?>" class="regular-text" />
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Variable Product Button Text', 'Customize the text displayed on the Add to Cart button for variable products.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Variable Product Button Text', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Customize the text displayed on the Add to Cart button for variable products.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-select-options" value="<?php echo esc_attr(get_option('txt-select-options', 'Select Options')); ?>" class="regular-text" />
+                                        <input type="text" name="txt-select-options" value="<?php echo esc_attr(get_option('txt-select-options', __('Select Options', 'one-page-quick-checkout-for-woocommerce'))); ?>" class="regular-text" />
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Read More Button Text', 'Customize the text displayed on the Read More button.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Read More Button Text', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Customize the text displayed on the Read More button.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-read-more" value="<?php echo esc_attr(get_option('txt-read-more', 'Read More')); ?>" class="regular-text" />
+                                        <input type="text" name="txt-read-more" value="<?php echo esc_attr(get_option('txt-read-more', __('Read More', 'one-page-quick-checkout-for-woocommerce'))); ?>" class="regular-text" />
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Grouped Product Button Text', 'Customize the text displayed on the Add to Cart button for grouped products.'); ?>
+                                    <?php
+                                    $onepaquc_helper->sec_head(
+                                        'th',
+                                        'rmenu-settings-label',
+                                        '',
+                                        __('Grouped Product Button Text', 'one-page-quick-checkout-for-woocommerce'),
+                                        __('Customize the text displayed on the Add to Cart button for grouped products.', 'one-page-quick-checkout-for-woocommerce')
+                                    );
+                                    ?>
                                     <td class="rmenu-settings-control">
-                                        <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', 'View Products')); ?>" class="regular-text" />
+                                        <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', __('View Products', 'one-page-quick-checkout-for-woocommerce'))); ?>" class="regular-text" />
                                     </td>
                                 </tr>
                             </table>
                         </div>
 
+
                         <div class="rmenu-settings-section button-style-section plugincy_card plugincy_col-5">
-                            <?php $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<span class="dashicons dashicons-admin-appearance"></span>', 'Button Style', ''); ?>
+                            <?php
+                            $onepaquc_helper->sec_head(
+                                'h3',
+                                'plugincy_sec_head',
+                                '<span class="dashicons dashicons-admin-appearance"></span>',
+                                __('Button Style', 'one-page-quick-checkout-for-woocommerce'),
+                                ''
+                            );
+                            ?>
+
 
                             <table class="form-table plugincy_table">
                                 <tbody class="plugincy_grid">
                                     <tr style="grid-column: span 2;">
-                                        <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Button Style', ''); ?>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Button Style', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_add_to_cart_style" class="rmenu-select" id="rmenu-atc-style-select">
-                                                <option value="default" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'default'); ?>>Default WooCommerce Style</option>
-                                                <option disabled value="modern" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'modern'); ?>>Modern Style (Pro Feature)</option>
-                                                <option value="rounded" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'rounded'); ?>>Rounded Style</option>
-                                                <option disabled value="minimal" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'minimal'); ?>>Minimal Style (Pro Feature)</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'custom'); ?>>Custom Style</option>
+                                                <option value="default" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'default'); ?>>
+                                                    <?php esc_html_e('Default WooCommerce Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option disabled value="modern" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'modern'); ?>>
+                                                    <?php esc_html_e('Modern Style (Pro Feature)', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="rounded" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'rounded'); ?>>
+                                                    <?php esc_html_e('Rounded Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+
+                                                <option disabled value="minimal" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'minimal'); ?>>
+                                                    <?php esc_html_e('Minimal Style (Pro Feature)', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="custom" <?php selected(get_option('rmenu_add_to_cart_style', 'default'), 'custom'); ?>>
+                                                    <?php esc_html_e('Custom Style', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
                                             </select>
                                         </td>
+
                                     </tr>
                                     <tr>
                                         <th class="rmenu-settings-label">
-    <?php esc_html_e('Button Color', 'one-page-quick-checkout-for-woocommerce'); ?>
-</th>
+                                            <?php esc_html_e('Button Color', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
 
                                         <td class="rmenu-settings-control">
                                             <input type="color" name="rmenu_add_to_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_bg_color', '#000')); ?>" class="rmenu-color-picker" />
@@ -3034,30 +3798,66 @@ $onepaquc_helper->sec_head(
                                     </tr>
 
                                     <tr>
-                                        <th class="rmenu-settings-label">Text Color</th>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Text Color', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                            <input type="color"
+                                                name="rmenu_add_to_cart_text_color"
+                                                value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>"
+                                                class="rmenu-color-picker" />
                                         </td>
                                     </tr>
 
+
                                     <tr>
-                                        <th class="rmenu-settings-label">Hover Background Color</th>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Hover Background Color', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>" class="rmenu-color-picker" />
+                                            <input type="color"
+                                                name="rmenu_add_to_cart_hover_bg_color"
+                                                value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>"
+                                                class="rmenu-color-picker" />
                                         </td>
                                     </tr>
 
+
                                     <tr>
-                                        <th class="rmenu-settings-label">Hover Text Color</th>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Hover Text Color', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                            <input type="color"
+                                                name="rmenu_add_to_cart_hover_text_color"
+                                                value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>"
+                                                class="rmenu-color-picker" />
                                         </td>
                                     </tr>
+
 
                                     <tr>
                                         <th class="rmenu-settings-label">
-    <?php esc_html_e('Border Radius', 'one-page-quick-checkout-for-woocommerce'); ?>
-</th>
+                                            <?php esc_html_e('Border Radius', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
 
                                         <td class="rmenu-settings-control">
                                             <input type="number" name="rmenu_add_to_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_border_radius', '3')); ?>" class="small-text" min="0" max="50" step="1" />
@@ -3067,23 +3867,32 @@ $onepaquc_helper->sec_head(
 
                                     <tr>
                                         <th class="rmenu-settings-label">
-        <?php esc_html_e('Button Font Size', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </th>
-    <td class="rmenu-settings-control">
-        <input type="number" name="rmenu_add_to_cart_font_size" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_font_size', '14')); ?>" class="small-text" min="10" max="24" step="1" />
-        <span class="rmenu-unit">px</span>
-    </td>
-</tr>
+                                            <?php esc_html_e('Button Font Size', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
+                                        <td class="rmenu-settings-control">
+                                            <input type="number" name="rmenu_add_to_cart_font_size" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_font_size', '14')); ?>" class="small-text" min="10" max="24" step="1" />
+                                            <span class="rmenu-unit">px</span>
+                                        </td>
+                                    </tr>
 
-<tr>
-    <th class="rmenu-settings-label">
-        <?php esc_html_e('Button Width', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </th>
+                                    <tr>
+                                        <th class="rmenu-settings-label">
+                                            <?php esc_html_e('Button Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                        </th>
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_add_to_cart_width" class="rmenu-select">
-                                                <option value="auto" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'auto'); ?>>Auto</option>
-                                                <option value="full" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'full'); ?>>Full Width</option>
-                                                <option value="custom" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'custom'); ?>>Custom Width</option>
+                                                <option value="auto" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'auto'); ?>>
+                                                    <?php esc_html_e('Auto', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+
+                                                <option value="full" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'full'); ?>>
+                                                    <?php esc_html_e('Full Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+
+                                                <option value="custom" <?php selected(get_option('rmenu_add_to_cart_width', 'auto'), 'custom'); ?>>
+                                                    <?php esc_html_e('Custom Width', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+
                                             </select>
                                         </td>
                                     </tr>
@@ -3097,35 +3906,86 @@ $onepaquc_helper->sec_head(
                                     </tr>
 
                                     <tr>
-                                        <th class="rmenu-settings-label">Button Icon</th>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Button Icon', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_add_to_cart_icon" class="rmenu-select">
-                                                <option value="none" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); ?>>No Icon</option>
-                                                <option value="cart" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); ?>>Cart Icon</option>
-                                                <option value="plus" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); ?>>Plus Icon</option>
-                                                <option value="bag" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); ?>>Shopping Bag Icon</option>
-                                                <option value="basket" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); ?>>Basket Icon</option>
+                                                <option value="none" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'none'); ?>>
+                                                    <?php esc_html_e('No Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="cart" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'cart'); ?>>
+                                                    <?php esc_html_e('Cart Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="plus" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'plus'); ?>>
+                                                    <?php esc_html_e('Plus Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="bag" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'bag'); ?>>
+                                                    <?php esc_html_e('Shopping Bag Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="basket" <?php selected(get_option('rmenu_add_to_cart_icon', 'none'), 'basket'); ?>>
+                                                    <?php esc_html_e('Basket Icon', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
                                             </select>
                                         </td>
+
                                     </tr>
                                     <tr id="rmenu-atc-icon-position-row" style="<?php echo (get_option('rmenu_add_to_cart_icon', 'none') == 'none') ? 'display:none;' : 'display:block;'; ?>">
-                                        <th class="rmenu-settings-label">Icon Position</th>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Icon Position', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
+
                                         <td class="rmenu-settings-control">
                                             <select name="rmenu_add_to_cart_icon_position" class="rmenu-select">
-                                                <option value="left" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); ?>>Left</option>
-                                                <option value="right" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); ?>>Right</option>
-                                                <option value="top" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'top'); ?>>Top</option>
-                                                <option value="bottom" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'bottom'); ?>>Bottom</option>
+                                                <option value="left" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'left'); ?>>
+                                                    <?php esc_html_e('Left', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="right" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'right'); ?>>
+                                                    <?php esc_html_e('Right', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="top" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'top'); ?>>
+                                                    <?php esc_html_e('Top', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
+                                                <option value="bottom" <?php selected(get_option('rmenu_add_to_cart_icon_position', 'left'), 'bottom'); ?>>
+                                                    <?php esc_html_e('Bottom', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                                </option>
                                             </select>
                                         </td>
+
                                     </tr>
 
                                     <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-atc-custom-css-row" style="<?php echo (get_option('rmenu_add_to_cart_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
-                                        <th class="rmenu-settings-label">Custom CSS</th>
+                                        <?php
+                                        $onepaquc_helper->sec_head(
+                                            'th',
+                                            'rmenu-settings-label',
+                                            '',
+                                            __('Custom CSS', 'one-page-quick-checkout-for-woocommerce'),
+                                            ''
+                                        );
+                                        ?>
+
                                         <td class="rmenu-settings-control">
-                                            <textarea name="rmenu_add_to_cart_custom_css" class="rmenu-textarea-code" rows="6"><?php echo esc_textarea(get_option('rmenu_add_to_cart_custom_css', '')); ?></textarea>
-                                            <p class="rmenu-field-description">Add custom CSS for advanced button styling. Use the class <code>.product_type_simple.add_to_cart_button</code> to target the button.</p>
+                                            <textarea name="rmenu_add_to_cart_custom_css"
+                                                class="rmenu-textarea-code"
+                                                rows="6"><?php echo esc_textarea(get_option('rmenu_add_to_cart_custom_css', '')); ?></textarea>
+                                            <p class="rmenu-field-description">
+                                                <?php esc_html_e('Add custom CSS for advanced button styling. Use the class <code>.product_type_simple.add_to_cart_button</code> to target the button.', 'one-page-quick-checkout-for-woocommerce'); ?>
+                                            </p>
                                         </td>
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -3584,9 +4444,9 @@ $onepaquc_helper->sec_head(
                     <span style="margin-bottom: -7px;"><svg fill="#fff" width="16" height="16" viewBox="0 0 0.48 0.48" xmlns="http://www.w3.org/2000/svg">
                             <path d="M.474.124.356.006A.03.03 0 0 0 .341 0H.022A.02.02 0 0 0 0 .022v.436c0 .013.01.023.022.023h.436A.022.022 0 0 0 .481.459v-.32A.02.02 0 0 0 .475.124zM.131.044h.131V.16H.131zm0 .393V.32h.218v.116zm.306 0H.393V.299A.022.022 0 0 0 .371.276H.109a.02.02 0 0 0-.022.022v.138H.044V.044h.044v.139q.001.02.021.021h.174A.022.022 0 0 0 .306.182V.044h.027l.104.104z" />
                         </svg></span>
-                   <span>
-    <?php esc_html_e('Save Changes', 'one-page-quick-checkout-for-woocommerce'); ?>
-</span>
+                    <span>
+                        <?php esc_html_e('Save Changes', 'one-page-quick-checkout-for-woocommerce'); ?>
+                    </span>
 
                 </button>
             </div>
@@ -3602,17 +4462,17 @@ $onepaquc_helper->sec_head(
 
         <div>
             <div class="plugincy_nav_card mb-4" style="padding-bottom: 1px;">
-    <?php 
-    $onepaquc_helper->sec_head(
-        'h2',
-        'plugincy_sec_head2',
-        '<span class="dashicons dashicons-video-alt3"></span>',
-        __( 'Tutorials', 'one-page-quick-checkout-for-woocommerce' ),
-        '',
-        __( 'Learn how to use our plugin features with these step-by-step video tutorials.', 'one-page-quick-checkout-for-woocommerce' )
-    ); 
-    ?>
-</div>
+                <?php
+                $onepaquc_helper->sec_head(
+                    'h2',
+                    'plugincy_sec_head2',
+                    '<span class="dashicons dashicons-video-alt3"></span>',
+                    __('Tutorials', 'one-page-quick-checkout-for-woocommerce'),
+                    '',
+                    __('Learn how to use our plugin features with these step-by-step video tutorials.', 'one-page-quick-checkout-for-woocommerce')
+                );
+                ?>
+            </div>
 
 
             <div class="tutorial-container">
@@ -3628,23 +4488,23 @@ $onepaquc_helper->sec_head(
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <h3><?php esc_html_e( 'Buy Now Button', 'one-page-quick-checkout-for-woocommerce' ); ?></h3>
+                    <h3><?php esc_html_e('Buy Now Button', 'one-page-quick-checkout-for-woocommerce'); ?></h3>
 
                     <p>
                         Transform your <strong>WooCommerce store</strong> with <strong>instant purchase buttons</strong> that bypass the traditional <strong>cart process</strong>. Our plugin automatically adds <strong>buy now buttons</strong> on <strong>single product</strong> and <strong>archive pages</strong>, but you have complete control over placement and customization.
                     </p>
                     <div class="tutorial-shortcode">
-                       <h4><?php esc_html_e( 'Basic Shortcode:', 'one-page-quick-checkout-for-woocommerce' ); ?></h4>
+                        <h4><?php esc_html_e('Basic Shortcode:', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
 
                         <code>[onepaquc_button]</code>
                         <p>
-    <?php 
-    echo esc_html__(
-        'This shortcode will display a buy now button for the current product when used on product pages.',
-        'one-page-quick-checkout-for-woocommerce'
-    );
-    ?>
-</p>
+                            <?php
+                            echo esc_html__(
+                                'This shortcode will display a buy now button for the current product when used on product pages.',
+                                'one-page-quick-checkout-for-woocommerce'
+                            );
+                            ?>
+                        </p>
 
                     </div>
                 </div>
@@ -3661,32 +4521,35 @@ $onepaquc_helper->sec_head(
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <h3><?php esc_html_e( 'Buy Now Button Anywhere', 'one-page-quick-checkout-for-woocommerce' ); ?></h3>
-<p>
-    <?php 
-    echo wp_kses_post(
-        __(
-            'You can use <strong>buy now button</strong> anywhere on your <strong>site</strong> with this <strong>shortcode</strong>.',
-            'one-page-quick-checkout-for-woocommerce'
-        )
-    );
-    ?>
-</p>
-<div class="tutorial-shortcode">
-    <h4><?php esc_html_e( 'Shortcode:', 'one-page-quick-checkout-for-woocommerce' ); ?></h4>
+                    <h3>
+                        <?php esc_html_e('Buy Now Button Anywhere', 'one-page-quick-checkout-for-woocommerce'); ?>
+                    </h3>
+
+                    <p>
+                        <?php
+                        echo wp_kses_post(
+                            __(
+                                'You can use <strong>buy now button</strong> anywhere on your <strong>site</strong> with this <strong>shortcode</strong>.',
+                                'one-page-quick-checkout-for-woocommerce'
+                            )
+                        );
+                        ?>
+                    </p>
+                    <div class="tutorial-shortcode">
+                        <h4><?php esc_html_e('Shortcode:', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
                         <code>[onepaquc_button product_id="123" variation_id="456" qty="2"]</code>
                     </div>
                     <div class="tutorial-tips">
-    <h4>
-        <?php esc_html_e('Tips:', 'one-page-quick-checkout-for-woocommerce'); ?>
-    </h4>
-    <p>
-        <?php esc_html_e(
-            'Use our widget or block (Buy Now Button) for easier implementation.',
-            'one-page-quick-checkout-for-woocommerce'
-        ); ?>
-    </p>
-</div>
+                        <h4>
+                            <?php esc_html_e('Tips:', 'one-page-quick-checkout-for-woocommerce'); ?>
+                        </h4>
+                        <p>
+                            <?php esc_html_e(
+                                'Use our widget or block (Buy Now Button) for easier implementation.',
+                                'one-page-quick-checkout-for-woocommerce'
+                            ); ?>
+                        </p>
+                    </div>
 
                 </div>
 
@@ -3702,14 +4565,15 @@ $onepaquc_helper->sec_head(
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <h3>One Page Checkout</h3>
+                    <h3><?php esc_html_e('One Page Checkout', 'one-page-quick-checkout-for-woocommerce'); ?></h3>
                     <p>
                         You can use <strong>one page checkout</strong> anywhere on your <strong>site</strong> with this <strong>shortcode</strong>.
                     </p>
                     <div class="tutorial-shortcode">
-                        <h4>Shortcode:</h4>
+                        <h4><?php esc_html_e('Shortcode:', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
                         <code>[onepaquc_checkout product_id="123" variation_id="456" qty="2" clear_cart="yes" auto_add="yes"]</code>
                     </div>
+
                     <div class="tutorial-tips">
                         <h4>Tips:</h4>
                         <p>Use our widget or block (One-page checkout) for easier implementation.</p>
@@ -3727,17 +4591,31 @@ $onepaquc_helper->sec_head(
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <h3>Floating Cart</h3>
+                    <h3><?php esc_html_e('Floating Cart', 'one-page-quick-checkout-for-woocommerce'); ?></h3>
+
                     <p>
                         A <strong>modern</strong>, <strong>stylish</strong> <strong>side-drawer cart</strong> that users can access from <strong>any page</strong> for improved convenience.
                     </p>
                     <div class="tutorial-tips">
-                        <h4>Floating Cart Benefits:</h4>
+                        <h4><?php esc_html_e('Floating Cart Benefits:', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
+
                         <ul>
-                            <li><strong>Reduced Abandonment:</strong> Customers can review their cart without losing their place on your site</li>
-                            <li><strong>Improved UX:</strong> No page reloads or redirects needed to manage cart contents</li>
-                            <li><strong>Mobile Friendly:</strong> Touch-optimized interface perfect for mobile shopping</li>
-                            <li><strong>Sales Boost:</strong> Easy access to cart encourages completion of purchases</li>
+                            <li>
+                                <strong><?php esc_html_e('Reduced Abandonment:', 'one-page-quick-checkout-for-woocommerce'); ?></strong>
+                                <?php esc_html_e('Customers can review their cart without losing their place on your site', 'one-page-quick-checkout-for-woocommerce'); ?>
+                            </li>
+                            <li>
+                                <strong><?php esc_html_e('Improved UX:', 'one-page-quick-checkout-for-woocommerce'); ?></strong>
+                                <?php esc_html_e('No page reloads or redirects needed to manage cart contents', 'one-page-quick-checkout-for-woocommerce'); ?>
+                            </li>
+                            <li>
+                                <strong><?php esc_html_e('Mobile Friendly:', 'one-page-quick-checkout-for-woocommerce'); ?></strong>
+                                <?php esc_html_e('Touch-optimized interface perfect for mobile shopping', 'one-page-quick-checkout-for-woocommerce'); ?>
+                            </li>
+                            <li>
+                                <strong><?php esc_html_e('Sales Boost:', 'one-page-quick-checkout-for-woocommerce'); ?></strong>
+                                <?php esc_html_e('Easy access to cart encourages completion of purchases', 'one-page-quick-checkout-for-woocommerce'); ?>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -4033,12 +4911,26 @@ add_action('wp_enqueue_scripts', 'onepaquc_cart_custom_css', 9999999);
 function onepaquc_rmenu_fields()
 {
     return [
-        'hide_coupon_toggle'          => ['selector' => '.woocommerce-form-coupon-toggle, .col-form-coupon,.woocommerce-form-coupon-toggle, .col-form-coupon', 'title' => 'Hide Top Coupon'],
-        'hide_customer_details_col2'  => ['selector' => ' .woocommerce-shipping-fields, .woocommerce-shipping-fields', 'title' => 'Hide Shipping Address'],
-        'hide_privacy_policy_text'    => ['selector' => '.woocommerce-privacy-policy-text, .woocommerce-privacy-policy-text, .wp-block-woocommerce-checkout-terms-block .wc-block-checkout__terms .wc-block-components-checkbox__label, .wc-block-checkout__terms .wc-block-components-checkbox__label', 'title' => 'Hide Privacy Policy Text'],
-        'hide_payment'                 => ['selector' => 'div#payment ul, div#payment ul, .wp-block-woocommerce-checkout-payment-block, .wc-block-checkout__payment-method, .wc-block-components-checkout-payment-methods, .wc-block-checkout__no-payment-methods-notice', 'title' => 'Hide Payment Options'],
-        'hide_product'                 => ['selector' => 'table.shop_table, table.shop_table, .wp-block-woocommerce-checkout-order-summary-block, .wp-block-woocommerce-checkout-order-summary-cart-items-block, .wp-block-woocommerce-checkout-order-summary-totals-block, .wc-block-components-order-summary', 'title' => 'Hide Product Table']
-
+        'hide_coupon_toggle' => [
+            'selector' => '.woocommerce-form-coupon-toggle, .col-form-coupon,.woocommerce-form-coupon-toggle, .col-form-coupon',
+            'title'    => __('Hide Top Coupon', 'one-page-quick-checkout-for-woocommerce'),
+        ],
+        'hide_customer_details_col2' => [
+            'selector' => ' .woocommerce-shipping-fields, .woocommerce-shipping-fields',
+            'title'    => __('Hide Shipping Address', 'one-page-quick-checkout-for-woocommerce'),
+        ],
+        'hide_privacy_policy_text' => [
+            'selector' => '.woocommerce-privacy-policy-text, .woocommerce-privacy-policy-text, .wp-block-woocommerce-checkout-terms-block .wc-block-checkout__terms .wc-block-components-checkbox__label, .wc-block-checkout__terms .wc-block-components-checkbox__label',
+            'title'    => __('Hide Privacy Policy Text', 'one-page-quick-checkout-for-woocommerce'),
+        ],
+        'hide_payment' => [
+            'selector' => 'div#payment ul, div#payment ul, .wp-block-woocommerce-checkout-payment-block, .wc-block-checkout__payment-method, .wc-block-components-checkout-payment-methods, .wc-block-checkout__no-payment-methods-notice',
+            'title'    => __('Hide Payment Options', 'one-page-quick-checkout-for-woocommerce'),
+        ],
+        'hide_product' => [
+            'selector' => 'table.shop_table, table.shop_table, .wp-block-woocommerce-checkout-order-summary-block, .wp-block-woocommerce-checkout-order-summary-cart-items-block, .wp-block-woocommerce-checkout-order-summary-totals-block, .wc-block-components-order-summary',
+            'title'    => __('Hide Product Table', 'one-page-quick-checkout-for-woocommerce'),
+        ],
     ];
 }
 
