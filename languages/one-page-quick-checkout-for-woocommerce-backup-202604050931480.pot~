@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: One Page Quick Checkout for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-25 11:18+0000\n"
+"POT-Creation-Date: 2026-03-25 11:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -2191,4 +2191,19 @@ msgid "Toast Notification"
 msgstr ""
 
 msgid "Mini Cart Preview"
+msgstr ""
+
+msgid "Settings to ensure compatibility with various themes and plugins."
+msgstr ""
+
+msgid "Same as Desktop"
+msgstr ""
+
+msgid "Larger"
+msgstr ""
+
+msgid "Smaller"
+msgstr ""
+
+msgid "Error, duplicate 1: Full Width"
 msgstr ""

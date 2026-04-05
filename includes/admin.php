@@ -2242,7 +2242,15 @@ function onepaquc_cart_dashboard()
                                 <?php $onepaquc_helper->switcher('rmenu_remove_product', 0); ?>
                             </td>
                         </tr>
-
+                        <tr valign="top" class="pro-only">
+                            <?php $onepaquc_helper->sec_head('th', '', '', __('Variation Switcher in Cart & Checkout', 'one-page-quick-checkout-for-woocommerce'), __('Enable this Pro feature to let customers switch variable-product options directly from the cart drawer, cart page, and checkout instead of adding a new variation and removing the old one manually.', 'one-page-quick-checkout-for-woocommerce')); ?>
+                            <td>
+                                <label class="switch">
+                                    <input disabled type="checkbox" name="pro_cart_checkout_variation_switch" value="1" />
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                        </tr>
                         <tr valign="top">
                             <?php
                             $onepaquc_helper->sec_head(

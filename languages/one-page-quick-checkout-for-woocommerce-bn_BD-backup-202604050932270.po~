@@ -10,7 +10,7 @@ msgstr ""
 "Language: bn_BD\n"
 "Language-Team: বাংলা\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"PO-Revision-Date: 2026-03-25 11:20+0000\n"
+"PO-Revision-Date: 2026-03-25 11:26+0000\n"
 "X-Generator: Loco https://localise.biz/"
 
 msgid " Advanced"
@@ -1004,6 +1004,9 @@ msgid ""
 "After Add to Cart Button"
 msgstr "ত্রুটি, সদৃশ ১:কার্টে যোগ করুন বোতামের পরে"
 
+msgid "Error, duplicate 1: Full Width"
+msgstr "ত্রুটি, সদৃশ ১: সম্পূর্ণ প্রস্থ"
+
 #| msgid "Error, duplicate 2: Error, duplicate 1: After Add to Cart Button"
 msgid ""
 "Error, duplicate 2: Error, duplicate 1: \n"
@@ -1257,6 +1260,9 @@ msgstr ""
 
 msgid "Keyboard Navigation"
 msgstr "কীবোর্ড নেভিগেশন"
+
+msgid "Larger"
+msgstr "বৃহত্তর"
 
 msgid "Last Name"
 msgstr "শেষ নাম"
@@ -1749,6 +1755,9 @@ msgstr "ডান"
 msgid "Rounded Style"
 msgstr "গোলাকার শৈলী"
 
+msgid "Same as Desktop"
+msgstr "ডেস্কটপের মতোই"
+
 msgid "Save Changes"
 msgstr "পরিবর্তনগুলি সংরক্ষণ করুন"
 
@@ -1808,6 +1817,9 @@ msgstr "ফ্লোটিং কার্টের উপরের অবস্
 #: one-page-quick-checkout-for-wooCommerce.php:1274
 msgid "Settings"
 msgstr "সেটিংস"
+
+msgid "Settings to ensure compatibility with various themes and plugins."
+msgstr "বিভিন্ন থিম এবং প্লাগইনগুলির সাথে সামঞ্জস্য নিশ্চিত করার জন্য সেটিংস।"
 
 #: includes/trusted-badge.php:37
 msgid "Shield"
@@ -1882,6 +1894,9 @@ msgid "SKU"
 msgstr "SKU"
 
 msgid "Small"
+msgstr "ছোট"
+
+msgid "Smaller"
 msgstr "ছোট"
 
 msgid "Social Sharing"

@@ -10,7 +10,7 @@ msgstr ""
 "Language: bn_BD\n"
 "Language-Team: বাংলা\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"PO-Revision-Date: 2026-03-25 11:19+0000\n"
+"PO-Revision-Date: 2026-04-05 09:32+0000\n"
 "X-Generator: Loco https://localise.biz/"
 
 msgid " Advanced"
@@ -945,6 +945,12 @@ msgstr "স্টিকি কার্ট সক্ষম করুন"
 msgid "Enable this if you experience display issues with your theme."
 msgstr "আপনার থিমের সাথে ডিসপ্লে সমস্যা হলে এটি সক্ষম করুন।"
 
+msgid ""
+"Enable this Pro feature to let customers switch variable-product options "
+"directly from the cart drawer, cart page, and checkout instead of adding a "
+"new variation and removing the old one manually."
+msgstr ""
+
 #: includes/trusted-badge.php:60
 msgid "Enable Trust Badges"
 msgstr "ট্রাস্ট ব্যাজ সক্ষম করুন"
@@ -1003,6 +1009,9 @@ msgid ""
 "Error, duplicate 1: \n"
 "After Add to Cart Button"
 msgstr "ত্রুটি, সদৃশ ১:কার্টে যোগ করুন বোতামের পরে"
+
+msgid "Error, duplicate 1: Full Width"
+msgstr "ত্রুটি, সদৃশ ১: সম্পূর্ণ প্রস্থ"
 
 #| msgid "Error, duplicate 2: Error, duplicate 1: After Add to Cart Button"
 msgid ""
@@ -1257,6 +1266,9 @@ msgstr ""
 
 msgid "Keyboard Navigation"
 msgstr "কীবোর্ড নেভিগেশন"
+
+msgid "Larger"
+msgstr "বৃহত্তর"
 
 msgid "Last Name"
 msgstr "শেষ নাম"
@@ -1749,6 +1761,9 @@ msgstr "ডান"
 msgid "Rounded Style"
 msgstr "গোলাকার শৈলী"
 
+msgid "Same as Desktop"
+msgstr "ডেস্কটপের মতোই"
+
 msgid "Save Changes"
 msgstr "পরিবর্তনগুলি সংরক্ষণ করুন"
 
@@ -1808,6 +1823,9 @@ msgstr "ফ্লোটিং কার্টের উপরের অবস্
 #: one-page-quick-checkout-for-wooCommerce.php:1274
 msgid "Settings"
 msgstr "সেটিংস"
+
+msgid "Settings to ensure compatibility with various themes and plugins."
+msgstr "বিভিন্ন থিম এবং প্লাগইনগুলির সাথে সামঞ্জস্য নিশ্চিত করার জন্য সেটিংস।"
 
 #: includes/trusted-badge.php:37
 msgid "Shield"
@@ -1882,6 +1900,9 @@ msgid "SKU"
 msgstr "SKU"
 
 msgid "Small"
+msgstr "ছোট"
+
+msgid "Smaller"
 msgstr "ছোট"
 
 msgid "Social Sharing"
@@ -2065,6 +2086,9 @@ msgstr "পরিবর্তন আইডি (ঐচ্ছিক)"
 
 msgid "Variation Selection Layout"
 msgstr "পরিবর্তন নির্বাচন বিন্যাস"
+
+msgid "Variation Switcher in Cart & Checkout"
+msgstr ""
 
 #: includes/trusted-badge.php:89
 msgid "Vertical List"

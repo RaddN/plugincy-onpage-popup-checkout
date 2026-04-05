@@ -10,7 +10,7 @@ msgstr ""
 "Language: bn_BD\n"
 "Language-Team: বাংলা\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"PO-Revision-Date: 2026-03-25 11:26+0000\n"
+"PO-Revision-Date: 2026-04-05 09:32+0000\n"
 "X-Generator: Loco https://localise.biz/"
 
 msgid " Advanced"
@@ -944,6 +944,15 @@ msgstr "স্টিকি কার্ট সক্ষম করুন"
 
 msgid "Enable this if you experience display issues with your theme."
 msgstr "আপনার থিমের সাথে ডিসপ্লে সমস্যা হলে এটি সক্ষম করুন।"
+
+msgid ""
+"Enable this Pro feature to let customers switch variable-product options "
+"directly from the cart drawer, cart page, and checkout instead of adding a "
+"new variation and removing the old one manually."
+msgstr ""
+"কার্ট ড্রয়ার, কার্ট পেজ এবং চেকআউট থেকে গ্রাহকদের ভেরিয়েবল-প্রোডাক্ট "
+"অপশনগুলি সরাসরি পরিবর্তন করার অনুমতি দিতে এই প্রো বৈশিষ্ট্যটি সক্ষম করুন, "
+"যাতে তাদের ম্যানুয়ালি একটি নতুন ভেরিয়েশন যোগ করে পুরানোটি সরাতে না হয়।"
 
 #: includes/trusted-badge.php:60
 msgid "Enable Trust Badges"
@@ -2080,6 +2089,9 @@ msgstr "পরিবর্তন আইডি (ঐচ্ছিক)"
 
 msgid "Variation Selection Layout"
 msgstr "পরিবর্তন নির্বাচন বিন্যাস"
+
+msgid "Variation Switcher in Cart & Checkout"
+msgstr "কার্ট ও চেকআউটে ভ্যারিয়েশন সুইচার"
 
 #: includes/trusted-badge.php:89
 msgid "Vertical List"
