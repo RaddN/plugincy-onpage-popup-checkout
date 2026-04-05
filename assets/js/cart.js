@@ -256,7 +256,7 @@ jQuery(document).ready(function ($) {
         // Update via AJAX
         $.ajax({
             type: 'POST',
-            url: wc_checkout_params.ajax_url,
+            url: onepaquc_wc_cart_params.ajax_url,
             data: {
                 action: 'onepaquc_update_cart_item_quantity',
                 cart_item_key: cartItemKey,
@@ -467,7 +467,7 @@ jQuery(document).ready(function ($) {
 
         $.ajax({
             type: 'POST',
-            url: wc_add_to_cart_params.ajax_url,
+            url: onepaquc_wc_cart_params.ajax_url,
             data: {
                 action: 'onepaquc_remove_cart_item',
                 cart_item_key: cartItemKey,
@@ -481,7 +481,7 @@ jQuery(document).ready(function ($) {
                 // Refresh the list of products
                 $.ajax({
                     type: 'POST',
-                    url: wc_add_to_cart_params.ajax_url,
+                    url: onepaquc_wc_cart_params.ajax_url,
                     data: {
                         action: 'onepaquc_refresh_checkout_product_list',
                         product_ids: product_ids,
@@ -895,7 +895,7 @@ jQuery(document).ready(function ($) {
         if ($directbehave.rmenu_wc_clear_cart == 1) {
             $.ajax({
                 type: 'POST',
-                url: wc_add_to_cart_params.ajax_url,
+                url: onepaquc_wc_cart_params.ajax_url,
                 data: {
                     action: 'woocommerce_clear_cart'
                 },

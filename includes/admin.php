@@ -189,7 +189,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title"> <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?> <span class="version-tag">v1.3.6</span>
+        <div class="welcome-title"> <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?> <span class="version-tag">v1.3.7</span>
         </div>
         <p style="max-width: 70%; margin:0 auto;"> <?php esc_html_e('Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.', 'one-page-quick-checkout-for-woocommerce'); ?> </p>
 
