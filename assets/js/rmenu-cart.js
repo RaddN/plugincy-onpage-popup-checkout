@@ -5,6 +5,20 @@ jQuery(document).ready(function ($) {
 
     plugincydebugLog("Settings : ", onepaquc_rmsgValue.plugincy_all_settings);
 
+    function fcStr(key, fallback) {
+        var fc = (typeof onepaquc_rmsgValue !== 'undefined' && onepaquc_rmsgValue.floating_cart) ? onepaquc_rmsgValue.floating_cart : {};
+        if (fc[key] !== undefined && fc[key] !== '') {
+            return fc[key];
+        }
+        return fallback;
+    }
+
+    function formatSelectedCountLabel(count) {
+        var p = typeof onepaquc_wc_cart_params !== 'undefined' ? onepaquc_wc_cart_params : {};
+        var suffix = (p.txt_selected) ? p.txt_selected : 'selected';
+        return String(count) + ' ' + suffix;
+    }
+
     const checkout_popup = $('.checkout-popup');
     $isonepagewidget = (checkout_popup.length) ? checkout_popup.data('isonepagewidget') : false;
 
@@ -18,7 +32,7 @@ jQuery(document).ready(function ($) {
     window.createCheckoutIframe = function () {
         if (!$('form.checkout.woocommerce-checkout').length && checkout_popup.length && $(".checkout-popup #checkout-form").length && !$(".checkout-popup #checkout-form #checkout-iframe").length) {
             // Show loading spinner before iframe loads
-            $('.checkout-popup #checkout-form').html('<style>div#checkout-form { overflow: hidden !important; display: flex ; flex-direction: column; justify-content: center; }</style><div class="plugincy_preloader"> <svg class="plugincy_cart" role="img" aria-label="Shopping plugincy_cart line animation" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg"> <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"> <g class="plugincy_cart__track" stroke="hsla(0,10%,10%,0.1)"> <polyline points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" /> <circle cx="43" cy="111" r="13" /> <circle cx="102" cy="111" r="13" /> </g> <g class="plugincy_cart__lines" stroke="currentColor"> <polyline class="plugincy_cart__top" points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" stroke-dasharray="338 338" stroke-dashoffset="-338" /> <g class="plugincy_cart__wheel1" transform="rotate(-90,43,111)"> <circle class="plugincy_cart__wheel-stroke" cx="43" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" /> </g> <g class="plugincy_cart__wheel2" transform="rotate(90,102,111)"> <circle class="plugincy_cart__wheel-stroke" cx="102" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" /> </g> </g> </g> </svg> <div class="plugincy_preloader__text"> <p class="plugincy_preloader__msg">Bringing you the goods…</p> <p class="plugincy_preloader__msg plugincy_preloader__msg--last">This is taking long. Something’s wrong.</p> </div> </div>');
+            $('.checkout-popup #checkout-form').html('<style>div#checkout-form { overflow: hidden !important; display: flex ; flex-direction: column; justify-content: center; }</style><div class="plugincy_preloader"> <svg class="plugincy_cart" role="img" aria-label="Shopping plugincy_cart line animation" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg"> <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"> <g class="plugincy_cart__track" stroke="hsla(0,10%,10%,0.1)"> <polyline points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" /> <circle cx="43" cy="111" r="13" /> <circle cx="102" cy="111" r="13" /> </g> <g class="plugincy_cart__lines" stroke="currentColor"> <polyline class="plugincy_cart__top" points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" stroke-dasharray="338 338" stroke-dashoffset="-338" /> <g class="plugincy_cart__wheel1" transform="rotate(-90,43,111)"> <circle class="plugincy_cart__wheel-stroke" cx="43" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" /> </g> <g class="plugincy_cart__wheel2" transform="rotate(90,102,111)"> <circle class="plugincy_cart__wheel-stroke" cx="102" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" /> </g> </g> </g> </svg> <div class="plugincy_preloader__text"> <p class="plugincy_preloader__msg">' + fcStr('preloader_msg', 'Bringing you the goods\u2026') + '</p> <p class="plugincy_preloader__msg plugincy_preloader__msg--last">' + fcStr('preloader_slow', 'This is taking long. Something\u2019s wrong.') + '</p> </div> </div>');
             $('.checkout-popup #checkout-form').append(checkoutIframe);
 
             $(".checkout-popup div#checkout-form").css("overflow", "hidden");
@@ -29,7 +43,7 @@ jQuery(document).ready(function ($) {
             });
 
             checkoutIframe.on('error', function () {
-                $('.checkout-popup #checkout-form').html('<p>Error loading checkout. Please try again.</p>');
+                $('.checkout-popup #checkout-form').html('<p>' + fcStr('iframe_error', 'Error loading checkout. Please try again.') + '</p>');
             });
         }
     }
@@ -125,13 +139,20 @@ jQuery(document).ready(function ($) {
         const selectedCountText = document.getElementById('selected-count-text');
         const removeSelectedButton = document.getElementById('remove-selected');
         const count = checkedBoxes.length;
-        selectedCountText.textContent = `${count} selected`;
-        removeSelectedButton.style.display = count > 0 ? 'inline-block' : 'none';
+        if (selectedCountText) {
+            selectedCountText.textContent = formatSelectedCountLabel(count);
+        }
+        if (removeSelectedButton) {
+            removeSelectedButton.style.display = count > 0 ? 'inline-block' : 'none';
+        }
     }
 
     // Update select all checkbox
     function updateSelectAllCheckbox() {
         const selectAllCheckbox = document.getElementById('select-all-items');
+        if (!selectAllCheckbox) {
+            return;
+        }
         const itemCheckboxes = document.querySelectorAll('.item-checkbox');
         const checkedBoxes = document.querySelectorAll('.item-checkbox:checked');
         selectAllCheckbox.checked = checkedBoxes.length === itemCheckboxes.length;
@@ -167,8 +188,8 @@ jQuery(document).ready(function ($) {
         const couponCode = couponInput.val().trim();
         if (!couponCode) return;
 
-        setLoadingState(this, true, 'Applying...');
-        showMessage('Applying coupon...', 'loading');
+        setLoadingState(this, true, fcStr('applying', 'Applying\u2026'));
+        showMessage(fcStr('applying_coupon', 'Applying coupon\u2026'), 'loading');
 
         const data = {
             action: 'apply_coupon',
@@ -177,21 +198,21 @@ jQuery(document).ready(function ($) {
         };
 
         jQuery.post(woocommerce_params.ajax_url, data, function (response) {
-            setLoadingState($('#apply-coupon')[0], false, 'Apply Coupon');
+            setLoadingState($('#apply-coupon')[0], false, fcStr('apply_coupon', 'Apply coupon'));
             if (response.success) {
-                showMessage('Coupon applied successfully!', 'success');
+                showMessage(fcStr('coupon_applied', 'Coupon applied successfully!'), 'success');
                 window.updateCartTotals(response.data);
                 // Add to applied coupons list
                 if (appliedCoupons) {
                     appliedCoupons.style.display = "block";
                     if (appliedCoupons.children.length <= 0) {
-                        appliedCoupons.innerHTML = `<h4>Applied Coupons:</h4>`;
+                        appliedCoupons.innerHTML = '<h4>' + fcStr('applied_coupons_heading', 'Applied Coupons:') + '</h4>';
                     }
                     const couponElement = document.createElement('div');
                     couponElement.className = 'applied-coupon';
                     couponElement.innerHTML = `
                         <span>${couponCode}</span>
-                        <button class="remove-coupon" data-coupon="${couponCode}">Remove</button>
+                        <button class="remove-coupon" data-coupon="${couponCode}">${fcStr('remove', 'Remove')}</button>
                     `;
                     appliedCoupons.appendChild(couponElement);
                 }
@@ -199,11 +220,11 @@ jQuery(document).ready(function ($) {
                 // Clear input
                 couponInput.value = '';
             } else {
-                showMessage(response.data.message || 'Invalid coupon code.', 'error');
+                showMessage(response.data.message || fcStr('invalid_coupon', 'Invalid coupon code.'), 'error');
             }
         }).fail(function () {
-            setLoadingState($('#apply-coupon')[0], false, 'Apply Coupon');
-            showMessage('Something went wrong. Please try again.', 'error');
+            setLoadingState($('#apply-coupon')[0], false, fcStr('apply_coupon', 'Apply coupon'));
+            showMessage(fcStr('error_try_again', 'Something went wrong. Please try again.'), 'error');
         });
     });
 
@@ -218,8 +239,8 @@ jQuery(document).ready(function ($) {
     function removeCoupon(couponCode, buttonElement) {
         const appliedCoupons = document.getElementById('applied-coupons');
         // Show loading state for the specific remove button
-        setLoadingState(buttonElement, true, 'Removing...');
-        showMessage('Removing coupon...', 'loading');
+        setLoadingState(buttonElement, true, fcStr('removing', 'Removing\u2026'));
+        showMessage(fcStr('removing_coupon', 'Removing coupon\u2026'), 'loading');
 
         const data = {
             action: 'remove_coupon',
@@ -239,19 +260,19 @@ jQuery(document).ready(function ($) {
                 }
 
                 // Show success message
-                showMessage('Coupon removed successfully!', 'success');
+                showMessage(fcStr('coupon_removed', 'Coupon removed successfully!'), 'success');
 
                 // Update cart totals
                 window.updateCartTotals(response.data);
             } else {
                 // Remove loading state if removal failed
-                setLoadingState(buttonElement, false, 'Remove');
-                showMessage('Failed to remove coupon. Please try again.', 'error');
+                setLoadingState(buttonElement, false, fcStr('remove', 'Remove'));
+                showMessage(fcStr('failed_remove_coupon', 'Failed to remove coupon. Please try again.'), 'error');
             }
         }).fail(function () {
             // Handle AJAX error
-            setLoadingState(buttonElement, false, 'Remove');
-            showMessage('Something went wrong. Please try again.', 'error');
+            setLoadingState(buttonElement, false, fcStr('remove', 'Remove'));
+            showMessage(fcStr('error_try_again', 'Something went wrong. Please try again.'), 'error');
         });
     }
 
@@ -301,7 +322,7 @@ jQuery(document).ready(function ($) {
         if (discountElement) {
             if (data.discount_total > 0) {
                 discountElement.style.display = 'flex';
-                discountElement.innerHTML = `<span>Discount</span><span>- ${onepaquc_rmsgValue.currency_symbol} ${data.discount_total}</span>`;
+                discountElement.innerHTML = '<span>' + fcStr('discount', 'Discount') + '</span><span>- ' + onepaquc_rmsgValue.currency_symbol + ' ' + data.discount_total + '</span>';
             } else {
                 discountElement.style.display = 'none';
             }

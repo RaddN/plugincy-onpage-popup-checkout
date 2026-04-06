@@ -53,7 +53,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
     <div class="cart-drawer <?php echo esc_attr($drawer_position); ?>">
         <div class="cart-content">
             <div class="cart-header">
-                <h2><?php echo get_option("your_cart") ? esc_attr(get_option("your_cart", 'Your Cart')) : "Your Cart"; ?></h2>
+                <h2><?php echo get_option('your_cart') ? esc_html(get_option('your_cart', __('Your Cart', 'one-page-quick-checkout-for-woocommerce'))) : esc_html__('Your Cart', 'one-page-quick-checkout-for-woocommerce'); ?></h2>
                 <button class="close_button" onclick="closeCheckoutPopup()"></button>
             </div>
 
@@ -66,7 +66,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                             <svg data-icon="icon-checkout" width="56" height="56" viewBox="0 0 24 24" class="plugincy-icon-checkout" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2 2.71411C2 2.31972 2.31972 2 2.71411 2H3.34019C4.37842 2 4.97454 2.67566 5.31984 3.34917C5.55645 3.8107 5.72685 4.37375 5.86764 4.86133H20.5709C21.5186 4.86133 22.2035 5.7674 21.945 6.67914L19.809 14.2123C19.4606 15.4413 18.3384 16.2896 17.0609 16.2896H9.80665C8.51866 16.2896 7.39 15.4276 7.05095 14.185L6.13344 10.8225C6.12779 10.8073 6.12262 10.7917 6.11795 10.7758L4.64782 5.78023C4.59738 5.61449 4.55096 5.45386 4.50614 5.29878C4.36354 4.80529 4.23716 4.36794 4.04891 4.00075C3.82131 3.55681 3.61232 3.42822 3.34019 3.42822H2.71411C2.31972 3.42822 2 3.1085 2 2.71411ZM7.49529 10.3874L8.4288 13.8091C8.59832 14.4304 9.16266 14.8613 9.80665 14.8613H17.0609C17.6997 14.8613 18.2608 14.4372 18.435 13.8227L20.5709 6.28955H6.28975L7.49529 10.3874ZM12.0017 19.8577C12.0017 21.0408 11.0426 22 9.85941 22C8.67623 22 7.71708 21.0408 7.71708 19.8577C7.71708 18.6745 8.67623 17.7153 9.85941 17.7153C11.0426 17.7153 12.0017 18.6745 12.0017 19.8577ZM10.5735 19.8577C10.5735 19.4633 10.2538 19.1436 9.85941 19.1436C9.46502 19.1436 9.1453 19.4633 9.1453 19.8577C9.1453 20.2521 9.46502 20.5718 9.85941 20.5718C10.2538 20.5718 10.5735 20.2521 10.5735 19.8577ZM19.1429 19.8577C19.1429 21.0408 18.1837 22 17.0005 22C15.8173 22 14.8582 21.0408 14.8582 19.8577C14.8582 18.6745 15.8173 17.7153 17.0005 17.7153C18.1837 17.7153 19.1429 18.6745 19.1429 19.8577ZM17.7146 19.8577C17.7146 19.4633 17.3949 19.1436 17.0005 19.1436C16.6061 19.1436 16.2864 19.4633 16.2864 19.8577C16.2864 20.2521 16.6061 20.5718 17.0005 20.5718C17.3949 20.5718 17.7146 20.2521 17.7146 19.8577Z" fill="currentColor"></path>
                             </svg>
-                            <div class="plugincy-zero-state-title">Your Cart is Empty</div>
+                            <div class="plugincy-zero-state-title"><?php echo esc_html__('Your Cart is Empty', 'one-page-quick-checkout-for-woocommerce'); ?></div>
                             <?php
                             // Get the shop page URL or fallback to home page
                             $shop_url = get_home_url(); // Default to home page
@@ -87,7 +87,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                                 }
                             }
                             ?>
-                            <a href="<?php echo esc_url($shop_url); ?>" class="plugincy-primary-button plugincy-shop-button plugincy-modal-close">Shop Now</a>
+                            <a href="<?php echo esc_url($shop_url); ?>" class="plugincy-primary-button plugincy-shop-button plugincy-modal-close"><?php echo esc_html__('Shop Now', 'one-page-quick-checkout-for-woocommerce'); ?></a>
                         </div>
                     </div>
                 <?php
@@ -98,10 +98,10 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                     <div class="cart-selection-bar">
                         <div class="select-all-container">
                             <input type="checkbox" id="select-all-items" class="select-all-checkbox">
-                            <label for="select-all-items"><?php echo get_option("txt_Select_All") ? esc_attr(get_option("txt_Select_All", 'Select All')) : "Select All"; ?></label>
+                            <label for="select-all-items"><?php echo get_option('txt_Select_All') ? esc_html(get_option('txt_Select_All', __('Select All', 'one-page-quick-checkout-for-woocommerce'))) : esc_html__('Select All', 'one-page-quick-checkout-for-woocommerce'); ?></label>
                         </div>
                         <div class="selected-count">
-                            <span id="selected-count-text">0 <?php echo get_option("txt_Selected") ? esc_attr(get_option("txt_Selected", 'selected')) : "selected"; ?></span>
+                            <span id="selected-count-text">0 <?php echo esc_html(onepaquc_get_txt_selected_suffix()); ?></span>
                             <button id="remove-selected" class="remove-selected-button" style="display:none;"><svg style="width: 16px; fill: #ffffff;" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" role="graphics-symbol" aria-hidden="false" aria-label="">
                                     <path d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM31.1 128H416V448C416 483.3 387.3 512 352 512H95.1C60.65 512 31.1 483.3 31.1 448V128zM111.1 208V432C111.1 440.8 119.2 448 127.1 448C136.8 448 143.1 440.8 143.1 432V208C143.1 199.2 136.8 192 127.1 192C119.2 192 111.1 199.2 111.1 208zM207.1 208V432C207.1 440.8 215.2 448 223.1 448C232.8 448 240 440.8 240 432V208C240 199.2 232.8 192 223.1 192C215.2 192 207.1 199.2 207.1 208zM304 208V432C304 440.8 311.2 448 320 448C328.8 448 336 440.8 336 432V208C336 199.2 328.8 192 320 192C311.2 192 304 199.2 304 208z"></path>
                                 </svg></button>
@@ -153,19 +153,19 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                     <!-- Coupon Section -->
                     <div class="coupon-section">
                         <div class="coupon-form">
-                            <input type="text" id="coupon-code" placeholder="Enter coupon code" class="coupon-input">
-                            <button id="apply-coupon" class="apply-coupon-button">Apply</button>
+                            <input type="text" id="coupon-code" placeholder="<?php echo esc_attr__('Enter coupon code', 'one-page-quick-checkout-for-woocommerce'); ?>" class="coupon-input">
+                            <button id="apply-coupon" class="apply-coupon-button"><?php echo esc_html__('Apply', 'one-page-quick-checkout-for-woocommerce'); ?></button>
                         </div>
                         <div id="coupon-message" class="coupon-message" style="display: none;"></div>
                         <div id="applied-coupons" class="applied-coupons" style="display: <?php echo WC()->cart->get_applied_coupons() ? "block" : "none"; ?>;">
                             <?php
                             if (WC()->cart->get_applied_coupons()) {
-                                echo '<h4>Applied Coupons:</h4>';
+                                echo '<h4>' . esc_html__('Applied Coupons:', 'one-page-quick-checkout-for-woocommerce') . '</h4>';
                                 foreach (WC()->cart->get_applied_coupons() as $code) {
                                     $coupon = new WC_Coupon($code);
                                     echo '<div class="applied-coupon">';
                                     echo '<span>' . esc_html($code) . '</span>';
-                                    echo '<button class="remove-coupon" data-coupon="' . esc_attr($code) . '">Remove</button>';
+                                    echo '<button class="remove-coupon" data-coupon="' . esc_attr($code) . '">' . esc_html__('Remove', 'one-page-quick-checkout-for-woocommerce') . '</button>';
                                     echo '</div>';
                                 }
                             }
@@ -205,7 +205,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                                             echo '<h4>' . esc_html($product->get_name()) . '</h4>';
                                             echo '<span class="price">' . wp_kses_post($product->get_price_html()) . '</span>';
                                             echo '</a>';
-                                            echo '<button class="add-to-cart-button" data-product-id="' . esc_attr($product->get_id()) . '">Add to Cart</button>';
+                                            echo '<button class="add-to-cart-button" data-product-id="' . esc_attr($product->get_id()) . '">' . esc_html($product->add_to_cart_text()) . '</button>';
                                             echo '</div>';
 
                                             $simple_products_shown++;
@@ -241,7 +241,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
 
                     <!-- Checkout Button -->
                     <div class="cart-actions">
-                        <a style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link">Checkout</a>
+                        <a style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link"><?php echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; ?></a>
                         <!-- <button class="checkout-button checkout-button-drawer" onclick="openCheckoutPopup()">
                             <?php //echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; 
                             ?>
@@ -253,7 +253,7 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
             <?php }
             } else {
                 // Fallback when WooCommerce is not initialized
-                echo '<p>Your cart is currently empty.</p>';
+                echo '<p>' . esc_html__('Your cart is currently empty.', 'one-page-quick-checkout-for-woocommerce') . '</p>';
             } ?>
         </div>
     </div>

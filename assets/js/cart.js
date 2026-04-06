@@ -225,8 +225,13 @@ jQuery(document).ready(function ($) {
 
                     // Update checkout totals
                     $(document.body).trigger('update_checkout');
-                    selectedCountText.textContent = `0 selected`;
-                    removeSelectedButton.style.display = 'none';
+                    var txtSel = (typeof onepaquc_wc_cart_params !== 'undefined' && onepaquc_wc_cart_params.txt_selected) ? onepaquc_wc_cart_params.txt_selected : 'selected';
+                    if (selectedCountText) {
+                        selectedCountText.textContent = '0 ' + txtSel;
+                    }
+                    if (removeSelectedButton) {
+                        removeSelectedButton.style.display = 'none';
+                    }
 
                     // Trigger WooCommerce hook
                     $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash]);

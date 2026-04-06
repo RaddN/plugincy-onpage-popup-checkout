@@ -180,6 +180,47 @@ require_once plugin_dir_path(__FILE__) . 'includes/quickview.php';
 require_once plugin_dir_path(__FILE__) . 'admin/license-tab.php';
 require_once plugin_dir_path(__FILE__) . 'includes/analytics.php';
 
+/**
+ * Suffix word for selected-item count ("N …"), matching option txt_Selected when set.
+ */
+function onepaquc_get_txt_selected_suffix()
+{
+    $saved = get_option('txt_Selected');
+    if ($saved !== false && $saved !== '') {
+        return $saved;
+    }
+
+    return __('selected', 'one-page-quick-checkout-for-woocommerce');
+}
+
+/**
+ * Strings for floating/side cart UI (JS + translators).
+ */
+function onepaquc_get_floating_cart_i18n()
+{
+    $domain = 'one-page-quick-checkout-for-woocommerce';
+
+    return array(
+        'applying'                 => esc_html__('Applying…', $domain),
+        'applying_coupon'          => esc_html__('Applying coupon…', $domain),
+        'apply_coupon'             => esc_html__('Apply coupon', $domain),
+        'apply'                    => esc_html__('Apply', $domain),
+        'coupon_applied'           => esc_html__('Coupon applied successfully!', $domain),
+        'invalid_coupon'           => esc_html__('Invalid coupon code.', $domain),
+        'error_try_again'          => esc_html__('Something went wrong. Please try again.', $domain),
+        'removing'                 => esc_html__('Removing…', $domain),
+        'removing_coupon'          => esc_html__('Removing coupon…', $domain),
+        'remove'                   => esc_html__('Remove', $domain),
+        'coupon_removed'           => esc_html__('Coupon removed successfully!', $domain),
+        'failed_remove_coupon'     => esc_html__('Failed to remove coupon. Please try again.', $domain),
+        'applied_coupons_heading'  => esc_html__('Applied Coupons:', $domain),
+        'discount'                 => esc_html__('Discount', $domain),
+        'preloader_msg'            => esc_html__('Bringing you the goods…', $domain),
+        'preloader_slow'           => esc_html__('This is taking long. Something\'s wrong.', $domain),
+        'iframe_error'             => esc_html__('Error loading checkout. Please try again.', $domain),
+    );
+}
+
 // Enqueue scripts and styles
 function onepaquc_cart_enqueue_scripts()
 {
@@ -225,6 +266,7 @@ function onepaquc_cart_enqueue_scripts()
         'checkout_url' => wc_get_checkout_url(),
         'cart_url'     => wc_get_cart_url(),
         'nonce' => esc_js(wp_create_nonce('rmenu-ajax-nonce')),
+        'txt_selected' => onepaquc_get_txt_selected_suffix(),
     ));
     // Retrieve the rmsg_editor value
     $rmsg_editor_value = get_option('rmsg_editor', '');
@@ -257,7 +299,8 @@ function onepaquc_cart_enqueue_scripts()
         'apply_coupon' => esc_js(wp_create_nonce('apply-coupon')),
         'currency_symbol' => $currency_symbol,
         'plugincy_all_settings' => $plugincy_all_settings,
-        'ajax_url' => esc_url(admin_url('admin-ajax.php'))
+        'ajax_url' => esc_url(admin_url('admin-ajax.php')),
+        'floating_cart' => onepaquc_get_floating_cart_i18n(),
     ));
 }
 add_action('wp_enqueue_scripts', 'onepaquc_cart_enqueue_scripts', 20);
