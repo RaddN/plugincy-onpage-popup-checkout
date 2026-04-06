@@ -2,6 +2,61 @@
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
 // cart-template.php
 
+/**
+ * Build inner HTML for cart drawer "You may also like" (simple, purchasable, in-stock products).
+ * Returns empty string if there are no suitable related products — do not render the section wrapper in that case.
+ *
+ * @param int   $parent_product_id Product ID whose related products are loaded.
+ * @param int   $max_products      Maximum cards to output.
+ * @param int[] $exclude_ids       Product IDs to skip (e.g. line items already in cart).
+ * @return string Trimmed HTML fragment or empty string.
+ */
+function onepaquc_cart_drawer_get_you_may_also_like_html($parent_product_id, $max_products = 3, $exclude_ids = array())
+{
+    $parent_product_id = absint($parent_product_id);
+    if ($parent_product_id < 1) {
+        return '';
+    }
+
+    $exclude_ids = array_filter(array_map('absint', (array) $exclude_ids));
+    $fetch_limit = max(15, (int) $max_products * 5);
+    $related_ids = wc_get_related_products($parent_product_id, $fetch_limit);
+
+    if (empty($related_ids) || !is_array($related_ids)) {
+        return '';
+    }
+
+    ob_start();
+    $shown = 0;
+    foreach ($related_ids as $rid) {
+        if ($shown >= $max_products) {
+            break;
+        }
+        $rid = absint($rid);
+        if ($rid < 1 || in_array($rid, $exclude_ids, true)) {
+            continue;
+        }
+
+        $product = wc_get_product($rid);
+        if (!$product || $product->get_type() !== 'simple' || !$product->is_purchasable() || !$product->is_in_stock()) {
+            continue;
+        }
+
+        echo '<div class="recommended-product">';
+        echo '<a href="' . esc_url($product->get_permalink()) . '">';
+        echo wp_kses_post($product->get_image());
+        echo '<h4>' . esc_html($product->get_name()) . '</h4>';
+        echo '<span class="price">' . wp_kses_post($product->get_price_html()) . '</span>';
+        echo '</a>';
+        echo '<button class="add-to-cart-button" data-product-id="' . esc_attr($product->get_id()) . '">' . esc_html($product->add_to_cart_text()) . '</button>';
+        echo '</div>';
+
+        $shown++;
+    }
+
+    return trim(ob_get_clean());
+}
+
 // Shortcode to display cart icon and drawer
 function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product_title_tag = 'p', $position = "", $top = "", $left = "")
 {
@@ -173,46 +228,23 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
                         </div>
                     </div>
 
-                    <!-- You May Also Like Section (if only one product in cart) -->
-                    <?php if ($cart_count == 1) : ?>
+                    <!-- You May Also Like Section (if only one product in cart and recommendations exist) -->
+                    <?php
+                    $onepaquc_ymal_inner = '';
+                    if ((int) $cart_count === 1 && !empty($cart_items) && is_array($cart_items)) {
+                        $cart_product = reset($cart_items);
+                        $ymal_parent_id = isset($cart_product['product_id']) ? absint($cart_product['product_id']) : 0;
+                        if ($ymal_parent_id > 0) {
+                            $exclude_in_cart = array($ymal_parent_id);
+                            $onepaquc_ymal_inner = onepaquc_cart_drawer_get_you_may_also_like_html($ymal_parent_id, 3, $exclude_in_cart);
+                        }
+                    }
+                    ?>
+                    <?php if ($onepaquc_ymal_inner !== '') : ?>
                         <div class="you-may-also-like">
-                            <h3><?php echo get_option("txt_you_may_like") ? esc_attr(get_option("txt_you_may_like", 'You may also like')) : "You may also like"; ?></h3>
+                            <h3><?php echo get_option('txt_you_may_like') ? esc_html(get_option('txt_you_may_like', __('You may also like', 'one-page-quick-checkout-for-woocommerce'))) : esc_html__('You may also like', 'one-page-quick-checkout-for-woocommerce'); ?></h3>
                             <div class="recommended-products">
-                                <?php
-                                // Get the single product in cart
-                                $cart_product = reset($cart_items);
-                                $product_id = $cart_product['product_id'];
-
-                                // Get related products
-                                $related_products = wc_get_related_products($product_id, 10); // Get more initially to filter
-
-                                if ($related_products) {
-                                    $simple_products_shown = 0;
-                                    $max_products = 3;
-
-                                    foreach ($related_products as $related_product) {
-                                        if ($simple_products_shown >= $max_products) {
-                                            break; // Stop when we have enough simple products
-                                        }
-
-                                        $product = wc_get_product($related_product);
-
-                                        // Check if product exists and is a simple product
-                                        if ($product && $product->get_type() === 'simple') {
-                                            echo '<div class="recommended-product">';
-                                            echo '<a href="' . esc_url($product->get_permalink()) . '">';
-                                            echo wp_kses_post($product->get_image());
-                                            echo '<h4>' . esc_html($product->get_name()) . '</h4>';
-                                            echo '<span class="price">' . wp_kses_post($product->get_price_html()) . '</span>';
-                                            echo '</a>';
-                                            echo '<button class="add-to-cart-button" data-product-id="' . esc_attr($product->get_id()) . '">' . esc_html($product->add_to_cart_text()) . '</button>';
-                                            echo '</div>';
-
-                                            $simple_products_shown++;
-                                        }
-                                    }
-                                }
-                                ?>
+                                <?php echo $onepaquc_ymal_inner; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Same structured markup as product loop above. ?>
                             </div>
                         </div>
                     <?php endif; ?>
