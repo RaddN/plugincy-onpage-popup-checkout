@@ -724,6 +724,29 @@ jQuery(document).ready(function ($) {
 
         $('#checkout-button-drawer-link').prop('disabled', true);
 
+        if (product_type === 'external') {
+            var externalUrl = $button.attr('data-external-product-url') || '';
+            if (!externalUrl) {
+                var $getForm = $('form.cart[method="get"]').first();
+                if ($getForm.length) {
+                    externalUrl = $getForm.attr('action') || '';
+                }
+            }
+            if (!externalUrl) {
+                var $productWrap = $button.closest('.product');
+                if ($productWrap.length) {
+                    var $extLink = $productWrap.find('a.product_type_external[href]').first();
+                    externalUrl = $extLink.attr('href') || '';
+                }
+            }
+            if (externalUrl) {
+                $('#checkout-button-drawer-link').prop('disabled', false);
+                $button.removeClass('loading').prop('disabled', false);
+                window.location.href = externalUrl;
+                return;
+            }
+        }
+
         // ENHANCED VALIDATION FOR VARIABLE PRODUCTS
         if (product_type === 'variable') {
             // Check if variation_id is missing

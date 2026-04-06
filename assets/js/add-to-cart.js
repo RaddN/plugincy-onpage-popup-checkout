@@ -11,7 +11,7 @@
 
         init: function () {
             // Handle AJAX add to cart for archive/shop pages
-            $(document).on('click', '.rmenu-ajax-add-to-cart,.single_add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.product_type_variable),.add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.product_type_variable)', function(e) {
+            $(document).on('click', '.rmenu-ajax-add-to-cart,.single_add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.product_type_variable):not(.product_type_external),.add_to_cart_button:not(.direct-checkout-button):not(.onepaquc-checkout-btn):not(.product_type_variable):not(.product_type_external)', function(e) {
                 if ($(this).closest('form.grouped_form').length) {
                     return;
                 }
@@ -29,10 +29,17 @@
          * AJAX add to cart handler
          */
         ajaxAddToCart: function (e) {
-            e.preventDefault();
-
             var $thisButton = $(this);
             var $form = $thisButton.closest('form.cart');
+
+            // WooCommerce external/affiliate (single product): form is method GET and submits to product URL.
+            // Do not intercept — native submit must navigate to the external URL.
+            if ($form.length && String($form.attr('method') || '').toLowerCase() === 'get') {
+                return;
+            }
+
+            e.preventDefault();
+
             var productId = $thisButton.data('product_id') || $thisButton.val() || $('input[name="product_id"]').val();
 
             // Get default quantity from button data attribute
