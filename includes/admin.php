@@ -221,6 +221,633 @@ function onepaquc_cart_text_change_form($textvariable)
     echo '</div> </div>';
 }
 
+function onepaquc_get_floating_cart_pro_empty_icon_options()
+{
+    return array(
+        'cart' => __('Cart', 'one-page-quick-checkout-for-woocommerce'),
+        'basket' => __('Basket', 'one-page-quick-checkout-for-woocommerce'),
+        'shopping-bag' => __('Shopping Bag', 'one-page-quick-checkout-for-woocommerce'),
+        'package' => __('Package', 'one-page-quick-checkout-for-woocommerce'),
+        'receipt' => __('Receipt', 'one-page-quick-checkout-for-woocommerce'),
+    );
+}
+
+function onepaquc_get_floating_cart_pro_text_defaults()
+{
+    return array(
+        'your_cart' => 'Your Cart',
+        'txt_Select_All' => 'Select All',
+        'txt_Selected' => 'selected',
+        'txt_subtotal' => 'Subtotal',
+        'txt_total' => 'Total',
+        'txt_checkout' => 'Checkout',
+        'txt_you_may_like' => 'You may also like',
+        'rmenu_floating_cart_empty_title' => 'Your Cart is Empty',
+        'rmenu_floating_cart_shop_button_text' => 'Shop Now',
+        'rmenu_floating_cart_coupon_title' => 'Have a coupon?',
+        'rmenu_floating_cart_coupon_placeholder' => 'Enter coupon code',
+        'rmenu_floating_cart_coupon_button_text' => 'Apply',
+        'rmenu_floating_cart_variation_update_text' => 'Update',
+        'rmenu_floating_cart_variation_cancel_text' => 'Cancel',
+        'rmenu_floating_cart_applied_coupons_heading' => 'Applied Coupons:',
+        'rmenu_floating_cart_remove_coupon_text' => 'Remove',
+        'rmenu_floating_cart_discount_label' => 'Discount',
+        'rmenu_floating_cart_shipping_options_label' => 'Shipping options',
+        'rmenu_floating_cart_shipping_label' => 'Shipping',
+        'rmenu_floating_cart_tax_label' => 'Tax',
+        'rmenu_floating_cart_related_add_to_cart_text' => 'Add to cart',
+        'rmenu_floating_cart_applying_text' => 'Applying...',
+        'rmenu_floating_cart_applying_coupon_text' => 'Applying coupon...',
+        'rmenu_floating_cart_coupon_applied_message' => 'Coupon applied successfully!',
+        'rmenu_floating_cart_invalid_coupon_message' => 'Invalid coupon code.',
+        'rmenu_floating_cart_error_try_again_message' => 'Something went wrong. Please try again.',
+        'rmenu_floating_cart_removing_text' => 'Removing...',
+        'rmenu_floating_cart_removing_coupon_text' => 'Removing coupon...',
+        'rmenu_floating_cart_coupon_removed_message' => 'Coupon removed successfully!',
+        'rmenu_floating_cart_failed_remove_coupon_message' => 'Failed to remove coupon. Please try again.',
+        'rmenu_floating_cart_preloader_message' => 'Bringing you the goods...',
+        'rmenu_floating_cart_preloader_slow_message' => 'This is taking long. Something is wrong.',
+        'rmenu_floating_cart_iframe_error_message' => 'Error loading checkout. Please try again.',
+        'rmenu_floating_cart_select_variation_error_message' => 'Please choose a valid variation before updating.',
+        'rmenu_floating_cart_update_variation_error_message' => 'Could not update the selected variation. Please try again.',
+        'rmenu_floating_cart_variation_disabled_message' => 'Variation switching is not enabled.',
+        'rmenu_floating_cart_item_not_found_message' => 'The selected cart item could not be found.',
+        'rmenu_floating_cart_item_not_variable_message' => 'This cart item does not support variation switching.',
+        'rmenu_floating_cart_invalid_variation_message' => 'The selected variation is invalid.',
+        'rmenu_floating_cart_same_variation_message' => 'The selected variation is already in your cart.',
+        'rmenu_floating_cart_unavailable_variation_message' => 'The selected variation cannot be added to the cart right now.',
+        'rmenu_floating_cart_original_item_update_error_message' => 'The original cart item could not be updated.',
+        'rmenu_floating_cart_variation_updated_message' => 'Variation updated successfully.',
+        'rmenu_floating_cart_cart_unavailable_message' => 'WooCommerce cart is not available.',
+        'rmenu_floating_cart_quantity_update_error_message' => 'Could not update quantity.',
+        'rmenu_floating_cart_no_cart_item_key_message' => 'No cart item key provided.',
+        'rmenu_floating_cart_remove_items_error_message' => 'Could not remove some items.',
+        'rmenu_floating_cart_remove_item_aria_label' => 'Remove this item',
+        'rmenu_floating_cart_decrease_quantity_label' => 'Decrease quantity',
+        'rmenu_floating_cart_increase_quantity_label' => 'Increase quantity',
+    );
+}
+
+function onepaquc_get_floating_cart_pro_element_groups()
+{
+    return array(
+        __('Floating Button', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Controls for the sticky cart button shown outside the drawer.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_show_cart_icon' => __('Cart Button Icon', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_cart_count' => __('Cart Button Count', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Cart Items', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Controls for product rows, item actions, and product details.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_show_select_bar' => __('Select Bar', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_item_select' => __('Item Checkbox', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_remove_item' => __('Remove Item', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_product_image' => __('Product Image', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_product_title' => __('Product Title', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_product_price' => __('Product Price', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_quantity' => __('Quantity Controls', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_variation_editor' => __('Variation Selector', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_item_meta' => __('Cart Item Meta', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_group_items' => __('Group Cart Items', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Coupon', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Controls for the coupon form and coupon collapse behavior.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_show_coupon' => __('Coupon Form', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_coupon_title' => __('Coupon Title', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_coupon_collapsible' => __('Collapsible Coupon', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_coupon_initially_collapsed' => __('Coupon Initially Collapsed', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Recommendations', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Controls for suggested products shown inside the drawer.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_show_recommendations' => __('Related Products', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Summary & Shipping', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Controls for totals, shipping options, and summary collapse behavior.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_show_summary' => __('Cart Summary', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_summary_collapsible' => __('Collapsible Summary', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_summary_initially_collapsed' => __('Summary Initially Collapsed', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_subtotal' => __('Subtotal Row', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_discount' => __('Discount Row', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_shipping_options' => __('Shipping Options', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_shipping_total' => __('Shipping Row', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_tax_total' => __('Tax Row', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_total' => __('Total Row', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Checkout & Empty Cart', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Controls for the checkout action and empty-cart drawer state.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_show_checkout' => __('Checkout Button', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_empty_icon' => __('Empty Cart Icon', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_show_shop_button' => __('Shop Button', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+    );
+}
+
+function onepaquc_get_floating_cart_pro_text_groups()
+{
+    return array(
+        __('Drawer Header & Selection', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Labels shown in the drawer header and selection bar.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'your_cart' => __('Drawer Title', 'one-page-quick-checkout-for-woocommerce'),
+                'txt_Select_All' => __('Select All Label', 'one-page-quick-checkout-for-woocommerce'),
+                'txt_Selected' => __('Selected Count Suffix', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Empty Cart', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Text shown when the floating cart drawer has no products.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_empty_title' => __('Empty Cart Title', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_shop_button_text' => __('Shop Button', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Coupon', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Coupon section labels and applied-coupon controls.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_coupon_title' => __('Coupon Title', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_coupon_placeholder' => __('Coupon Placeholder', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_coupon_button_text' => __('Coupon Button', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_applied_coupons_heading' => __('Applied Coupons Heading', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_remove_coupon_text' => __('Remove Coupon', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Variation Editor', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Button text used when changing a variable product inside the drawer.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_variation_update_text' => __('Variation Update Button', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_variation_cancel_text' => __('Variation Cancel Button', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Recommendations', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Text used for related products in the floating cart drawer.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'txt_you_may_like' => __('Related Products Heading', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_related_add_to_cart_text' => __('Add to Cart Button', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Summary & Checkout', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Labels used for totals, shipping, tax, and the checkout action.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'txt_subtotal' => __('Subtotal Label', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_discount_label' => __('Discount Label', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_shipping_options_label' => __('Shipping Options Heading', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_shipping_label' => __('Shipping Label', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_tax_label' => __('Tax Label', 'one-page-quick-checkout-for-woocommerce'),
+                'txt_total' => __('Total Label', 'one-page-quick-checkout-for-woocommerce'),
+                'txt_checkout' => __('Checkout Button', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+    );
+}
+
+function onepaquc_get_floating_cart_pro_feedback_text_groups()
+{
+    return array(
+        __('General Status', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Shared loading, removing, and error messages used by drawer actions.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_applying_text' => __('Generic Loading Text', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_error_try_again_message' => __('Generic Error Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_removing_text' => __('Generic Removing Text', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_cart_unavailable_message' => __('Cart Unavailable Message', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Coupon Feedback', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Messages shown while applying or removing coupons in the drawer.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_applying_coupon_text' => __('Applying Coupon Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_coupon_applied_message' => __('Coupon Applied Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_invalid_coupon_message' => __('Invalid Coupon Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_removing_coupon_text' => __('Removing Coupon Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_coupon_removed_message' => __('Coupon Removed Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_failed_remove_coupon_message' => __('Coupon Remove Error Message', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Variation Feedback', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Messages for drawer variation selection and update flows.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_select_variation_error_message' => __('Variation Selection Error', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_update_variation_error_message' => __('Variation Update Error', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_variation_disabled_message' => __('Variation Disabled Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_item_not_variable_message' => __('Not Variable Item Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_invalid_variation_message' => __('Invalid Variation Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_same_variation_message' => __('Same Variation Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_unavailable_variation_message' => __('Unavailable Variation Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_original_item_update_error_message' => __('Original Item Update Error', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_variation_updated_message' => __('Variation Updated Message', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Cart Item & Quantity Feedback', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Messages for cart item lookup, quantity changes, and item removal.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_item_not_found_message' => __('Cart Item Missing Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_quantity_update_error_message' => __('Quantity Update Error', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_no_cart_item_key_message' => __('Missing Cart Item Key Message', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_remove_items_error_message' => __('Remove Items Error', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+        __('Accessibility Labels', 'one-page-quick-checkout-for-woocommerce') => array(
+            'description' => __('Labels used by screen readers for item and quantity controls.', 'one-page-quick-checkout-for-woocommerce'),
+            'settings' => array(
+                'rmenu_floating_cart_remove_item_aria_label' => __('Remove Item Accessibility Label', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_decrease_quantity_label' => __('Decrease Quantity Accessibility Label', 'one-page-quick-checkout-for-woocommerce'),
+                'rmenu_floating_cart_increase_quantity_label' => __('Increase Quantity Accessibility Label', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ),
+    );
+}
+
+function onepaquc_render_floating_cart_pro_badge()
+{
+    ?>
+    <span class="onepaquc-pro-feature-badge"><?php esc_html_e('Pro Feature', 'one-page-quick-checkout-for-woocommerce'); ?></span>
+    <?php
+}
+
+function onepaquc_render_floating_cart_pro_switch($name, $label)
+{
+    ?>
+    <div class="onepaquc-floating-pro-field plugincy_row items_center pro-only">
+        <label class="onepaquc-floating-pro-label"><?php echo esc_html($label); ?></label>
+        <div class="onepaquc-floating-pro-control">
+            <label class="switch">
+                <input type="checkbox" name="<?php echo esc_attr('pro_' . $name); ?>" value="1" disabled />
+                <span class="slider round"></span>
+            </label>
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </div>
+    </div>
+    <?php
+}
+
+function onepaquc_render_floating_cart_pro_text_field($name, $label, $placeholder = '')
+{
+    ?>
+    <label class="onepaquc-floating-pro-field onepaquc-floating-pro-field-text pro-only">
+        <span class="onepaquc-floating-pro-label"><?php echo esc_html($label); ?></span>
+        <span class="onepaquc-floating-pro-control">
+            <input type="text" name="<?php echo esc_attr('pro_' . $name); ?>" value="" placeholder="<?php echo esc_attr($placeholder); ?>" disabled />
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </span>
+    </label>
+    <?php
+}
+
+function onepaquc_render_floating_cart_pro_select($name, $label, $options, $selected = '')
+{
+    ?>
+    <div class="onepaquc-floating-pro-field plugincy_row items_center pro-only">
+        <label class="onepaquc-floating-pro-label"><?php echo esc_html($label); ?></label>
+        <div class="onepaquc-floating-pro-control">
+            <select name="<?php echo esc_attr('pro_' . $name); ?>" class="rmenu-select" disabled>
+                <?php foreach ($options as $option_value => $option_label) : ?>
+                    <option value="<?php echo esc_attr($option_value); ?>" <?php selected($selected, $option_value); ?>><?php echo esc_html($option_label); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </div>
+    </div>
+    <?php
+}
+
+function onepaquc_render_floating_cart_pro_meta_rule_builder($name, $label)
+{
+    ?>
+    <div class="onepaquc-floating-pro-field onepaquc-floating-pro-field-stack pro-only">
+        <label class="onepaquc-floating-pro-label"><?php echo esc_html($label); ?></label>
+        <div class="onepaquc-floating-pro-control onepaqucpro-meta-builder">
+            <input type="hidden" name="<?php echo esc_attr('pro_' . $name); ?>" value="" disabled />
+            <div class="onepaqucpro-meta-builder__head" aria-hidden="true">
+                <span></span>
+                <span><?php esc_html_e('Meta', 'one-page-quick-checkout-for-woocommerce'); ?></span>
+                <span><?php esc_html_e('Mode', 'one-page-quick-checkout-for-woocommerce'); ?></span>
+                <span><?php esc_html_e('Title', 'one-page-quick-checkout-for-woocommerce'); ?></span>
+                <span></span>
+            </div>
+            <div class="onepaqucpro-meta-builder__rows">
+                <div class="onepaqucpro-meta-builder__row">
+                    <button type="button" class="onepaqucpro-meta-builder__drag" aria-label="<?php esc_attr_e('Reorder meta data', 'one-page-quick-checkout-for-woocommerce'); ?>" disabled>
+                        <span class="dashicons dashicons-menu"></span>
+                    </button>
+                    <select disabled>
+                        <option value="onepaqucpro_variations"><?php esc_html_e('Variations', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                    </select>
+                    <select disabled>
+                        <option value="separate"><?php esc_html_e('Separate', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                        <option value="combine"><?php esc_html_e('Combine', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                    </select>
+                    <input type="text" value="" placeholder="<?php esc_attr_e('Display title', 'one-page-quick-checkout-for-woocommerce'); ?>" disabled />
+                    <button type="button" class="onepaqucpro-meta-builder__remove" aria-label="<?php esc_attr_e('Remove meta data', 'one-page-quick-checkout-for-woocommerce'); ?>" disabled>
+                        <span class="dashicons dashicons-no-alt"></span>
+                    </button>
+                </div>
+            </div>
+            <button type="button" class="button onepaqucpro-meta-builder__add" disabled><?php esc_html_e('Add meta data', 'one-page-quick-checkout-for-woocommerce'); ?></button>
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </div>
+    </div>
+    <?php
+}
+
+function onepaquc_render_floating_cart_pro_meta_picker($name, $label)
+{
+    ?>
+    <div class="onepaquc-floating-pro-field onepaquc-floating-pro-field-stack pro-only">
+        <label class="onepaquc-floating-pro-label"><?php echo esc_html($label); ?></label>
+        <div class="onepaquc-floating-pro-control onepaqucpro-meta-picker">
+            <input type="hidden" name="<?php echo esc_attr('pro_' . $name); ?>" value="" disabled />
+            <select disabled>
+                <option value="onepaqucpro_variations"><?php esc_html_e('Variations', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+            </select>
+            <div class="onepaqucpro-meta-picker__custom">
+                <input type="text" placeholder="<?php esc_attr_e('Add custom meta key', 'one-page-quick-checkout-for-woocommerce'); ?>" disabled />
+                <button type="button" class="button" disabled><?php esc_html_e('Add', 'one-page-quick-checkout-for-woocommerce'); ?></button>
+            </div>
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </div>
+    </div>
+    <?php
+}
+
+function onepaquc_render_floating_cart_pro_general_rows($onepaquc_helper)
+{
+    $cart_icon_options = array(
+        'cart' => __('Cart', 'one-page-quick-checkout-for-woocommerce'),
+        'shopping-bag' => __('Shopping Bag', 'one-page-quick-checkout-for-woocommerce'),
+        'basket' => __('Basket', 'one-page-quick-checkout-for-woocommerce'),
+    );
+    ?>
+    <tr class="pro-only">
+        <?php $onepaquc_helper->sec_head('th', '', '', __('Floating Cart Icon', 'one-page-quick-checkout-for-woocommerce'), __('Choose the icon shown on the floating cart launcher.', 'one-page-quick-checkout-for-woocommerce')); ?>
+        <td class="rmenu-settings-control onepaquc-floating-pro-table-control">
+            <select name="pro_rmenu_floating_cart_icon" class="rmenu-select" disabled>
+                <?php foreach ($cart_icon_options as $icon_key => $icon_label) : ?>
+                    <option value="<?php echo esc_attr($icon_key); ?>" <?php selected($icon_key, 'cart'); ?>><?php echo esc_html($icon_label); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </td>
+    </tr>
+
+    <tr class="pro-only">
+        <?php $onepaquc_helper->sec_head('th', '', '', __('Empty Cart Icon', 'one-page-quick-checkout-for-woocommerce'), __('Choose the icon shown in the empty floating cart drawer.', 'one-page-quick-checkout-for-woocommerce')); ?>
+        <td class="rmenu-settings-control onepaquc-floating-pro-table-control">
+            <select name="pro_rmenu_floating_cart_empty_icon" class="rmenu-select" disabled>
+                <?php foreach (onepaquc_get_floating_cart_pro_empty_icon_options() as $icon_key => $icon_label) : ?>
+                    <option value="<?php echo esc_attr($icon_key); ?>" <?php selected($icon_key, 'cart'); ?>><?php echo esc_html($icon_label); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </td>
+    </tr>
+
+    <tr class="pro-only">
+        <?php $onepaquc_helper->sec_head('th', '', '', __('Hide If Cart Empty', 'one-page-quick-checkout-for-woocommerce'), __('Hide the floating cart button while the cart is empty.', 'one-page-quick-checkout-for-woocommerce')); ?>
+        <td class="rmenu-settings-control onepaquc-floating-pro-table-control">
+            <label class="switch">
+                <input type="checkbox" name="pro_rmenu_hide_empty_cart_button" value="1" disabled />
+                <span class="slider round"></span>
+            </label>
+            <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
+        </td>
+    </tr>
+    <?php
+}
+
+function onepaquc_render_floating_cart_pro_only_sections($onepaquc_helper)
+{
+    $text_defaults = onepaquc_get_floating_cart_pro_text_defaults();
+    ?>
+    <div class="rmenu-settings-section plugincy_card onepaquc-floating-pro-section pro-only mb-4">
+        <div class="onepaquc-floating-pro-heading">
+            <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-screenoptions"></span>', __('Drawer Elements', 'one-page-quick-checkout-for-woocommerce'), __('Manage which elements appear inside the floating cart drawer.', 'one-page-quick-checkout-for-woocommerce')); ?>
+            <?php onepaquc_render_floating_cart_pro_badge(); ?>
+        </div>
+        <div class="onepaqucpro-floating-elements-groups">
+            <?php foreach (onepaquc_get_floating_cart_pro_element_groups() as $group_title => $group_data) : ?>
+                <fieldset class="onepaqucpro-floating-elements-group">
+                    <legend class="onepaqucpro-floating-elements-group__title"><?php echo esc_html($group_title); ?></legend>
+                    <p class="onepaqucpro-floating-elements-group__description"><?php echo esc_html($group_data['description']); ?></p>
+                    <div class="onepaquc-floating-pro-columns onepaqucpro-floating-elements-group__controls">
+                        <?php foreach ($group_data['settings'] as $field_name => $field_label) : ?>
+                            <div class="onepaquc-floating-pro-column">
+                                <?php onepaquc_render_floating_cart_pro_switch($field_name, $field_label); ?>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </fieldset>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <div class="rmenu-settings-section plugincy_card onepaquc-floating-pro-section pro-only mb-4">
+        <div class="onepaquc-floating-pro-heading">
+            <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-index-card"></span>', __('Cart Item Data & Grouping', 'one-page-quick-checkout-for-woocommerce'), __('Control cart item meta visibility and optional item grouping.', 'one-page-quick-checkout-for-woocommerce')); ?>
+            <?php onepaquc_render_floating_cart_pro_badge(); ?>
+        </div>
+        <div class="onepaquc-floating-pro-columns">
+            <div class="onepaquc-floating-pro-column">
+                <?php onepaquc_render_floating_cart_pro_switch('rmenu_floating_cart_show_variation_in_title', __('Show Variation in Product Title', 'one-page-quick-checkout-for-woocommerce')); ?>
+            </div>
+        </div>
+        <div class="onepaquc-floating-pro-row">
+            <?php onepaquc_render_floating_cart_pro_meta_rule_builder('rmenu_floating_cart_meta_include', __('Meta Include', 'one-page-quick-checkout-for-woocommerce')); ?>
+        </div>
+        <div class="onepaquc-floating-pro-columns">
+            <div class="onepaquc-floating-pro-column">
+                <?php
+                onepaquc_render_floating_cart_pro_select(
+                    'rmenu_floating_cart_group_by',
+                    __('Group Items By', 'one-page-quick-checkout-for-woocommerce'),
+                    array(
+                        'category' => __('Category', 'one-page-quick-checkout-for-woocommerce'),
+                        'brand' => __('Brand', 'one-page-quick-checkout-for-woocommerce'),
+                        'meta' => __('Cart Item Meta', 'one-page-quick-checkout-for-woocommerce'),
+                    ),
+                    'category'
+                );
+                ?>
+            </div>
+            <div class="onepaquc-floating-pro-column">
+                <?php onepaquc_render_floating_cart_pro_meta_picker('rmenu_floating_cart_group_meta_key', __('Group Meta Key', 'one-page-quick-checkout-for-woocommerce')); ?>
+            </div>
+        </div>
+        <div class="onepaquc-floating-pro-row">
+            <?php
+            onepaquc_render_floating_cart_pro_select(
+                'rmenu_floating_cart_group_icon',
+                __('Group Title Icon', 'one-page-quick-checkout-for-woocommerce'),
+                array(
+                    'none' => __('No Icon', 'one-page-quick-checkout-for-woocommerce'),
+                    'tag' => __('Tag', 'one-page-quick-checkout-for-woocommerce'),
+                    'folder' => __('Folder', 'one-page-quick-checkout-for-woocommerce'),
+                    'star' => __('Star', 'one-page-quick-checkout-for-woocommerce'),
+                    'location' => __('Location', 'one-page-quick-checkout-for-woocommerce'),
+                ),
+                'tag'
+            );
+            ?>
+        </div>
+    </div>
+
+    <div class="rmenu-settings-section plugincy_card onepaquc-floating-pro-section pro-only mb-4">
+        <div class="onepaquc-floating-pro-heading">
+            <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-edit"></span>', __('Drawer Text', 'one-page-quick-checkout-for-woocommerce'), __('Manage text used inside the floating cart drawer.', 'one-page-quick-checkout-for-woocommerce')); ?>
+            <?php onepaquc_render_floating_cart_pro_badge(); ?>
+        </div>
+        <div class="onepaqucpro-floating-text-groups">
+            <?php foreach (onepaquc_get_floating_cart_pro_text_groups() as $group_title => $group_data) : ?>
+                <fieldset class="onepaqucpro-floating-text-group">
+                    <legend class="onepaqucpro-floating-text-group__title"><?php echo esc_html($group_title); ?></legend>
+                    <p class="onepaqucpro-floating-text-group__description"><?php echo esc_html($group_data['description']); ?></p>
+                    <div class="plugincy_grid onepaqucpro-floating-text-group__fields">
+                        <?php foreach ($group_data['settings'] as $field_name => $field_label) : ?>
+                            <?php onepaquc_render_floating_cart_pro_text_field($field_name, $field_label, isset($text_defaults[$field_name]) ? $text_defaults[$field_name] : ''); ?>
+                        <?php endforeach; ?>
+                    </div>
+                </fieldset>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <div class="rmenu-settings-section plugincy_card onepaquc-floating-pro-section pro-only mb-4">
+        <div class="onepaquc-floating-pro-heading">
+            <?php $onepaquc_helper->sec_head('h2', 'plugincy_sec_head', '<span class="dashicons dashicons-megaphone"></span>', __('Drawer Notices & Feedback Text', 'one-page-quick-checkout-for-woocommerce'), __('Customize coupon, cart item, quantity, and drawer variation messages used by the floating cart.', 'one-page-quick-checkout-for-woocommerce')); ?>
+            <?php onepaquc_render_floating_cart_pro_badge(); ?>
+        </div>
+        <div class="onepaqucpro-floating-text-groups">
+            <?php foreach (onepaquc_get_floating_cart_pro_feedback_text_groups() as $group_title => $group_data) : ?>
+                <fieldset class="onepaqucpro-floating-text-group">
+                    <legend class="onepaqucpro-floating-text-group__title"><?php echo esc_html($group_title); ?></legend>
+                    <p class="onepaqucpro-floating-text-group__description"><?php echo esc_html($group_data['description']); ?></p>
+                    <div class="plugincy_grid onepaqucpro-floating-text-group__fields">
+                        <?php foreach ($group_data['settings'] as $field_name => $field_label) : ?>
+                            <?php onepaquc_render_floating_cart_pro_text_field($field_name, $field_label, isset($text_defaults[$field_name]) ? $text_defaults[$field_name] : ''); ?>
+                        <?php endforeach; ?>
+                    </div>
+                </fieldset>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+}
+
+function onepaquc_render_floating_cart_visual_editor_preview()
+{
+    $text_defaults = onepaquc_get_floating_cart_pro_text_defaults();
+    $primary_color = get_option('rmenu_cart_bg_color', '#96588a');
+    $primary_text = get_option('rmenu_cart_text_color', '#ffffff');
+    $primary_hover = get_option('rmenu_cart_hover_bg', '#f8f8f8');
+    $primary_hover_text = get_option('rmenu_cart_hover_text', '#000000');
+    $button_radius = get_option('rmenu_cart_border_radius', '5px 0 0 5px');
+    ?>
+    <div class="onepaquc-floating-visual-editor-ui plugincy_card pro-only mb-4" aria-label="<?php esc_attr_e('Visual Cart Editor preview', 'one-page-quick-checkout-for-woocommerce'); ?>">
+        <div class="onepaqucpro-floating-preview-toolbar">
+            <div>
+                <h3><?php esc_html_e('Visual Cart Editor', 'one-page-quick-checkout-for-woocommerce'); ?></h3>
+                <p><?php esc_html_e('Preview the pro visual editor for text, visibility, and element settings inside the floating cart.', 'one-page-quick-checkout-for-woocommerce'); ?></p>
+            </div>
+            <div class="onepaqucpro-floating-preview-modes" role="group" aria-label="<?php esc_attr_e('Preview mode', 'one-page-quick-checkout-for-woocommerce'); ?>">
+                <button type="button" class="button active" disabled><?php esc_html_e('Cart', 'one-page-quick-checkout-for-woocommerce'); ?></button>
+                <button type="button" class="button" disabled><?php esc_html_e('Empty', 'one-page-quick-checkout-for-woocommerce'); ?></button>
+            </div>
+            <?php onepaquc_render_floating_cart_pro_badge(); ?>
+        </div>
+
+        <div class="onepaqucpro-floating-preview-stage" style="--onepaqucpro-floating-primary: <?php echo esc_attr($primary_color); ?>; --onepaqucpro-floating-primary-text: <?php echo esc_attr($primary_text); ?>; --onepaqucpro-floating-primary-hover: <?php echo esc_attr($primary_hover); ?>; --onepaqucpro-floating-primary-hover-text: <?php echo esc_attr($primary_hover_text); ?>; --onepaqucpro-floating-button-radius: <?php echo esc_attr($button_radius); ?>;">
+            <button type="button" class="onepaqucpro-floating-preview-button">
+                <span class="dashicons dashicons-cart"></span>
+                <span class="onepaqucpro-floating-preview-count">2</span>
+            </button>
+
+            <div class="onepaqucpro-floating-preview-drawer">
+                <div class="onepaqucpro-floating-preview-header">
+                    <h2><?php echo esc_html($text_defaults['your_cart']); ?></h2>
+                    <span class="dashicons dashicons-no-alt"></span>
+                </div>
+                <div class="onepaqucpro-floating-preview-select">
+                    <span><input type="checkbox" checked disabled> <?php echo esc_html($text_defaults['txt_Select_All']); ?></span>
+                    <span>2 <?php echo esc_html($text_defaults['txt_Selected']); ?></span>
+                </div>
+                <div class="onepaqucpro-floating-preview-group">
+                    <h4><span class="dashicons dashicons-tag" aria-hidden="true"></span><span><?php esc_html_e('Gaming Accessories', 'one-page-quick-checkout-for-woocommerce'); ?></span></h4>
+                </div>
+                <div class="onepaqucpro-floating-preview-item">
+                    <input type="checkbox" checked disabled>
+                    <button type="button" class="onepaqucpro-floating-preview-remove" disabled>&times;</button>
+                    <div class="onepaqucpro-floating-preview-image"><span class="dashicons dashicons-format-image"></span></div>
+                    <div class="onepaqucpro-floating-preview-item-main">
+                        <div class="onepaqucpro-floating-preview-title"><?php esc_html_e('B100 Pro Wireless Gaming Headset - Black', 'one-page-quick-checkout-for-woocommerce'); ?></div>
+                        <dl class="onepaqucpro-floating-preview-meta">
+                            <div>
+                                <dt><?php esc_html_e('Color', 'one-page-quick-checkout-for-woocommerce'); ?></dt>
+                                <dd><?php esc_html_e('Black', 'one-page-quick-checkout-for-woocommerce'); ?></dd>
+                            </div>
+                            <div>
+                                <dt><?php esc_html_e('Size', 'one-page-quick-checkout-for-woocommerce'); ?></dt>
+                                <dd><?php esc_html_e('Standard', 'one-page-quick-checkout-for-woocommerce'); ?></dd>
+                            </div>
+                        </dl>
+                        <div class="onepaqucpro-floating-preview-actions">
+                            <div class="onepaqucpro-floating-preview-qty"><button type="button" disabled>-</button><span>1</span><button type="button" disabled>+</button></div>
+                            <div class="onepaqucpro-floating-preview-variation-editor">
+                                <button type="button" class="onepaqucpro-floating-preview-variation-toggle" aria-expanded="false" disabled>
+                                    <span class="dashicons dashicons-update"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <strong>500.00&#2547;</strong>
+                </div>
+                <div class="onepaqucpro-floating-preview-coupon">
+                    <button type="button" class="onepaqucpro-floating-preview-coupon-toggle" aria-expanded="true" disabled>
+                        <span><?php echo esc_html($text_defaults['rmenu_floating_cart_coupon_title']); ?></span>
+                    </button>
+                    <div class="onepaqucpro-floating-preview-coupon-content" aria-hidden="false">
+                        <div class="onepaqucpro-floating-preview-coupon-form">
+                            <span><?php echo esc_html($text_defaults['rmenu_floating_cart_coupon_placeholder']); ?></span>
+                            <button type="button" disabled><?php echo esc_html($text_defaults['rmenu_floating_cart_coupon_button_text']); ?></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="onepaqucpro-floating-preview-related">
+                    <h4><?php echo esc_html($text_defaults['txt_you_may_like']); ?></h4>
+                    <div class="onepaqucpro-floating-preview-products">
+                        <div><span class="dashicons dashicons-format-image"></span><p><?php esc_html_e('Fastest MacBook', 'one-page-quick-checkout-for-woocommerce'); ?></p><strong>650.00&#2547;</strong><button type="button" disabled><?php echo esc_html($text_defaults['rmenu_floating_cart_related_add_to_cart_text']); ?></button></div>
+                        <div><span class="dashicons dashicons-format-image"></span><p><?php esc_html_e('Desktop PC Core i5', 'one-page-quick-checkout-for-woocommerce'); ?></p><strong>570.00&#2547;</strong><button type="button" disabled><?php echo esc_html($text_defaults['rmenu_floating_cart_related_add_to_cart_text']); ?></button></div>
+                    </div>
+                </div>
+                <div class="onepaqucpro-floating-preview-shipping">
+                    <h4><?php echo esc_html($text_defaults['rmenu_floating_cart_shipping_options_label']); ?></h4>
+                    <label><input type="radio" checked disabled> <?php esc_html_e('Flat rate: 60.00', 'one-page-quick-checkout-for-woocommerce'); ?>&#2547;</label>
+                    <label><input type="radio" disabled> <?php esc_html_e('Local pickup', 'one-page-quick-checkout-for-woocommerce'); ?></label>
+                </div>
+                <div class="onepaqucpro-floating-preview-summary">
+                    <div class="onepaqucpro-floating-preview-summary-content">
+                        <div><span><?php echo esc_html($text_defaults['txt_subtotal']); ?></span><span>1,150.00&#2547;</span></div>
+                        <div><span><?php echo esc_html($text_defaults['rmenu_floating_cart_discount_label']); ?></span><span>- 50.00&#2547;</span></div>
+                        <div><span><?php echo esc_html($text_defaults['rmenu_floating_cart_shipping_label']); ?></span><span>60.00&#2547;</span></div>
+                        <div><span><?php echo esc_html($text_defaults['rmenu_floating_cart_tax_label']); ?></span><span>50.00&#2547;</span></div>
+                        <div class="total"><span><?php echo esc_html($text_defaults['txt_total']); ?></span><strong>1,210.00&#2547;</strong></div>
+                    </div>
+                </div>
+                <button type="button" class="onepaqucpro-floating-preview-checkout" disabled><?php echo esc_html($text_defaults['txt_checkout']); ?></button>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
 // Dashboard page
 function onepaquc_cart_dashboard()
 {
@@ -231,7 +858,7 @@ function onepaquc_cart_dashboard()
     ?>
 
     <div class="welcome-banner">
-        <div class="welcome-title"> <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?> <span class="version-tag">v1.3.7</span>
+        <div class="welcome-title"> <?php esc_html_e('Welcome to One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'); ?> <span class="version-tag">v1.3.8</span>
         </div>
         <p style="max-width: 70%; margin:0 auto;"> <?php esc_html_e('Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.', 'one-page-quick-checkout-for-woocommerce'); ?> </p>
 
@@ -725,7 +1352,7 @@ function onepaquc_cart_dashboard()
                 </div>
             </div>
             <div class="tab-content" id="tab-9">
-                <div class="mb-4">
+                <div class="mb-4 onepaquc-floating-editor-intro">
                     <?php
                     $onepaquc_helper->sec_head(
                         'h2',
@@ -743,6 +1370,10 @@ function onepaquc_cart_dashboard()
                     </p>
                 </div>
 
+                
+
+                <div id="onepaquc-floating-cart-editor" class="onepaquc-floating-editor " data-floating-cart-visual-editor-enabled="1">
+                <div class="onepaquc-floating-editor-left">
 
                 <div class="plugincy_row mb-4">
                     <div class="rmenu-settings-section plugincy_card plugincy_col-5">
@@ -764,6 +1395,8 @@ function onepaquc_cart_dashboard()
                                     <?php $onepaquc_helper->switcher('rmenu_enable_sticky_cart', 0); ?>
                                 </td>
                             </tr>
+
+                            <?php onepaquc_render_floating_cart_pro_general_rows($onepaquc_helper); ?>
 
                             <tr>
                                 <?php
@@ -836,7 +1469,7 @@ function onepaquc_cart_dashboard()
                     </div>
                 </div>
 
-                <div class="rmenu-settings-section plugincy_card">
+                <div class="rmenu-settings-section plugincy_card mb-4">
                     <?php
                     $onepaquc_helper->sec_head(
                         'h2',
@@ -924,6 +1557,8 @@ function onepaquc_cart_dashboard()
                     </div>
                 </div>
 
+                <?php onepaquc_render_floating_cart_pro_only_sections($onepaquc_helper); ?>
+
                 <!-- <div class="rmenu-settings-section">
                     <div class="rmenu-settings-section-header">
                         <h3><span class="dashicons dashicons-admin-settings"></span> Additional Settings (coming soon)</h3>
@@ -969,6 +1604,11 @@ function onepaquc_cart_dashboard()
                         });
                     });
                 </script>
+            </div>
+                <div class="onepaqucpro-floating-editor-right" aria-label="Floating cart visual preview">
+                    <?php onepaquc_render_floating_cart_visual_editor_preview(); ?>
+                </div>
+            </div>
             </div>
 
             <div class="tab-content" id="tab-3">

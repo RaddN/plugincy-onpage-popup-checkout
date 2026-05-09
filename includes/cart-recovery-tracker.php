@@ -5,7 +5,7 @@ if (! defined('ABSPATH')) {
 
 class Onepaqucpro_Cart_Recovery_Tracker
 {
-    const SCHEMA_VERSION = '1.1.9.27';
+    const SCHEMA_VERSION = '1.3.8';
     const VERSION_OPTION = 'onepaqucpro_cart_recovery_schema_version';
     const SETTINGS_OPTION = 'onepaqucpro_cart_recovery_settings';
     const TEMPLATES_OPTION = 'onepaqucpro_cart_recovery_templates';
