@@ -20,6 +20,14 @@ define('ONEPAQUC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 define("RMENU_VERSION", "1.3.7");
 
+if (! defined('ONEPAQUC_CART_RECOVERY_FREE_MODE')) {
+    define('ONEPAQUC_CART_RECOVERY_FREE_MODE', true);
+}
+
+if (! defined('ONEPAQUC_CART_RECOVERY_UPGRADE_URL')) {
+    define('ONEPAQUC_CART_RECOVERY_UPGRADE_URL', 'https://plugincy.com/one-page-quick-checkout-for-woocommerce/');
+}
+
 function onepaquc_is_enabled_option($option_name, $default = '0')
 {
     $value = get_option($option_name, $default);
@@ -45,7 +53,14 @@ require_once plugin_dir_path(__FILE__) . 'includes/admin.php';
 require_once plugin_dir_path(__FILE__) . 'includes/one-page-checkout-shortcode.php';
 require_once plugin_dir_path(__FILE__) . 'includes/add-to-cart-button.php';
 require_once plugin_dir_path(__FILE__) . 'includes/class_helper.php';
+require_once plugin_dir_path(__FILE__) . 'includes/cart-recovery-tracker.php';
+require_once plugin_dir_path(__FILE__) . 'includes/cart-recovery.php';
 require_once plugin_dir_path(__FILE__) . 'includes/blocks/checkout-form-block.php';
+
+if (class_exists('Onepaqucpro_Cart_Recovery_Tracker')) {
+    register_activation_hook(__FILE__, array('Onepaqucpro_Cart_Recovery_Tracker', 'install'));
+    register_deactivation_hook(__FILE__, array('Onepaqucpro_Cart_Recovery_Tracker', 'deactivate'));
+}
 
 
 global $onepaquc_checkoutformfields, $onepaquc_productpageformfields, $onepaquc_rcheckoutformfields, $onepaquc_string_settings_fields;
@@ -310,11 +325,31 @@ add_action('admin_enqueue_scripts', 'onepaquc_cart_admin_styles');
 // Enqueue the admin stylesheet only for this settings page
 function onepaquc_cart_admin_styles($hook)
 {
-    if ($hook === 'toplevel_page_onepaquc_cart') {
+    $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+
+    if ($hook === 'toplevel_page_onepaquc_cart' || $current_page === 'onepaqucpro_cart_recovery' || $current_page === 'onepaqucpro_cart_recovery_template') {
         wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.3.7");
         wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.3.7");
         wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.3.7", true);
     }
+
+    if ($current_page === 'onepaqucpro_cart_recovery' || $current_page === 'onepaqucpro_cart_recovery_template') {
+        wp_enqueue_style(
+            'onepaquc_cart_recovery_admin_css',
+            plugin_dir_url(__FILE__) . 'assets/css/cart-recovery-admin.css',
+            array('onepaquc_cart_admin_css'),
+            filemtime(plugin_dir_path(__FILE__) . 'assets/css/cart-recovery-admin.css')
+        );
+        wp_enqueue_script(
+            'onepaquc_cart_recovery_admin_js',
+            plugin_dir_url(__FILE__) . 'assets/js/cart-recovery-admin.js',
+            array('jquery', 'select2-js'),
+            filemtime(plugin_dir_path(__FILE__) . 'assets/js/cart-recovery-admin.js'),
+            true
+        );
+        wp_enqueue_editor();
+    }
+
     wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.3.7");
     wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.3.7", true);
 }

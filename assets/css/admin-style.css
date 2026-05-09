@@ -526,13 +526,11 @@ span.plugincy_sec_icon {
   background: #fff;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 8px;
-  max-width: 95%;
 }
 .plugincy_nav_card {
   padding: 2rem 0 0;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   border-radius: 8px;
-  max-width: 98.5%;
   box-sizing: border-box;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;

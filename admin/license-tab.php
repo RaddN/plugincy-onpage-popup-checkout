@@ -411,7 +411,7 @@ class onepaquc_License_Manager
                     <?php wp_nonce_field('onepaquc_license_nonce', 'onepaquc_license_nonce'); ?>
                     <label for="onepaquc_license_key" style=" font-size: 16px; "><?php echo esc_html__('License Key', 'one-page-quick-checkout-for-woocommerce'); ?></label>
                     <div style="position: relative;">
-                        <input type="password" style="width: 100%;border: 1px solid #eee;padding: 6px;" id="onepaquc_license_key" name="onepaquc_license_key" value="<?php echo esc_attr($license_key); ?>" class="regular-text" placeholder="Enter your license key" />
+                        <input type="password" style="width: 100%;border: 1px solid #eee;padding: 6px;" id="onepaquc_license_key" name="onepaquc_license_key" value="<?php echo esc_attr($license_key); ?>"  placeholder="Enter your license key" />
                         <span id="onepaquc_license_eye" style="vertical-align: middle;margin-left: 8px;position: absolute;right: 0;top: 0;background: #eee;height: 100%;display: flex;align-items: center;justify-content: center;padding: 0 20px;border-radius: 0 2px 2px 0;cursor:pointer;" class="dashicons dashicons-visibility" title="<?php echo esc_attr__('Show license key', 'one-page-quick-checkout-for-woocommerce'); ?>"></span>
                         <script>
                             (function() {
