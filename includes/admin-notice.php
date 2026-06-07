@@ -113,14 +113,14 @@ function onepaquc_enqueue_new_year_notice_assets()
         'onepaquc-admin-inline',
         ONEPAQUC_PLUGIN_URL . 'assets/css/admin-inline.css',
         array(),
-        function_exists('onepaquc_asset_version') ? onepaquc_asset_version('assets/css/admin-inline.css') : RMENU_VERSION
+        function_exists('onepaquc_asset_version') ? onepaquc_asset_version('assets/css/admin-inline.css') : ONEPAQUC_VERSION
     );
 
     wp_enqueue_script(
         'onepaquc-admin-notice',
         ONEPAQUC_PLUGIN_URL . 'assets/js/admin-notice.js',
         array('jquery'),
-        function_exists('onepaquc_asset_version') ? onepaquc_asset_version('assets/js/admin-notice.js') : RMENU_VERSION,
+        function_exists('onepaquc_asset_version') ? onepaquc_asset_version('assets/js/admin-notice.js') : ONEPAQUC_VERSION,
         true
     );
 

@@ -7,7 +7,7 @@
 (function ($) {
     'use strict';
 
-    var RMENU_Add_To_Cart = {
+    var ONEPAQUC_Add_To_Cart = {
 
         init: function () {
             // Handle AJAX add to cart for archive/shop pages
@@ -15,7 +15,7 @@
                 if ($(this).closest('form.grouped_form').length) {
                     return;
                 }
-                RMENU_Add_To_Cart.ajaxAddToCart.call(this, e);
+                ONEPAQUC_Add_To_Cart.ajaxAddToCart.call(this, e);
             });
 
             // Handle quantity changes on archive pages
@@ -143,19 +143,19 @@
                                 }
                             }
                             // If no redirect, show animation and notification
-                            RMENU_Add_To_Cart.triggerAnimation($thisButton, response.product_name);
-                            RMENU_Add_To_Cart.showNotification(response);
+                            ONEPAQUC_Add_To_Cart.triggerAnimation($thisButton, response.product_name);
+                            ONEPAQUC_Add_To_Cart.showNotification(response);
                             // Trigger WC events
                             $(document.body).trigger('added_to_cart', [response.fragments, response.cart_hash, $thisButton]);
                         } else {
                             // Show error
-                            RMENU_Add_To_Cart.showError(response.message || 'Error adding to cart');
+                            ONEPAQUC_Add_To_Cart.showError(response.message || 'Error adding to cart');
                             $thisButton.removeClass('loading').prop('disabled', false);
                         }
                     },
                     error: function () {
                         // Show error
-                        RMENU_Add_To_Cart.showError('Server error. Please try again.');
+                        ONEPAQUC_Add_To_Cart.showError('Server error. Please try again.');
                         $thisButton.removeClass('loading').prop('disabled', false);
                     }
                 });
@@ -445,7 +445,7 @@
 
     // Initialize on document ready
     $(document).ready(function () {
-        RMENU_Add_To_Cart.init();
+        ONEPAQUC_Add_To_Cart.init();
     });
 
 })(jQuery);

@@ -21,7 +21,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 define('ONEPAQUC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-define("RMENU_VERSION", "1.3.8");
+define('ONEPAQUC_VERSION', '1.3.8');
 
 if (! defined('ONEPAQUC_CART_RECOVERY_FREE_MODE')) {
     define('ONEPAQUC_CART_RECOVERY_FREE_MODE', true);
@@ -86,12 +86,12 @@ function onepaquc_asset_version($relative_path)
     $asset_path    = plugin_dir_path(__FILE__) . $relative_path;
 
     if (!is_file($asset_path)) {
-        return RMENU_VERSION;
+        return ONEPAQUC_VERSION;
     }
 
     $modified_time = filemtime($asset_path);
 
-    return false !== $modified_time ? (string) $modified_time : RMENU_VERSION;
+    return false !== $modified_time ? (string) $modified_time : ONEPAQUC_VERSION;
 }
 
 /**
@@ -412,11 +412,11 @@ function onepaquc_cart_enqueue_scripts()
         }
     }
 
-    $cart_script_version = RMENU_VERSION . '.' . onepaquc_asset_version('assets/js/cart.js');
+    $cart_script_version = ONEPAQUC_VERSION . '.' . onepaquc_asset_version('assets/js/cart.js');
 
-    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), "1.3.8");
-    wp_enqueue_style('checkout-form-two-column', plugin_dir_url(__FILE__) . 'assets/css/checkout-form-two-column.css', array(), "1.3.8");
-    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), "1.3.8", true);
+    wp_enqueue_style('rmenu-cart-style', plugin_dir_url(__FILE__) . 'assets/css/rmenu-cart.css', array(), ONEPAQUC_VERSION);
+    wp_enqueue_style('checkout-form-two-column', plugin_dir_url(__FILE__) . 'assets/css/checkout-form-two-column.css', array(), ONEPAQUC_VERSION);
+    wp_enqueue_script('rmenu-cart-script', plugin_dir_url(__FILE__) . 'assets/js/rmenu-cart.js', array('jquery'), ONEPAQUC_VERSION, true);
 
     wp_enqueue_script('cart-script', plugin_dir_url(__FILE__) . 'assets/js/cart.js', array('jquery'), $cart_script_version, true);
     $direct_checkout_behave = [
@@ -452,7 +452,7 @@ function onepaquc_cart_enqueue_scripts()
             'onepaquc-cart-blocks',
             plugin_dir_url(__FILE__) . 'assets/js/cart-blocks.js',
             array('cart-script', 'wc-blocks-checkout', 'wc-blocks-data-store'),
-            RMENU_VERSION . '.' . onepaquc_asset_version('assets/js/cart-blocks.js'),
+            ONEPAQUC_VERSION . '.' . onepaquc_asset_version('assets/js/cart-blocks.js'),
             true
         );
     }
@@ -511,9 +511,9 @@ function onepaquc_cart_admin_styles($hook)
             array(),
             onepaquc_asset_version('assets/css/admin-inline.css')
         );
-        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), "1.3.8");
-        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), "1.3.8");
-        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), "1.3.8", true);
+        wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-style.css', array(), ONEPAQUC_VERSION);
+        wp_enqueue_style('select2-css', plugin_dir_url(__FILE__) . 'assets/css/select2.min.css', array(), ONEPAQUC_VERSION);
+        wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), ONEPAQUC_VERSION, true);
     }
 
     if ($hook === 'toplevel_page_onepaquc_cart') {
@@ -550,8 +550,8 @@ function onepaquc_cart_admin_styles($hook)
         wp_enqueue_editor();
     }
 
-    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), "1.3.8");
-    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), "1.3.8", true);
+    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), ONEPAQUC_VERSION);
+    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), ONEPAQUC_VERSION, true);
 }
 
 // add shortcode
@@ -576,7 +576,7 @@ function onepaquc_editor_script()
         'onepaquc_editor_script',
         plugin_dir_url(__FILE__) . 'includes/blocks/editor.js',
         array('wp-blocks', 'wp-element', 'wp-edit-post', 'wp-dom-ready', 'wp-plugins'),
-        '1.3.8',
+        ONEPAQUC_VERSION,
         true
     );
 }
@@ -1598,7 +1598,7 @@ class onepaquc_cart_analytics_main
         $this->analytics = new onepaquc_cart_anaylytics(
             '03',
             'https://plugincy.com/wp-json/product-analytics/v1',
-            RMENU_VERSION,
+            ONEPAQUC_VERSION,
             'One Page Quick Checkout for WooCommerce',
             __FILE__ // Pass the main plugin file
         );

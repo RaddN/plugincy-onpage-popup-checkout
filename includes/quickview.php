@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class RMENU_Quick_View
+class ONEPAQUC_Quick_View
 {
     private $is_btn_add_hook_works;
     /**
@@ -622,7 +622,7 @@ class RMENU_Quick_View
             'rmenu-quick-view-styles',
             plugin_dir_url(__FILE__) . '../assets/css/quick-view.css',
             array(),
-            RMENU_VERSION
+            ONEPAQUC_VERSION
         );
         wp_enqueue_style('rmenu-quick-view-styles');
 
@@ -631,7 +631,7 @@ class RMENU_Quick_View
             'rmenu-quick-view-scripts',
             plugin_dir_url(__FILE__) . '../assets/js/quick-view.js',
             array('jquery'),
-            RMENU_VERSION,
+            ONEPAQUC_VERSION,
             true
         );
 
@@ -751,7 +751,7 @@ class RMENU_Quick_View
 }
 
 // Initialize the quick view class
-$rmenu_quick_view = new RMENU_Quick_View();
+$rmenu_quick_view = new ONEPAQUC_Quick_View();
 
 /**
  * Add shortcode for quick view button
@@ -775,7 +775,7 @@ $rmenu_quick_view = new RMENU_Quick_View();
 //     }
     
 //     // Create temporary instance to use the method
-//     $quick_view = new RMENU_Quick_View();
+//     $quick_view = new ONEPAQUC_Quick_View();
     
 //     ob_start();
 //     $quick_view->render_quick_view_button($product);

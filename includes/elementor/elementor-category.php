@@ -28,7 +28,7 @@ class onepaquc_Elementor_Category_Alternative
             . '.onepaquc-elementor-category-icon:before,i.dashicons-onepaquc_one_page_cart:before,i.dashicons-onepaquc_cart:before,i.dashicons-onepaquc_buy_btn:before{font-family:dashicons;content:"\f174";color:#6a3df6;font-size:22px;line-height:1;}';
 
         if (!wp_style_is($handle, 'registered')) {
-            wp_register_style($handle, false, array(), defined('RMENU_VERSION') ? RMENU_VERSION : '1.3.8');
+            wp_register_style($handle, false, array(), ONEPAQUC_VERSION);
         }
 
         wp_enqueue_style($handle);

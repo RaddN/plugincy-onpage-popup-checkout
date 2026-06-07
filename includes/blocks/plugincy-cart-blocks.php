@@ -327,7 +327,7 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
         'rmenu-cart-block-style',
         false,
         array(),
-        RMENU_VERSION
+        ONEPAQUC_VERSION
     );
     
     wp_enqueue_style('rmenu-cart-block-style');

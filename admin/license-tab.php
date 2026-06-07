@@ -89,7 +89,7 @@ class onepaquc_License_Manager
         $response = wp_remote_get(add_query_arg($api_params, $this->api_url), array(
             'timeout' => 30,
             'sslverify' => true,
-            'user-agent' => 'DAPF/' . (defined('RMENU_VERSION') ? RMENU_VERSION : '1.3.8')
+            'user-agent' => 'DAPF/' . ONEPAQUC_VERSION
         ));
 
         if (is_wp_error($response)) {
@@ -174,7 +174,7 @@ class onepaquc_License_Manager
         $response = wp_remote_get(add_query_arg($api_params, $this->api_url), array(
             'timeout' => 30,
             'sslverify' => true,
-            'user-agent' => 'DAPF/' . (defined('RMENU_VERSION') ? RMENU_VERSION : '1.3.8')
+            'user-agent' => 'DAPF/' . ONEPAQUC_VERSION
         ));
 
         // Step 2: Deactivate Pro plugin if it's active (before removing license data)
@@ -212,7 +212,7 @@ class onepaquc_License_Manager
         $response = wp_remote_get(add_query_arg($api_params, $this->api_url), array(
             'timeout' => 30,
             'sslverify' => true,
-            'user-agent' => 'DAPF/' . (defined('RMENU_VERSION') ? RMENU_VERSION : '1.3.8')
+            'user-agent' => 'DAPF/' . ONEPAQUC_VERSION
         ));
 
         if (is_wp_error($response) || wp_remote_retrieve_response_code($response) < 200 || wp_remote_retrieve_response_code($response) >= 300) {

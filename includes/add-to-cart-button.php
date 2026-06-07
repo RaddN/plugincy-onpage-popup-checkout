@@ -264,7 +264,7 @@ class ONEPAQUC_Add_To_Cart_Handler
             'rmenu-ajax-add-to-cart',
             plugin_dir_url(__FILE__) . '../assets/js/add-to-cart.js',
             array('jquery'),
-            RMENU_VERSION,
+            ONEPAQUC_VERSION,
             true
         );
 
@@ -378,7 +378,7 @@ class ONEPAQUC_Add_To_Cart_Handler
             'rmenu-notifications',
             plugin_dir_url(__FILE__) . '../assets/css/notifications.css',
             array(),
-            RMENU_VERSION
+            ONEPAQUC_VERSION
         );
     }
 
