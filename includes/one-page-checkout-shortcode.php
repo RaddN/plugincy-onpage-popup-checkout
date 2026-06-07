@@ -4,14 +4,20 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 // shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" category="" tags="" attribute="" terms="" template=""]
 function onepaquc_one_page_checkout_shortcode($atts)
 {
+    $atts = is_array($atts) ? $atts : array();
     $atts = shortcode_atts(array(
         'product_ids' => '',
         'category'    => '',
         'tags'        => '',
         'attribute'   => '',
         'terms'       => '',
-        'template'    => 'product-table'
+        'template'    => 'product-table',
+        'limit'       => 100,
     ), $atts);
+    foreach (array('product_ids', 'category', 'tags', 'attribute', 'terms', 'template') as $attribute_key) {
+        $atts[$attribute_key] = is_scalar($atts[$attribute_key]) ? sanitize_text_field((string) $atts[$attribute_key]) : '';
+    }
+    $query_limit = is_scalar($atts['limit']) ? min(200, max(1, absint($atts['limit']))) : 100;
 
     ob_start();
 
@@ -20,11 +26,11 @@ function onepaquc_one_page_checkout_shortcode($atts)
 
     if (!empty($atts['product_ids'])) {
         $product_ids = explode(',', $atts['product_ids']);
-        $product_ids = array_map('trim', $product_ids);
+        $product_ids = array_slice(array_values(array_unique(array_filter(array_map('absint', $product_ids)))), 0, 200);
     } else {
         $args = array(
             'post_type'      => 'product',
-            'posts_per_page' => -1,
+            'posts_per_page' => $query_limit,
             'fields'         => 'ids',
             'post_status'    => 'publish',
         );
@@ -35,7 +41,7 @@ function onepaquc_one_page_checkout_shortcode($atts)
             $tax_query[] = array(
                 'taxonomy' => 'product_cat',
                 'field'    => 'slug',
-                'terms'    => array_map('trim', explode(',', $atts['category'])),
+                'terms'    => array_values(array_filter(array_map('sanitize_title', explode(',', $atts['category'])))),
             );
         }
 
@@ -43,7 +49,7 @@ function onepaquc_one_page_checkout_shortcode($atts)
             $tax_query[] = array(
                 'taxonomy' => 'product_tag',
                 'field'    => 'slug',
-                'terms'    => array_map('trim', explode(',', $atts['tags'])),
+                'terms'    => array_values(array_filter(array_map('sanitize_title', explode(',', $atts['tags'])))),
             );
         }
 
@@ -51,7 +57,7 @@ function onepaquc_one_page_checkout_shortcode($atts)
             $tax_query[] = array(
                 'taxonomy' => 'pa_' . wc_sanitize_taxonomy_name($atts['attribute']),
                 'field'    => 'slug',
-                'terms'    => array_map('trim', explode(',', $atts['terms'])),
+                'terms'    => array_values(array_filter(array_map('sanitize_title', explode(',', $atts['terms'])))),
             );
         }
 
@@ -67,27 +73,31 @@ function onepaquc_one_page_checkout_shortcode($atts)
         return '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs, category, tags, or attribute terms.', 'one-page-quick-checkout-for-woocommerce') . '</p></div>';
     }
 
-    if (class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_empty", "1") === "1") {
-        WC()->cart->empty_cart();
+    $cart = function_exists('onepaquc_get_wc_cart') ? onepaquc_get_wc_cart() : null;
+    if ($cart && get_option("onpage_checkout_widget_cart_empty", "1") === "1") {
+        $cart->empty_cart();
     }
 
     foreach ($product_ids as $product_id) {
         $product_id = intval($product_id);
-        if ($product_id > 0 && class_exists('WooCommerce') && WC()->cart && get_option("onpage_checkout_widget_cart_add", "1") === "1") {
+        if ($product_id > 0 && $cart && get_option("onpage_checkout_widget_cart_add", "1") === "1") {
             $product = wc_get_product($product_id);
             if ($product && $product->is_type('variable')) {
                 $available_variations = onepaquc_get_validated_variations( $product );
                 if (!empty($available_variations)) {
                     $variation_id = $available_variations[0]['variation_id'];
                     $variation = wc_get_product($variation_id);
-                    if ($variation && $variation->is_purchasable()) {
-                        WC()->cart->add_to_cart($product_id, 1, $variation_id);
+                    $variation_attributes = isset($available_variations[0]['attributes']) && is_array($available_variations[0]['attributes'])
+                        ? $available_variations[0]['attributes']
+                        : array();
+                    if ($variation instanceof WC_Product_Variation && $variation->get_parent_id() === $product_id && $variation->is_purchasable()) {
+                        $cart->add_to_cart($product_id, 1, $variation_id, $variation_attributes);
                     }
                 }
             } else {
                 // Check if the product is purchasable before adding to cart
                 if ($product && $product->is_purchasable()) {
-                    WC()->cart->add_to_cart($product_id);
+                    $cart->add_to_cart($product_id);
                 }
             }
         }
@@ -96,20 +106,19 @@ function onepaquc_one_page_checkout_shortcode($atts)
     <div class="rmenu-one-page-checkout" id="checkout-popup">
         <?php
         // Include the checkout template based on the selected template
-        if ($atts['template'] === 'product-table') {
-            include plugin_dir_path(__FILE__) . '../templates/product-table-template.php';
-        } elseif ($atts['template'] === 'product-list') {
-            include plugin_dir_path(__FILE__) . '../templates/product-list-template.php';
-        } elseif ($atts['template'] === 'product-single') {
-            include plugin_dir_path(__FILE__) . '../templates/product-single-template.php';
-        } elseif ($atts['template'] === 'product-slider') {
-            include plugin_dir_path(__FILE__) . '../templates/product-slider-template.php';
-        } elseif ($atts['template'] === 'product-accordion') {
-            include plugin_dir_path(__FILE__) . '../templates/product-accordion-template.php';
-        } elseif ($atts['template'] === 'product-tabs') {
-            include plugin_dir_path(__FILE__) . '../templates/product-tabs-template.php';
-        } else {
-            include plugin_dir_path(__FILE__) . '../templates/pricing-table-template.php';
+        $templates = array(
+            'product-table'     => 'product-table-template.php',
+            'product-list'      => 'product-list-template.php',
+            'product-single'    => 'product-single-template.php',
+            'product-slider'    => 'product-slider-template.php',
+            'product-accordion' => 'product-accordion-template.php',
+            'product-tabs'      => 'product-tabs-template.php',
+            'pricing-table'     => 'pricing-table-template.php',
+        );
+        $template_key  = isset($templates[$atts['template']]) ? $atts['template'] : 'product-table';
+        $template_file = plugin_dir_path(__FILE__) . '../templates/' . $templates[$template_key];
+        if (is_readable($template_file)) {
+            include $template_file;
         }
         ?>
     </div>
@@ -139,23 +148,26 @@ add_action('init', function () {
         ], $atts, 'onepaquc_checkout');
 
         // Basic sanitization / normalization
-        $auto_add     = in_array(strtolower($atts['auto_add']), ['yes', 'true', '1'], true);
-        $clear_cart   = in_array(strtolower($atts['clear_cart']), ['yes', 'true', '1'], true);
-        $product_id   = absint($atts['product_id']);
-        $variation_id = absint($atts['variation_id']);
-        $qty          = max(1, absint($atts['qty']));
+        $auto_add_value = is_scalar($atts['auto_add']) ? strtolower((string) $atts['auto_add']) : '';
+        $clear_cart_value = is_scalar($atts['clear_cart']) ? strtolower((string) $atts['clear_cart']) : '';
+        $auto_add     = in_array($auto_add_value, ['yes', 'true', '1'], true);
+        $clear_cart   = in_array($clear_cart_value, ['yes', 'true', '1'], true);
+        $product_id   = is_scalar($atts['product_id']) ? absint($atts['product_id']) : 0;
+        $variation_id = is_scalar($atts['variation_id']) ? absint($atts['variation_id']) : 0;
+        $qty          = is_scalar($atts['qty']) ? max(1, absint($atts['qty'])) : 1;
 
         // --- Add to cart behavior ---
         if ( function_exists('WC') && !is_admin() && !wp_doing_ajax() ) {
             // Only do cart ops if we have a product_id and auto_add is enabled
             if ( $auto_add && $product_id > 0 ) {
-                if ( $clear_cart && WC()->cart ) {
-                    WC()->cart->empty_cart();
+                $cart = function_exists('onepaquc_get_wc_cart') ? onepaquc_get_wc_cart() : null;
+                if ( $clear_cart && $cart ) {
+                    $cart->empty_cart();
                 }
 
                 // If variation_id is given, add that specific variation.
                 // Otherwise add the simple/parent product.
-                if ( WC()->cart ) {
+                if ( $cart ) {
                     // NB: $variation is optional here (empty array ok if attributes aren’t needed)
                     $variation  = [];
                     $cart_item_data = [];
@@ -164,10 +176,19 @@ add_action('init', function () {
                     try {
                         // When adding a variation, Woo expects the parent variable product ID as $product_id,
                         // and the specific $variation_id you want to add.
+                        $product = wc_get_product($product_id);
+                        if (!$product instanceof WC_Product || !$product->is_purchasable()) {
+                            return '';
+                        }
                         if ( $variation_id > 0 ) {
-                            WC()->cart->add_to_cart($product_id, $qty, $variation_id, $variation, $cart_item_data);
+                            $variation_product = wc_get_product($variation_id);
+                            if (!$variation_product instanceof WC_Product_Variation || $variation_product->get_parent_id() !== $product_id || !$variation_product->is_purchasable()) {
+                                return '';
+                            }
+                            $variation = $variation_product->get_variation_attributes();
+                            $cart->add_to_cart($product_id, $qty, $variation_id, $variation, $cart_item_data);
                         } else {
-                            WC()->cart->add_to_cart($product_id, $qty, 0, $variation, $cart_item_data);
+                            $cart->add_to_cart($product_id, $qty, 0, $variation, $cart_item_data);
                         }
                     } catch ( \Throwable $e ) {
                         // You could log this if needed: error_log($e->getMessage());

@@ -1,4 +1,5 @@
 jQuery(document).ready(function ($) {
+    "use strict";
     // Function to update the active TOC item on scroll
     function updateActiveMenuItem() {
         // Get all section elements
@@ -70,6 +71,8 @@ jQuery(document).ready(function ($) {
 });
 
 jQuery(document).ready(function ($) {
+    "use strict";
+
     if ($('.remove_checkout_fields').length) $('.remove_checkout_fields').select2({
         placeholder: 'Select fields to remove',
         allowClear: true,
@@ -78,8 +81,17 @@ jQuery(document).ready(function ($) {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const tabs = document.querySelectorAll(".tab");
-    const contents = document.querySelectorAll(".tab-content");
+    "use strict";
+
+    const tabContainer = document.querySelector(".tab-container");
+    if (!tabContainer) {
+        return;
+    }
+
+    const tabs = tabContainer.querySelectorAll(":scope > .tabs > .tab");
+    const contents = Array.prototype.map.call(tabs, tab => {
+        return document.getElementById(`tab-${tab.dataset.tab}`);
+    }).filter(Boolean);
     const STORAGE_KEY = 'active_tab'; // Key for localStorage
 
     // Function to activate a specific tab
@@ -89,16 +101,16 @@ document.addEventListener("DOMContentLoaded", function () {
         contents.forEach(c => c.classList.remove("active"));
 
         // Add active class to the tab with the matching data-tab attribute
-        const targetTab = document.querySelector(`.tab[data-tab="${tabIndex}"]`);
+        const targetTab = tabContainer.querySelector(`:scope > .tabs > .tab[data-tab="${tabIndex}"]`);
         if (targetTab) {
             targetTab.classList.add("active");
-            const content = document.querySelector(`#tab-${tabIndex}`);
+            const content = document.getElementById(`tab-${tabIndex}`);
             if (content) {
                 content.classList.add("active");
             }
         } else {
             // activate the first tab as default
-            const firstTab = document.querySelector('.tab');
+            const firstTab = tabs[0];
             if (firstTab) {
                 const firstTabIndex = firstTab.dataset.tab;
                 activateTab(firstTabIndex);
@@ -161,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
             activateTab(activeTabIndex);
         } else {
             // If no stored tab, activate the first tab as default
-            const firstTab = document.querySelector('.tab');
+            const firstTab = tabs[0];
             if (firstTab) {
                 const firstTabIndex = firstTab.dataset.tab;
                 activateTab(firstTabIndex);
@@ -177,129 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 (function () {
-    // Inject CSS styles
-    const style = document.createElement('style');
-    style.textContent = `
-    .modal-overlay-notice {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 9999;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .modal-overlay-notice.active {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-notice {
-      background: white;
-      border-radius: 16px;
-      padding: 0;
-      max-width: 400px;
-      width: 90%;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-      animation: slideUp 0.3s ease;
-      overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    }
-
-    .modal-notice-header {
-      padding: 24px 24px 16px;
-      text-align: center;
-    }
-
-    .modal-notice-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 16px;
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-    }
-
-    .modal-notice-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: #dc2626;
-      margin: 0 0 8px 0;
-    }
-
-    .modal-notice-body {
-      padding: 0 24px 24px;
-      text-align: center;
-    }
-
-    .modal-notice-message {
-      font-size: 15px;
-      color: #666;
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .modal-notice-footer {
-      display: flex;
-      gap: 12px;
-      padding: 16px 24px 24px;
-    }
-
-    .modal-notice-btn {
-      flex: 1;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .modal-notice-btn-cancel {
-      background: #f1f3f5;
-      color: #495057;
-    }
-
-    .modal-notice-btn-cancel:hover {
-      background: #e9ecef;
-    }
-
-    .modal-notice-btn-confirm {
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      color: white;
-    }
-
-    .modal-notice-btn-confirm:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(30px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-  `;
-    document.head.appendChild(style);
+    "use strict";
 
     // Create modal HTML
     const modalHTML = `
@@ -381,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Close on overlay click
         modalOverlay.addEventListener('click', function (e) {
             if (e.target === modalOverlay) {
-                btnCancel.click();
+                btnCancel.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
             }
         });
     });

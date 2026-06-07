@@ -1,0 +1,101 @@
+.feedback-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feedback-modal {
+    background: #fff;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.modal-header {
+    padding: 24px 24px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-body {
+    padding: 16px 24px 24px;
+}
+
+.feedback-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.other-reason-container {
+    margin: 12px 0;
+}
+
+.other-reason-container textarea {
+    width: 100%;
+}
+
+.modal-footer {
+    margin-top: 18px;
+    text-align: right;
+}
+
+.close-button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.btn {
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+}
+
+.btn-primary {
+    background: #0073aa;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #005a87;
+}
+
+@media (max-width: 640px) {
+    .feedback-modal {
+        margin: 20px;
+        width: calc(100% - 40px);
+    }
+
+    .modal-header {
+        padding: 20px 20px 8px;
+    }
+
+    .modal-body {
+        padding: 16px 20px 20px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

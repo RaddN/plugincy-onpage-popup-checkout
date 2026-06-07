@@ -17,7 +17,7 @@ function onepaquc_buy_now_button_block_register() {
         'onepaquc-buy-now-button-block',
         plugins_url( 'buy_now_button_block.js', __FILE__ ),
         array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor' ),
-        filemtime( plugin_dir_path( __FILE__ ) . 'buy_now_button_block.js' ),
+        onepaquc_asset_version( 'includes/blocks/buy_now_button_block.js' ),
         true
     );
 
@@ -51,19 +51,21 @@ add_action( 'init', 'onepaquc_buy_now_button_block_register', 10 );
  * Render callback: reuse your shortcode handler
  */
 function onepaquc_buy_now_button_block_render( $attrs = array() ) {
+    $attrs = is_array( $attrs ) ? $attrs : array();
+
     // Normalize to the shortcode handler’s expected strings
     $atts = array(
-        'product_id'       => isset( $attrs['product_id'] ) ? (string) absint( $attrs['product_id'] ) : '',
-        'variation_id'     => isset( $attrs['variation_id'] ) ? (string) absint( $attrs['variation_id'] ) : '',
+        'product_id'       => isset( $attrs['product_id'] ) && is_numeric( $attrs['product_id'] ) ? (string) absint( $attrs['product_id'] ) : '',
+        'variation_id'     => isset( $attrs['variation_id'] ) && is_numeric( $attrs['variation_id'] ) ? (string) absint( $attrs['variation_id'] ) : '',
         'detect_product'   => ! empty( $attrs['detect_product'] )   ? '1' : '0',
         'detect_variation' => ! empty( $attrs['detect_variation'] ) ? '1' : '0',
-        'text'             => isset( $attrs['text'] )          ? (string) $attrs['text'] : '',
-        'qty'              => isset( $attrs['qty'] )           ? (string) max( 1, absint( $attrs['qty'] ) ) : '1',
-        'icon'             => isset( $attrs['icon'] )          ? (string) $attrs['icon'] : '',
-        'icon_position'    => isset( $attrs['icon_position'] ) ? (string) $attrs['icon_position'] : '',
-        'class'            => isset( $attrs['class'] )         ? (string) $attrs['class'] : '',
-        'style'            => isset( $attrs['style'] )         ? (string) $attrs['style'] : '',
-        'show_for'         => isset( $attrs['show_for'] )      ? (string) $attrs['show_for'] : '',
+        'text'             => isset( $attrs['text'] ) && is_scalar( $attrs['text'] ) ? (string) $attrs['text'] : '',
+        'qty'              => isset( $attrs['qty'] ) && is_numeric( $attrs['qty'] ) ? (string) max( 1, absint( $attrs['qty'] ) ) : '1',
+        'icon'             => isset( $attrs['icon'] ) && is_scalar( $attrs['icon'] ) ? (string) $attrs['icon'] : '',
+        'icon_position'    => isset( $attrs['icon_position'] ) && is_scalar( $attrs['icon_position'] ) ? (string) $attrs['icon_position'] : '',
+        'class'            => isset( $attrs['class'] ) && is_scalar( $attrs['class'] ) ? (string) $attrs['class'] : '',
+        'style'            => isset( $attrs['style'] ) && is_scalar( $attrs['style'] ) ? (string) $attrs['style'] : '',
+        'show_for'         => isset( $attrs['show_for'] ) && is_scalar( $attrs['show_for'] ) ? (string) $attrs['show_for'] : '',
         'force'            => ! empty( $attrs['force'] )       ? '1' : '0',
     );
 

@@ -740,114 +740,74 @@ function onepaquc_plugincy_cart_elementor_widget()
          */
         private function generate_styles($settings)
         {
-            global $onepaquc_onepaquc_allowed_tags;
-            $css = '<style>';
+            $css = '';
 
-            // Cart Icon Styles
-            if (!empty($settings['cart_icon_size']['size'])) {
-                $css .= '.cart-icon { font-size: ' . $settings['cart_icon_size']['size'] . 'px; }';
-            }
-            if (!empty($settings['cart_icon_color'])) {
-                $css .= '.cart-icon { color: ' . $settings['cart_icon_color'] . '; }';
-            }
+            $add_size_rule = function ($selector, $property, $control, $unit = 'px') use (&$css, $settings) {
+                if (empty($settings[$control]['size']) || !is_numeric($settings[$control]['size'])) {
+                    return;
+                }
 
-            // Drawer Styles
-            if (!empty($settings['drawer_width']['size'])) {
-                $css .= '.cart-drawer { width: ' . $settings['drawer_width']['size'] . 'px; }';
-            }
-            if (!empty($settings['drawer_background'])) {
-                $css .= '.cart-drawer { background-color: ' . $settings['drawer_background'] . '; }';
-            }
-            if (!empty($settings['drawer_padding']['size'])) {
-                $css .= '.cart-drawer { padding: ' . $settings['drawer_padding']['size'] . 'px; }';
-            }
-            if (!empty($settings['drawer_margin']['size'])) {
-                $css .= '.cart-drawer { margin: ' . $settings['drawer_margin']['size'] . 'px; }';
-            }
+                $value = (float) $settings[$control]['size'];
+                if ($value < 0) {
+                    return;
+                }
 
-            // Product Image Styles
-            if (!empty($settings['product_image_width']['size'])) {
-                $css .= '.cart-item img { width: ' . $settings['product_image_width']['size'] . 'px; }';
-            }
-            if (!empty($settings['product_image_height']['size'])) {
-                $css .= '.cart-item img { height: ' . $settings['product_image_height']['size'] . 'px; }';
-            }
+                $css .= $selector . '{' . $property . ':' . esc_attr($value . $unit) . ';}';
+            };
 
-            // Product Title Styles
-            if (!empty($settings['product_title_font_size']['size'])) {
-                $css .= '.rmenu-cart .cart-item .item-title { font-size: ' . $settings['product_title_font_size']['size'] . 'px; }';
-            }
-            if (!empty($settings['product_title_line_height']['size'])) {
-                $css .= '.rmenu-cart .cart-item .item-title { line-height: ' . $settings['product_title_line_height']['size'] . '; }';
-            }
-            if (!empty($settings['product_title_color'])) {
-                $css .= '.rmenu-cart .cart-item .item-title { color: ' . $settings['product_title_color'] . '; }';
-            }
+            $add_color_rule = function ($selector, $property, $control) use (&$css, $settings) {
+                if (empty($settings[$control])) {
+                    return;
+                }
 
-            // Product Price Styles
-            if (!empty($settings['product_price_font_size']['size'])) {
-                $css .= '.rmenu-cart .cart-item .item-price { font-size: ' . $settings['product_price_font_size']['size'] . 'px; }';
-            }
-            if (!empty($settings['product_price_line_height']['size'])) {
-                $css .= '.rmenu-cart .cart-item .item-price { line-height: ' . $settings['product_price_line_height']['size'] . '; }';
-            }
-            if (!empty($settings['product_price_color'])) {
-                $css .= '.rmenu-cart .cart-item .item-price { color: ' . $settings['product_price_color'] . '; }';
-            }
+                $color = sanitize_hex_color($settings[$control]);
+                if (!$color) {
+                    return;
+                }
 
-            // Quantity Styles
-            if (!empty($settings['quantity_width']['size'])) {
-                $css .= '.rmenu-cart .cart-item .quantity input { width: ' . $settings['quantity_width']['size'] . 'px; }';
-            }
-            if (!empty($settings['quantity_height']['size'])) {
-                $css .= '.rmenu-cart .cart-item .quantity input { height: ' . $settings['quantity_height']['size'] . 'px; }';
-            }
-            if (!empty($settings['quantity_padding']['size'])) {
-                $css .= '.rmenu-cart .cart-item .quantity input { padding: ' . $settings['quantity_padding']['size'] . 'px; }';
-            }
+                $css .= $selector . '{' . $property . ':' . esc_attr($color) . ';}';
+            };
 
-            // Remove Button Styles
-            if (!empty($settings['remove_button_size']['size'])) {
-                $css .= '.cart-item .remove-item { font-size: ' . $settings['remove_button_size']['size'] . 'px; }';
-            }
-            if (!empty($settings['remove_button_padding']['size'])) {
-                $css .= '.cart-item .remove-item { padding: ' . $settings['remove_button_padding']['size'] . 'px; }';
-            }
+            $add_size_rule('.cart-icon', 'font-size', 'cart_icon_size');
+            $add_color_rule('.cart-icon', 'color', 'cart_icon_color');
 
-            // Subtotal Styles
-            if (!empty($settings['subtotal_font_size']['size'])) {
-                $css .= '.cart-subtotal { font-size: ' . $settings['subtotal_font_size']['size'] . 'px; }';
-            }
-            if (!empty($settings['subtotal_line_height']['size'])) {
-                $css .= '.cart-subtotal { line-height: ' . $settings['subtotal_line_height']['size'] . '; }';
-            }
-            if (!empty($settings['subtotal_color'])) {
-                $css .= '.cart-subtotal { color: ' . $settings['subtotal_color'] . '; }';
-            }
-            if (!empty($settings['subtotal_padding']['size'])) {
-                $css .= '.cart-subtotal { padding: ' . $settings['subtotal_padding']['size'] . 'px; }';
-            }
-            if (!empty($settings['subtotal_margin']['size'])) {
-                $css .= '.cart-subtotal { margin: ' . $settings['subtotal_margin']['size'] . 'px; }';
-            }
+            $add_size_rule('.cart-drawer', 'width', 'drawer_width');
+            $add_color_rule('.cart-drawer', 'background-color', 'drawer_background');
+            $add_size_rule('.cart-drawer', 'padding', 'drawer_padding');
+            $add_size_rule('.cart-drawer', 'margin', 'drawer_margin');
 
-            // Checkout Button Styles
-            if (!empty($settings['checkout_btn_background'])) {
-                $css .= '.checkout-button { background-color: ' . $settings['checkout_btn_background'] . '; }';
-            }
-            if (!empty($settings['checkout_btn_font_size']['size'])) {
-                $css .= '.checkout-button { font-size: ' . $settings['checkout_btn_font_size']['size'] . 'px; }';
-            }
-            if (!empty($settings['checkout_btn_line_height']['size'])) {
-                $css .= '.checkout-button { line-height: ' . $settings['checkout_btn_line_height']['size'] . '; }';
-            }
-            if (!empty($settings['checkout_btn_color'])) {
-                $css .= '.checkout-button { color: ' . $settings['checkout_btn_color'] . '; }';
-            }
+            $add_size_rule('.cart-item img', 'width', 'product_image_width');
+            $add_size_rule('.cart-item img', 'height', 'product_image_height');
 
-            $css .= '</style>';
+            $add_size_rule('.rmenu-cart .cart-item .item-title', 'font-size', 'product_title_font_size');
+            $add_size_rule('.rmenu-cart .cart-item .item-title', 'line-height', 'product_title_line_height', '');
+            $add_color_rule('.rmenu-cart .cart-item .item-title', 'color', 'product_title_color');
 
-            echo $css;
+            $add_size_rule('.rmenu-cart .cart-item .item-price', 'font-size', 'product_price_font_size');
+            $add_size_rule('.rmenu-cart .cart-item .item-price', 'line-height', 'product_price_line_height', '');
+            $add_color_rule('.rmenu-cart .cart-item .item-price', 'color', 'product_price_color');
+
+            $add_size_rule('.rmenu-cart .cart-item .quantity input', 'width', 'quantity_width');
+            $add_size_rule('.rmenu-cart .cart-item .quantity input', 'height', 'quantity_height');
+            $add_size_rule('.rmenu-cart .cart-item .quantity input', 'padding', 'quantity_padding');
+
+            $add_size_rule('.cart-item .remove-item', 'font-size', 'remove_button_size');
+            $add_size_rule('.cart-item .remove-item', 'padding', 'remove_button_padding');
+
+            $add_size_rule('.cart-subtotal', 'font-size', 'subtotal_font_size');
+            $add_size_rule('.cart-subtotal', 'line-height', 'subtotal_line_height', '');
+            $add_color_rule('.cart-subtotal', 'color', 'subtotal_color');
+            $add_size_rule('.cart-subtotal', 'padding', 'subtotal_padding');
+            $add_size_rule('.cart-subtotal', 'margin', 'subtotal_margin');
+
+            $add_color_rule('.checkout-button', 'background-color', 'checkout_btn_background');
+            $add_size_rule('.checkout-button', 'font-size', 'checkout_btn_font_size');
+            $add_size_rule('.checkout-button', 'line-height', 'checkout_btn_line_height', '');
+            $add_color_rule('.checkout-button', 'color', 'checkout_btn_color');
+
+            if ($css && wp_style_is('rmenu-cart-style', 'enqueued')) {
+                wp_add_inline_style('rmenu-cart-style', $css);
+            }
         }
     }
     // Register the widget

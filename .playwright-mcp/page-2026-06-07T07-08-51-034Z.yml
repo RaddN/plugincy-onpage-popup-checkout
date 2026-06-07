@@ -1,0 +1,741 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation "Toolbar":
+      - menu:
+        - group [ref=e3]:
+          - menuitem "About WordPress" [ref=e4] [cursor=pointer]:
+            - generic [ref=e6]: About WordPress
+        - group [ref=e7]:
+          - menuitem "plugincy on page checkout" [ref=e8] [cursor=pointer]
+        - group [ref=e9]:
+          - menuitem "Live" [ref=e10] [cursor=pointer]
+        - group [ref=e11]:
+          - menuitem "Customize" [ref=e12] [cursor=pointer]
+        - group [ref=e13]:
+          - menuitem "0 Comments in moderation" [ref=e14] [cursor=pointer]:
+            - generic [ref=e16]: "0"
+            - generic [ref=e17]: 0 Comments in moderation
+        - group [ref=e18]:
+          - menuitem "New" [ref=e19] [cursor=pointer]:
+            - generic [ref=e21]: New
+        - group [ref=e22]:
+          - menuitem "Edit Page" [ref=e23] [cursor=pointer]
+      - menu [ref=e24]:
+        - group [ref=e25]:
+          - menuitem [ref=e26] [cursor=pointer]:
+            - img [ref=e28]
+        - group [ref=e32]:
+          - menuitem "Howdy, admin" [ref=e33] [cursor=pointer]
+        - group [ref=e34]:
+          - menuitem "Search" [ref=e35]:
+            - generic [ref=e36]:
+              - textbox "Search" [ref=e37] [cursor=pointer]
+              - generic [ref=e38]: Search
+  - link "Skip to content" [ref=e39] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=e40]:
+    - banner [ref=e41]:
+      - generic [ref=e46]:
+        - link "plugincy on page checkout" [ref=e52] [cursor=pointer]:
+          - /url: http://free-one-page-checkout.local/
+        - generic [ref=e53]:
+          - navigation "Primary Site Navigation" [ref=e57]:
+            - list [ref=e59]:
+              - listitem [ref=e60]:
+                - link [ref=e61] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/604-2/
+              - listitem [ref=e62]:
+                - link "block Checkout" [ref=e63] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/block-checkout/
+              - listitem [ref=e64]:
+                - link "Buy now button Block" [ref=e65] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/buy-now-button-block/
+              - listitem [ref=e66]:
+                - link "Cart" [ref=e67] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/cart/
+              - listitem [ref=e68]:
+                - link "Checkout" [ref=e69] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/checkout/
+              - listitem [ref=e70]:
+                - 'link "Elementor #453" [ref=e71] [cursor=pointer]':
+                  - /url: http://free-one-page-checkout.local/elementor-453/
+              - listitem [ref=e72]:
+                - link "My account" [ref=e73] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/my-account/
+              - listitem [ref=e74]:
+                - link "Sample Page" [ref=e75] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/sample-page/
+              - listitem [ref=e76]:
+                - link "shop" [ref=e77] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/shop/
+              - listitem [ref=e78]:
+                - link "test" [ref=e79] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/
+          - link "View Shopping Cart, 15 items" [ref=e83] [cursor=pointer]:
+            - /url: http://free-one-page-checkout.local/cart/
+            - generic [ref=e85]:
+              - img [ref=e87]
+              - text: "15"
+    - main [ref=e92]:
+      - article [ref=e93]:
+        - table [ref=e100]:
+          - rowgroup [ref=e101]:
+            - row [ref=e102]:
+              - columnheader [ref=e103]
+              - 'columnheader "Placeholder Surface Pro 11th Edition Sapphire Compare Render ৳ 570.00 Add to cart: “Surface Pro 11th Edition Sapphire Compare Render” Buy Now" [ref=e104]':
+                - img "Placeholder" [ref=e106]
+                - heading "Surface Pro 11th Edition Sapphire Compare Render" [level=3] [ref=e107]
+                - generic [ref=e109]: ৳ 570.00
+                - paragraph [ref=e111]:
+                  - 'link "Add to cart: “Surface Pro 11th Edition Sapphire Compare Render”" [ref=e112] [cursor=pointer]':
+                    - /url: /?add-to-cart=154
+                    - img [ref=e114]
+                    - generic [ref=e118]: Add to Cart
+                  - generic [ref=e119] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder Lenovo ideapad 320 15.6 Laptop ৳ 500.00 Add to cart: “Lenovo ideapad 320 15.6 Laptop” Buy Now" [ref=e121]':
+                - img "Placeholder" [ref=e123]
+                - heading "Lenovo ideapad 320 15.6 Laptop" [level=3] [ref=e124]
+                - generic [ref=e126]: ৳ 500.00
+                - paragraph [ref=e128]:
+                  - 'link "Add to cart: “Lenovo ideapad 320 15.6 Laptop”" [ref=e129] [cursor=pointer]':
+                    - /url: /?add-to-cart=70
+                    - img [ref=e131]
+                    - generic [ref=e135]: Add to Cart
+                  - generic [ref=e136] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder Bl100 Pro Wireless Gaming Headset For Pc ৳ 540.00 Add to cart: “Bl100 Pro Wireless Gaming Headset For Pc” Buy Now" [ref=e138]':
+                - img "Placeholder" [ref=e140]
+                - heading "Bl100 Pro Wireless Gaming Headset For Pc" [level=3] [ref=e141]
+                - generic [ref=e143]: ৳ 540.00
+                - paragraph [ref=e145]:
+                  - 'link "Add to cart: “Bl100 Pro Wireless Gaming Headset For Pc”" [ref=e146] [cursor=pointer]':
+                    - /url: /?add-to-cart=71
+                    - img [ref=e148]
+                    - generic [ref=e152]: Add to Cart
+                  - generic [ref=e153] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder Desktop Computer, Windows ৳ 550.00 Blue White Yellow Add to cart: “Desktop Computer, Windows” Buy Now" [ref=e155]':
+                - img "Placeholder" [ref=e157]
+                - heading "Desktop Computer, Windows" [level=3] [ref=e158]
+                - generic [ref=e160]: ৳ 550.00
+                - generic [ref=e161]:
+                  - generic "Blue" [ref=e162]
+                  - generic "White" [ref=e163]
+                  - generic "Yellow" [ref=e164]
+                - paragraph [ref=e166]:
+                  - 'link "Add to cart: “Desktop Computer, Windows”" [ref=e167] [cursor=pointer]':
+                    - /url: /?add-to-cart=72
+                    - img [ref=e169]
+                    - generic [ref=e173]: Add to Cart
+                  - generic [ref=e174] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM ৳ 560.00 Add to cart: “HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM” Buy Now" [ref=e176]':
+                - img "Placeholder" [ref=e178]
+                - heading "HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM" [level=3] [ref=e179]
+                - generic [ref=e181]: ৳ 560.00
+                - paragraph [ref=e183]:
+                  - 'link "Add to cart: “HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM”" [ref=e184] [cursor=pointer]':
+                    - /url: /?add-to-cart=73
+                    - img [ref=e186]
+                    - generic [ref=e190]: Add to Cart
+                  - generic [ref=e191] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder Surface Laptop 6 for Business ৳ 500.00 Add to cart: “Surface Laptop 6 for Business” Buy Now" [ref=e193]':
+                - img "Placeholder" [ref=e195]
+                - heading "Surface Laptop 6 for Business" [level=3] [ref=e196]
+                - generic [ref=e198]: ৳ 500.00
+                - paragraph [ref=e200]:
+                  - 'link "Add to cart: “Surface Laptop 6 for Business”" [ref=e201] [cursor=pointer]':
+                    - /url: /?add-to-cart=74
+                    - img [ref=e203]
+                    - generic [ref=e207]: Add to Cart
+                  - generic [ref=e208] [cursor=pointer]: Buy Now
+              - columnheader "Assembled Desktop Computer SSD128 Assembled Desktop Computer SSD128 ৳ 500.00 AMD Athlon AMD Ryzen 5 AMD Ryzen 7 Select options for “Assembled Desktop Computer SSD128” Buy Now This product has multiple variants. The options may be chosen on the product page" [ref=e210]:
+                - img "Assembled Desktop Computer SSD128" [ref=e212]
+                - heading "Assembled Desktop Computer SSD128" [level=3] [ref=e213]
+                - generic [ref=e215]: ৳ 500.00
+                - generic [ref=e216]:
+                  - paragraph
+                  - generic [ref=e220]:
+                    - button "AMD Athlon" [ref=e221] [cursor=pointer]
+                    - button "AMD Ryzen 5" [ref=e222] [cursor=pointer]
+                    - button "AMD Ryzen 7" [ref=e223] [cursor=pointer]
+                  - link "Select options for “Assembled Desktop Computer SSD128”" [ref=e224] [cursor=pointer]:
+                    - /url: http://free-one-page-checkout.local/product/assembled-desktop-computer-ssd128/
+                    - text: Select Options
+                  - generic [ref=e225] [cursor=pointer]: Buy Now
+                  - generic [ref=e226]: This product has multiple variants. The options may be chosen on the product page
+                  - paragraph
+              - columnheader "Apple Laptop Apple Laptop Read more about “Apple Laptop”" [ref=e227]:
+                - img "Apple Laptop" [ref=e229]
+                - heading "Apple Laptop" [level=3] [ref=e230]
+                - paragraph [ref=e232]:
+                  - link "Read more about “Apple Laptop”" [ref=e233] [cursor=pointer]:
+                    - /url: http://free-one-page-checkout.local/product/apple-laptop/
+                    - text: Select Options
+              - 'columnheader "Placeholder Best MacBook ৳ 650.00 Add to cart: “Best MacBook” Buy Now" [ref=e235]':
+                - img "Placeholder" [ref=e237]
+                - heading "Best MacBook" [level=3] [ref=e238]
+                - generic [ref=e240]: ৳ 650.00
+                - paragraph [ref=e242]:
+                  - 'link "Add to cart: “Best MacBook”" [ref=e243] [cursor=pointer]':
+                    - /url: /?add-to-cart=79
+                    - img [ref=e245]
+                    - generic [ref=e249]: Add to Cart
+                  - generic [ref=e250] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder MacBook Air Coding ৳ 650.00 Add to cart: “MacBook Air Coding” Buy Now" [ref=e252]':
+                - img "Placeholder" [ref=e254]
+                - heading "MacBook Air Coding" [level=3] [ref=e255]
+                - generic [ref=e257]: ৳ 650.00
+                - paragraph [ref=e259]:
+                  - 'link "Add to cart: “MacBook Air Coding”" [ref=e260] [cursor=pointer]':
+                    - /url: /?add-to-cart=80
+                    - img [ref=e262]
+                    - generic [ref=e266]: Add to Cart
+                  - generic [ref=e267] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder Fastest MacBook ৳ 650.00 Add to cart: “Fastest MacBook” Buy Now" [ref=e269]':
+                - img "Placeholder" [ref=e271]
+                - heading "Fastest MacBook" [level=3] [ref=e272]
+                - generic [ref=e274]: ৳ 650.00
+                - paragraph [ref=e276]:
+                  - 'link "Add to cart: “Fastest MacBook”" [ref=e277] [cursor=pointer]':
+                    - /url: /?add-to-cart=81
+                    - img [ref=e279]
+                    - generic [ref=e283]: Add to Cart
+                  - generic [ref=e284] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder elegant smartphone composition ৳ 600.00 Add to cart: “elegant smartphone composition” Buy Now" [ref=e286]':
+                - img "Placeholder" [ref=e288]
+                - heading "elegant smartphone composition" [level=3] [ref=e289]
+                - generic [ref=e291]: ৳ 600.00
+                - paragraph [ref=e293]:
+                  - 'link "Add to cart: “elegant smartphone composition”" [ref=e294] [cursor=pointer]':
+                    - /url: /?add-to-cart=82
+                    - img [ref=e296]
+                    - generic [ref=e300]: Add to Cart
+                  - generic [ref=e301] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD ৳ 570.00 Add to cart: “Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD” Buy Now" [ref=e303]':
+                - img "Placeholder" [ref=e305]
+                - heading "Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD" [level=3] [ref=e306]
+                - generic [ref=e308]: ৳ 570.00
+                - paragraph [ref=e310]:
+                  - 'link "Add to cart: “Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD”" [ref=e311] [cursor=pointer]':
+                    - /url: /?add-to-cart=63
+                    - img [ref=e313]
+                    - generic [ref=e317]: Add to Cart
+                  - generic [ref=e318] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led ৳ 580.00 Add to cart: “CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led” Buy Now" [ref=e320]':
+                - img "Placeholder" [ref=e322]
+                - heading "CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led" [level=3] [ref=e323]
+                - generic [ref=e325]: ৳ 580.00
+                - paragraph [ref=e327]:
+                  - 'link "Add to cart: “CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led”" [ref=e328] [cursor=pointer]':
+                    - /url: /?add-to-cart=64
+                    - img [ref=e330]
+                    - generic [ref=e334]: Add to Cart
+                  - generic [ref=e335] [cursor=pointer]: Buy Now
+              - 'columnheader "Placeholder Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED ৳ 500.00 Add to cart: “Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED” Buy Now" [ref=e337]':
+                - img "Placeholder" [ref=e339]
+                - heading "Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED" [level=3] [ref=e340]
+                - generic [ref=e342]: ৳ 500.00
+                - paragraph [ref=e344]:
+                  - 'link "Add to cart: “Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED”" [ref=e345] [cursor=pointer]':
+                    - /url: /?add-to-cart=65
+                    - img [ref=e347]
+                    - generic [ref=e351]: Add to Cart
+                  - generic [ref=e352] [cursor=pointer]: Buy Now
+              - columnheader "Placeholder Detachable Lenovo laptop is two separate computers ৳ 29.99 AMD Athlon AMD Ryzen 5 AMD Ryzen 7 Select options for “Detachable Lenovo laptop is two separate computers” Buy Now This product has multiple variants. The options may be chosen on the product page" [ref=e354]:
+                - img "Placeholder" [ref=e356]
+                - heading "Detachable Lenovo laptop is two separate computers" [level=3] [ref=e357]
+                - generic [ref=e359]: ৳ 29.99
+                - generic [ref=e360]:
+                  - paragraph
+                  - generic [ref=e364]:
+                    - button "AMD Athlon" [ref=e365] [cursor=pointer]
+                    - button "AMD Ryzen 5" [ref=e366] [cursor=pointer]
+                    - button "AMD Ryzen 7" [ref=e367] [cursor=pointer]
+                  - link "Select options for “Detachable Lenovo laptop is two separate computers”" [ref=e368] [cursor=pointer]:
+                    - /url: http://free-one-page-checkout.local/product/detachable-lenovo-laptop-is-two-separate-computers/
+                    - text: Select Options
+                  - generic [ref=e369] [cursor=pointer]: Buy Now
+                  - generic [ref=e370]: This product has multiple variants. The options may be chosen on the product page
+                  - paragraph
+            - row "PRODUCT Name Surface Pro 11th Edition Sapphire Compare Render Lenovo ideapad 320 15.6 Laptop Bl100 Pro Wireless Gaming Headset For Pc Desktop Computer, Windows HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM Surface Laptop 6 for Business Assembled Desktop Computer SSD128 Apple Laptop Best MacBook MacBook Air Coding Fastest MacBook elegant smartphone composition Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED Detachable Lenovo laptop is two separate computers" [ref=e371]:
+              - cell "PRODUCT Name" [ref=e372]
+              - cell "Surface Pro 11th Edition Sapphire Compare Render" [ref=e373]
+              - cell "Lenovo ideapad 320 15.6 Laptop" [ref=e374]
+              - cell "Bl100 Pro Wireless Gaming Headset For Pc" [ref=e375]
+              - cell "Desktop Computer, Windows" [ref=e376]
+              - cell "HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM" [ref=e377]
+              - cell "Surface Laptop 6 for Business" [ref=e378]
+              - cell "Assembled Desktop Computer SSD128" [ref=e379]
+              - cell "Apple Laptop" [ref=e380]
+              - cell "Best MacBook" [ref=e381]
+              - cell "MacBook Air Coding" [ref=e382]
+              - cell "Fastest MacBook" [ref=e383]
+              - cell "elegant smartphone composition" [ref=e384]
+              - cell "Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD" [ref=e385]
+              - cell "CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led" [ref=e386]
+              - cell "Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED" [ref=e387]
+              - cell "Detachable Lenovo laptop is two separate computers" [ref=e388]
+            - row "SKU — — — — — — — — — — — — — — — —" [ref=e389]:
+              - cell "SKU" [ref=e390]
+              - cell "—" [ref=e391]
+              - cell "—" [ref=e392]
+              - cell "—" [ref=e393]
+              - cell "—" [ref=e394]
+              - cell "—" [ref=e395]
+              - cell "—" [ref=e396]
+              - cell "—" [ref=e397]
+              - cell "—" [ref=e398]
+              - cell "—" [ref=e399]
+              - cell "—" [ref=e400]
+              - cell "—" [ref=e401]
+              - cell "—" [ref=e402]
+              - cell "—" [ref=e403]
+              - cell "—" [ref=e404]
+              - cell "—" [ref=e405]
+              - cell "—" [ref=e406]
+            - row "Stock Status In Stock In Stock In Stock In Stock In Stock In Stock In Stock Out of Stock In Stock In Stock In Stock In Stock In Stock In Stock In Stock In Stock" [ref=e407]:
+              - cell "Stock Status" [ref=e408]
+              - cell "In Stock" [ref=e409]
+              - cell "In Stock" [ref=e410]
+              - cell "In Stock" [ref=e411]
+              - cell "In Stock" [ref=e412]
+              - cell "In Stock" [ref=e413]
+              - cell "In Stock" [ref=e414]
+              - cell "In Stock" [ref=e415]
+              - cell "Out of Stock" [ref=e416]
+              - cell "In Stock" [ref=e417]
+              - cell "In Stock" [ref=e418]
+              - cell "In Stock" [ref=e419]
+              - cell "In Stock" [ref=e420]
+              - cell "In Stock" [ref=e421]
+              - cell "In Stock" [ref=e422]
+              - cell "In Stock" [ref=e423]
+              - cell "In Stock" [ref=e424]
+            - row "Brand Lenevo Dell HP Asus, Dell Dell Lenevo Lenevo Lenevo HP Lenevo Lenevo Lenevo Lenevo Lenevo Lenevo Lenevo" [ref=e425]:
+              - cell "Brand" [ref=e426]
+              - cell "Lenevo" [ref=e427]
+              - cell "Dell" [ref=e428]
+              - cell "HP" [ref=e429]
+              - cell "Asus, Dell" [ref=e430]
+              - cell "Dell" [ref=e431]
+              - cell "Lenevo" [ref=e432]
+              - cell "Lenevo" [ref=e433]
+              - cell "Lenevo" [ref=e434]
+              - cell "HP" [ref=e435]
+              - cell "Lenevo" [ref=e436]
+              - cell "Lenevo" [ref=e437]
+              - cell "Lenevo" [ref=e438]
+              - cell "Lenevo" [ref=e439]
+              - cell "Lenevo" [ref=e440]
+              - cell "Lenevo" [ref=e441]
+              - cell "Lenevo" [ref=e442]
+            - row "Processor AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7 AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e443]:
+              - cell "Processor" [ref=e444]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e445]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e446]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e447]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e448]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e449]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e450]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e451]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e452]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e453]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e454]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e455]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e456]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e457]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e458]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e459]
+              - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e460]
+            - row "Color — — — Blue, White, Yellow — — — — — — — — — — — —" [ref=e461]:
+              - cell "Color" [ref=e462]
+              - cell "—" [ref=e463]
+              - cell "—" [ref=e464]
+              - cell "—" [ref=e465]
+              - cell "Blue, White, Yellow" [ref=e466]
+              - cell "—" [ref=e467]
+              - cell "—" [ref=e468]
+              - cell "—" [ref=e469]
+              - cell "—" [ref=e470]
+              - cell "—" [ref=e471]
+              - cell "—" [ref=e472]
+              - cell "—" [ref=e473]
+              - cell "—" [ref=e474]
+              - cell "—" [ref=e475]
+              - cell "—" [ref=e476]
+              - cell "—" [ref=e477]
+              - cell "—" [ref=e478]
+            - row "Categories Electronics, Laptop Electronics, Laptop, MacBook Electronics, Laptop Desktop, Electronics Desktop, Electronics, Laptop Electronics, Laptop Desktop, Electronics Electronics, MacBook Electronics, MacBook Electronics, MacBook Electronics, MacBook Electronics, Smartphones Desktop, Electronics Electronics, Laptop Desktop, Electronics Electronics, Laptop" [ref=e479]:
+              - cell "Categories" [ref=e480]
+              - cell "Electronics, Laptop" [ref=e481]:
+                - link "Electronics" [ref=e482] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "Laptop" [ref=e483] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/laptop/
+              - cell "Electronics, Laptop, MacBook" [ref=e484]:
+                - link "Electronics" [ref=e485] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "Laptop" [ref=e486] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/laptop/
+                - text: ","
+                - link "MacBook" [ref=e487] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/macbook/
+              - cell "Electronics, Laptop" [ref=e488]:
+                - link "Electronics" [ref=e489] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "Laptop" [ref=e490] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/laptop/
+              - cell "Desktop, Electronics" [ref=e491]:
+                - link "Desktop" [ref=e492] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/desktop/
+                - text: ","
+                - link "Electronics" [ref=e493] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+              - cell "Desktop, Electronics, Laptop" [ref=e494]:
+                - link "Desktop" [ref=e495] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/desktop/
+                - text: ","
+                - link "Electronics" [ref=e496] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "Laptop" [ref=e497] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/laptop/
+              - cell "Electronics, Laptop" [ref=e498]:
+                - link "Electronics" [ref=e499] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "Laptop" [ref=e500] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/laptop/
+              - cell "Desktop, Electronics" [ref=e501]:
+                - link "Desktop" [ref=e502] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/desktop/
+                - text: ","
+                - link "Electronics" [ref=e503] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+              - cell "Electronics, MacBook" [ref=e504]:
+                - link "Electronics" [ref=e505] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "MacBook" [ref=e506] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/macbook/
+              - cell "Electronics, MacBook" [ref=e507]:
+                - link "Electronics" [ref=e508] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "MacBook" [ref=e509] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/macbook/
+              - cell "Electronics, MacBook" [ref=e510]:
+                - link "Electronics" [ref=e511] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "MacBook" [ref=e512] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/macbook/
+              - cell "Electronics, MacBook" [ref=e513]:
+                - link "Electronics" [ref=e514] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "MacBook" [ref=e515] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/macbook/
+              - cell "Electronics, Smartphones" [ref=e516]:
+                - link "Electronics" [ref=e517] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "Smartphones" [ref=e518] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/smartphones/
+              - cell "Desktop, Electronics" [ref=e519]:
+                - link "Desktop" [ref=e520] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/desktop/
+                - text: ","
+                - link "Electronics" [ref=e521] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+              - cell "Electronics, Laptop" [ref=e522]:
+                - link "Electronics" [ref=e523] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "Laptop" [ref=e524] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/laptop/
+              - cell "Desktop, Electronics" [ref=e525]:
+                - link "Desktop" [ref=e526] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/desktop/
+                - text: ","
+                - link "Electronics" [ref=e527] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+              - cell "Electronics, Laptop" [ref=e528]:
+                - link "Electronics" [ref=e529] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/electronics/
+                - text: ","
+                - link "Laptop" [ref=e530] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-category/laptop/
+            - row "Tags — — — New Arrival — — — — — — — — — — — —" [ref=e531]:
+              - cell "Tags" [ref=e532]
+              - cell "—" [ref=e533]
+              - cell "—" [ref=e534]
+              - cell "—" [ref=e535]
+              - cell "New Arrival" [ref=e536]:
+                - link "New Arrival" [ref=e537] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product-tag/new-arrival/
+              - cell "—" [ref=e538]
+              - cell "—" [ref=e539]
+              - cell "—" [ref=e540]
+              - cell "—" [ref=e541]
+              - cell "—" [ref=e542]
+              - cell "—" [ref=e543]
+              - cell "—" [ref=e544]
+              - cell "—" [ref=e545]
+              - cell "—" [ref=e546]
+              - cell "—" [ref=e547]
+              - cell "—" [ref=e548]
+              - cell "—" [ref=e549]
+    - contentinfo [ref=e550]:
+      - paragraph [ref=e557]:
+        - text: Copyright © 2026 plugincy on page checkout | Powered by
+        - link "Astra WordPress Theme" [ref=e558] [cursor=pointer]:
+          - /url: https://wpastra.com
+  - generic:
+    - button "15" [ref=e559] [cursor=pointer]:
+      - img [ref=e561]
+      - generic [ref=e565]: "15"
+    - generic [ref=e567]:
+      - generic [ref=e568]:
+        - heading "আমার কার্ট" [level=2] [ref=e569]
+        - button [ref=e570] [cursor=pointer]
+      - generic [ref=e571]:
+        - checkbox [ref=e573]
+        - generic [ref=e574]: 0 gulo selected
+      - generic [ref=e575]:
+        - generic [ref=e576]:
+          - checkbox [ref=e578]
+          - generic [ref=e579]:
+            - img "Placeholder" [ref=e580]
+            - button [ref=e581] [cursor=pointer]:
+              - img [ref=e582]
+          - generic [ref=e584]:
+            - generic [ref=e585]:
+              - paragraph [ref=e586]: Surface Pro 11th Edition Sapphire Compare Render
+              - paragraph [ref=e587]:
+                - generic [ref=e588]: ৳ 570.00
+            - generic [ref=e589]:
+              - button "-" [ref=e590] [cursor=pointer]
+              - spinbutton [ref=e591]: "1"
+              - button "+" [ref=e592] [cursor=pointer]
+        - generic [ref=e593]:
+          - checkbox [ref=e595]
+          - generic [ref=e596]:
+            - img "Placeholder" [ref=e597]
+            - button [ref=e598] [cursor=pointer]:
+              - img [ref=e599]
+          - generic [ref=e601]:
+            - generic [ref=e602]:
+              - paragraph [ref=e603]: Lenovo ideapad 320 15.6 Laptop
+              - paragraph [ref=e604]:
+                - generic [ref=e605]: ৳ 500.00
+            - generic [ref=e606]:
+              - button "-" [ref=e607] [cursor=pointer]
+              - spinbutton [ref=e608]: "1"
+              - button "+" [ref=e609] [cursor=pointer]
+        - generic [ref=e610]:
+          - checkbox [ref=e612]
+          - generic [ref=e613]:
+            - img "Placeholder" [ref=e614]
+            - button [ref=e615] [cursor=pointer]:
+              - img [ref=e616]
+          - generic [ref=e618]:
+            - generic [ref=e619]:
+              - paragraph [ref=e620]: Bl100 Pro Wireless Gaming Headset For Pc
+              - paragraph [ref=e621]:
+                - generic [ref=e622]: ৳ 540.00
+            - generic [ref=e623]:
+              - button "-" [ref=e624] [cursor=pointer]
+              - spinbutton [ref=e625]: "1"
+              - button "+" [ref=e626] [cursor=pointer]
+        - generic [ref=e627]:
+          - checkbox [ref=e629]
+          - generic [ref=e630]:
+            - img "Placeholder" [ref=e631]
+            - button [ref=e632] [cursor=pointer]:
+              - img [ref=e633]
+          - generic [ref=e635]:
+            - generic [ref=e636]:
+              - paragraph [ref=e637]: Desktop Computer, Windows
+              - paragraph [ref=e638]:
+                - generic [ref=e639]: ৳ 550.00
+            - generic [ref=e640]:
+              - button "-" [ref=e641] [cursor=pointer]
+              - spinbutton [ref=e642]: "1"
+              - button "+" [ref=e643] [cursor=pointer]
+        - generic [ref=e644]:
+          - checkbox [ref=e646]
+          - generic [ref=e647]:
+            - img "Placeholder" [ref=e648]
+            - button [ref=e649] [cursor=pointer]:
+              - img [ref=e650]
+          - generic [ref=e652]:
+            - generic [ref=e653]:
+              - paragraph [ref=e654]: HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM
+              - paragraph [ref=e655]:
+                - generic [ref=e656]: ৳ 560.00
+            - generic [ref=e657]:
+              - button "-" [ref=e658] [cursor=pointer]
+              - spinbutton [ref=e659]: "1"
+              - button "+" [ref=e660] [cursor=pointer]
+        - generic [ref=e661]:
+          - checkbox [ref=e663]
+          - generic [ref=e664]:
+            - img "Placeholder" [ref=e665]
+            - button [ref=e666] [cursor=pointer]:
+              - img [ref=e667]
+          - generic [ref=e669]:
+            - generic [ref=e670]:
+              - paragraph [ref=e671]: Surface Laptop 6 for Business
+              - paragraph [ref=e672]:
+                - generic [ref=e673]: ৳ 500.00
+            - generic [ref=e674]:
+              - button "-" [ref=e675] [cursor=pointer]
+              - spinbutton [ref=e676]: "1"
+              - button "+" [ref=e677] [cursor=pointer]
+        - generic [ref=e678]:
+          - checkbox [ref=e680]
+          - generic [ref=e681]:
+            - img "Assembled Desktop Computer SSD128 - AMD Athlon" [ref=e682]
+            - button [ref=e683] [cursor=pointer]:
+              - img [ref=e684]
+          - generic [ref=e686]:
+            - generic [ref=e687]:
+              - paragraph [ref=e688]: Assembled Desktop Computer SSD128 - AMD Athlon
+              - paragraph [ref=e689]:
+                - generic [ref=e690]: ৳ 500.00
+            - generic [ref=e691]:
+              - button "-" [ref=e692] [cursor=pointer]
+              - spinbutton [ref=e693]: "1"
+              - button "+" [ref=e694] [cursor=pointer]
+        - generic [ref=e695]:
+          - checkbox [ref=e697]
+          - generic [ref=e698]:
+            - img "Placeholder" [ref=e699]
+            - button [ref=e700] [cursor=pointer]:
+              - img [ref=e701]
+          - generic [ref=e703]:
+            - generic [ref=e704]:
+              - paragraph [ref=e705]: Best MacBook
+              - paragraph [ref=e706]:
+                - generic [ref=e707]: ৳ 650.00
+            - generic [ref=e708]:
+              - button "-" [ref=e709] [cursor=pointer]
+              - spinbutton [ref=e710]: "1"
+              - button "+" [ref=e711] [cursor=pointer]
+        - generic [ref=e712]:
+          - checkbox [ref=e714]
+          - generic [ref=e715]:
+            - img "Placeholder" [ref=e716]
+            - button [ref=e717] [cursor=pointer]:
+              - img [ref=e718]
+          - generic [ref=e720]:
+            - generic [ref=e721]:
+              - paragraph [ref=e722]: MacBook Air Coding
+              - paragraph [ref=e723]:
+                - generic [ref=e724]: ৳ 650.00
+            - generic [ref=e725]:
+              - button "-" [ref=e726] [cursor=pointer]
+              - spinbutton [ref=e727]: "1"
+              - button "+" [ref=e728] [cursor=pointer]
+        - generic [ref=e729]:
+          - checkbox [ref=e731]
+          - generic [ref=e732]:
+            - img "Placeholder" [ref=e733]
+            - button [ref=e734] [cursor=pointer]:
+              - img [ref=e735]
+          - generic [ref=e737]:
+            - generic [ref=e738]:
+              - paragraph [ref=e739]: Fastest MacBook
+              - paragraph [ref=e740]:
+                - generic [ref=e741]: ৳ 650.00
+            - generic [ref=e742]:
+              - button "-" [ref=e743] [cursor=pointer]
+              - spinbutton [ref=e744]: "1"
+              - button "+" [ref=e745] [cursor=pointer]
+        - generic [ref=e746]:
+          - checkbox [ref=e748]
+          - generic [ref=e749]:
+            - img "Placeholder" [ref=e750]
+            - button [ref=e751] [cursor=pointer]:
+              - img [ref=e752]
+          - generic [ref=e754]:
+            - generic [ref=e755]:
+              - paragraph [ref=e756]: elegant smartphone composition
+              - paragraph [ref=e757]:
+                - generic [ref=e758]: ৳ 600.00
+            - generic [ref=e759]:
+              - button "-" [ref=e760] [cursor=pointer]
+              - spinbutton [ref=e761]: "1"
+              - button "+" [ref=e762] [cursor=pointer]
+        - generic [ref=e763]:
+          - checkbox [ref=e765]
+          - generic [ref=e766]:
+            - img "Placeholder" [ref=e767]
+            - button [ref=e768] [cursor=pointer]:
+              - img [ref=e769]
+          - generic [ref=e771]:
+            - generic [ref=e772]:
+              - paragraph [ref=e773]: Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD
+              - paragraph [ref=e774]:
+                - generic [ref=e775]: ৳ 570.00
+            - generic [ref=e776]:
+              - button "-" [ref=e777] [cursor=pointer]
+              - spinbutton [ref=e778]: "1"
+              - button "+" [ref=e779] [cursor=pointer]
+        - generic [ref=e780]:
+          - checkbox [ref=e782]
+          - generic [ref=e783]:
+            - img "Placeholder" [ref=e784]
+            - button [ref=e785] [cursor=pointer]:
+              - img [ref=e786]
+          - generic [ref=e788]:
+            - generic [ref=e789]:
+              - paragraph [ref=e790]: CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led
+              - paragraph [ref=e791]:
+                - generic [ref=e792]: ৳ 580.00
+            - generic [ref=e793]:
+              - button "-" [ref=e794] [cursor=pointer]
+              - spinbutton [ref=e795]: "1"
+              - button "+" [ref=e796] [cursor=pointer]
+        - generic [ref=e797]:
+          - checkbox [ref=e799]
+          - generic [ref=e800]:
+            - img "Placeholder" [ref=e801]
+            - button [ref=e802] [cursor=pointer]:
+              - img [ref=e803]
+          - generic [ref=e805]:
+            - generic [ref=e806]:
+              - paragraph [ref=e807]: Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED
+              - paragraph [ref=e808]:
+                - generic [ref=e809]: ৳ 500.00
+            - generic [ref=e810]:
+              - button "-" [ref=e811] [cursor=pointer]
+              - spinbutton [ref=e812]: "1"
+              - button "+" [ref=e813] [cursor=pointer]
+        - generic [ref=e814]:
+          - checkbox [ref=e816]
+          - generic [ref=e817]:
+            - img "Placeholder" [ref=e818]
+            - button [ref=e819] [cursor=pointer]:
+              - img [ref=e820]
+          - generic [ref=e822]:
+            - generic [ref=e823]:
+              - paragraph [ref=e824]: Detachable Lenovo laptop is two separate computers - AMD Athlon
+              - paragraph [ref=e825]:
+                - generic [ref=e826]: ৳ 29.99
+            - generic [ref=e827]:
+              - button "-" [ref=e828] [cursor=pointer]
+              - spinbutton [ref=e829]: "1"
+              - button "+" [ref=e830] [cursor=pointer]
+      - generic [ref=e832]:
+        - textbox "Enter coupon code" [ref=e833]
+        - button "Apply" [ref=e834] [cursor=pointer]
+      - generic [ref=e835]:
+        - generic [ref=e836]:
+          - text: "সর্বমোট:"
+          - generic [ref=e838]: ৳ 7,949.99
+        - generic [ref=e841]: ৳ 7,949.99
+      - generic [ref=e843] [cursor=pointer]: চেক আউট
+  - status [ref=e846]

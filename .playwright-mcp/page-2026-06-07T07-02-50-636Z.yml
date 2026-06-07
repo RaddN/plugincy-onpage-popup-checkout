@@ -1,0 +1,944 @@
+- generic [ref=e2]:
+  - navigation "Main menu":
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#wpbody-content"
+    - link "Skip to toolbar" [ref=e4] [cursor=pointer]:
+      - /url: "#wp-toolbar"
+    - list [ref=e7]:
+      - listitem [ref=e8]:
+        - link "Dashboard" [ref=e9] [cursor=pointer]:
+          - /url: index.php
+          - generic [ref=e10]: 
+          - generic [ref=e11]: Dashboard
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Home" [ref=e14] [cursor=pointer]:
+              - /url: index.php
+          - listitem [ref=e15]:
+            - link "Updates" [ref=e16] [cursor=pointer]:
+              - /url: update-core.php
+      - listitem [ref=e17]:
+        - link "Astra" [ref=e18] [cursor=pointer]:
+          - /url: admin.php?page=astra
+          - generic [ref=e20]: Astra
+        - list [ref=e21]:
+          - listitem [ref=e22]:
+            - link "Dashboard" [ref=e23] [cursor=pointer]:
+              - /url: admin.php?page=astra
+          - listitem [ref=e24]:
+            - link "Customize" [ref=e25] [cursor=pointer]:
+              - /url: customize.php
+          - listitem [ref=e26]:
+            - link "Site Builder" [ref=e27] [cursor=pointer]:
+              - /url: admin.php?page=theme-builder-free
+          - listitem [ref=e28]:
+            - link "WooCommerce" [ref=e29] [cursor=pointer]:
+              - /url: admin.php?page=astra&path=woocommerce
+          - listitem [ref=e30]:
+            - link "Learn 6" [ref=e31] [cursor=pointer]:
+              - /url: admin.php?page=astra&path=learn
+              - text: Learn
+              - generic [ref=e32]: "6"
+      - listitem [ref=e33]:
+        - link "Elementor" [ref=e34] [cursor=pointer]:
+          - /url: admin.php?page=elementor-home
+          - generic [ref=e36]: Elementor
+        - list [ref=e37]:
+          - listitem [ref=e38]:
+            - link "Home" [ref=e39] [cursor=pointer]:
+              - /url: admin.php?page=elementor-home
+          - listitem [ref=e40]:
+            - link "Editor" [ref=e41] [cursor=pointer]:
+              - /url: admin.php?page=elementor
+          - listitem [ref=e42]:
+            - link "Upgrade" [ref=e43] [cursor=pointer]:
+              - /url: admin.php?page=elementor-one-upgrade
+      - listitem [ref=e44]
+      - listitem [ref=e46]:
+        - link "Posts" [ref=e47] [cursor=pointer]:
+          - /url: edit.php
+          - generic [ref=e48]: 
+          - generic [ref=e49]: Posts
+        - list [ref=e50]:
+          - listitem [ref=e51]:
+            - link "All Posts" [ref=e52] [cursor=pointer]:
+              - /url: edit.php
+          - listitem [ref=e53]:
+            - link "Add Post" [ref=e54] [cursor=pointer]:
+              - /url: post-new.php
+          - listitem [ref=e55]:
+            - link "Categories" [ref=e56] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=category
+          - listitem [ref=e57]:
+            - link "Tags" [ref=e58] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=post_tag
+      - listitem [ref=e59]:
+        - link "Media" [ref=e60] [cursor=pointer]:
+          - /url: upload.php
+          - generic [ref=e61]: 
+          - generic [ref=e62]: Media
+        - list [ref=e63]:
+          - listitem [ref=e64]:
+            - link "Library" [ref=e65] [cursor=pointer]:
+              - /url: upload.php
+          - listitem [ref=e66]:
+            - link "Add Media File" [ref=e67] [cursor=pointer]:
+              - /url: media-new.php
+      - listitem [ref=e68]:
+        - link "Pages" [ref=e69] [cursor=pointer]:
+          - /url: edit.php?post_type=page
+          - generic [ref=e70]: 
+          - generic [ref=e71]: Pages
+        - list [ref=e72]:
+          - listitem [ref=e73]:
+            - link "All Pages" [ref=e74] [cursor=pointer]:
+              - /url: edit.php?post_type=page
+          - listitem [ref=e75]:
+            - link "Add Page" [ref=e76] [cursor=pointer]:
+              - /url: post-new.php?post_type=page
+      - listitem [ref=e77]:
+        - link "Comments" [ref=e78] [cursor=pointer]:
+          - /url: edit-comments.php
+          - generic [ref=e79]: 
+          - generic [ref=e80]: Comments
+      - text: 
+      - listitem [ref=e81]:
+        - link "Spectra" [ref=e82] [cursor=pointer]:
+          - /url: admin.php?page=spectra
+          - generic [ref=e84]: Spectra
+        - list [ref=e85]:
+          - listitem [ref=e86]:
+            - link "Dashboard" [ref=e87] [cursor=pointer]:
+              - /url: admin.php?page=spectra
+          - listitem [ref=e88]:
+            - link "Blocks" [ref=e89] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=blocks
+          - listitem [ref=e90]:
+            - link "Popup Builder" [ref=e91] [cursor=pointer]:
+              - /url: edit.php?post_type=spectra-popup
+          - listitem [ref=e92]:
+            - link "AI Features" [ref=e93] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=ai-features
+          - listitem [ref=e94]:
+            - link "Settings" [ref=e95] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=settings
+          - listitem [ref=e96]:
+            - link "Learn" [ref=e97] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=learn
+          - listitem [ref=e98]:
+            - link "Get Spectra Pro" [ref=e99] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=free-vs-pro
+      - listitem [ref=e100]
+      - listitem [ref=e102]:
+        - link "WooCommerce" [ref=e103] [cursor=pointer]:
+          - /url: admin.php?page=wc-admin
+          - generic [ref=e105]: WooCommerce
+        - list [ref=e106]:
+          - listitem [ref=e107]:
+            - link "Home 1" [ref=e108] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin
+              - text: Home
+              - generic [ref=e109]: "1"
+          - listitem [ref=e110]:
+            - link "Orders 38" [ref=e111] [cursor=pointer]:
+              - /url: admin.php?page=wc-orders
+              - text: Orders
+              - generic [ref=e112]: "38"
+          - listitem [ref=e113]:
+            - link "Customers" [ref=e114] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/customers
+          - listitem [ref=e115]:
+            - link "Coupons" [ref=e116] [cursor=pointer]:
+              - /url: admin.php?page=coupons-moved
+          - listitem [ref=e117]:
+            - link "Reports" [ref=e118] [cursor=pointer]:
+              - /url: admin.php?page=wc-reports
+          - listitem [ref=e119]:
+            - link "Settings" [ref=e120] [cursor=pointer]:
+              - /url: admin.php?page=wc-settings
+          - listitem [ref=e121]:
+            - link "Status" [ref=e122] [cursor=pointer]:
+              - /url: admin.php?page=wc-status
+          - listitem [ref=e123]:
+            - link "Extensions" [ref=e124] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/extensions
+      - listitem [ref=e125]:
+        - link "Products" [ref=e126] [cursor=pointer]:
+          - /url: edit.php?post_type=product
+          - generic [ref=e127]: 
+          - generic [ref=e128]: Products
+        - list [ref=e129]:
+          - listitem [ref=e130]:
+            - link "All Products" [ref=e131] [cursor=pointer]:
+              - /url: edit.php?post_type=product
+          - listitem [ref=e132]:
+            - link "Add new product" [ref=e133] [cursor=pointer]:
+              - /url: post-new.php?post_type=product
+          - listitem [ref=e134]:
+            - link "Brands" [ref=e135] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=product_brand&post_type=product
+          - listitem [ref=e136]:
+            - link "Categories" [ref=e137] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=product_cat&post_type=product
+          - listitem [ref=e138]:
+            - link "Tags" [ref=e139] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=product_tag&post_type=product
+          - listitem [ref=e140]:
+            - link "Attributes" [ref=e141] [cursor=pointer]:
+              - /url: edit.php?post_type=product&page=product_attributes
+          - listitem [ref=e142]:
+            - link "Reviews" [ref=e143] [cursor=pointer]:
+              - /url: edit.php?post_type=product&page=product-reviews
+      - listitem [ref=e144]:
+        - link "Onpage Checkout" [ref=e145] [cursor=pointer]:
+          - /url: admin.php?page=onepaquc_cart
+          - generic [ref=e146]: 
+          - generic [ref=e147]: Onpage Checkout
+        - list [ref=e148]:
+          - listitem [ref=e149]:
+            - link "Onpage Checkout" [ref=e150] [cursor=pointer]:
+              - /url: admin.php?page=onepaquc_cart
+          - listitem [ref=e151]:
+            - link "Cart Recovery NEW!" [ref=e152] [cursor=pointer]:
+              - /url: admin.php?page=onepaqucpro_cart_recovery
+              - text: Cart Recovery
+              - generic [ref=e153]: NEW!
+          - listitem
+          - listitem [ref=e154]:
+            - link "Documentation" [ref=e155] [cursor=pointer]:
+              - /url: admin.php?page=onepaquc_cart_documentation
+          - listitem [ref=e156]:
+            - link "Get Pro" [ref=e157] [cursor=pointer]:
+              - /url: admin.php?page=onepaquc_cart_get_pro
+      - listitem [ref=e158]:
+        - link "Payments" [ref=e159] [cursor=pointer]:
+          - /url: admin.php?page=wc-settings&tab=checkout&from=PAYMENTS_MENU_ITEM
+          - generic [ref=e161]: Payments
+      - listitem [ref=e162]:
+        - link "Analytics" [ref=e163] [cursor=pointer]:
+          - /url: admin.php?page=wc-admin&path=/analytics/overview
+          - generic [ref=e164]: 
+          - generic [ref=e165]: Analytics
+        - list [ref=e166]:
+          - listitem [ref=e167]:
+            - link "Overview" [ref=e168] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/overview
+          - listitem [ref=e169]:
+            - link "Products" [ref=e170] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/products
+          - listitem [ref=e171]:
+            - link "Revenue" [ref=e172] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/revenue
+          - listitem [ref=e173]:
+            - link "Orders" [ref=e174] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/orders
+          - listitem [ref=e175]:
+            - link "Variations" [ref=e176] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/variations
+          - listitem [ref=e177]:
+            - link "Categories" [ref=e178] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/categories
+          - listitem [ref=e179]:
+            - link "Coupons" [ref=e180] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/coupons
+          - listitem [ref=e181]:
+            - link "Taxes" [ref=e182] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/taxes
+          - listitem [ref=e183]:
+            - link "Downloads" [ref=e184] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/downloads
+          - listitem [ref=e185]:
+            - link "Stock" [ref=e186] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/stock
+          - listitem [ref=e187]:
+            - link "Settings" [ref=e188] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/settings
+      - listitem [ref=e189]:
+        - link "Marketing" [ref=e190] [cursor=pointer]:
+          - /url: admin.php?page=wc-admin&path=/marketing
+          - generic [ref=e191]: 
+          - generic [ref=e192]: Marketing
+        - list [ref=e193]:
+          - listitem [ref=e194]:
+            - link "Overview" [ref=e195] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/marketing
+          - listitem [ref=e196]:
+            - link "Coupons" [ref=e197] [cursor=pointer]:
+              - /url: edit.php?post_type=shop_coupon
+      - text: 
+      - listitem [ref=e198]
+      - listitem [ref=e200]:
+        - link "Appearance" [ref=e201] [cursor=pointer]:
+          - /url: themes.php
+          - generic [ref=e202]: 
+          - generic [ref=e203]: Appearance
+        - list [ref=e204]:
+          - listitem [ref=e205]:
+            - link "Themes" [ref=e206] [cursor=pointer]:
+              - /url: themes.php
+          - listitem [ref=e207]:
+            - link "Design" [ref=e208] [cursor=pointer]:
+              - /url: site-editor.php
+          - listitem [ref=e209]:
+            - link "Customize" [ref=e210] [cursor=pointer]:
+              - /url: customize.php?return=%2Fwp-admin%2Fadmin.php%3Fpage%3Donepaqucpro_cart_recovery
+          - listitem [ref=e211]:
+            - link "Widgets" [ref=e212] [cursor=pointer]:
+              - /url: widgets.php
+          - listitem [ref=e213]:
+            - link "Fonts" [ref=e214] [cursor=pointer]:
+              - /url: font-library.php
+          - listitem [ref=e215]:
+            - link "Menus" [ref=e216] [cursor=pointer]:
+              - /url: nav-menus.php
+          - listitem [ref=e217]:
+            - link "Theme File Editor" [ref=e218] [cursor=pointer]:
+              - /url: theme-editor.php
+      - listitem [ref=e219]:
+        - link "Plugins" [ref=e220] [cursor=pointer]:
+          - /url: plugins.php
+          - generic [ref=e221]: 
+          - generic [ref=e222]: Plugins
+        - list [ref=e223]:
+          - listitem [ref=e224]:
+            - link "Installed Plugins" [ref=e225] [cursor=pointer]:
+              - /url: plugins.php
+          - listitem [ref=e226]:
+            - link "Add Plugin" [ref=e227] [cursor=pointer]:
+              - /url: plugin-install.php
+          - listitem [ref=e228]:
+            - link "Plugin File Editor" [ref=e229] [cursor=pointer]:
+              - /url: plugin-editor.php
+      - listitem [ref=e230]:
+        - link "Users" [ref=e231] [cursor=pointer]:
+          - /url: users.php
+          - generic [ref=e232]: 
+          - generic [ref=e233]: Users
+        - list [ref=e234]:
+          - listitem [ref=e235]:
+            - link "All Users" [ref=e236] [cursor=pointer]:
+              - /url: users.php
+          - listitem [ref=e237]:
+            - link "Add User" [ref=e238] [cursor=pointer]:
+              - /url: user-new.php
+          - listitem [ref=e239]:
+            - link "Profile" [ref=e240] [cursor=pointer]:
+              - /url: profile.php
+      - listitem [ref=e241]:
+        - link "Tools" [ref=e242] [cursor=pointer]:
+          - /url: tools.php
+          - generic [ref=e243]: 
+          - generic [ref=e244]: Tools
+        - list [ref=e245]:
+          - listitem [ref=e246]:
+            - link "Available Tools" [ref=e247] [cursor=pointer]:
+              - /url: tools.php
+          - listitem [ref=e248]:
+            - link "Import" [ref=e249] [cursor=pointer]:
+              - /url: import.php
+          - listitem [ref=e250]:
+            - link "Export" [ref=e251] [cursor=pointer]:
+              - /url: export.php
+          - listitem [ref=e252]:
+            - link "Site Health 1" [ref=e253] [cursor=pointer]:
+              - /url: site-health.php
+              - text: Site Health
+              - generic [ref=e254]: "1"
+          - listitem [ref=e255]:
+            - link "Export Personal Data" [ref=e256] [cursor=pointer]:
+              - /url: export-personal-data.php
+          - listitem [ref=e257]:
+            - link "Erase Personal Data" [ref=e258] [cursor=pointer]:
+              - /url: erase-personal-data.php
+          - listitem [ref=e259]:
+            - link "Plugin Check" [ref=e260] [cursor=pointer]:
+              - /url: tools.php?page=plugin-check
+          - listitem [ref=e261]:
+            - link "Plugin Check Namer" [ref=e262] [cursor=pointer]:
+              - /url: tools.php?page=plugin-check-namer
+          - listitem [ref=e263]:
+            - link "Scheduled Actions" [ref=e264] [cursor=pointer]:
+              - /url: tools.php?page=action-scheduler
+      - listitem [ref=e265]:
+        - link "Settings" [ref=e266] [cursor=pointer]:
+          - /url: options-general.php
+          - generic [ref=e267]: 
+          - generic [ref=e268]: Settings
+        - list [ref=e269]:
+          - listitem [ref=e270]:
+            - link "General" [ref=e271] [cursor=pointer]:
+              - /url: options-general.php
+          - listitem [ref=e272]:
+            - link "Connectors" [ref=e273] [cursor=pointer]:
+              - /url: options-connectors.php
+          - listitem [ref=e274]:
+            - link "Writing" [ref=e275] [cursor=pointer]:
+              - /url: options-writing.php
+          - listitem [ref=e276]:
+            - link "Reading" [ref=e277] [cursor=pointer]:
+              - /url: options-reading.php
+          - listitem [ref=e278]:
+            - link "Discussion" [ref=e279] [cursor=pointer]:
+              - /url: options-discussion.php
+          - listitem [ref=e280]:
+            - link "Media" [ref=e281] [cursor=pointer]:
+              - /url: options-media.php
+          - listitem [ref=e282]:
+            - link "Permalinks" [ref=e283] [cursor=pointer]:
+              - /url: options-permalink.php
+          - listitem [ref=e284]:
+            - link "Privacy" [ref=e285] [cursor=pointer]:
+              - /url: options-privacy.php
+          - listitem [ref=e286]:
+            - link "Plugin Check" [ref=e287] [cursor=pointer]:
+              - /url: options-general.php?page=plugin-check-settings
+      - listitem [ref=e288]
+      - text: 
+      - listitem [ref=e290]:
+        - link "Loco Translate" [ref=e291] [cursor=pointer]:
+          - /url: admin.php?page=loco
+          - generic [ref=e292]: 
+          - generic [ref=e293]: Loco Translate
+        - list [ref=e294]:
+          - listitem [ref=e295]:
+            - link "Home" [ref=e296] [cursor=pointer]:
+              - /url: admin.php?page=loco
+          - listitem [ref=e297]:
+            - link "Themes" [ref=e298] [cursor=pointer]:
+              - /url: admin.php?page=loco-theme
+          - listitem [ref=e299]:
+            - link "Plugins" [ref=e300] [cursor=pointer]:
+              - /url: admin.php?page=loco-plugin
+          - listitem [ref=e301]:
+            - link "WordPress" [ref=e302] [cursor=pointer]:
+              - /url: admin.php?page=loco-core
+          - listitem [ref=e303]:
+            - link "Languages" [ref=e304] [cursor=pointer]:
+              - /url: admin.php?page=loco-lang
+          - listitem [ref=e305]:
+            - link "Settings" [ref=e306] [cursor=pointer]:
+              - /url: admin.php?page=loco-config
+          - listitem [ref=e307]:
+            - link "Debug" [ref=e308] [cursor=pointer]:
+              - /url: admin.php?page=loco-debug
+      - listitem [ref=e309]:
+        - button "Collapse Main menu" [expanded] [ref=e310] [cursor=pointer]:
+          - generic [ref=e312]: Collapse Menu
+  - generic [ref=e313]:
+    - generic [ref=e314]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=e315]:
+            - menuitem "About WordPress" [ref=e316] [cursor=pointer]:
+              - generic [ref=e318]: About WordPress
+          - group [ref=e319]:
+            - menuitem "plugincy on page checkout" [ref=e320] [cursor=pointer]
+          - group [ref=e321]:
+            - menuitem "Live" [ref=e322] [cursor=pointer]
+          - group [ref=e323]:
+            - menuitem "Ctrl+K Open command palette" [ref=e324] [cursor=pointer]:
+              - generic [ref=e326]:
+                - text: Ctrl+K
+                - generic [ref=e327]: Open command palette
+          - group [ref=e328]:
+            - menuitem "0 Comments in moderation" [ref=e329] [cursor=pointer]:
+              - generic [ref=e331]: "0"
+              - generic [ref=e332]: 0 Comments in moderation
+          - group [ref=e333]:
+            - menuitem "New" [ref=e334] [cursor=pointer]:
+              - generic [ref=e336]: New
+        - menu [ref=e337]:
+          - group [ref=e338]:
+            - menuitem [ref=e339] [cursor=pointer]:
+              - img [ref=e341]
+          - group [ref=e345]:
+            - menuitem "Howdy, admin" [ref=e346] [cursor=pointer]
+    - main [ref=e347]:
+      - generic [ref=e348]:
+        - button "Screen Options" [ref=e351] [cursor=pointer]
+        - generic [ref=e352]:
+          - generic [ref=e353]:
+            - generic [ref=e354]:
+              - generic [ref=e355]: Revenue Recovery Suite
+              - heading "Cart Recovery" [level=1] [ref=e356]
+              - paragraph [ref=e357]: Track abandoned carts, review the shopper journey, and tune recovery emails from one workspace that matches the rest of your Onpage Checkout admin.
+            - generic [ref=e358]:
+              - generic [ref=e359]:
+                - generic [ref=e360]: Recovery Status
+                - strong [ref=e361]: Details Only
+              - generic [ref=e362]:
+                - generic [ref=e363]: Tracked Carts
+                - strong [ref=e364]: "7"
+              - generic [ref=e365]:
+                - generic [ref=e366]: Active Emails
+                - strong [ref=e367]:
+                  - generic [ref=e368]:
+                    - generic [ref=e369]: 
+                    - generic [ref=e370]: Email automation - Pro only
+          - navigation "Cart recovery sections" [ref=e371]:
+            - link " Carts" [ref=e372] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts
+              - generic [ref=e373]: 
+              - generic [ref=e374]: Carts
+            - link " Analytics" [ref=e375] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=analytics
+              - generic [ref=e376]: 
+              - generic [ref=e377]: Analytics
+            - link " Journey" [ref=e378] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=journey
+              - generic [ref=e379]: 
+              - generic [ref=e380]: Journey
+            - link " Activity" [ref=e381] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=activity
+              - generic [ref=e382]: 
+              - generic [ref=e383]: Activity
+            - link " Email" [ref=e384] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=email
+              - generic [ref=e385]: 
+              - generic [ref=e386]: Email
+            - link " Settings" [ref=e387] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=settings
+              - generic [ref=e388]: 
+              - generic [ref=e389]: Settings
+          - generic [ref=e391]:
+            - generic [ref=e392]:
+              - generic [ref=e393]:
+                - generic [ref=e394]: 
+                - generic [ref=e395]:
+                  - generic [ref=e396]: Showing
+                  - strong [ref=e397]: "7"
+              - generic [ref=e398]:
+                - generic [ref=e399]: 
+                - generic [ref=e400]:
+                  - generic [ref=e401]: Total Value
+                  - strong [ref=e402]:
+                    - generic [ref=e403]: ৳ 17,729.93
+              - generic [ref=e404]:
+                - generic [ref=e405]: 
+                - generic [ref=e406]:
+                  - generic [ref=e407]: Average
+                  - strong [ref=e408]:
+                    - generic [ref=e409]: ৳ 2,532.85
+              - generic [ref=e410]:
+                - generic [ref=e411]: 
+                - generic [ref=e412]:
+                  - generic [ref=e413]: Recoverable Value
+                  - strong [ref=e414]:
+                    - generic [ref=e415]: ৳ 9,779.94
+            - generic [ref=e417]:
+              - generic [ref=e418]:
+                - generic [ref=e419]: Search
+                - searchbox "Search" [ref=e420]
+              - generic [ref=e421]:
+                - generic [ref=e422]: Status
+                - combobox "Status" [ref=e423] [cursor=pointer]:
+                  - option "All" [selected]
+                  - option "Active"
+                  - option "Abandoned"
+                  - option "Recovered"
+                  - option "Unsubscribed"
+                  - option "Ignored"
+                  - option "Archived"
+              - generic [ref=e424]:
+                - generic [ref=e425]: Customer
+                - combobox "Customer" [ref=e426] [cursor=pointer]:
+                  - option "All Customers" [selected]
+                  - option "Guests"
+                  - option "Registered"
+              - generic [ref=e427]:
+                - generic [ref=e428]: Device
+                - combobox "Device" [ref=e429] [cursor=pointer]:
+                  - option "All Devices" [selected]
+                  - option "Desktop"
+                  - option "Mobile"
+                  - option "Tablet"
+              - generic [ref=e430]:
+                - generic [ref=e431]: Source
+                - combobox "Source" [ref=e432] [cursor=pointer]:
+                  - option "All Sources" [selected]
+                  - option "Email Restore"
+                  - option "Site Revisit"
+                  - option "Admin"
+              - generic [ref=e433]:
+                - generic [ref=e434]: Template
+                - combobox "Template" [ref=e435] [cursor=pointer]:
+                  - option "All Templates" [selected]
+                  - option "Immediate Recovery"
+                  - option "Value Reinforcement"
+                  - option "Final Attempt"
+              - generic [ref=e436]:
+                - generic [ref=e437]: Date From
+                - textbox "Date From" [ref=e438]
+              - generic [ref=e439]:
+                - generic [ref=e440]: Date To
+                - textbox "Date To" [ref=e441]
+              - generic [ref=e442]:
+                - generic [ref=e443]: Min Value
+                - spinbutton "Min Value" [ref=e444]
+              - generic [ref=e445]:
+                - generic [ref=e446]: Max Value
+                - spinbutton "Max Value" [ref=e447]
+              - generic "Quick date range select" [ref=e448]:
+                - generic [ref=e449]: Quick Select
+                - generic [ref=e450]:
+                  - link "Today" [ref=e451] [cursor=pointer]:
+                    - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts&cr_cart_from=2026-06-07&cr_cart_to=2026-06-07
+                  - link "Last 7 Days" [ref=e452] [cursor=pointer]:
+                    - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts&cr_cart_from=2026-06-01&cr_cart_to=2026-06-07
+                  - link "Last 30 Days" [ref=e453] [cursor=pointer]:
+                    - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts&cr_cart_from=2026-05-09&cr_cart_to=2026-06-07
+                  - link "This Month" [ref=e454] [cursor=pointer]:
+                    - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts&cr_cart_from=2026-06-01&cr_cart_to=2026-06-07
+                  - link "Last Month" [ref=e455] [cursor=pointer]:
+                    - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts&cr_cart_from=2026-05-01&cr_cart_to=2026-05-31
+              - generic [ref=e456]:
+                - button "Apply" [ref=e457] [cursor=pointer]
+                - link "Reset" [ref=e458] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts
+            - generic [ref=e459]:
+              - generic [ref=e460]:
+                - generic [ref=e463]:
+                  - generic [ref=e464]: 
+                  - generic [ref=e465]: Bulk actions - Pro only
+                - generic [ref=e466]:
+                  - button "Export CSV" [ref=e467] [cursor=pointer]
+                  - generic [ref=e468]: 7 carts
+              - table [ref=e469]:
+                - rowgroup [ref=e470]:
+                  - row "Cart Cart Total  Status Last Activity  Recovery " [ref=e471]:
+                    - cell [ref=e472]:
+                      - checkbox [ref=e473] [cursor=pointer]
+                    - rowheader "Cart" [ref=e474]
+                    - columnheader "Cart Total " [ref=e475]:
+                      - link "Cart Total " [ref=e476] [cursor=pointer]:
+                        - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts&cr_cart_status=all&cr_cart_customer_type=all&cr_cart_device=all&cr_cart_template&cr_cart_source=all&cr_cart_from&cr_cart_to&cr_cart_min&cr_cart_max&cr_cart_search&cr_cart_sort=cart_total&cr_cart_order=asc
+                        - text: Cart Total
+                        - generic [ref=e477]: 
+                    - columnheader "Status" [ref=e478]
+                    - columnheader "Last Activity " [ref=e479]:
+                      - link "Last Activity " [ref=e480] [cursor=pointer]:
+                        - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts&cr_cart_status=all&cr_cart_customer_type=all&cr_cart_device=all&cr_cart_template&cr_cart_source=all&cr_cart_from&cr_cart_to&cr_cart_min&cr_cart_max&cr_cart_search&cr_cart_sort=last_activity&cr_cart_order=asc
+                        - text: Last Activity
+                        - generic [ref=e481]: 
+                    - columnheader "Recovery " [ref=e482]:
+                      - link "Recovery " [ref=e483] [cursor=pointer]:
+                        - /url: http://free-one-page-checkout.local/wp-admin/admin.php?page=onepaqucpro_cart_recovery&tab=carts&cr_cart_status=all&cr_cart_customer_type=all&cr_cart_device=all&cr_cart_template&cr_cart_source=all&cr_cart_from&cr_cart_to&cr_cart_min&cr_cart_max&cr_cart_search&cr_cart_sort=recovered_at&cr_cart_order=asc
+                        - text: Recovery
+                        - generic [ref=e484]: 
+                - rowgroup [ref=e485]:
+                  - 'row "test Hossain #cr_357583fc549e44329c299c073cd8 Email - Pro only • 15 items Surface Pro 11th Edition Sapphire Compare Render, Lenovo ideapad 320 15.6 Laptop, Bl100 Pro Wireless Gaming Headset For Pc, Desktop Computer, Windows, HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM, Surface Laptop 6 for Business, Assembled Desktop Computer SSD128 - AMD Athlon, Best MacBook, MacBook Air Coding, Fastest MacBook, elegant smartphone composition, Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD, CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led, Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED, Detachable Lenovo laptop is two separate computers - AMD Athlon View Details | Cart actions - Pro only ৳ 7,949.99 Customer type - Pro only Active Browser - Pro only 35 seconds ago June 7, 2026 7:02 am Emails: 0 - Waiting" [ref=e486]':
+                    - rowheader [ref=e487]:
+                      - checkbox [ref=e488] [cursor=pointer]
+                    - 'cell "test Hossain #cr_357583fc549e44329c299c073cd8 Email - Pro only • 15 items Surface Pro 11th Edition Sapphire Compare Render, Lenovo ideapad 320 15.6 Laptop, Bl100 Pro Wireless Gaming Headset For Pc, Desktop Computer, Windows, HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM, Surface Laptop 6 for Business, Assembled Desktop Computer SSD128 - AMD Athlon, Best MacBook, MacBook Air Coding, Fastest MacBook, elegant smartphone composition, Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD, CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led, Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED, Detachable Lenovo laptop is two separate computers - AMD Athlon View Details | Cart actions - Pro only" [ref=e489]':
+                      - generic [ref=e490]:
+                        - strong [ref=e491]:
+                          - text: test Hossain
+                          - generic [ref=e492]: "#cr_357583fc549e44329c299c073cd8"
+                        - generic [ref=e493]:
+                          - generic [ref=e495]:
+                            - generic [ref=e496]: 
+                            - generic [ref=e497]: Email - Pro only
+                          - generic [ref=e498]: •
+                          - generic [ref=e499]: 15 items
+                        - generic [ref=e500]: Surface Pro 11th Edition Sapphire Compare Render, Lenovo ideapad 320 15.6 Laptop, Bl100 Pro Wireless Gaming Headset For Pc, Desktop Computer, Windows, HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM, Surface Laptop 6 for Business, Assembled Desktop Computer SSD128 - AMD Athlon, Best MacBook, MacBook Air Coding, Fastest MacBook, elegant smartphone composition, Desktop PC Core i5 12th Gen 8GB RAM 1TB HDD, CHIST Desktop Computer Core I5 4Th Gen 19 Inch Led, Desktop Intel Core i7 9th Gen 16GB Ram 1TB SSD 24 LED, Detachable Lenovo laptop is two separate computers - AMD Athlon
+                        - generic [ref=e501]:
+                          - button "View Details" [ref=e502] [cursor=pointer]
+                          - text: "|"
+                          - generic [ref=e504]:
+                            - generic [ref=e505]: 
+                            - generic [ref=e506]: Cart actions - Pro only
+                      - text: 
+                    - cell "৳ 7,949.99 Customer type - Pro only" [ref=e507]:
+                      - strong [ref=e508]:
+                        - generic [ref=e509]: ৳ 7,949.99
+                      - generic [ref=e511]:
+                        - generic [ref=e512]: 
+                        - generic [ref=e513]: Customer type - Pro only
+                    - cell "Active Browser - Pro only" [ref=e514]:
+                      - generic [ref=e515]: Active
+                      - generic [ref=e517]:
+                        - generic [ref=e518]: 
+                        - generic [ref=e519]: Browser - Pro only
+                    - 'cell "35 seconds ago June 7, 2026 7:02 am Emails: 0" [ref=e520]':
+                      - text: 35 seconds ago
+                      - generic [ref=e521]: June 7, 2026 7:02 am
+                      - generic [ref=e522]: "Emails: 0"
+                    - cell "- Waiting" [ref=e523]:
+                      - text: "-"
+                      - generic [ref=e524]: Waiting
+                  - 'row "test Hossain #cr_566c1aaf5e29413e9ed8fbec1688 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only ৳ 1,629.99 Customer type - Pro only Abandoned Browser - Pro only 2 hours ago June 7, 2026 5:00 am Emails: 0 June 7, 2026 5:00 am Waiting" [ref=e525]':
+                    - rowheader [ref=e526]:
+                      - checkbox [ref=e527] [cursor=pointer]
+                    - 'cell "test Hossain #cr_566c1aaf5e29413e9ed8fbec1688 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only" [ref=e528]':
+                      - generic [ref=e529]:
+                        - strong [ref=e530]:
+                          - text: test Hossain
+                          - generic [ref=e531]: "#cr_566c1aaf5e29413e9ed8fbec1688"
+                        - generic [ref=e532]:
+                          - generic [ref=e534]:
+                            - generic [ref=e535]: 
+                            - generic [ref=e536]: Email - Pro only
+                          - generic [ref=e537]: •
+                          - generic [ref=e538]: 4 items
+                        - generic [ref=e539]: Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon
+                        - generic [ref=e540]:
+                          - button "View Details" [ref=e541] [cursor=pointer]
+                          - text: "|"
+                          - generic [ref=e543]:
+                            - generic [ref=e544]: 
+                            - generic [ref=e545]: Cart actions - Pro only
+                      - text: 
+                    - cell "৳ 1,629.99 Customer type - Pro only" [ref=e546]:
+                      - strong [ref=e547]:
+                        - generic [ref=e548]: ৳ 1,629.99
+                      - generic [ref=e550]:
+                        - generic [ref=e551]: 
+                        - generic [ref=e552]: Customer type - Pro only
+                    - cell "Abandoned Browser - Pro only" [ref=e553]:
+                      - generic [ref=e554]: Abandoned
+                      - generic [ref=e556]:
+                        - generic [ref=e557]: 
+                        - generic [ref=e558]: Browser - Pro only
+                    - 'cell "2 hours ago June 7, 2026 5:00 am Emails: 0" [ref=e559]':
+                      - text: 2 hours ago
+                      - generic [ref=e560]: June 7, 2026 5:00 am
+                      - generic [ref=e561]: "Emails: 0"
+                    - cell "June 7, 2026 5:00 am Waiting" [ref=e562]:
+                      - text: June 7, 2026 5:00 am
+                      - generic [ref=e563]: Waiting
+                  - 'row "test Hossain #cr_a77ae6449da54481a61053e6bc20 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only ৳ 1,629.99 Customer type - Pro only Abandoned Browser - Pro only 3 hours ago June 7, 2026 3:37 am Emails: 0 June 7, 2026 3:37 am Waiting" [ref=e564]':
+                    - rowheader [ref=e565]:
+                      - checkbox [ref=e566] [cursor=pointer]
+                    - 'cell "test Hossain #cr_a77ae6449da54481a61053e6bc20 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only" [ref=e567]':
+                      - generic [ref=e568]:
+                        - strong [ref=e569]:
+                          - text: test Hossain
+                          - generic [ref=e570]: "#cr_a77ae6449da54481a61053e6bc20"
+                        - generic [ref=e571]:
+                          - generic [ref=e573]:
+                            - generic [ref=e574]: 
+                            - generic [ref=e575]: Email - Pro only
+                          - generic [ref=e576]: •
+                          - generic [ref=e577]: 4 items
+                        - generic [ref=e578]: Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon
+                        - generic [ref=e579]:
+                          - button "View Details" [ref=e580] [cursor=pointer]
+                          - text: "|"
+                          - generic [ref=e582]:
+                            - generic [ref=e583]: 
+                            - generic [ref=e584]: Cart actions - Pro only
+                      - text: 
+                    - cell "৳ 1,629.99 Customer type - Pro only" [ref=e585]:
+                      - strong [ref=e586]:
+                        - generic [ref=e587]: ৳ 1,629.99
+                      - generic [ref=e589]:
+                        - generic [ref=e590]: 
+                        - generic [ref=e591]: Customer type - Pro only
+                    - cell "Abandoned Browser - Pro only" [ref=e592]:
+                      - generic [ref=e593]: Abandoned
+                      - generic [ref=e595]:
+                        - generic [ref=e596]: 
+                        - generic [ref=e597]: Browser - Pro only
+                    - 'cell "3 hours ago June 7, 2026 3:37 am Emails: 0" [ref=e598]':
+                      - text: 3 hours ago
+                      - generic [ref=e599]: June 7, 2026 3:37 am
+                      - generic [ref=e600]: "Emails: 0"
+                    - cell "June 7, 2026 3:37 am Waiting" [ref=e601]:
+                      - text: June 7, 2026 3:37 am
+                      - generic [ref=e602]: Waiting
+                  - 'row "test Hossain #cr_eb043079a0274272938ecfe8c034 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only ৳ 1,629.99 Customer type - Pro only Abandoned Browser - Pro only 1 day ago June 6, 2026 4:11 am Emails: 0 June 6, 2026 4:11 am Waiting" [ref=e603]':
+                    - rowheader [ref=e604]:
+                      - checkbox [ref=e605] [cursor=pointer]
+                    - 'cell "test Hossain #cr_eb043079a0274272938ecfe8c034 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only" [ref=e606]':
+                      - generic [ref=e607]:
+                        - strong [ref=e608]:
+                          - text: test Hossain
+                          - generic [ref=e609]: "#cr_eb043079a0274272938ecfe8c034"
+                        - generic [ref=e610]:
+                          - generic [ref=e612]:
+                            - generic [ref=e613]: 
+                            - generic [ref=e614]: Email - Pro only
+                          - generic [ref=e615]: •
+                          - generic [ref=e616]: 4 items
+                        - generic [ref=e617]: Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon
+                        - generic [ref=e618]:
+                          - button "View Details" [ref=e619] [cursor=pointer]
+                          - text: "|"
+                          - generic [ref=e621]:
+                            - generic [ref=e622]: 
+                            - generic [ref=e623]: Cart actions - Pro only
+                      - text: 
+                    - cell "৳ 1,629.99 Customer type - Pro only" [ref=e624]:
+                      - strong [ref=e625]:
+                        - generic [ref=e626]: ৳ 1,629.99
+                      - generic [ref=e628]:
+                        - generic [ref=e629]: 
+                        - generic [ref=e630]: Customer type - Pro only
+                    - cell "Abandoned Browser - Pro only" [ref=e631]:
+                      - generic [ref=e632]: Abandoned
+                      - generic [ref=e634]:
+                        - generic [ref=e635]: 
+                        - generic [ref=e636]: Browser - Pro only
+                    - 'cell "1 day ago June 6, 2026 4:11 am Emails: 0" [ref=e637]':
+                      - text: 1 day ago
+                      - generic [ref=e638]: June 6, 2026 4:11 am
+                      - generic [ref=e639]: "Emails: 0"
+                    - cell "June 6, 2026 4:11 am Waiting" [ref=e640]:
+                      - text: June 6, 2026 4:11 am
+                      - generic [ref=e641]: Waiting
+                  - 'row "test Hossain #cr_eee6158b7742494083b7ab3c5bf9 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only ৳ 1,629.99 Customer type - Pro only Abandoned Browser - Pro only 1 day ago June 6, 2026 4:11 am Emails: 0 June 6, 2026 4:11 am Waiting" [ref=e642]':
+                    - rowheader [ref=e643]:
+                      - checkbox [ref=e644] [cursor=pointer]
+                    - 'cell "test Hossain #cr_eee6158b7742494083b7ab3c5bf9 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only" [ref=e645]':
+                      - generic [ref=e646]:
+                        - strong [ref=e647]:
+                          - text: test Hossain
+                          - generic [ref=e648]: "#cr_eee6158b7742494083b7ab3c5bf9"
+                        - generic [ref=e649]:
+                          - generic [ref=e651]:
+                            - generic [ref=e652]: 
+                            - generic [ref=e653]: Email - Pro only
+                          - generic [ref=e654]: •
+                          - generic [ref=e655]: 4 items
+                        - generic [ref=e656]: Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon
+                        - generic [ref=e657]:
+                          - button "View Details" [ref=e658] [cursor=pointer]
+                          - text: "|"
+                          - generic [ref=e660]:
+                            - generic [ref=e661]: 
+                            - generic [ref=e662]: Cart actions - Pro only
+                      - text: 
+                    - cell "৳ 1,629.99 Customer type - Pro only" [ref=e663]:
+                      - strong [ref=e664]:
+                        - generic [ref=e665]: ৳ 1,629.99
+                      - generic [ref=e667]:
+                        - generic [ref=e668]: 
+                        - generic [ref=e669]: Customer type - Pro only
+                    - cell "Abandoned Browser - Pro only" [ref=e670]:
+                      - generic [ref=e671]: Abandoned
+                      - generic [ref=e673]:
+                        - generic [ref=e674]: 
+                        - generic [ref=e675]: Browser - Pro only
+                    - 'cell "1 day ago June 6, 2026 4:11 am Emails: 0" [ref=e676]':
+                      - text: 1 day ago
+                      - generic [ref=e677]: June 6, 2026 4:11 am
+                      - generic [ref=e678]: "Emails: 0"
+                    - cell "June 6, 2026 4:11 am Waiting" [ref=e679]:
+                      - text: June 6, 2026 4:11 am
+                      - generic [ref=e680]: Waiting
+                  - 'row "test Hossain #cr_ade184e93cc948799c2565b7611a Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only ৳ 1,629.99 Customer type - Pro only Abandoned Browser - Pro only 2 weeks ago May 26, 2026 4:36 am Emails: 0 May 26, 2026 4:36 am Waiting" [ref=e681]':
+                    - rowheader [ref=e682]:
+                      - checkbox [ref=e683] [cursor=pointer]
+                    - 'cell "test Hossain #cr_ade184e93cc948799c2565b7611a Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only" [ref=e684]':
+                      - generic [ref=e685]:
+                        - strong [ref=e686]:
+                          - text: test Hossain
+                          - generic [ref=e687]: "#cr_ade184e93cc948799c2565b7611a"
+                        - generic [ref=e688]:
+                          - generic [ref=e690]:
+                            - generic [ref=e691]: 
+                            - generic [ref=e692]: Email - Pro only
+                          - generic [ref=e693]: •
+                          - generic [ref=e694]: 4 items
+                        - generic [ref=e695]: Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon
+                        - generic [ref=e696]:
+                          - button "View Details" [ref=e697] [cursor=pointer]
+                          - text: "|"
+                          - generic [ref=e699]:
+                            - generic [ref=e700]: 
+                            - generic [ref=e701]: Cart actions - Pro only
+                      - text: 
+                    - cell "৳ 1,629.99 Customer type - Pro only" [ref=e702]:
+                      - strong [ref=e703]:
+                        - generic [ref=e704]: ৳ 1,629.99
+                      - generic [ref=e706]:
+                        - generic [ref=e707]: 
+                        - generic [ref=e708]: Customer type - Pro only
+                    - cell "Abandoned Browser - Pro only" [ref=e709]:
+                      - generic [ref=e710]: Abandoned
+                      - generic [ref=e712]:
+                        - generic [ref=e713]: 
+                        - generic [ref=e714]: Browser - Pro only
+                    - 'cell "2 weeks ago May 26, 2026 4:36 am Emails: 0" [ref=e715]':
+                      - text: 2 weeks ago
+                      - generic [ref=e716]: May 26, 2026 4:36 am
+                      - generic [ref=e717]: "Emails: 0"
+                    - cell "May 26, 2026 4:36 am Waiting" [ref=e718]:
+                      - text: May 26, 2026 4:36 am
+                      - generic [ref=e719]: Waiting
+                  - 'row "test Hossain #cr_d86ecc4e23e44bdbb3e70892b250 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only ৳ 1,629.99 Customer type - Pro only Abandoned Browser - Pro only 4 weeks ago May 9, 2026 11:28 am Emails: 0 May 9, 2026 11:28 am Waiting" [ref=e720]':
+                    - rowheader [ref=e721]:
+                      - checkbox [ref=e722] [cursor=pointer]
+                    - 'cell "test Hossain #cr_d86ecc4e23e44bdbb3e70892b250 Email - Pro only • 4 items Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon View Details | Cart actions - Pro only" [ref=e723]':
+                      - generic [ref=e724]:
+                        - strong [ref=e725]:
+                          - text: test Hossain
+                          - generic [ref=e726]: "#cr_d86ecc4e23e44bdbb3e70892b250"
+                        - generic [ref=e727]:
+                          - generic [ref=e729]:
+                            - generic [ref=e730]: 
+                            - generic [ref=e731]: Email - Pro only
+                          - generic [ref=e732]: •
+                          - generic [ref=e733]: 4 items
+                        - generic [ref=e734]: Asus ProArt P16, Assembled Desktop Computer SSD128 - AMD Ryzen 5, Detachable Lenovo laptop is two separate computers - AMD Ryzen 5, Assembled Desktop Computer SSD128 - AMD Athlon
+                        - generic [ref=e735]:
+                          - button "View Details" [ref=e736] [cursor=pointer]
+                          - text: "|"
+                          - generic [ref=e738]:
+                            - generic [ref=e739]: 
+                            - generic [ref=e740]: Cart actions - Pro only
+                      - text: 
+                    - cell "৳ 1,629.99 Customer type - Pro only" [ref=e741]:
+                      - strong [ref=e742]:
+                        - generic [ref=e743]: ৳ 1,629.99
+                      - generic [ref=e745]:
+                        - generic [ref=e746]: 
+                        - generic [ref=e747]: Customer type - Pro only
+                    - cell "Abandoned Browser - Pro only" [ref=e748]:
+                      - generic [ref=e749]: Abandoned
+                      - generic [ref=e751]:
+                        - generic [ref=e752]: 
+                        - generic [ref=e753]: Browser - Pro only
+                    - 'cell "4 weeks ago May 9, 2026 11:28 am Emails: 0" [ref=e754]':
+                      - text: 4 weeks ago
+                      - generic [ref=e755]: May 9, 2026 11:28 am
+                      - generic [ref=e756]: "Emails: 0"
+                    - cell "May 9, 2026 11:28 am Waiting" [ref=e757]:
+                      - text: May 9, 2026 11:28 am
+                      - generic [ref=e758]: Waiting
+          - region "Unlock full Cart Recovery with Pro" [ref=e759]:
+            - generic [ref=e760]:
+              - generic [ref=e761]:
+                - generic [ref=e762]:
+                  - generic [ref=e763]: 
+                  - text: Pro version recommended
+                - heading "Unlock full Cart Recovery with Pro" [level=2] [ref=e764]
+                - paragraph [ref=e765]: See every shopper detail, send automated recovery emails, review drop-off points, and connect advanced recovery controls from one place.
+                - generic [ref=e766]:
+                  - link "Upgrade to Pro" [ref=e767] [cursor=pointer]:
+                    - /url: https://plugincy.com/one-page-quick-checkout-for-woocommerce/
+                    - generic [ref=e768]: 
+                    - text: Upgrade to Pro
+                  - generic [ref=e769]: Unlock email automation, contact details, analytics, and advanced rules.
+              - generic [ref=e770]:
+                - generic [ref=e771]:
+                  - generic [ref=e772]: 
+                  - generic [ref=e773]:
+                    - strong [ref=e774]: Customer contact details
+                    - generic [ref=e775]: Email, phone, company, IP, address, device, browser, and order notes.
+                - generic [ref=e776]:
+                  - generic [ref=e777]: 
+                  - generic [ref=e778]:
+                    - strong [ref=e779]: Automated recovery emails
+                    - generic [ref=e780]: Template builder, preview, test send, activity tracking, resend, and retry tools.
+                - generic [ref=e781]:
+                  - generic [ref=e782]: 
+                  - generic [ref=e783]:
+                    - strong [ref=e784]: Analytics and journey funnel
+                    - generic [ref=e785]: Revenue trends, stage drop-off, customer journey, and recovery performance.
+                - generic [ref=e786]:
+                  - generic [ref=e787]: 
+                  - generic [ref=e788]:
+                    - strong [ref=e789]: Advanced recovery controls
+                    - generic [ref=e790]: High-value thresholds, exclusions, role controls, webhooks, and free-cart tracking.
+          - text: 

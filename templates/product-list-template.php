@@ -3,12 +3,13 @@
 
  // product list template
  // shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" template="product-list"]
+ $product_ids = isset($product_ids) && is_array($product_ids) ? array_values(array_filter($product_ids, 'is_numeric')) : array();
 ?>
 <div class = "product-list-template">
 <div class="one-page-checkout-container">
     <div class="one-page-checkout-products">
         <h2><?php echo esc_html__('Products', 'one-page-quick-checkout-for-woocommerce'); ?></h2>
-        <ul class="one-page-checkout-product-list" data-product-ids="<?php echo esc_attr($atts['product_ids']); ?>">
+        <ul class="one-page-checkout-product-list" data-product-ids="<?php echo esc_attr(implode(',', array_map('absint', (array) $product_ids))); ?>">
             <?php
             // Remove any whitespace from product IDs
             $product_ids = array_map('trim', $product_ids);
@@ -26,10 +27,11 @@
                     $in_cart = false;
                     $cart_item_key = '';
                     // Check if WooCommerce cart is initialized and not empty
-                    if( WC()->cart && !WC()->cart->is_empty() ) {
+                    $cart = function_exists('onepaquc_get_wc_cart') ? onepaquc_get_wc_cart() : null;
+                    if ($cart && !$cart->is_empty()) {
                         // Loop through cart items to check if the product is already in the cart
-                    foreach (WC()->cart->get_cart() as $key => $cart_item) {
-                        if ($cart_item['product_id'] == $product_id) {
+                    foreach ($cart->get_cart() as $key => $cart_item) {
+                        if (is_array($cart_item) && isset($cart_item['product_id']) && (int) $cart_item['product_id'] === (int) $product_id) {
                             $in_cart = true;
                             $cart_item_key = $key;
                             break;
@@ -62,6 +64,10 @@
 
 <?php $inline_script = "
 jQuery(document).ready(function($) {
+    if (typeof wc_add_to_cart_params === 'undefined' || typeof onepaquc_wc_cart_params === 'undefined') {
+        return;
+    }
+
     // Function to add product to cart using WooCommerce AJAX
     function addProductToCart(product_id, item) {
         item.addClass('loading');
@@ -109,11 +115,11 @@ jQuery(document).ready(function($) {
         
         $.ajax({
             type: 'POST',
-            url: wc_add_to_cart_params.ajax_url,
+            url: onepaquc_wc_cart_params.ajax_url,
             data: {
                 action: 'onepaquc_remove_cart_item',
                 cart_item_key: cart_item_key,
-                nonce: wc_add_to_cart_params.remove_cart_item
+                nonce: onepaquc_wc_cart_params.remove_cart_item
             },
             success: function(response) {
                 $(document.body).trigger('update_checkout');
@@ -183,4 +189,4 @@ jQuery(document).ready(function($) {
 });";
 
     // Enqueue the inline script
-    wp_add_inline_script('rmenu-cart-script', $inline_script,99);
+    wp_add_inline_script('rmenu-cart-script', $inline_script, 'after');

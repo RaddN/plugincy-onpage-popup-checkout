@@ -412,27 +412,6 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
 
         $this->end_controls_section();
 
-        $this->start_controls_section(
-            'custom_css_section',
-            [
-                'label' => esc_html__('Plugincy Custom CSS', 'one-page-quick-checkout-for-woocommerce'),
-                'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
-            ]
-        );
-        $this->add_control(
-            'custom_css',
-            [
-                'label' => esc_html__('Custom CSS', 'one-page-quick-checkout-for-woocommerce'),
-                'type' => \Elementor\Controls_Manager::CODE,
-                'language' => 'css',
-                'rows' => 10,
-                'description' => esc_html__('Add your custom CSS styles here', 'one-page-quick-checkout-for-woocommerce'),
-                'dynamic' => [
-                    'active' => true,
-                ],
-            ]
-        );
-        $this->end_controls_section();
     }
 
     /**
@@ -478,31 +457,42 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
         // Container classes
         $container_classes = ['plugincy-checkout-container'];
         if (!empty($settings['custom_css_class'])) {
-            $container_classes[] = esc_attr($settings['custom_css_class']);
+            $custom_classes = preg_split('/\s+/', (string) $settings['custom_css_class']);
+            foreach ($custom_classes as $custom_class) {
+                $custom_class = sanitize_html_class($custom_class);
+                if ($custom_class) {
+                    $container_classes[] = $custom_class;
+                }
+            }
         }
         if (!empty($settings['button_style'])) {
-            $container_classes[] = 'button-style-' . esc_attr($settings['button_style']);
+            $button_style = in_array($settings['button_style'], ['filled', 'outlined', 'text'], true) ? $settings['button_style'] : 'filled';
+            $container_classes[] = 'button-style-' . $button_style;
+        } else {
+            $button_style = 'filled';
+            $container_classes[] = 'button-style-filled';
         }
 
         // Container ID
         $container_id = '';
         if (!empty($settings['custom_id'])) {
-            $container_id = 'id="' . esc_attr($settings['custom_id']) . '"';
+            $custom_id = sanitize_html_class($settings['custom_id']);
+            if ($custom_id) {
+                $container_id = $custom_id;
+            }
         }
 
-        //custom_css
-        if (!empty($settings['custom_css'])) {
-            $container_classes[] = 'custom-css';
-            add_action('wp_footer', function() use ($settings) {
-                echo '<style>' . wp_kses(wp_strip_all_tags($settings['custom_css']), array()) . '</style>'; 
-            });
-        }
+        $primary_color = !empty($settings['primary_color']) ? sanitize_hex_color($settings['primary_color']) : '#4CAF50';
+        $secondary_color = !empty($settings['secondary_color']) ? sanitize_hex_color($settings['secondary_color']) : '#2196F3';
+        $container_styles = array(
+            '--onepaquc-primary-color:' . ($primary_color ? $primary_color : '#4CAF50'),
+            '--onepaquc-secondary-color:' . ($secondary_color ? $secondary_color : '#2196F3'),
+        );
 
         // Output the widget
-        echo '<div class="' . esc_attr(implode(' ', $container_classes)) . '" ' . esc_attr($container_id) . '>';
-
-        // Add inline styles for dynamic styling
-        $this->render_inline_styles($settings);
+        echo '<div class="' . esc_attr(implode(' ', $container_classes)) . '"'
+            . ($container_id ? ' id="' . esc_attr($container_id) . '"' : '')
+            . ' style="' . esc_attr(implode(';', $container_styles)) . '">';
         
         // Execute the shortcode
         echo do_shortcode($shortcode);
@@ -510,60 +500,6 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
         echo '</div>';
     }
 
-    /**
-     * Render inline styles for dynamic styling
-     */
-    private function render_inline_styles($settings) {
-        $styles = [];
-        
-        // Button styles based on button_style setting
-        if (!empty($settings['button_style'])) {
-            $primary_color = !empty($settings['primary_color']) ? $settings['primary_color'] : '#4CAF50';
-            $secondary_color = !empty($settings['secondary_color']) ? $settings['secondary_color'] : '#2196F3';
-            
-            switch ($settings['button_style']) {
-                case 'outlined':
-                    $styles[] = '.plugincy-checkout-container .checkout-button { 
-                        background: transparent !important; 
-                        border: 2px solid ' . esc_attr($primary_color) . ' !important; 
-                        color: ' . esc_attr($primary_color) . ' !important; 
-                    }';
-                    $styles[] = '.plugincy-checkout-container .checkout-button:hover { 
-                        background: ' . esc_attr($primary_color) . ' !important; 
-                        color: white !important; 
-                    }';
-                    break;
-                    
-                case 'text':
-                    $styles[] = '.plugincy-checkout-container .checkout-button { 
-                        background: transparent !important; 
-                        border: none !important; 
-                        color: ' . esc_attr($primary_color) . ' !important; 
-                        text-decoration: underline;
-                    }';
-                    $styles[] = '.plugincy-checkout-container .checkout-button:hover { 
-                        color: ' . esc_attr($secondary_color) . ' !important; 
-                    }';
-                    break;
-                    
-                default: // filled
-                    $styles[] = '.plugincy-checkout-container .checkout-button { 
-                        background: ' . esc_attr($primary_color) . ' !important; 
-                        border: none !important; 
-                        color: white !important; 
-                    }';
-                    $styles[] = '.plugincy-checkout-container .checkout-button:hover { 
-                        background: ' . esc_attr($secondary_color) . ' !important; 
-                    }';
-                    break;
-            }
-        }
-
-        // Output styles if any
-        if (!empty($styles)) {
-            echo '<style>' . implode(' ', wp_kses($styles, array())) . '</style>'; 
-        }
-    }
 }
 
 // Register the widget

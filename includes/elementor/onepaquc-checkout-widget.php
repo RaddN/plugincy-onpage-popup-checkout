@@ -157,13 +157,14 @@ class Plugincy_OPQC_Checkout_Widget extends Widget_Base {
 				echo '<div class="onepaquc-checkout-placeholder" style="border:1px dashed #c3c4c7;padding:12px;border-radius:6px;background:#fff;">' .
 					'<strong>' . esc_html__( 'Checkout (Preview)', 'one-page-quick-checkout-for-woocommerce' ) . '</strong><br>' .
 					esc_html__( 'The checkout form appears on the front end when the cart is not empty.', 'one-page-quick-checkout-for-woocommerce' ) .
-					'<div style="margin-top:8px;padding:8px;background:#f6f7f7;border:1px solid #e0e0e0;border-radius:4px;font-family:monospace;"><em>' . $esc_sc . '</em></div>' .
+					'<div style="margin-top:8px;padding:8px;background:#f6f7f7;border:1px solid #e0e0e0;border-radius:4px;font-family:monospace;"><em>' . esc_html( $esc_sc ) . '</em></div>' .
 					'</div>';
 			}
 			return;
 		}
 
 		// Safe HTML from your renderer + Woo templates.
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Shortcode output contains WooCommerce checkout form markup escaped by the shortcode/template renderer.
 		echo $html;
 	}
 }

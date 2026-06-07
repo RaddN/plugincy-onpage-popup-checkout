@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) exit;
 // Shortcode: [plugincy_one_page_checkout product_ids="" template="product-slider"]
 
 wp_enqueue_style( 'owl-carousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css', array(), "1.3.8");
-wp_enqueue_style( 'owl-theme', plugin_dir_url(__FILE__) . '../assets/css/owl.theme.default.css', array(), "1.3.8" );
+wp_enqueue_style( 'owl-theme', plugin_dir_url(__FILE__) . '../assets/css/owl.theme.default.min.css', array(), RMENU_VERSION );
 ?>
 
 <div class="product-slider-template">
@@ -74,4 +74,4 @@ $inline_script = "
             });
         });
     })(jQuery);";
-wp_add_inline_script('owl-carousel', $inline_script, 99);
+wp_add_inline_script('owl-carousel', $inline_script, 'after');

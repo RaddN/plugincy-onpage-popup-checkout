@@ -10,7 +10,10 @@ function onepaquc_add_product_image_to_checkout_cart_items($product_name, $cart_
         return $product_name;
     }
     // Get the product
-    $product = $cart_item['data'];
+    $product = is_array($cart_item) && isset($cart_item['data']) ? $cart_item['data'] : null;
+    if (!$product instanceof WC_Product) {
+        return $product_name;
+    }
 
     // Get product thumbnail
     $thumbnail = $product->get_image(array(50, 50));
@@ -29,7 +32,7 @@ add_filter('woocommerce_cart_item_name', 'onepaquc_add_product_image_to_checkout
  */
 function onepaquc_get_validated_variations( $product ) {
     // Skip if product is not published or is scheduled
-    if ( ! $product || 'publish' !== $product->get_status() ) {
+    if ( ! $product instanceof WC_Product_Variable || 'publish' !== $product->get_status() ) {
         return [];
     }
 
@@ -68,7 +71,7 @@ function onepaquc_get_validated_variations( $product ) {
 
     // Prepare attribute validation data
     foreach ( $product_attributes as $attribute_name => $attribute ) {
-        if ( $attribute->get_variation() ) {
+        if ( $attribute instanceof WC_Product_Attribute && $attribute->get_variation() ) {
             if ( $attribute->is_taxonomy() ) {
                 // Terms (slugs) for taxonomy attributes
                 $terms = wc_get_product_terms(
@@ -76,6 +79,7 @@ function onepaquc_get_validated_variations( $product ) {
                     $attribute_name,
                     [ 'fields' => 'slugs' ]
                 );
+                $terms = is_wp_error( $terms ) || ! is_array( $terms ) ? [] : $terms;
 
                 $variation_attributes[ $attribute_name ] = [
                     'type'               => 'taxonomy',
@@ -121,11 +125,14 @@ function onepaquc_get_validated_variations( $product ) {
 
     foreach ( $all_variations as $variation ) {
 
-        $variation_id  = $variation['variation_id'];
+        if ( ! is_array( $variation ) || empty( $variation['variation_id'] ) ) {
+            continue;
+        }
+        $variation_id  = absint( $variation['variation_id'] );
         $variation_obj = wc_get_product( $variation_id );
 
         // 1. Basic checks
-        if ( ! $variation_obj ) {
+        if ( ! $variation_obj instanceof WC_Product_Variation || $variation_obj->get_parent_id() !== $product->get_id() ) {
             continue;
         }
 
@@ -156,7 +163,7 @@ function onepaquc_get_validated_variations( $product ) {
         // Tax class
         $tax_class = $variation_obj->get_tax_class();
         if ( ! empty( $tax_class ) ) {
-            $tax_classes = WC_Tax::get_tax_classes(); // names, not slugs
+            $tax_classes = array_map( 'sanitize_title', WC_Tax::get_tax_classes() );
             if ( ! in_array( $tax_class, $tax_classes, true ) ) {
                 continue;
             }
@@ -324,9 +331,13 @@ if (get_option('rmenu_at_one_product_cart', 0)) {
 
 function onepaquc_add_random_product_if_cart_empty()
 {
+    $cart = function_exists('onepaquc_get_wc_cart') ? onepaquc_get_wc_cart() : null;
+    if (!$cart || !function_exists('wc_get_products')) {
+        return;
+    }
 
     // If cart is empty
-    if (WC()->cart->is_empty()) {
+    if ($cart->is_empty()) {
 
         // Get one random product ID
         $random_product = wc_get_products(array(
@@ -338,29 +349,24 @@ function onepaquc_add_random_product_if_cart_empty()
         ));
 
         if (!empty($random_product)) {
-            WC()->cart->add_to_cart($random_product[0], 1);
+            $product_id = absint($random_product[0]);
+            $product = $product_id ? wc_get_product($product_id) : false;
+            if ($product instanceof WC_Product && $product->is_purchasable() && $product->is_in_stock()) {
+                $cart->add_to_cart($product_id, 1);
+            }
         }
 
-        // Set a flag in local storage via JavaScript to indicate a random product was added
-        add_action('wp_footer', function () {
-?>
-            <script>
-                try {
-                    localStorage.setItem('random_product_added', '1');
-                } catch (e) {}
-            </script>
-        <?php
-        });
+        add_action('wp_enqueue_scripts', function () {
+            if (wp_script_is('rmenu-cart-script', 'enqueued')) {
+                wp_add_inline_script('rmenu-cart-script', 'try{localStorage.setItem("random_product_added","1");}catch(e){}');
+            }
+        }, 30);
     } else {
-        add_action('wp_footer', function () {
-        ?>
-            <script>
-                try {
-                    localStorage.removeItem('random_product_added');
-                } catch (e) {}
-            </script>
-<?php
-        });
+        add_action('wp_enqueue_scripts', function () {
+            if (wp_script_is('rmenu-cart-script', 'enqueued')) {
+                wp_add_inline_script('rmenu-cart-script', 'try{localStorage.removeItem("random_product_added");}catch(e){}');
+            }
+        }, 30);
     }
 }
 
@@ -368,8 +374,8 @@ if (get_option('rmenu_disable_cart_page', 0)) {
     add_action('template_redirect', 'disable_cart_page_redirect');
     function disable_cart_page_redirect()
     {
-        if (is_cart()) {
-            wp_redirect(wc_get_checkout_url());
+        if (function_exists('is_cart') && is_cart() && function_exists('wc_get_checkout_url')) {
+            wp_safe_redirect(wc_get_checkout_url());
             exit;
         }
     }
@@ -381,7 +387,10 @@ if (get_option('rmenu_link_product', 0)) {
     {
         // Only apply on the checkout page
         if (is_checkout()) {
-            $product = $cart_item['data'];
+            $product = is_array($cart_item) && isset($cart_item['data']) ? $cart_item['data'] : null;
+            if (!$product instanceof WC_Product) {
+                return $product_name;
+            }
             $product_link = get_permalink($product->get_id());
             $product_name = sprintf('<a href="%s">%s</a>', esc_url($product_link), $product_name);
         }
@@ -457,16 +466,14 @@ class onepaquc_add_variation_buttons_on_archive
         global $product;
         global $onepaquc_variation_buttons_on_archive;
 
+        if (!$product instanceof WC_Product_Variable) {
+            return;
+        }
         $product_id = $product->get_id();
 
         static $loop_counter = 0;
         $loop_counter++;
         $context_key = $product_id . '_' . $loop_counter;
-
-
-        if (!$product || !$product->is_type('variable')) {
-            return;
-        }
 
         if(isset($onepaquc_variation_buttons_on_archive[$context_key])){
             return;
@@ -680,10 +687,7 @@ class onepaquc_add_variation_buttons_on_archive
 
             $attr_keys = array_keys($attr_keys_indexed);
 
-            // Container that carries JSON safely (no HTML-entity headaches)
-            echo '<div class="separate-attrs">';
-            echo '<script type="application/json" class="var-map">' . wp_json_encode($variations_for_js) . '</script>';
-            echo '<script type="application/json" class="attr-keys">' . wp_json_encode($attr_keys) . '</script>';
+            echo '<div class="separate-attrs" data-var-map="' . esc_attr(wp_json_encode($variations_for_js)) . '" data-attr-keys="' . esc_attr(wp_json_encode($attr_keys)) . '">';
 
             foreach ($attributes_terms as $attr_key => $info) {
                 echo '<div class="var-attr-group" data-attr="' . esc_attr($attr_key) . '">';
@@ -712,16 +716,15 @@ class onepaquc_add_variation_buttons_on_archive
 function onepaquc_add_variation_buttons_to_loop($link, $product)
 {
     global $onepaquc_variation_buttons_on_archive;
+    if (!$product instanceof WC_Product_Variable) {
+        return $link;
+    }
     $product_id = $product->get_id();
 
     static $loop_counter = 0;
     $loop_counter++;
     $context_key = $product_id . '_' . $loop_counter;
     
-    if (!$product || !$product->is_type('variable')) {
-        return $link;
-    }
-
     if(isset($onepaquc_variation_buttons_on_archive[$context_key])){
         return $link;
     }
@@ -926,9 +929,7 @@ function onepaquc_add_variation_buttons_to_loop($link, $product)
 
         $attr_keys = array_keys($attr_keys_indexed);
 
-        echo '<div class="separate-attrs">';
-        echo '<script type="application/json" class="var-map">' . wp_json_encode($variations_for_js) . '</script>';
-        echo '<script type="application/json" class="attr-keys">' . wp_json_encode($attr_keys) . '</script>';
+        echo '<div class="separate-attrs" data-var-map="' . esc_attr(wp_json_encode($variations_for_js)) . '" data-attr-keys="' . esc_attr(wp_json_encode($attr_keys)) . '">';
 
         foreach ($attributes_terms as $attr_key => $info) {
             echo '<div class="var-attr-group" data-attr="' . esc_attr($attr_key) . '">';

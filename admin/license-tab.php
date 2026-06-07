@@ -19,46 +19,47 @@ class onepaquc_License_Manager
 
     public function handle_license_actions()
     {
-        if (!isset($_POST['onepaquc_license_action']) || !isset($_POST['onepaquc_license_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['onepaquc_license_nonce'])), 'onepaquc_license_nonce')) {
+        if (!isset($_POST['onepaquc_license_action']) || !isset($_POST['onepaquc_license_nonce']) || !is_scalar($_POST['onepaquc_license_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['onepaquc_license_nonce'])), 'onepaquc_license_nonce')) {
+            return;
+        }
+        if (!current_user_can('install_plugins')) {
+            wp_die(esc_html__('You do not have permission to manage plugin licenses.', 'one-page-quick-checkout-for-woocommerce'));
+        }
+
+        $action = is_scalar($_POST['onepaquc_license_action']) ? sanitize_key(wp_unslash($_POST['onepaquc_license_action'])) : '';
+        if (!in_array($action, array('activate', 'deactivate', 'reinstall'), true)) {
             return;
         }
 
-        $action = sanitize_text_field(wp_unslash($_POST['onepaquc_license_action']));
-
-        // Start output buffering to prevent header issues
-        ob_start();
-
         try {
             if ($action === 'activate') {
-                $license_key = isset($_POST['onepaquc_license_key']) ? sanitize_text_field(wp_unslash($_POST['onepaquc_license_key'])) : '';
+                $license_key = isset($_POST['onepaquc_license_key']) && is_scalar($_POST['onepaquc_license_key']) ? sanitize_text_field(wp_unslash($_POST['onepaquc_license_key'])) : '';
 
                 if (empty($license_key)) {
                     $this->set_transient_notice('Please enter a valid license key.', 'error');
-                    return;
+                } else {
+                    $this->activate_license($license_key);
                 }
-
-                $this->activate_license($license_key);
             } elseif ($action === 'deactivate') {
                 $this->deactivate_license();
             } elseif ($action === 'reinstall') {
                 $this->reinstall_pro_plugin();
             }
-        } catch (Exception $e) {
-            $this->set_transient_notice('An error occurred: ' . $e->getMessage(), 'error');
+        } catch (Throwable $throwable) {
+            $this->set_transient_notice('An unexpected error occurred. Please try again.', 'error');
         }
 
-        // Clean output buffer
-        ob_end_clean();
-
-        // Redirect to prevent form resubmission
-        wp_redirect(add_query_arg(array('updated' => 1), wp_get_referer()));
+        // Redirect to prevent form resubmission.
+        $redirect_url = wp_get_referer() ? add_query_arg(array('updated' => 1), wp_get_referer()) : admin_url('admin.php');
+        wp_safe_redirect($redirect_url);
         exit;
     }
 
     private function set_transient_notice($message, $type = 'success')
     {
+        $type = 'error' === $type ? 'error' : 'success';
         set_transient('onepaquc_admin_notice', array(
-            'message' => $message,
+            'message' => sanitize_text_field((string) $message),
             'type' => $type
         ), 30);
     }
@@ -66,8 +67,8 @@ class onepaquc_License_Manager
     public function show_admin_notices()
     {
         $notice = get_transient('onepaquc_admin_notice');
-        if ($notice) {
-            $class = $notice['type'] === 'error' ? 'notice-error' : 'notice-success';
+        if (is_array($notice) && !empty($notice['message'])) {
+            $class = isset($notice['type']) && $notice['type'] === 'error' ? 'notice-error' : 'notice-success';
             echo '<div class="notice ' . esc_attr($class) . ' is-dismissible">';
             echo '<p>' . esc_html($notice['message']) . '</p>';
             echo '</div>';
@@ -96,13 +97,18 @@ class onepaquc_License_Manager
             return;
         }
 
-        $license_data = json_decode(wp_remote_retrieve_body($response));
+        $response_code = wp_remote_retrieve_response_code($response);
+        $license_data  = json_decode(wp_remote_retrieve_body($response));
+        if ($response_code < 200 || $response_code >= 300 || !is_object($license_data)) {
+            $this->set_transient_notice('Invalid response from license server. Please try again.', 'error');
+            return;
+        }
 
-        if ($license_data && $license_data->license == 'valid') {
+        if (isset($license_data->license) && $license_data->license === 'valid') {
             // Step 2: Get version info to get download URL
             $version_info = $this->get_version_info($license_key);
 
-            if ($version_info && isset($version_info->download_link)) {
+            if (is_object($version_info) && !empty($version_info->download_link) && is_string($version_info->download_link)) {
                 // Step 3: Download and install the pro plugin
                 $install_result = $this->download_and_install_pro_plugin($version_info->download_link);
 
@@ -134,7 +140,7 @@ class onepaquc_License_Manager
         // Get version info to get download URL using existing license
         $version_info = $this->get_version_info($license_key);
 
-        if ($version_info && isset($version_info->download_link)) {
+        if (is_object($version_info) && !empty($version_info->download_link) && is_string($version_info->download_link)) {
             // Download and install the pro plugin
             $install_result = $this->download_and_install_pro_plugin($version_info->download_link);
 
@@ -183,11 +189,13 @@ class onepaquc_License_Manager
         if (is_wp_error($response)) {
             $this->set_transient_notice('License removed locally but unable to connect to server. License may still be active on server.', 'error');
         } else {
+            $response_code = wp_remote_retrieve_response_code($response);
             $license_data = json_decode(wp_remote_retrieve_body($response));
-            if ($license_data && $license_data->license == 'deactivated') {
+            if ($response_code >= 200 && $response_code < 300 && is_object($license_data) && isset($license_data->license) && $license_data->license === 'deactivated') {
                 $this->set_transient_notice('License deactivated successfully!', 'success');
             } else {
-                $this->set_transient_notice('License removed locally. Server response: ' . ($license_data->license ?? 'unknown'), 'error');
+                $server_status = is_object($license_data) && isset($license_data->license) ? sanitize_key($license_data->license) : 'unknown';
+                $this->set_transient_notice('License removed locally. Server response: ' . $server_status, 'error');
             }
         }
     }
@@ -207,11 +215,12 @@ class onepaquc_License_Manager
             'user-agent' => 'DAPF/' . (defined('RMENU_VERSION') ? RMENU_VERSION : '1.3.8')
         ));
 
-        if (is_wp_error($response)) {
+        if (is_wp_error($response) || wp_remote_retrieve_response_code($response) < 200 || wp_remote_retrieve_response_code($response) >= 300) {
             return false;
         }
 
-        return json_decode(wp_remote_retrieve_body($response));
+        $version_info = json_decode(wp_remote_retrieve_body($response));
+        return is_object($version_info) ? $version_info : false;
     }
 
     private function remove_existing_plugin_directory()
@@ -226,6 +235,8 @@ class onepaquc_License_Manager
                     return $wp_filesystem->rmdir($plugin_dir, true);
                 }
             }
+
+            return false;
         }
 
         return true;
@@ -234,6 +245,9 @@ class onepaquc_License_Manager
     private function download_and_install_pro_plugin($download_url)
     {
         if (!current_user_can('install_plugins')) {
+            return false;
+        }
+        if (!is_string($download_url) || !wp_http_validate_url($download_url) || 'https' !== wp_parse_url($download_url, PHP_URL_SCHEME)) {
             return false;
         }
 
@@ -252,6 +266,7 @@ class onepaquc_License_Manager
 
         // Step 2: Remove existing plugin directory if it exists
         if (!$this->remove_existing_plugin_directory()) {
+            return false;
         }
 
         // Step 3: Download the plugin zip file
@@ -262,12 +277,13 @@ class onepaquc_License_Manager
         }
 
         // Step 4: Install the plugin using WordPress upgrader with silent skin
-        $upgrader = new Plugin_Upgrader(new Automatic_Upgrader_Skin());
-        $install_result = $upgrader->install($temp_file);
-
-        // Clean up temp file
-        if (file_exists($temp_file)) {
-            wp_delete_file($temp_file);
+        try {
+            $upgrader = new Plugin_Upgrader(new Automatic_Upgrader_Skin());
+            $install_result = $upgrader->install($temp_file);
+        } finally {
+            if (is_string($temp_file) && file_exists($temp_file)) {
+                wp_delete_file($temp_file);
+            }
         }
 
         if (is_wp_error($install_result) || !$install_result) {
@@ -413,20 +429,6 @@ class onepaquc_License_Manager
                     <div style="position: relative;">
                         <input type="password" style="width: 100%;border: 1px solid #eee;padding: 6px;" id="onepaquc_license_key" name="onepaquc_license_key" value="<?php echo esc_attr($license_key); ?>"  placeholder="Enter your license key" />
                         <span id="onepaquc_license_eye" style="vertical-align: middle;margin-left: 8px;position: absolute;right: 0;top: 0;background: #eee;height: 100%;display: flex;align-items: center;justify-content: center;padding: 0 20px;border-radius: 0 2px 2px 0;cursor:pointer;" class="dashicons dashicons-visibility" title="<?php echo esc_attr__('Show license key', 'one-page-quick-checkout-for-woocommerce'); ?>"></span>
-                        <script>
-                            (function() {
-                                var input = document.getElementById('onepaquc_license_key');
-                                var eye = document.getElementById('onepaquc_license_eye');
-                                var visible = false;
-                                eye.addEventListener('click', function() {
-                                    visible = !visible;
-                                    input.type = visible ? 'text' : 'password';
-                                    eye.classList.toggle('dashicons-visibility');
-                                    eye.classList.toggle('dashicons-visibility-alt');
-                                    eye.title = visible ? '<?php echo esc_js(esc_html__('Hide license key', 'one-page-quick-checkout-for-woocommerce')); ?>' : '<?php echo esc_js(esc_html__('Show license key', 'one-page-quick-checkout-for-woocommerce')); ?>';
-                                });
-                            })();
-                        </script>
                     </div>
                     <p class="description"><?php echo esc_html__('Enter your license key to download and activate the Pro version.', 'one-page-quick-checkout-for-woocommerce'); ?></p>
                     <input type="hidden" name="onepaquc_license_action" value="activate" />

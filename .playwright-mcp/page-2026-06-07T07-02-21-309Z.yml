@@ -1,0 +1,810 @@
+- generic [ref=e2]:
+  - navigation "Main menu":
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#wpbody-content"
+    - link "Skip to toolbar" [ref=e4] [cursor=pointer]:
+      - /url: "#wp-toolbar"
+    - list [ref=e7]:
+      - listitem [ref=e8]:
+        - link "Dashboard" [ref=e9] [cursor=pointer]:
+          - /url: index.php
+          - generic [ref=e10]: 
+          - generic [ref=e11]: Dashboard
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Home" [ref=e14] [cursor=pointer]:
+              - /url: index.php
+          - listitem [ref=e15]:
+            - link "Updates" [ref=e16] [cursor=pointer]:
+              - /url: update-core.php
+      - listitem [ref=e17]:
+        - link "Astra" [ref=e18] [cursor=pointer]:
+          - /url: admin.php?page=astra
+          - generic [ref=e20]: Astra
+        - list [ref=e21]:
+          - listitem [ref=e22]:
+            - link "Dashboard" [ref=e23] [cursor=pointer]:
+              - /url: admin.php?page=astra
+          - listitem [ref=e24]:
+            - link "Customize" [ref=e25] [cursor=pointer]:
+              - /url: customize.php
+          - listitem [ref=e26]:
+            - link "Site Builder" [ref=e27] [cursor=pointer]:
+              - /url: admin.php?page=theme-builder-free
+          - listitem [ref=e28]:
+            - link "WooCommerce" [ref=e29] [cursor=pointer]:
+              - /url: admin.php?page=astra&path=woocommerce
+          - listitem [ref=e30]:
+            - link "Learn 6" [ref=e31] [cursor=pointer]:
+              - /url: admin.php?page=astra&path=learn
+              - text: Learn
+              - generic [ref=e32]: "6"
+      - listitem [ref=e33]:
+        - link "Elementor" [ref=e34] [cursor=pointer]:
+          - /url: admin.php?page=elementor-home
+          - generic [ref=e36]: Elementor
+        - list [ref=e37]:
+          - listitem [ref=e38]:
+            - link "Home" [ref=e39] [cursor=pointer]:
+              - /url: admin.php?page=elementor-home
+          - listitem [ref=e40]:
+            - link "Editor" [ref=e41] [cursor=pointer]:
+              - /url: admin.php?page=elementor
+          - listitem [ref=e42]:
+            - link "Upgrade" [ref=e43] [cursor=pointer]:
+              - /url: admin.php?page=elementor-one-upgrade
+      - listitem [ref=e44]
+      - listitem [ref=e46]:
+        - link "Posts" [ref=e47] [cursor=pointer]:
+          - /url: edit.php
+          - generic [ref=e48]: 
+          - generic [ref=e49]: Posts
+        - list [ref=e50]:
+          - listitem [ref=e51]:
+            - link "All Posts" [ref=e52] [cursor=pointer]:
+              - /url: edit.php
+          - listitem [ref=e53]:
+            - link "Add Post" [ref=e54] [cursor=pointer]:
+              - /url: post-new.php
+          - listitem [ref=e55]:
+            - link "Categories" [ref=e56] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=category
+          - listitem [ref=e57]:
+            - link "Tags" [ref=e58] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=post_tag
+      - listitem [ref=e59]:
+        - link "Media" [ref=e60] [cursor=pointer]:
+          - /url: upload.php
+          - generic [ref=e61]: 
+          - generic [ref=e62]: Media
+        - list [ref=e63]:
+          - listitem [ref=e64]:
+            - link "Library" [ref=e65] [cursor=pointer]:
+              - /url: upload.php
+          - listitem [ref=e66]:
+            - link "Add Media File" [ref=e67] [cursor=pointer]:
+              - /url: media-new.php
+      - listitem [ref=e68]:
+        - link "Pages" [ref=e69] [cursor=pointer]:
+          - /url: edit.php?post_type=page
+          - generic [ref=e70]: 
+          - generic [ref=e71]: Pages
+        - list [ref=e72]:
+          - listitem [ref=e73]:
+            - link "All Pages" [ref=e74] [cursor=pointer]:
+              - /url: edit.php?post_type=page
+          - listitem [ref=e75]:
+            - link "Add Page" [ref=e76] [cursor=pointer]:
+              - /url: post-new.php?post_type=page
+      - listitem [ref=e77]:
+        - link "Comments" [ref=e78] [cursor=pointer]:
+          - /url: edit-comments.php
+          - generic [ref=e79]: 
+          - generic [ref=e80]: Comments
+      - text: 
+      - listitem [ref=e81]:
+        - link "Spectra" [ref=e82] [cursor=pointer]:
+          - /url: admin.php?page=spectra
+          - generic [ref=e84]: Spectra
+        - list [ref=e85]:
+          - listitem [ref=e86]:
+            - link "Dashboard" [ref=e87] [cursor=pointer]:
+              - /url: admin.php?page=spectra
+          - listitem [ref=e88]:
+            - link "Blocks" [ref=e89] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=blocks
+          - listitem [ref=e90]:
+            - link "Popup Builder" [ref=e91] [cursor=pointer]:
+              - /url: edit.php?post_type=spectra-popup
+          - listitem [ref=e92]:
+            - link "AI Features" [ref=e93] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=ai-features
+          - listitem [ref=e94]:
+            - link "Settings" [ref=e95] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=settings
+          - listitem [ref=e96]:
+            - link "Learn" [ref=e97] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=learn
+          - listitem [ref=e98]:
+            - link "Get Spectra Pro" [ref=e99] [cursor=pointer]:
+              - /url: admin.php?page=spectra&path=free-vs-pro
+      - listitem [ref=e100]
+      - listitem [ref=e102]:
+        - link "WooCommerce" [ref=e103] [cursor=pointer]:
+          - /url: admin.php?page=wc-admin
+          - generic [ref=e105]: WooCommerce
+        - list [ref=e106]:
+          - listitem [ref=e107]:
+            - link "Home 1" [ref=e108] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin
+              - text: Home
+              - generic [ref=e109]: "1"
+          - listitem [ref=e110]:
+            - link "Orders 38" [ref=e111] [cursor=pointer]:
+              - /url: admin.php?page=wc-orders
+              - text: Orders
+              - generic [ref=e112]: "38"
+          - listitem [ref=e113]:
+            - link "Customers" [ref=e114] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/customers
+          - listitem [ref=e115]:
+            - link "Coupons" [ref=e116] [cursor=pointer]:
+              - /url: admin.php?page=coupons-moved
+          - listitem [ref=e117]:
+            - link "Reports" [ref=e118] [cursor=pointer]:
+              - /url: admin.php?page=wc-reports
+          - listitem [ref=e119]:
+            - link "Settings" [ref=e120] [cursor=pointer]:
+              - /url: admin.php?page=wc-settings
+          - listitem [ref=e121]:
+            - link "Status" [ref=e122] [cursor=pointer]:
+              - /url: admin.php?page=wc-status
+          - listitem [ref=e123]:
+            - link "Extensions" [ref=e124] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/extensions
+      - listitem [ref=e125]:
+        - link "Products" [ref=e126] [cursor=pointer]:
+          - /url: edit.php?post_type=product
+          - generic [ref=e127]: 
+          - generic [ref=e128]: Products
+        - list [ref=e129]:
+          - listitem [ref=e130]:
+            - link "All Products" [ref=e131] [cursor=pointer]:
+              - /url: edit.php?post_type=product
+          - listitem [ref=e132]:
+            - link "Add new product" [ref=e133] [cursor=pointer]:
+              - /url: post-new.php?post_type=product
+          - listitem [ref=e134]:
+            - link "Brands" [ref=e135] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=product_brand&post_type=product
+          - listitem [ref=e136]:
+            - link "Categories" [ref=e137] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=product_cat&post_type=product
+          - listitem [ref=e138]:
+            - link "Tags" [ref=e139] [cursor=pointer]:
+              - /url: edit-tags.php?taxonomy=product_tag&post_type=product
+          - listitem [ref=e140]:
+            - link "Attributes" [ref=e141] [cursor=pointer]:
+              - /url: edit.php?post_type=product&page=product_attributes
+          - listitem [ref=e142]:
+            - link "Reviews" [ref=e143] [cursor=pointer]:
+              - /url: edit.php?post_type=product&page=product-reviews
+      - listitem [ref=e144]:
+        - link "Onpage Checkout" [ref=e145] [cursor=pointer]:
+          - /url: admin.php?page=onepaquc_cart
+          - generic [ref=e146]: 
+          - generic [ref=e147]: Onpage Checkout
+        - list [ref=e148]:
+          - listitem [ref=e149]:
+            - link "Onpage Checkout" [ref=e150] [cursor=pointer]:
+              - /url: admin.php?page=onepaquc_cart
+          - listitem [ref=e151]:
+            - link "Cart Recovery NEW!" [ref=e152] [cursor=pointer]:
+              - /url: admin.php?page=onepaqucpro_cart_recovery
+              - text: Cart Recovery
+              - generic [ref=e153]: NEW!
+          - listitem
+          - listitem [ref=e154]:
+            - link "Documentation" [ref=e155] [cursor=pointer]:
+              - /url: admin.php?page=onepaquc_cart_documentation
+          - listitem [ref=e156]:
+            - link "Get Pro" [ref=e157] [cursor=pointer]:
+              - /url: admin.php?page=onepaquc_cart_get_pro
+      - listitem [ref=e158]:
+        - link "Payments" [ref=e159] [cursor=pointer]:
+          - /url: admin.php?page=wc-settings&tab=checkout&from=PAYMENTS_MENU_ITEM
+          - generic [ref=e161]: Payments
+      - listitem [ref=e162]:
+        - link "Analytics" [ref=e163] [cursor=pointer]:
+          - /url: admin.php?page=wc-admin&path=/analytics/overview
+          - generic [ref=e164]: 
+          - generic [ref=e165]: Analytics
+        - list [ref=e166]:
+          - listitem [ref=e167]:
+            - link "Overview" [ref=e168] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/overview
+          - listitem [ref=e169]:
+            - link "Products" [ref=e170] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/products
+          - listitem [ref=e171]:
+            - link "Revenue" [ref=e172] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/revenue
+          - listitem [ref=e173]:
+            - link "Orders" [ref=e174] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/orders
+          - listitem [ref=e175]:
+            - link "Variations" [ref=e176] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/variations
+          - listitem [ref=e177]:
+            - link "Categories" [ref=e178] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/categories
+          - listitem [ref=e179]:
+            - link "Coupons" [ref=e180] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/coupons
+          - listitem [ref=e181]:
+            - link "Taxes" [ref=e182] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/taxes
+          - listitem [ref=e183]:
+            - link "Downloads" [ref=e184] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/downloads
+          - listitem [ref=e185]:
+            - link "Stock" [ref=e186] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/stock
+          - listitem [ref=e187]:
+            - link "Settings" [ref=e188] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/analytics/settings
+      - listitem [ref=e189]:
+        - link "Marketing" [ref=e190] [cursor=pointer]:
+          - /url: admin.php?page=wc-admin&path=/marketing
+          - generic [ref=e191]: 
+          - generic [ref=e192]: Marketing
+        - list [ref=e193]:
+          - listitem [ref=e194]:
+            - link "Overview" [ref=e195] [cursor=pointer]:
+              - /url: admin.php?page=wc-admin&path=/marketing
+          - listitem [ref=e196]:
+            - link "Coupons" [ref=e197] [cursor=pointer]:
+              - /url: edit.php?post_type=shop_coupon
+      - text: 
+      - listitem [ref=e198]
+      - listitem [ref=e200]:
+        - link "Appearance" [ref=e201] [cursor=pointer]:
+          - /url: themes.php
+          - generic [ref=e202]: 
+          - generic [ref=e203]: Appearance
+        - list [ref=e204]:
+          - listitem [ref=e205]:
+            - link "Themes" [ref=e206] [cursor=pointer]:
+              - /url: themes.php
+          - listitem [ref=e207]:
+            - link "Design" [ref=e208] [cursor=pointer]:
+              - /url: site-editor.php
+          - listitem [ref=e209]:
+            - link "Customize" [ref=e210] [cursor=pointer]:
+              - /url: customize.php?return=%2Fwp-admin%2Fadmin.php%3Fpage%3Donepaquc_cart
+          - listitem [ref=e211]:
+            - link "Widgets" [ref=e212] [cursor=pointer]:
+              - /url: widgets.php
+          - listitem [ref=e213]:
+            - link "Fonts" [ref=e214] [cursor=pointer]:
+              - /url: font-library.php
+          - listitem [ref=e215]:
+            - link "Menus" [ref=e216] [cursor=pointer]:
+              - /url: nav-menus.php
+          - listitem [ref=e217]:
+            - link "Theme File Editor" [ref=e218] [cursor=pointer]:
+              - /url: theme-editor.php
+      - listitem [ref=e219]:
+        - link "Plugins" [ref=e220] [cursor=pointer]:
+          - /url: plugins.php
+          - generic [ref=e221]: 
+          - generic [ref=e222]: Plugins
+        - list [ref=e223]:
+          - listitem [ref=e224]:
+            - link "Installed Plugins" [ref=e225] [cursor=pointer]:
+              - /url: plugins.php
+          - listitem [ref=e226]:
+            - link "Add Plugin" [ref=e227] [cursor=pointer]:
+              - /url: plugin-install.php
+          - listitem [ref=e228]:
+            - link "Plugin File Editor" [ref=e229] [cursor=pointer]:
+              - /url: plugin-editor.php
+      - listitem [ref=e230]:
+        - link "Users" [ref=e231] [cursor=pointer]:
+          - /url: users.php
+          - generic [ref=e232]: 
+          - generic [ref=e233]: Users
+        - list [ref=e234]:
+          - listitem [ref=e235]:
+            - link "All Users" [ref=e236] [cursor=pointer]:
+              - /url: users.php
+          - listitem [ref=e237]:
+            - link "Add User" [ref=e238] [cursor=pointer]:
+              - /url: user-new.php
+          - listitem [ref=e239]:
+            - link "Profile" [ref=e240] [cursor=pointer]:
+              - /url: profile.php
+      - listitem [ref=e241]:
+        - link "Tools" [ref=e242] [cursor=pointer]:
+          - /url: tools.php
+          - generic [ref=e243]: 
+          - generic [ref=e244]: Tools
+        - list [ref=e245]:
+          - listitem [ref=e246]:
+            - link "Available Tools" [ref=e247] [cursor=pointer]:
+              - /url: tools.php
+          - listitem [ref=e248]:
+            - link "Import" [ref=e249] [cursor=pointer]:
+              - /url: import.php
+          - listitem [ref=e250]:
+            - link "Export" [ref=e251] [cursor=pointer]:
+              - /url: export.php
+          - listitem [ref=e252]:
+            - link "Site Health 1" [ref=e253] [cursor=pointer]:
+              - /url: site-health.php
+              - text: Site Health
+              - generic [ref=e254]: "1"
+          - listitem [ref=e255]:
+            - link "Export Personal Data" [ref=e256] [cursor=pointer]:
+              - /url: export-personal-data.php
+          - listitem [ref=e257]:
+            - link "Erase Personal Data" [ref=e258] [cursor=pointer]:
+              - /url: erase-personal-data.php
+          - listitem [ref=e259]:
+            - link "Plugin Check" [ref=e260] [cursor=pointer]:
+              - /url: tools.php?page=plugin-check
+          - listitem [ref=e261]:
+            - link "Plugin Check Namer" [ref=e262] [cursor=pointer]:
+              - /url: tools.php?page=plugin-check-namer
+          - listitem [ref=e263]:
+            - link "Scheduled Actions" [ref=e264] [cursor=pointer]:
+              - /url: tools.php?page=action-scheduler
+      - listitem [ref=e265]:
+        - link "Settings" [ref=e266] [cursor=pointer]:
+          - /url: options-general.php
+          - generic [ref=e267]: 
+          - generic [ref=e268]: Settings
+        - list [ref=e269]:
+          - listitem [ref=e270]:
+            - link "General" [ref=e271] [cursor=pointer]:
+              - /url: options-general.php
+          - listitem [ref=e272]:
+            - link "Connectors" [ref=e273] [cursor=pointer]:
+              - /url: options-connectors.php
+          - listitem [ref=e274]:
+            - link "Writing" [ref=e275] [cursor=pointer]:
+              - /url: options-writing.php
+          - listitem [ref=e276]:
+            - link "Reading" [ref=e277] [cursor=pointer]:
+              - /url: options-reading.php
+          - listitem [ref=e278]:
+            - link "Discussion" [ref=e279] [cursor=pointer]:
+              - /url: options-discussion.php
+          - listitem [ref=e280]:
+            - link "Media" [ref=e281] [cursor=pointer]:
+              - /url: options-media.php
+          - listitem [ref=e282]:
+            - link "Permalinks" [ref=e283] [cursor=pointer]:
+              - /url: options-permalink.php
+          - listitem [ref=e284]:
+            - link "Privacy" [ref=e285] [cursor=pointer]:
+              - /url: options-privacy.php
+          - listitem [ref=e286]:
+            - link "Plugin Check" [ref=e287] [cursor=pointer]:
+              - /url: options-general.php?page=plugin-check-settings
+      - listitem [ref=e288]
+      - text: 
+      - listitem [ref=e290]:
+        - link "Loco Translate" [ref=e291] [cursor=pointer]:
+          - /url: admin.php?page=loco
+          - generic [ref=e292]: 
+          - generic [ref=e293]: Loco Translate
+        - list [ref=e294]:
+          - listitem [ref=e295]:
+            - link "Home" [ref=e296] [cursor=pointer]:
+              - /url: admin.php?page=loco
+          - listitem [ref=e297]:
+            - link "Themes" [ref=e298] [cursor=pointer]:
+              - /url: admin.php?page=loco-theme
+          - listitem [ref=e299]:
+            - link "Plugins" [ref=e300] [cursor=pointer]:
+              - /url: admin.php?page=loco-plugin
+          - listitem [ref=e301]:
+            - link "WordPress" [ref=e302] [cursor=pointer]:
+              - /url: admin.php?page=loco-core
+          - listitem [ref=e303]:
+            - link "Languages" [ref=e304] [cursor=pointer]:
+              - /url: admin.php?page=loco-lang
+          - listitem [ref=e305]:
+            - link "Settings" [ref=e306] [cursor=pointer]:
+              - /url: admin.php?page=loco-config
+          - listitem [ref=e307]:
+            - link "Debug" [ref=e308] [cursor=pointer]:
+              - /url: admin.php?page=loco-debug
+      - listitem [ref=e309]:
+        - button "Collapse Main menu" [expanded] [ref=e310] [cursor=pointer]:
+          - generic [ref=e312]: Collapse Menu
+  - generic [ref=e313]:
+    - generic [ref=e314]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=e315]:
+            - menuitem "About WordPress" [ref=e316] [cursor=pointer]:
+              - generic [ref=e318]: About WordPress
+          - group [ref=e319]:
+            - menuitem "plugincy on page checkout" [ref=e320] [cursor=pointer]
+          - group [ref=e321]:
+            - menuitem "Live" [ref=e322] [cursor=pointer]
+          - group [ref=e323]:
+            - menuitem "Ctrl+K Open command palette" [ref=e324] [cursor=pointer]:
+              - generic [ref=e326]:
+                - text: Ctrl+K
+                - generic [ref=e327]: Open command palette
+          - group [ref=e328]:
+            - menuitem "0 Comments in moderation" [ref=e329] [cursor=pointer]:
+              - generic [ref=e331]: "0"
+              - generic [ref=e332]: 0 Comments in moderation
+          - group [ref=e333]:
+            - menuitem "New" [ref=e334] [cursor=pointer]:
+              - generic [ref=e336]: New
+        - menu [ref=e337]:
+          - group [ref=e338]:
+            - menuitem [ref=e339] [cursor=pointer]:
+              - img [ref=e341]
+          - group [ref=e345]:
+            - menuitem "Howdy, admin" [ref=e346] [cursor=pointer]
+    - main [ref=e347]:
+      - generic [ref=e348]:
+        - generic [ref=e349]:
+          - generic [ref=e350]:
+            - text: Welcome to One Page Quick Checkout for WooCommerce
+            - generic [ref=e351]: v1.3.8
+          - paragraph [ref=e352]: Thank you for installing One Page Quick Checkout for WooCommerce! Streamline your WooCommerce checkout process and boost your conversion rates with our easy-to-configure solution.
+          - generic [ref=e353]:
+            - generic [ref=e354]:
+              - img [ref=e356]
+              - heading "Fast Setup" [level=3] [ref=e358]
+              - paragraph [ref=e359]: Configure your checkout in minutes with our intuitive options.
+            - generic [ref=e360]:
+              - img [ref=e362]
+              - heading "Mobile Friendly" [level=3] [ref=e364]
+              - paragraph [ref=e365]: Responsive design works perfectly on all devices.
+            - generic [ref=e366]:
+              - img [ref=e368]
+              - heading "Payment Gateways" [level=3] [ref=e371]
+              - paragraph [ref=e372]: Supports all major payment processors.
+          - generic [ref=e373]:
+            - link " Upgrade to Pro" [ref=e374] [cursor=pointer]:
+              - /url: https://plugincy.com/one-page-quick-checkout-for-woocommerce/
+              - generic [ref=e375]: 
+              - text: Upgrade to Pro
+            - link " View Demo" [ref=e376] [cursor=pointer]:
+              - /url: https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/
+              - generic [ref=e377]: 
+              - text: View Demo
+            - link " View Documentation" [ref=e378] [cursor=pointer]:
+              - /url: https://plugincy.com/documentations/one-page-quick-checkout-for-woocommerce/
+              - generic [ref=e379]: 
+              - text: View Documentation
+            - link " Get Support" [ref=e380] [cursor=pointer]:
+              - /url: https://plugincy.com/support
+              - generic [ref=e381]: 
+              - text: Get Support
+        - heading "Dashboard" [level=1] [ref=e382]
+        - generic [ref=e383]:
+          - generic [ref=e384] [cursor=pointer]:
+            - generic [ref=e385]:
+              - generic [ref=e386]: 
+              - text: Direct Checkout
+            - generic [ref=e387]:
+              - generic [ref=e388]: 
+              - text: One Page Checkout
+            - generic [ref=e389]:
+              - generic [ref=e390]: 
+              - text: Floating Cart
+            - generic [ref=e391]:
+              - generic [ref=e392]: 
+              - text: Quick View
+            - generic [ref=e393]:
+              - generic [ref=e394]: 
+              - text: Features
+            - generic [ref=e395]:
+              - generic [ref=e396]: 
+              - text: Add To Cart
+            - generic [ref=e397]:
+              - generic [ref=e398]: 
+              - text: Checkout Form
+            - generic [ref=e399]:
+              - generic [ref=e400]: 
+              - text: Text Manage
+            - generic [ref=e401]:
+              - generic [ref=e402]: 
+              - text: Advanced Settings
+            - generic [ref=e403]:
+              - generic [ref=e404]: 
+              - text: Plugin License
+          - text:  
+          - generic [ref=e405]:
+            - text: "                                                                                                      : :   "
+            - generic [ref=e406]:
+              - generic [ref=e407]:
+                - heading "WooCommerce Direct Checkout Enable direct checkout to allow customers to bypass the cart and proceed directly to checkout, streamlining the purchasing process." [level=2] [ref=e408]:
+                  - img [ref=e410]
+                  - generic [ref=e412]:
+                    - text: WooCommerce Direct Checkout
+                    - paragraph [ref=e413]: Enable direct checkout to allow customers to bypass the cart and proceed directly to checkout, streamlining the purchasing process.
+                - list [ref=e415]:
+                  - listitem [ref=e416] [cursor=pointer]:
+                    - generic [ref=e417]: 
+                    - text: General Settings
+                  - listitem [ref=e418] [cursor=pointer]:
+                    - generic [ref=e419]: 
+                    - text: Advanced
+              - text:      
+            - text:                                   
+            - button "Save Changes" [ref=e421] [cursor=pointer]:
+              - img [ref=e423]
+              - generic [ref=e425]: Save Changes
+          - generic [ref=e426]:
+            - heading " Tutorials Learn how to use our plugin features with these step-by-step video tutorials." [level=2] [ref=e428]:
+              - generic [ref=e430]: 
+              - generic [ref=e431]:
+                - text: Tutorials
+                - paragraph [ref=e432]: Learn how to use our plugin features with these step-by-step video tutorials.
+            - generic [ref=e433]:
+              - generic [ref=e434]:
+                - iframe [ref=e436]:
+                  - generic [active] [ref=f55e1]:
+                    - generic "YouTube Video Player" [ref=f55e3]
+                    - generic [ref=f55e6]:
+                      - generic:
+                        - generic:
+                          - button "Hide player controls" [ref=f55e7] [cursor=pointer]
+                          - generic [ref=f55e9]:
+                            - generic:
+                              - generic [ref=f55e12]:
+                                - generic [ref=f55e14]:
+                                  - generic [ref=f55e15]:
+                                    - link "Buy now button" [ref=f55e16] [cursor=pointer]:
+                                      - /url: https://www.youtube.com/watch?v=IJU9EEIT8MA
+                                    - link "Plugincy" [ref=f55e17] [cursor=pointer]:
+                                      - /url: /channel/UCFXtocniAR6iuedWNvmcn5w
+                                      - generic [ref=f55e18]: Plugincy
+                                  - generic [ref=f55e19]:
+                                    - button [ref=f55e20] [cursor=pointer]
+                                    - generic [ref=f55e22]:
+                                      - generic: Plugincy
+                                      - generic: 1.01k subscribers
+                                - generic [ref=f55e23]:
+                                  - button "Unmute" [ref=f55e25] [cursor=pointer]:
+                                    - img "Unmute" [ref=f55e26]
+                                  - button "Playback settings" [ref=f55e28] [cursor=pointer]:
+                                    - generic [ref=f55e31]:
+                                      - img
+                              - generic [ref=f55e32]:
+                                - generic:
+                                  - generic:
+                                    - button "Previous video"
+                                  - button "Rewind 10 seconds"
+                                  - generic:
+                                    - button "Play video":
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - img
+                                  - button "Fast-forward 10 seconds"
+                                  - generic:
+                                    - button "Next video" [disabled]
+                            - generic:
+                              - generic:
+                                - generic [ref=f55e38]:
+                                  - generic [ref=f55e39]:
+                                    - text: 0:00
+                                    - generic [ref=f55e40]: Time elapsed
+                                  - text: /
+                                  - generic [ref=f55e41]:
+                                    - text: 0:40
+                                    - generic [ref=f55e42]: Time duration 40 seconds
+                                - button "Enter full screen" [ref=f55e46] [cursor=pointer]
+                            - slider "Seek slider" [ref=f55e50] [cursor=pointer]
+                            - generic [ref=f55e57]:
+                              - button "Share" [ref=f55e60] [cursor=pointer]:
+                                - generic [ref=f55e64]:
+                                  - img
+                              - link "Watch on YouTube" [ref=f55e71] [cursor=pointer]:
+                                - /url: https://www.youtube.com/watch?v=IJU9EEIT8MA
+                                - img [ref=f55e75]:
+                                  - generic [ref=f55e77]:
+                                    - img
+                - heading "Buy Now Button" [level=3] [ref=e437]
+                - paragraph [ref=e438]: Transform your WooCommerce store with instant purchase buttons that bypass the traditional cart process. Our plugin automatically adds buy now buttons on single product and archive pages, but you have complete control over placement and customization.
+                - generic [ref=e439]:
+                  - heading "Basic Shortcode:" [level=4] [ref=e440]
+                  - code [ref=e441]: "[onepaquc_button]"
+                  - paragraph [ref=e442]: This shortcode will display a buy now button for the current product when used on product pages.
+              - generic [ref=e443]:
+                - iframe [ref=e445]:
+                  - generic [active] [ref=f56e1]:
+                    - generic "YouTube Video Player" [ref=f56e3]
+                    - generic [ref=f56e6]:
+                      - generic:
+                        - generic:
+                          - button "Hide player controls" [ref=f56e7] [cursor=pointer]
+                          - generic [ref=f56e9]:
+                            - generic:
+                              - generic [ref=f56e12]:
+                                - generic [ref=f56e14]:
+                                  - generic [ref=f56e15]:
+                                    - link "Buy now in product table" [ref=f56e16] [cursor=pointer]:
+                                      - /url: https://www.youtube.com/watch?v=FY_-CSI03vk
+                                    - link "Plugincy" [ref=f56e17] [cursor=pointer]:
+                                      - /url: /channel/UCFXtocniAR6iuedWNvmcn5w
+                                      - generic [ref=f56e18]: Plugincy
+                                  - generic [ref=f56e19]:
+                                    - button [ref=f56e20] [cursor=pointer]
+                                    - generic [ref=f56e22]:
+                                      - generic: Plugincy
+                                      - generic: 1.01k subscribers
+                                - generic [ref=f56e23]:
+                                  - button "Unmute" [ref=f56e25] [cursor=pointer]:
+                                    - img "Unmute" [ref=f56e26]
+                                  - button "Playback settings" [ref=f56e28] [cursor=pointer]:
+                                    - generic [ref=f56e31]:
+                                      - img
+                              - generic [ref=f56e32]:
+                                - generic:
+                                  - generic:
+                                    - button "Previous video"
+                                  - button "Rewind 10 seconds"
+                                  - generic:
+                                    - button "Play video":
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - img
+                                  - button "Fast-forward 10 seconds"
+                                  - generic:
+                                    - button "Next video" [disabled]
+                            - generic:
+                              - generic:
+                                - generic [ref=f56e38]:
+                                  - generic [ref=f56e39]:
+                                    - text: 0:00
+                                    - generic [ref=f56e40]: Time elapsed
+                                  - text: /
+                                  - generic [ref=f56e41]:
+                                    - text: 0:54
+                                    - generic [ref=f56e42]: Time duration 54 seconds
+                                - button "Enter full screen" [ref=f56e46] [cursor=pointer]
+                            - slider "Seek slider" [ref=f56e50] [cursor=pointer]
+                            - generic [ref=f56e57]:
+                              - button "Share" [ref=f56e60] [cursor=pointer]:
+                                - generic [ref=f56e64]:
+                                  - img
+                              - link "Watch on YouTube" [ref=f56e71] [cursor=pointer]:
+                                - /url: https://www.youtube.com/watch?v=FY_-CSI03vk
+                                - img [ref=f56e75]:
+                                  - generic [ref=f56e77]:
+                                    - img
+                - heading "Buy Now Button Anywhere" [level=3] [ref=e446]
+                - paragraph [ref=e447]:
+                  - text: You can use
+                  - strong [ref=e448]: buy now button
+                  - text: anywhere on your
+                  - strong [ref=e449]: site
+                  - text: with this
+                  - strong [ref=e450]: shortcode
+                  - text: .
+                - generic [ref=e451]:
+                  - heading "Shortcode:" [level=4] [ref=e452]
+                  - code [ref=e453]: "[onepaquc_button product_id=\"123\" variation_id=\"456\" qty=\"2\"]"
+                - generic [ref=e454]:
+                  - heading "Tips:" [level=4] [ref=e455]
+                  - paragraph [ref=e456]: Use our widget or block (Buy Now Button) for easier implementation.
+              - generic [ref=e457]:
+                - iframe [ref=e459]:
+                  - generic [active] [ref=f57e1]:
+                    - generic "YouTube Video Player" [ref=f57e3]
+                    - generic [ref=f57e6]:
+                      - generic:
+                        - generic:
+                          - button "Hide player controls" [ref=f57e7] [cursor=pointer]
+                          - generic [ref=f57e9]:
+                            - generic:
+                              - generic [ref=f57e12]:
+                                - generic [ref=f57e14]:
+                                  - generic [ref=f57e15]:
+                                    - link "One Page Checkout" [ref=f57e16] [cursor=pointer]:
+                                      - /url: https://www.youtube.com/watch?v=nXmUvcNzDb8
+                                    - link "Plugincy" [ref=f57e17] [cursor=pointer]:
+                                      - /url: /channel/UCFXtocniAR6iuedWNvmcn5w
+                                      - generic [ref=f57e18]: Plugincy
+                                  - generic [ref=f57e19]:
+                                    - button [ref=f57e20] [cursor=pointer]
+                                    - generic [ref=f57e22]:
+                                      - generic: Plugincy
+                                      - generic: 1.01k subscribers
+                                - generic [ref=f57e23]:
+                                  - button "Unmute" [ref=f57e25] [cursor=pointer]:
+                                    - img "Unmute" [ref=f57e26]
+                                  - button "Playback settings" [ref=f57e28] [cursor=pointer]:
+                                    - generic [ref=f57e31]:
+                                      - img
+                              - generic [ref=f57e32]:
+                                - generic:
+                                  - generic:
+                                    - button "Previous video"
+                                  - button "Rewind 10 seconds"
+                                  - generic:
+                                    - button "Play video":
+                                      - generic:
+                                        - generic:
+                                          - generic:
+                                            - img
+                                  - button "Fast-forward 10 seconds"
+                                  - generic:
+                                    - button "Next video" [disabled]
+                            - generic:
+                              - generic:
+                                - generic [ref=f57e38]:
+                                  - generic [ref=f57e39]:
+                                    - text: 0:00
+                                    - generic [ref=f57e40]: Time elapsed
+                                  - text: /
+                                  - generic [ref=f57e41]:
+                                    - text: 0:29
+                                    - generic [ref=f57e42]: Time duration 29 seconds
+                                - button "Enter full screen" [ref=f57e46] [cursor=pointer]
+                            - slider "Seek slider" [ref=f57e50] [cursor=pointer]
+                            - generic [ref=f57e57]:
+                              - button "Share" [ref=f57e60] [cursor=pointer]:
+                                - generic [ref=f57e64]:
+                                  - img
+                              - link "Watch on YouTube" [ref=f57e71] [cursor=pointer]:
+                                - /url: https://www.youtube.com/watch?v=nXmUvcNzDb8
+                                - img [ref=f57e75]:
+                                  - generic [ref=f57e77]:
+                                    - img
+                - heading "One Page Checkout" [level=3] [ref=e460]
+                - paragraph [ref=e461]:
+                  - text: You can use
+                  - strong [ref=e462]: buy now button
+                  - text: anywhere on your
+                  - strong [ref=e463]: site
+                  - text: with this
+                  - strong [ref=e464]: shortcode
+                  - text: .
+                - generic [ref=e465]:
+                  - heading "Shortcode:" [level=4] [ref=e466]
+                  - code [ref=e467]: "[onepaquc_checkout product_id=\"123\" variation_id=\"456\" qty=\"2\" clear_cart=\"yes\" auto_add=\"yes\"]"
+                - generic [ref=e468]:
+                  - heading "Tips:" [level=4] [ref=e469]
+                  - paragraph [ref=e470]: Use our widget or block (One-page checkout) for easier implementation.
+              - generic [ref=e471]:
+                - iframe [ref=e473]:
+                  - generic "YouTube Video Player" [ref=f58e3]
+                - heading "Floating Cart" [level=3] [ref=e474]
+                - paragraph [ref=e475]:
+                  - text: A
+                  - strong [ref=e476]: modern
+                  - text: ","
+                  - strong [ref=e477]: stylish
+                  - strong [ref=e478]: side-drawer cart
+                  - text: that users can access from
+                  - strong [ref=e479]: any page
+                  - text: for improved convenience.
+                - generic [ref=e480]:
+                  - heading "Floating Cart Benefits:" [level=4] [ref=e481]
+                  - list [ref=e482]:
+                    - listitem [ref=e483]:
+                      - strong [ref=e484]: "Reduced Abandonment:"
+                      - text: Customers can review their cart without losing their place on your site
+                    - listitem [ref=e485]:
+                      - strong [ref=e486]: "Improved UX:"
+                      - text: No page reloads or redirects needed to manage cart contents
+                    - listitem [ref=e487]:
+                      - strong [ref=e488]: "Mobile Friendly:"
+                      - text: Touch-optimized interface perfect for mobile shopping
+                    - listitem [ref=e489]:
+                      - strong [ref=e490]: "Sales Boost:"
+                      - text: Easy access to cart encourages completion of purchases

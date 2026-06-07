@@ -18,7 +18,7 @@ function onepaquc_checkout_form_block_register() {
 		'onepaquc-checkout-form-block',
 		plugins_url( 'checkout_form_block.js', __FILE__ ),
 		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor' ),
-		filemtime( plugin_dir_path( __FILE__ ) . 'checkout_form_block.js' ),
+		onepaquc_asset_version( 'includes/blocks/checkout_form_block.js' ),
 		true
 	);
 

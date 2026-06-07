@@ -75,6 +75,7 @@ if (!defined('ABSPATH')) exit;
                                     <?php foreach ($attributes as $attribute) {
 
                                         $terms = wc_get_product_terms($product_id, $attribute->get_name(), ['fields' => 'names']);
+                                        $terms = is_wp_error($terms) || !is_array($terms) ? array() : $terms;
                                         if (!empty($terms)) {
                                             echo '<li>' . esc_html(wc_attribute_label($attribute->get_name())) . ': ' . esc_html(implode(', ', $terms)) . '</li>';
                                         }

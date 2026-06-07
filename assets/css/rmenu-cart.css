@@ -10,13 +10,32 @@ html {
 }
 .rwc_cart-button {
   /* WordPress blue */
-  color: white;
+  color: var(--cart-text, #fff);
+  background: var(--cart-bg, #96588a);
   border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
+  border-radius: var(--cart-radius, 5px);
+  padding: var(--cart-padding, 10px 15px);
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: var(--cart-width, auto);
+  height: var(--cart-height, auto);
+  transition: all 0.3s ease;
+}
+
+.plugincy_pos_,
+.plugincy_pos_fixed {
+  position: fixed;
+  top: var(--cart-top, 50%);
+  left: var(--cart-left, 100%);
+  z-index: 999;
+}
+
+.plugincy_pos_:hover,
+.plugincy_pos_fixed:hover {
+  background: var(--cart-hover-bg, #f8f8f8);
+  color: var(--cart-hover-text, #000);
 }
 
 .cart-icon {
@@ -2063,4 +2082,125 @@ button#place_order {
 
 a.remove-item-checkout {
   cursor: pointer;
+}
+.onepaquc-checkout-loading {
+    overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+body.onepaquc-hide-cart-drawer .cart-drawer {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+body.onepaquc-hide-cart-drawer-checkout .cart-drawer,
+body.onepaquc-hide-cart-drawer-checkout .overlay {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    display: none !important;
+}
+
+body.onepaquc-hide-cart-drawer-checkout {
+    overflow: auto !important;
+}
+
+.product-comparison-table .feature-column {
+  width: 20%;
+  min-width: 120px;
+  position: sticky;
+  left: 0;
+  background: #fff;
+  z-index: 10;
+  border-right: 2px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 8px;
+  vertical-align: top;
+}
+
+.product-comparison-table .feature-name {
+  font-weight: bold;
+  background-color: #f8f9fa;
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  border-right: 2px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-comparison-table tr.feature-row:hover {
+  background: #eee;
+}
+
+.product-comparison-table #tableContainer {
+  scrollbar-color: #c1c1c1 #f1f1f1;
+  scrollbar-width: thin;
+}
+
+.plugincy-checkout-container.button-style-filled .checkout-button {
+  background: var(--onepaquc-primary-color, #4caf50) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+.plugincy-checkout-container.button-style-filled .checkout-button:hover {
+  background: var(--onepaquc-secondary-color, #2196f3) !important;
+}
+
+.plugincy-checkout-container.button-style-outlined .checkout-button {
+  background: transparent !important;
+  border: 2px solid var(--onepaquc-primary-color, #4caf50) !important;
+  color: var(--onepaquc-primary-color, #4caf50) !important;
+}
+
+.plugincy-checkout-container.button-style-outlined .checkout-button:hover {
+  background: var(--onepaquc-primary-color, #4caf50) !important;
+  color: #fff !important;
+}
+
+.plugincy-checkout-container.button-style-text .checkout-button {
+  background: transparent !important;
+  border: none !important;
+  color: var(--onepaquc-primary-color, #4caf50) !important;
+  text-decoration: underline;
+}
+
+.plugincy-checkout-container.button-style-text .checkout-button:hover {
+  color: var(--onepaquc-secondary-color, #2196f3) !important;
+}
+
+.plugincy-one-page-checkout-block .one-page-checkout-container {
+  border-radius: var(--onepaquc-block-border-radius, 4px);
+  box-shadow: var(--onepaquc-block-shadow, none);
+}
+
+.plugincy-one-page-checkout-block .one-page-checkout-container .product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--onepaquc-block-spacing, 15px);
+}
+
+.plugincy-one-page-checkout-block .one-page-checkout-container button#place_order {
+  border-radius: var(--onepaquc-block-border-radius, 4px);
+  padding: 10px 20px;
+  margin-bottom: var(--onepaquc-block-spacing, 15px);
+}
+
+.plugincy-one-page-checkout-block.button-style-filled .one-page-checkout-container button#place_order {
+  background-color: var(--onepaquc-primary-color, #4caf50);
+  color: var(--onepaquc-secondary-color, #2196f3);
+  border: none;
+}
+
+.plugincy-one-page-checkout-block.button-style-outlined .one-page-checkout-container button#place_order {
+  background-color: transparent;
+  color: var(--onepaquc-primary-color, #4caf50);
+  border: 2px solid var(--onepaquc-primary-color, #4caf50);
+}
+
+.plugincy-one-page-checkout-block.button-style-text .one-page-checkout-container button#place_order {
+  background-color: transparent;
+  color: var(--onepaquc-primary-color, #4caf50);
+  border: none;
 }

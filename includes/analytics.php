@@ -22,11 +22,11 @@ class onepaquc_cart_anaylytics
 
     public function __construct($product_id, $analytics_api_url, $plugin_version, $plugin_name, $plugin_file = null)
     {
-        $this->product_id = $product_id;
-        $this->analytics_api_url = rtrim($analytics_api_url, '/');
-        $this->plugin_version = $plugin_version;
-        $this->plugin_name = $plugin_name;
-        $this->plugin_file = $plugin_file;
+        $this->product_id = sanitize_key((string) $product_id);
+        $this->analytics_api_url = untrailingslashit(esc_url_raw((string) $analytics_api_url));
+        $this->plugin_version = sanitize_text_field((string) $plugin_version);
+        $this->plugin_name = sanitize_text_field((string) $plugin_name);
+        $this->plugin_file = is_string($plugin_file) ? $plugin_file : null;
 
         // Hook into plugin activation/deactivation using the correct file path
         if ($this->plugin_file && get_option('rmenu_allow_analytics', 1)) {
@@ -98,7 +98,7 @@ class onepaquc_cart_anaylytics
         }
 
         $response_code = wp_remote_retrieve_response_code($response);
-        if ($response_code !== 200) {
+        if ($response_code < 200 || $response_code >= 300) {
             return false;
         }
 
@@ -112,7 +112,7 @@ class onepaquc_cart_anaylytics
     {
         $data = array(
             'site_url' => home_url(),
-            'reason' => $reason,
+            'reason' => sanitize_text_field((string) $reason),
         );
 
         $response = wp_remote_post($this->analytics_api_url . '/deactivate/' . $this->product_id, array(
@@ -127,7 +127,8 @@ class onepaquc_cart_anaylytics
             return false;
         }
 
-        return true;
+        $response_code = wp_remote_retrieve_response_code($response);
+        return $response_code >= 200 && $response_code < 300;
     }
 
     /**
@@ -142,14 +143,15 @@ class onepaquc_cart_anaylytics
             'multisite' => is_multisite(),
             'wp_version' => get_bloginfo('version'),
             'php_version' => phpversion(),
-            'server_software' => sanitize_text_field(wp_unslash($_SERVER['SERVER_SOFTWARE'] ?? 'Unknown')),
+            'server_software' => isset($_SERVER['SERVER_SOFTWARE']) && is_scalar($_SERVER['SERVER_SOFTWARE'])
+                ? sanitize_text_field(wp_unslash($_SERVER['SERVER_SOFTWARE']))
+                : 'Unknown',
             'mysql_version' => $wpdb->db_version(),
             'location' => $this->get_site_location(),
             'plugin_version' => $this->plugin_version,
             'other_plugins' => $this->get_other_plugins(),
             'active_theme' => get_option('stylesheet'),
             'using_pro' => "0",
-            'license_key' => $this->get_license_key(),
         );
     }
 
@@ -175,9 +177,22 @@ class onepaquc_cart_anaylytics
     {
         $active_plugins = get_option('active_plugins', array());
         $plugins = array();
+        if (!is_array($active_plugins)) {
+            return $plugins;
+        }
+        if (!function_exists('get_plugin_data')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
 
         foreach ($active_plugins as $plugin_path) {
-            $plugin_data = get_plugin_data(WP_PLUGIN_DIR . '/' . $plugin_path);
+            if (!is_string($plugin_path)) {
+                continue;
+            }
+            $plugin_file = WP_PLUGIN_DIR . '/' . $plugin_path;
+            if (!is_readable($plugin_file)) {
+                continue;
+            }
+            $plugin_data = get_plugin_data($plugin_file, false, false);
             if (!empty($plugin_data['Name']) && $plugin_data['Name'] !== $this->plugin_name) {
                 $plugins[] = array(
                     'name' => $plugin_data['Name'],
@@ -190,26 +205,12 @@ class onepaquc_cart_anaylytics
     }
 
     /**
-     * Get license key if available
-     * Override this method based on your plugin's license system
-     */
-    private function get_license_key()
-    {
-        // Example: Get license from options
-        return get_option('onepaquc_license_key', '');
-    }
-
-    /**
      * Add deactivation feedback form
      */
     public function add_deactivation_feedback_form()
     {
         $screen = get_current_screen();
         if ($screen && $screen->id === 'plugins') {
-            // Get the correct plugin basename
-            $plugin_file = $this->plugin_file;
-            $plugin_basename = plugin_basename($plugin_file);
-            $plugin_slug = dirname($plugin_basename);
 ?>
             <div id="onepaquc-plugin-deactivation-feedback" style="display:none;">
                 <div class="feedback-overlay">
@@ -290,323 +291,6 @@ class onepaquc_cart_anaylytics
                     </div>
                 </div>
             </div>
-
-            <style>
-                .feedback-overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.5);
-                    z-index: 999999;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                .feedback-modal {
-                    background: #ffffff;
-                    border-radius: 8px;
-                    max-width: 500px;
-                    width: 90%;
-                    max-height: 90vh;
-                    overflow-y: auto;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                }
-
-                .modal-header {
-                    padding: 24px 24px 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                }
-
-                .modal-header h3 {
-                    margin: 0;
-                    font-size: 18px;
-                    font-weight: 600;
-                    color: #1a1a1a;
-                }
-
-                .close-button {
-                    background: none;
-                    border: none;
-                    font-size: 20px;
-                    color: #666;
-                    cursor: pointer;
-                    padding: 4px;
-                    border-radius: 4px;
-                    transition: background-color 0.2s ease;
-                }
-
-                .close-button:hover {
-                    background: #f5f5f5;
-                }
-
-                .modal-body {
-                    padding: 16px 24px 24px;
-                }
-
-                .modal-body p {
-                    margin: 0 0 20px;
-                    color: #555;
-                    font-size: 14px;
-                    line-height: 1.5;
-                }
-
-                .feedback-options {
-                    margin-bottom: 16px;
-                }
-
-                .feedback-option {
-                    display: flex;
-                    align-items: center;
-                    margin: 0 0 12px;
-                    padding: 0;
-                    cursor: pointer;
-                    font-size: 14px;
-                    color: #333;
-                    line-height: 1.4;
-                }
-
-                .feedback-option:hover {
-                    color: #0073aa;
-                }
-
-                .feedback-option input[type="radio"] {
-                    position: absolute;
-                    opacity: 0;
-                    cursor: pointer;
-                    height: 0;
-                    width: 0;
-                }
-
-                .radio-button {
-                    height: 16px;
-                    width: 16px;
-                    background: #ffffff;
-                    border: 2px solid #ddd;
-                    border-radius: 50%;
-                    margin-right: 12px;
-                    flex-shrink: 0;
-                    position: relative;
-                    transition: all 0.2s ease;
-                }
-
-                .feedback-option input[type="radio"]:checked+.radio-button {
-                    border-color: #0073aa;
-                    background: #0073aa;
-                }
-
-                .feedback-option input[type="radio"]:checked+.radio-button:after {
-                    content: "";
-                    position: absolute;
-                    display: block;
-                    left: 50%;
-                    top: 50%;
-                    transform: translate(-50%, -50%);
-                    width: 6px;
-                    height: 6px;
-                    border-radius: 50%;
-                    background: white;
-                }
-
-                .other-reason-container {
-                    margin-top: 16px;
-                    animation: slideDown 0.3s ease-out;
-                }
-
-                @keyframes slideDown {
-                    from {
-                        opacity: 0;
-                        max-height: 0;
-                        transform: translateY(-10px);
-                    }
-
-                    to {
-                        opacity: 1;
-                        max-height: 100px;
-                        transform: translateY(0);
-                    }
-                }
-
-                .other-reason-container textarea {
-                    width: 100%;
-                    padding: 8px 12px;
-                    border: 1px solid #ddd;
-                    border-radius: 4px;
-                    resize: vertical;
-                    font-family: inherit;
-                    font-size: 14px;
-                    line-height: 1.4;
-                    transition: border-color 0.2s ease;
-                    box-sizing: border-box;
-                }
-
-                .other-reason-container textarea:focus {
-                    outline: none;
-                    border-color: #0073aa;
-                    box-shadow: 0 0 0 1px #0073aa;
-                }
-
-                .modal-footer {
-                    display: flex;
-                    justify-content: flex-end;
-                    margin-top: 20px;
-                    padding-top: 16px;
-                    border-top: 1px solid #eee;
-                }
-
-                .btn {
-                    padding: 8px 16px;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    font-weight: 500;
-                    transition: all 0.2s ease;
-                    text-decoration: none;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    min-width: 120px;
-                }
-
-                .btn-primary {
-                    background: #0073aa;
-                    color: white;
-                }
-
-                .btn-primary:hover {
-                    background: #005a87;
-                }
-
-                /* Responsive design */
-                @media (max-width: 640px) {
-                    .feedback-modal {
-                        margin: 20px;
-                        width: calc(100% - 40px);
-                    }
-
-                    .modal-header {
-                        padding: 20px 20px 8px;
-                    }
-
-                    .modal-body {
-                        padding: 16px 20px 20px;
-                    }
-
-                    .btn {
-                        width: 100%;
-                    }
-                }
-            </style>
-
-            <script>
-                jQuery(document).ready(function($) {
-                    var pluginBasename = '<?php echo esc_js($plugin_basename); ?>';
-                    var pluginSlug = '<?php echo esc_js($plugin_slug); ?>';
-                    var deactivateUrl = '';
-
-                    // Multiple selectors to catch the deactivation link
-                    var selectors = [
-                        'tr[data-slug="' + pluginSlug + '"] .deactivate a',
-                        'tr[data-plugin="' + pluginBasename + '"] .deactivate a',
-                        '.wp-list-table.plugins tr[data-slug="' + pluginSlug + '"] .row-actions .deactivate a'
-                    ];
-
-                    // Try each selector
-                    selectors.forEach(function(selector) {
-                        $(selector).on('click', function(e) {
-                            e.preventDefault();
-                            deactivateUrl = $(this).attr('href');
-                            $('#onepaquc-plugin-deactivation-feedback').show();
-                        });
-                    });
-
-                    // Fallback: Find deactivation link by searching for plugin basename in the URL
-                    $('a[href*="action=deactivate"]').each(function() {
-                        var href = $(this).attr('href');
-                        if (href.indexOf(encodeURIComponent(pluginBasename)) > -1) {
-                            $(this).on('click', function(e) {
-                                e.preventDefault();
-                                deactivateUrl = $(this).attr('href');
-                                $('#onepaquc-plugin-deactivation-feedback').show();
-                            });
-                        }
-                    });
-
-                    // Handle feedback form submission
-                    $('#onepaquc-deactivation-feedback-form').on('submit', function(e) {
-                        e.preventDefault();
-
-                        var reason = $('input[name="reason"]:checked').val();
-                        var otherReason = $('textarea[name="other_reason"]').val();
-
-                        if (reason === 'other' && otherReason) {
-                            reason = otherReason;
-                        }
-
-                        $(this).find("button.btn.btn-primary").text("Deactivating...");
-
-                        // Send deactivation data
-                        $.ajax({
-                            url: '<?php echo esc_url(admin_url('admin-ajax.php')); ?>',
-                            type: 'POST',
-                            data: {
-                                action: 'onepaquc_send_deactivation_feedback',
-                                reason: reason || 'no-reason-provided',
-                                nonce: '<?php echo esc_js(wp_create_nonce('deactivation_feedback')); ?>'
-                            },
-                            success: function(response) {
-                                // Wait a moment to ensure the request completed
-                                setTimeout(function() {
-                                    window.location.href = deactivateUrl;
-                                }, 500);
-                            },
-                            error: function(xhr, status, error) {
-                                console.error('Feedback send failed:', status, error);
-                                console.error('Response:', xhr.responseText);
-
-                                // Even if feedback fails, proceed with deactivation
-                                setTimeout(function() {
-                                    window.location.href = deactivateUrl;
-                                }, 500);
-                            }
-                        });
-                    });
-
-                    // Handle other reason text area
-                    $('input[name="reason"]').change(function() {
-                        if ($(this).val() === 'other') {
-                            $('.other-reason-container').slideDown(300);
-                        } else {
-                            $('.other-reason-container').slideUp(300);
-                        }
-                    });
-
-                    // Handle close button
-                    $('.close-button').click(function() {
-                        $('#onepaquc-plugin-deactivation-feedback').hide();
-                    });
-
-                    // Handle overlay click to close
-                    $('.feedback-overlay').click(function(e) {
-                        if (e.target === this) {
-                            $('#onepaquc-plugin-deactivation-feedback').hide();
-                        }
-                    });
-
-                    // Handle escape key
-                    $(document).keyup(function(e) {
-                        if (e.keyCode === 27) { // ESC key
-                            $('#onepaquc-plugin-deactivation-feedback').hide();
-                        }
-                    });
-                });
-            </script>
 <?php
         }
     }

@@ -4,7 +4,6 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
 /**
  * Register the Plugincy One Page Checkout Gutenberg Block
  */
@@ -19,7 +18,7 @@ function onepaquc_register_one_page_checkout_block() {
         'plugincy-one-page-checkout-block',
         plugins_url( 'one-page-checkout-block.js', __FILE__ ),
         array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-i18n' ),
-        filemtime( plugin_dir_path( __FILE__ ) . 'one-page-checkout-block.js' ),
+        onepaquc_asset_version( 'includes/blocks/one-page-checkout-block.js' ),
         true
     );
 
@@ -28,7 +27,7 @@ function onepaquc_register_one_page_checkout_block() {
         'plugincy-one-page-checkout-editor',
         plugins_url( 'one-page-checkout-editor.css', __FILE__ ),
         array(),
-        filemtime( plugin_dir_path( __FILE__ ) . 'one-page-checkout-editor.css' )
+        onepaquc_asset_version( 'includes/blocks/one-page-checkout-editor.css' )
     );
 
     // Register the block
@@ -99,53 +98,30 @@ add_action( 'init', 'onepaquc_register_one_page_checkout_block' );
  */
 function onepaquc_render_one_page_checkout_block($attributes)
 {
-    // Extract and sanitize attributes
-    $product_ids = isset($attributes['product_ids']) ? sanitize_text_field($attributes['product_ids']) : '';
-    $category = isset($attributes['category']) ? sanitize_text_field($attributes['category']) : '';
-    $tags = isset($attributes['tags']) ? sanitize_text_field($attributes['tags']) : '';
-    $attribute = isset($attributes['attribute']) ? sanitize_text_field($attributes['attribute']) : '';
-    $terms = isset($attributes['terms']) ? sanitize_text_field($attributes['terms']) : '';
-    $template = isset($attributes['template']) ? sanitize_text_field($attributes['template']) : 'product-tabs';
-    $borderRadius = isset($attributes['borderRadius']) ? intval($attributes['borderRadius']) : 4;
-    $boxShadow = isset($attributes['boxShadow']) ? (bool) $attributes['boxShadow'] : false;
-    $primaryColor = isset($attributes['primaryColor']) ? sanitize_hex_color($attributes['primaryColor']) : '#4CAF50';
-    $secondaryColor = isset($attributes['secondaryColor']) ? sanitize_hex_color($attributes['secondaryColor']) : '#2196F3';
-    $buttonStyle = isset($attributes['buttonStyle']) ? sanitize_text_field($attributes['buttonStyle']) : 'filled';
-    $spacing = isset($attributes['spacing']) ? intval($attributes['spacing']) : 15;
+    $attributes = onepaquc_validate_block_attributes(is_array($attributes) ? $attributes : array());
 
-    $custom_styles = '<style>
-        .one-page-checkout-container {
-            border-radius: ' . esc_attr($borderRadius) . 'px;
-            box-shadow: ' . ($boxShadow ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none') . ';
-        }
-        .one-page-checkout-container .product-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: ' . esc_attr($spacing) . 'px;
-        }
-        .one-page-checkout-container button#place_order {
-            border-radius: ' . esc_attr($borderRadius) . 'px;
-            padding: 10px 20px;
-            margin-bottom: ' . esc_attr($spacing) . 'px;
-            ' . (
-            $buttonStyle === 'outlined' ? '
-                background-color: transparent;
-                color: ' . esc_attr($primaryColor) . ';
-                border: 2px solid ' . esc_attr($primaryColor) . ';
-            ' : (
-                $buttonStyle === 'text' ? '
-                background-color: transparent;
-                color: ' . esc_attr($primaryColor) . ';
-                border: none;
-                ' : '
-                background-color: ' . esc_attr($primaryColor) . ';
-                color: ' . esc_attr($secondaryColor) . ';
-                border: none;
-                '
-            )
-            ) . '
-        }
-        </style>';
+    // Extract and sanitize attributes
+    $product_ids = isset($attributes['product_ids']) ? $attributes['product_ids'] : '';
+    $category = isset($attributes['category']) ? $attributes['category'] : '';
+    $tags = isset($attributes['tags']) ? $attributes['tags'] : '';
+    $attribute = isset($attributes['attribute']) ? $attributes['attribute'] : '';
+    $terms = isset($attributes['terms']) ? $attributes['terms'] : '';
+    $template = isset($attributes['template']) ? $attributes['template'] : 'product-tabs';
+    $borderRadius = isset($attributes['borderRadius']) && is_numeric($attributes['borderRadius']) ? (int) $attributes['borderRadius'] : 4;
+    $boxShadow = isset($attributes['boxShadow']) ? (bool) $attributes['boxShadow'] : false;
+    $primaryColor = onepaquc_sanitize_hex_color(isset($attributes['primaryColor']) ? $attributes['primaryColor'] : '', '#4CAF50');
+    $secondaryColor = onepaquc_sanitize_hex_color(isset($attributes['secondaryColor']) ? $attributes['secondaryColor'] : '', '#2196F3');
+    $buttonStyle = isset($attributes['buttonStyle']) && is_scalar($attributes['buttonStyle']) ? sanitize_key($attributes['buttonStyle']) : 'filled';
+    $spacing = isset($attributes['spacing']) && is_numeric($attributes['spacing']) ? (int) $attributes['spacing'] : 15;
+
+    $buttonStyle    = in_array($buttonStyle, array('filled', 'outlined', 'text'), true) ? $buttonStyle : 'filled';
+    $wrapper_styles = array(
+        '--onepaquc-block-border-radius:' . min(100, max(0, $borderRadius)) . 'px',
+        '--onepaquc-block-spacing:' . min(200, max(0, $spacing)) . 'px',
+        '--onepaquc-primary-color:' . $primaryColor,
+        '--onepaquc-secondary-color:' . $secondaryColor,
+        '--onepaquc-block-shadow:' . ($boxShadow ? '0 2px 10px rgba(0, 0, 0, 0.1)' : 'none'),
+    );
 
     // Build shortcode attributes array
     $shortcode_atts = array();
@@ -181,15 +157,17 @@ function onepaquc_render_one_page_checkout_block($attributes)
     }
     $shortcode .= ']';
 
-    return $custom_styles . $shortcode;
+    return '<div class="plugincy-one-page-checkout-block button-style-' . esc_attr($buttonStyle) . '" style="' . esc_attr(implode(';', $wrapper_styles)) . '">' . $shortcode . '</div>';
 }
 /**
  * Add custom block category for Plugincy blocks
  */
 function onepaquc_add_block_category( $categories ) {
+    $categories = is_array( $categories ) ? $categories : array();
+
     // Check if the category already exists
     foreach ( $categories as $category ) {
-        if ( $category['slug'] === 'plugincy' ) {
+        if ( is_array( $category ) && isset( $category['slug'] ) && 'plugincy' === $category['slug'] ) {
             return $categories;
         }
     }
@@ -203,7 +181,7 @@ function onepaquc_add_block_category( $categories ) {
                 'icon'  => 'cart',
             ),
         ),
-        is_array( $categories ) ? $categories : array()
+        $categories
     );
 }
 add_filter( 'block_categories_all', 'onepaquc_add_block_category' );
@@ -276,10 +254,11 @@ add_action( 'enqueue_block_editor_assets', 'onepaquc_enqueue_block_editor_assets
  * @return array Validated attributes.
  */
 function onepaquc_validate_block_attributes( $attributes ) {
+    $attributes = is_array( $attributes ) ? $attributes : array();
     $validated = array();
     
     // Validate product_ids (comma-separated numbers)
-    if ( isset( $attributes['product_ids'] ) ) {
+    if ( isset( $attributes['product_ids'] ) && is_scalar( $attributes['product_ids'] ) ) {
         $product_ids = sanitize_text_field( $attributes['product_ids'] );
         if ( preg_match( '/^[\d,\s]*$/', $product_ids ) ) {
             $validated['product_ids'] = $product_ids;
@@ -287,7 +266,7 @@ function onepaquc_validate_block_attributes( $attributes ) {
     }
     
     // Validate category (comma-separated slugs)
-    if ( isset( $attributes['category'] ) ) {
+    if ( isset( $attributes['category'] ) && is_scalar( $attributes['category'] ) ) {
         $category = sanitize_text_field( $attributes['category'] );
         if ( preg_match( '/^[a-zA-Z0-9\-_,\s]*$/', $category ) ) {
             $validated['category'] = $category;
@@ -295,7 +274,7 @@ function onepaquc_validate_block_attributes( $attributes ) {
     }
     
     // Validate tags (comma-separated slugs)
-    if ( isset( $attributes['tags'] ) ) {
+    if ( isset( $attributes['tags'] ) && is_scalar( $attributes['tags'] ) ) {
         $tags = sanitize_text_field( $attributes['tags'] );
         if ( preg_match( '/^[a-zA-Z0-9\-_,\s]*$/', $tags ) ) {
             $validated['tags'] = $tags;
@@ -303,7 +282,7 @@ function onepaquc_validate_block_attributes( $attributes ) {
     }
     
     // Validate attribute (single attribute name)
-    if ( isset( $attributes['attribute'] ) ) {
+    if ( isset( $attributes['attribute'] ) && is_scalar( $attributes['attribute'] ) ) {
         $attribute = sanitize_text_field( $attributes['attribute'] );
         if ( preg_match( '/^[a-zA-Z0-9\-_]*$/', $attribute ) ) {
             $validated['attribute'] = $attribute;
@@ -311,7 +290,7 @@ function onepaquc_validate_block_attributes( $attributes ) {
     }
     
     // Validate terms (comma-separated terms)
-    if ( isset( $attributes['terms'] ) ) {
+    if ( isset( $attributes['terms'] ) && is_scalar( $attributes['terms'] ) ) {
         $terms = sanitize_text_field( $attributes['terms'] );
         if ( preg_match( '/^[a-zA-Z0-9\-_,\s]*$/', $terms ) ) {
             $validated['terms'] = $terms;
@@ -323,31 +302,49 @@ function onepaquc_validate_block_attributes( $attributes ) {
         'product-table', 'product-list', 'product-single', 
         'product-slider', 'product-accordion', 'product-tabs', 'pricing-table'
     );
-    if ( isset( $attributes['template'] ) && in_array( $attributes['template'], $valid_templates ) ) {
-        $validated['template'] = $attributes['template'];
+    if ( isset( $attributes['template'] ) && is_scalar( $attributes['template'] ) && in_array( $attributes['template'], $valid_templates, true ) ) {
+        $validated['template'] = (string) $attributes['template'];
     } else {
         $validated['template'] = 'product-tabs'; // Default fallback
     }
 
-    return array_merge( is_array( $attributes ) ? $attributes : array(), is_array( $validated ) ? $validated : array() );
-}
-
-
-/**
- * Add custom category for Plugincy blocks
- */
-function onepaquc_block_categories( $categories, $post ) {
-    // Create the new category array
-    $new_category = array(
-        'slug' => 'plugincy',
-        'title' => esc_html__( 'Plugincy', 'one-page-quick-checkout-for-woocommerce' ),
-        'icon'  => 'plugincy',
+    $validated['borderRadius'] = isset( $attributes['borderRadius'] ) && is_numeric( $attributes['borderRadius'] )
+        ? min( 100, max( 0, (int) $attributes['borderRadius'] ) )
+        : 4;
+    $validated['boxShadow'] = isset( $attributes['boxShadow'] ) && is_bool( $attributes['boxShadow'] )
+        ? $attributes['boxShadow']
+        : false;
+    $validated['primaryColor'] = onepaquc_sanitize_hex_color(
+        isset( $attributes['primaryColor'] ) ? $attributes['primaryColor'] : '',
+        '#4CAF50'
     );
+    $validated['secondaryColor'] = onepaquc_sanitize_hex_color(
+        isset( $attributes['secondaryColor'] ) ? $attributes['secondaryColor'] : '',
+        '#2196F3'
+    );
+    $button_style = isset( $attributes['buttonStyle'] ) && is_scalar( $attributes['buttonStyle'] )
+        ? sanitize_key( (string) $attributes['buttonStyle'] )
+        : 'filled';
+    $validated['buttonStyle'] = in_array( $button_style, array( 'filled', 'outlined', 'text' ), true ) ? $button_style : 'filled';
+    $validated['spacing'] = isset( $attributes['spacing'] ) && is_numeric( $attributes['spacing'] )
+        ? min( 200, max( 0, (int) $attributes['spacing'] ) )
+        : 15;
 
-    // Add the new category to the beginning of the categories array
-    array_unshift( $categories, $new_category );
-
-    return $categories;
+    return array_merge(
+        array(
+            'product_ids'    => '',
+            'category'       => '',
+            'tags'           => '',
+            'attribute'      => '',
+            'terms'          => '',
+            'template'       => 'product-tabs',
+            'borderRadius'   => 4,
+            'boxShadow'      => false,
+            'primaryColor'   => '#4CAF50',
+            'secondaryColor' => '#2196F3',
+            'buttonStyle'    => 'filled',
+            'spacing'        => 15,
+        ),
+        $validated
+    );
 }
-add_filter( 'block_categories_all', 'onepaquc_block_categories', 0, 2 );
-

@@ -82,4 +82,4 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
         });
     });";
     // Enqueue the inline script
-    wp_add_inline_script('rmenu-cart-script', $inline_script,99);
+    wp_add_inline_script('rmenu-cart-script', $inline_script, 'after');

@@ -52,16 +52,11 @@ class RMENU_Quick_View
      */
     private function add_quick_view_button()
     {
-        global $displayed_quick_view_buttons;
-        $displayed_quick_view_buttons = false;
         $button_position = get_option('rmenu_quick_view_button_position', 'image_overlay');
+        $button_position = is_scalar($button_position) ? sanitize_key($button_position) : 'image_overlay';
 
         switch ($button_position) {
             case 'after_image':
-                // add_action('woocommerce_after_shop_loop_item_title', array($this, 'display_quick_view_button'), 11);
-                if (!$this->is_btn_add_hook_works) {
-                    add_action('wp_footer', array($this, 'display_overlay_quick_view_button_footer'), 25);
-                }
                 break;
             case 'before_title':
                 add_action('woocommerce_before_shop_loop_item_title', array($this, 'display_quick_view_button'), 9);
@@ -80,23 +75,10 @@ class RMENU_Quick_View
                 add_filter('woocommerce_loop_add_to_cart_link', array($this, 'onepaquc_display_quick_view_button_to_add_to_cart'), 100, 2);
                 break;
             case 'image_overlay':
-                // // Primary hook
-                // add_action('woocommerce_after_shop_loop_item_title', array($this, 'display_overlay_quick_view_button'), 11);
-                // add_action('woocommerce_shop_loop_item_title', array($this, 'display_overlay_quick_view_button'), 30);
-                // // Add fallback hooks with lower priority in case the primary doesn't work
-                // add_action('woocommerce_after_shop_loop_item_title', array($this, 'display_overlay_quick_view_button'), 5);
-                // add_action('woocommerce_before_shop_loop_item_title', array($this, 'display_overlay_quick_view_button'), 11);
-                // add_action('woocommerce_after_shop_loop_item', array($this, 'display_overlay_quick_view_button'), 11);
-                // add_action('woocommerce_before_shop_loop_item', array($this, 'display_overlay_quick_view_button'), 25);
-
-                add_action('wp_footer', array($this, 'display_overlay_quick_view_button_footer'), 25);
-
                 break;
         }
 
-        if (!$displayed_quick_view_buttons) {
-            add_action('wp_footer', array($this, 'display_overlay_quick_view_button_footer'), 110);
-        }
+        add_action('wp_enqueue_scripts', array($this, 'display_overlay_quick_view_button_footer'), 30);
     }
 
 
@@ -104,16 +86,26 @@ class RMENU_Quick_View
     {
         global $displayed_quick_view_buttons;
         $displayed_quick_view_buttons = true;
+        if (!$product instanceof WC_Product) {
+            return $link;
+        }
+
         // Check if product type is allowed
-        $allowed_types = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]);
-        if (!in_array($product->get_type(), $allowed_types)) {
+        $allowed_types = onepaquc_normalize_key_list(
+            get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]),
+            ['simple', 'variable', "grouped", "external"]
+        );
+        if (!in_array($product->get_type(), $allowed_types, true)) {
             return $link;
         }
 
         $this->is_btn_add_hook_works = true;
 
         // Check if current page is allowed
-        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']);
+        $allowed_pages = onepaquc_normalize_key_list(
+            get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']),
+            ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']
+        );
         if (!$this->is_allowed_quick_view_page($allowed_pages)) {
             return $link;
         }
@@ -141,7 +133,10 @@ class RMENU_Quick_View
 
         global $onepaquc_onepaquc_allowed_tags;
 
-        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']);
+        $allowed_pages = onepaquc_normalize_key_list(
+            get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']),
+            ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']
+        );
 
         if (is_singular('product') && !in_array('single', (array) $allowed_pages, true)) {
             return;
@@ -153,140 +148,33 @@ class RMENU_Quick_View
         if (!$this->is_allowed_quick_view_page($allowed_pages)) {
             return;
         }
-?>
-        <script>
-            jQuery(document).ready(function($) {
-                // Configuration variables
-                const quickViewConfig = {
-                    buttonPos: "<?php echo esc_attr(get_option('rmenu_quick_view_button_position', 'image_overlay')); ?>",
-                    contents: '<?php echo wp_kses($button_contents['button_content'], $onepaquc_onepaquc_allowed_tags); ?>',
-                    buttonClass: "<?php echo esc_attr(implode(' ', $button_contents['button_classes'])); ?>",
-                    allowedTypes: <?php echo wp_json_encode(get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"])); ?>
-                };
 
-                /**
-                 * Initialize quick view buttons for products
-                 * @param {jQuery} container - Optional container to limit scope (defaults to entire document)
-                 */
-                function initQuickViewButtons(container = $(document)) {
-                    container.find(".product").each(function() {
-                        let $this = $(this);
+        if (!wp_script_is('rmenu-quick-view-scripts', 'enqueued')) {
+            return;
+        }
 
-                        // On single-product templates, target product cards in loops (related/upsells), not the main product block.
-                        if ($('body').hasClass('single-product') && !$this.closest('ul.products, .products').length) {
-                            return;
-                        }
+        $config = array(
+            'buttonPos'    => sanitize_key(is_scalar(get_option('rmenu_quick_view_button_position', 'image_overlay')) ? get_option('rmenu_quick_view_button_position', 'image_overlay') : 'image_overlay'),
+            'contents'     => wp_kses($button_contents['button_content'], $onepaquc_onepaquc_allowed_tags),
+            'buttonClass'  => sanitize_text_field(implode(' ', $button_contents['button_classes'])),
+            'allowedTypes' => onepaquc_normalize_key_list(get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', 'grouped', 'external']), ['simple', 'variable', 'grouped', 'external']),
+        );
 
-                        // Skip if this product already has a quick view button or conflicting plugin button
-                        if ($this.has(".rmenu-quick-view-overlay").length || $this.has(".opqvfw-btn").length) {
-                            return;
-                        }
+        $inline_script = 'jQuery(function($){'
+            . 'var quickViewConfig=' . wp_json_encode($config) . ';'
+            . 'function addQuickViewButton($product,productId){var $wrap=$("<div/>",{"class":"rmenu-quick-view-overlay "+quickViewConfig.buttonPos});var $button=$("<a/>",{"href":"#","class":quickViewConfig.buttonClass,"data-product-id":productId}).html(quickViewConfig.contents);$wrap.append($button);if(quickViewConfig.buttonPos==="after_image"){var $image=$product.find("img").first();if($image.length){$image.after($wrap);}else{$product.append($wrap);}}else{$product.append($wrap);}}'
+            . 'function initQuickViewButtons(container){container=container||$(document);container.find(".product").each(function(){var $this=$(this);if($("body").hasClass("single-product")&&!$this.closest("ul.products, .products").length){return;}if($this.has(".rmenu-quick-view-overlay").length||$this.has(".opqvfw-btn").length){return;}var productIdMatch=($this.attr("class")||"").match(/post-(\d+)/);var productId=productIdMatch?productIdMatch[1]:($this.find(".button").length?$this.find(".button").data("product_id"):null);var productTypeMatch=($this.attr("class")||"").match(/product-type-(\w+)/);var productType=productTypeMatch?productTypeMatch[1]:($this.find(".button").length?$this.find(".button").data("product-type"):null);if(quickViewConfig.allowedTypes.indexOf(productType)!==-1&&productId){addQuickViewButton($this,productId);}});cleanupOrphanedQuickViewButtons();}'
+            . 'function cleanupOrphanedQuickViewButtons(){$(".rmenu-quick-view-overlay").each(function(){if(!$(this).closest(".product").length){$(this).remove();}});}'
+            . 'function refreshQuickViewButtons(container){container=container||$(document);container.find(".rmenu-quick-view-overlay").remove();initQuickViewButtons(container);}'
+            . 'initQuickViewButtons();'
+            . '$(document).ajaxComplete(function(){window.setTimeout(function(){initQuickViewButtons();},100);});'
+            . '$("body").on("wc_fragments_loaded wc_fragments_refreshed",function(){initQuickViewButtons();});'
+            . '$("body").on("post-load",function(event,data){if(data&&data.length){initQuickViewButtons($(data));}});'
+            . '$("body").on("woocommerce_updated_cart_totals updated_checkout updated_shipping_method",function(){window.setTimeout(function(){initQuickViewButtons();},100);});'
+            . 'window.initQuickViewButtons=initQuickViewButtons;window.refreshQuickViewButtons=refreshQuickViewButtons;window.cleanupOrphanedQuickViewButtons=cleanupOrphanedQuickViewButtons;'
+            . '});';
 
-                        // Extract product ID from class or button data
-                        let productIdMatch = $this.attr('class').match(/post-(\d+)/);
-                        let product_id = productIdMatch ? productIdMatch[1] :
-                            ($this.find(".button").length ? $this.find(".button").data("product_id") : null);
-
-                        // Extract product type from class or button data
-                        let productTypeMatch = $this.attr('class').match(/product-type-(\w+)/);
-                        let product_type = productTypeMatch ? productTypeMatch[1] :
-                            ($this.find(".button").length ? $this.find(".button").data("product-type") : null);
-
-                        // Only add button if product type is allowed and we have a product ID
-                        if (quickViewConfig.allowedTypes.includes(product_type) && product_id) {
-                            addQuickViewButton($this, product_id);
-                        }
-                    });
-
-                    // Clean up any orphaned quick view buttons
-                    cleanupOrphanedQuickViewButtons();
-                }
-
-                /**
-                 * Add quick view button based on position setting
-                 * @param {jQuery} $product - Product element
-                 * @param {string} product_id - Product ID
-                 */
-                function addQuickViewButton($product, product_id) {
-                    const buttonHtml = `<div class='rmenu-quick-view-overlay ${quickViewConfig.buttonPos}'>
-            <a href="#" class="${quickViewConfig.buttonClass}" data-product-id="${product_id}">
-                ${quickViewConfig.contents}
-            </a>
-        </div>`;
-
-                    if (quickViewConfig.buttonPos === 'after_image') {
-                        // Find the image and add button after it
-                        let $image = $product.find('img').first();
-                        if ($image.length) {
-                            $image.after(buttonHtml);
-                        } else {
-                            // Fallback: append to product if no image found
-                            $product.append(buttonHtml);
-                        }
-                    } else {
-                        // Default behavior for other positions (overlay, etc.)
-                        $product.append(buttonHtml);
-                    }
-                }
-
-                /**
-                 * Remove any quick view buttons that aren't children of .product elements
-                 */
-                function cleanupOrphanedQuickViewButtons() {
-                    $(".rmenu-quick-view-overlay").each(function() {
-                        if (!$(this).closest('.product').length) {
-                            $(this).remove();
-                        }
-                    });
-                }
-
-                /**
-                 * Refresh quick view buttons (remove existing and reinitialize)
-                 * @param {jQuery} container - Optional container to limit scope
-                 */
-                function refreshQuickViewButtons(container = $(document)) {
-                    container.find(".rmenu-quick-view-overlay").remove();
-                    initQuickViewButtons(container);
-                }
-
-                // Initial load
-                initQuickViewButtons();
-
-                // Re-initialize after AJAX complete (global)
-                $(document).ajaxComplete(function(event, xhr, settings) {
-                    // Add a small delay to ensure DOM is updated
-                    setTimeout(function() {
-                        initQuickViewButtons();
-                    }, 100);
-                });
-
-                // Re-initialize when new content is loaded via AJAX (WooCommerce specific)
-                $('body').on('wc_fragments_loaded wc_fragments_refreshed', function() {
-                    initQuickViewButtons();
-                });
-
-                // Re-initialize for infinite scroll or pagination
-                $('body').on('post-load', function(e, data) {
-                    if (data && data.length) {
-                        initQuickViewButtons($(data));
-                    }
-                });
-
-                // Re-initialize when products are updated/filtered
-                $('body').on('woocommerce_updated_cart_totals updated_checkout updated_shipping_method', function() {
-                    setTimeout(function() {
-                        initQuickViewButtons();
-                    }, 100);
-                });
-
-                // Make functions globally available for manual calls
-                window.initQuickViewButtons = initQuickViewButtons;
-                window.refreshQuickViewButtons = refreshQuickViewButtons;
-                window.cleanupOrphanedQuickViewButtons = cleanupOrphanedQuickViewButtons;
-
-            });
-        </script>
-    <?php
+        wp_add_inline_script('rmenu-quick-view-scripts', $inline_script);
     }
 
     /**
@@ -296,17 +184,26 @@ class RMENU_Quick_View
     {
 
         global $product;
+        if (!$product instanceof WC_Product) {
+            return;
+        }
 
         // Check if product type is allowed
-        $allowed_types = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]);
-        if (!in_array($product->get_type(), $allowed_types)) {
+        $allowed_types = onepaquc_normalize_key_list(
+            get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]),
+            ['simple', 'variable', "grouped", "external"]
+        );
+        if (!in_array($product->get_type(), $allowed_types, true)) {
             return;
         }
 
         $this->is_btn_add_hook_works = true;
 
         // Check if current page is allowed
-        $allowed_pages = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']);
+        $allowed_pages = onepaquc_normalize_key_list(
+            get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']),
+            ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']
+        );
         if (!$this->is_allowed_quick_view_page($allowed_pages)) {
             return;
         }
@@ -321,15 +218,22 @@ class RMENU_Quick_View
     public function display_overlay_quick_view_button($is_return = false)
     {
         global $product;
+        if (!$product instanceof WC_Product) {
+            return $is_return ? '' : null;
+        }
 
-        $button_position = get_option('rmenu_quick_view_button_position', 'image_overlay');
+        $button_position_option = get_option('rmenu_quick_view_button_position', 'image_overlay');
+        $button_position = is_scalar($button_position_option) ? sanitize_key($button_position_option) : 'image_overlay';
 
         $this->is_btn_add_hook_works = true;
 
         // Same checks as display_quick_view_button
-        $allowed_types = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]);
-        if (!in_array($product->get_type(), $allowed_types)) {
-            return;
+        $allowed_types = onepaquc_normalize_key_list(
+            get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]),
+            ['simple', 'variable', "grouped", "external"]
+        );
+        if (!in_array($product->get_type(), $allowed_types, true)) {
+            return $is_return ? '' : null;
         }
 
         if (!$is_return) {
@@ -352,6 +256,9 @@ class RMENU_Quick_View
     private function render_quick_view_button($product)
     {
         static $displayed_products = array();
+        if (!$product instanceof WC_Product) {
+            return;
+        }
 
         // Use product ID to track if we already displayed button for this product
         $product_id = $product->get_id();
@@ -477,12 +384,15 @@ class RMENU_Quick_View
 
     public function button_contents()
     {
-        $display_type = get_option('rmenu_quick_view_display_type', 'icon');
-        $button_icon = get_option('rmenu_quick_view_button_icon', 'eye');
-        $icon_position = get_option('rmenu_quick_view_icon_position', 'left');
-        $button_position = get_option('rmenu_quick_view_button_position', 'image_overlay');
+        $display_type = sanitize_key(is_scalar(get_option('rmenu_quick_view_display_type', 'icon')) ? get_option('rmenu_quick_view_display_type', 'icon') : 'icon');
+        $display_type = in_array($display_type, array('icon', 'text', 'text_icon', 'hover_icon'), true) ? $display_type : 'icon';
+        $button_icon = sanitize_key(is_scalar(get_option('rmenu_quick_view_button_icon', 'eye')) ? get_option('rmenu_quick_view_button_icon', 'eye') : 'eye');
+        $button_icon = in_array($button_icon, array('none', 'eye', 'search', 'zoom', 'preview'), true) ? $button_icon : 'eye';
+        $icon_position = sanitize_key(is_scalar(get_option('rmenu_quick_view_icon_position', 'left')) ? get_option('rmenu_quick_view_icon_position', 'left') : 'left');
+        $icon_position = in_array($icon_position, array('left', 'right'), true) ? $icon_position : 'left';
+        $button_position = sanitize_key(is_scalar(get_option('rmenu_quick_view_button_position', 'image_overlay')) ? get_option('rmenu_quick_view_button_position', 'image_overlay') : 'image_overlay');
         $button_text = get_option('rmenu_quick_view_button_text', '');
-        if (empty($button_text)) {
+        if (!is_scalar($button_text) || empty($button_text)) {
             $button_text = 'Quick View';
         }
 
@@ -498,7 +408,8 @@ class RMENU_Quick_View
 
         // Generate button classes
         $button_classes = array('opqvfw-btn');
-        $button_style = get_option('rmenu_quick_view_button_style', 'default');
+        $button_style_option = get_option('rmenu_quick_view_button_style', 'default');
+        $button_style = is_scalar($button_style_option) ? sanitize_key($button_style_option) : 'default';
 
         if ($button_style === 'default') {
             $button_classes[] = 'button';
@@ -545,7 +456,7 @@ class RMENU_Quick_View
 
         static $displayed_product_data = array();
 
-        if (!$product) {
+        if (!$product instanceof WC_Product) {
             return;
         }
 
@@ -563,7 +474,10 @@ class RMENU_Quick_View
         $displayed_product_data[$context_key] = true;
 
         // Get elements to display
-        $elements = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']);
+        $elements = onepaquc_normalize_key_list(
+            get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']),
+            ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']
+        );
 
         // Prepare product data
         $product_data = array(
@@ -601,7 +515,11 @@ class RMENU_Quick_View
             $brand_links = array();
             $brand_names = array();
             foreach ($brand_terms as $brand) {
-                $brand_links[] = '<a href="' . get_term_link($brand) . '">' . $brand->name . '</a>';
+                $term_link = get_term_link($brand);
+                if (is_wp_error($term_link)) {
+                    continue;
+                }
+                $brand_links[] = '<a href="' . esc_url($term_link) . '">' . esc_html($brand->name) . '</a>';
                 $brand_names[] = $brand->name;
             }
             $product_data['brands_html'] = implode(', ', $brand_links);
@@ -627,13 +545,15 @@ class RMENU_Quick_View
             $image_thumb = wp_get_attachment_image_src($image_id, 'shop_thumbnail');
             $image_full = wp_get_attachment_image_src($image_id, 'full');
 
-            $product_data['images'][] = array(
-                'id' => $image_id,
-                'src' => $image_src[0],
-                'thumb' => $image_thumb[0],
-                'full' => $image_full[0],
-                'alt' => get_post_meta($image_id, '_wp_attachment_image_alt', true),
-            );
+            if ($image_src && $image_thumb && $image_full) {
+                $product_data['images'][] = array(
+                    'id' => $image_id,
+                    'src' => $image_src[0],
+                    'thumb' => $image_thumb[0],
+                    'full' => $image_full[0],
+                    'alt' => get_post_meta($image_id, '_wp_attachment_image_alt', true),
+                );
+            }
         }
 
         // Get gallery images
@@ -644,7 +564,7 @@ class RMENU_Quick_View
                 $image_thumb = wp_get_attachment_image_src($gallery_id, 'shop_thumbnail');
                 $image_full = wp_get_attachment_image_src($gallery_id, 'full');
 
-                if ($image_src) {
+                if ($image_src && $image_thumb && $image_full) {
                     $product_data['images'][] = array(
                         'id' => $gallery_id,
                         'src' => $image_src[0],
@@ -665,16 +585,22 @@ class RMENU_Quick_View
             $available_variations = onepaquc_get_validated_variations( $product );
             if (!empty($available_variations)) {
                 foreach ($available_variations as $variation) {
+                    if (!is_array($variation) || empty($variation['variation_id'])) {
+                        continue;
+                    }
                     $variation_id = $variation['variation_id'];
                     $variation_obj = wc_get_product($variation_id);
+                    if (!$variation_obj instanceof WC_Product_Variation) {
+                        continue;
+                    }
 
                     $product_data['variations'][] = array(
                         'variation_id' => $variation_id,
-                        'attributes' => $variation['attributes'],
+                        'attributes' => isset($variation['attributes']) && is_array($variation['attributes']) ? $variation['attributes'] : array(),
                         'price_html' => $variation_obj->get_price_html(),
                         'is_in_stock' => $variation_obj->is_in_stock(),
-                        'image_id' => $variation['image_id'],
-                        'image_src' => $variation['image']['src'],
+                        'image_id' => isset($variation['image_id']) ? absint($variation['image_id']) : 0,
+                        'image_src' => isset($variation['image']['src']) ? esc_url_raw($variation['image']['src']) : '',
                         // 'image_full_src' => $variation['image']['full_src'],
                     );
                 }
@@ -710,14 +636,17 @@ class RMENU_Quick_View
         );
 
         // Get settings for JS
-        $onepaquc_ajax_add_to_cart = get_option('rmenu_quick_view_ajax_add_to_cart', 1);
+        $onepaquc_ajax_add_to_cart = onepaquc_is_enabled_option('rmenu_quick_view_ajax_add_to_cart', 1);
         $close_on_add = false;
-        $keyboard_nav = get_option('rmenu_quick_view_keyboard_nav', 1);
+        $keyboard_nav = onepaquc_is_enabled_option('rmenu_quick_view_keyboard_nav', 1);
         $effect =  'fade';
         $mobile_optimize = false;
-        $debug_mode = get_option('rmenu_quick_view_debug_mode', 0);
-        $lightbox = get_option('rmenu_quick_view_enable_lightbox', 1);
-        $elements_in_popup = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']);
+        $debug_mode = onepaquc_is_enabled_option('rmenu_quick_view_debug_mode', 0);
+        $lightbox = onepaquc_is_enabled_option('rmenu_quick_view_enable_lightbox', 1);
+        $elements_in_popup = onepaquc_normalize_key_list(
+            get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']),
+            ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']
+        );
 
         // Localize script with settings
         wp_localize_script('rmenu-quick-view-scripts', 'rmenu_quick_view_params', array(
@@ -732,32 +661,18 @@ class RMENU_Quick_View
             'ajax_url' => esc_url(admin_url('admin-ajax.php')),
             'nonce' => esc_js(wp_create_nonce('rmenu_quick_view_nonce')),
             'i18n' => array(
-                'close' => get_option('rmenu_quick_view_close_text') !== '' ? get_option('rmenu_quick_view_close_text') : 'Close',
-                'prev' => get_option('rmenu_quick_view_prev_text') !== '' ? get_option('rmenu_quick_view_prev_text') : 'Previous Product',
-                'next' => get_option('rmenu_quick_view_next_text') !== '' ? get_option('rmenu_quick_view_next_text') : 'Next Product',
+                'close' => onepaquc_get_text_option('rmenu_quick_view_close_text', __('Close', 'one-page-quick-checkout-for-woocommerce')),
+                'prev' => onepaquc_get_text_option('rmenu_quick_view_prev_text', __('Previous Product', 'one-page-quick-checkout-for-woocommerce')),
+                'next' => onepaquc_get_text_option('rmenu_quick_view_next_text', __('Next Product', 'one-page-quick-checkout-for-woocommerce')),
                 'add_to_cart' => esc_html__('Add to cart', 'one-page-quick-checkout-for-woocommerce'),
                 'select_options' => esc_html__('Select options', 'one-page-quick-checkout-for-woocommerce'),
-                'view_details' => get_option('rmenu_quick_view_details_text') !== '' ? get_option('rmenu_quick_view_details_text') : 'View Full Details',
+                'view_details' => onepaquc_get_text_option('rmenu_quick_view_details_text', __('View Full Details', 'one-page-quick-checkout-for-woocommerce')),
                 'out_of_stock' => esc_html__('Out of stock', 'one-page-quick-checkout-for-woocommerce'),
                 'error_loading' => esc_html__('Error loading product information. Please try again.', 'one-page-quick-checkout-for-woocommerce'),
             )
         ));
 
         wp_enqueue_script('rmenu-quick-view-scripts');
-
-        // Custom JS from settings
-        $custom_js = get_option('rmenu_quick_view_custom_js', '');
-        if (!empty($custom_js)) {
-            wp_add_inline_script('rmenu-quick-view-scripts', $custom_js);
-        }
-
-        // Custom CSS from settings
-        if (get_option('rmenu_quick_view_button_style', 'default') === 'custom') {
-            $custom_css = get_option('rmenu_quick_view_custom_css', '');
-            if (!empty($custom_css)) {
-                wp_add_inline_style('rmenu-quick-view-styles', $custom_css);
-            }
-        }
 
         // Add dynamic CSS
         $this->add_dynamic_css();
@@ -773,12 +688,14 @@ class RMENU_Quick_View
         if ($button_style === 'default') {
             return; // Only add dynamic CSS for custom style
         }
-        $button_color = get_option('rmenu_quick_view_button_color', '#000');
-        $text_color = get_option('rmenu_quick_view_text_color', '#ffffff');
+        $button_color = onepaquc_sanitize_hex_color(get_option('rmenu_quick_view_button_color', '#000'), '#000000');
+        $text_color = onepaquc_sanitize_hex_color(get_option('rmenu_quick_view_text_color', '#ffffff'), '#ffffff');
+        $button_color = $button_color ? $button_color : '#000000';
+        $text_color = $text_color ? $text_color : '#ffffff';
 
         $custom_css = "
             .opqvfw-btn {
-                background-color: {$button_color}4a !important;
+                background-color: {$button_color} !important;
                 color: {$text_color} !important;
             }
             .opqvfw-btn:hover {
@@ -803,7 +720,7 @@ class RMENU_Quick_View
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M15 5 5 15M5 5l10 10" />
                     </svg>
-                    <span class="screen-reader-text"><?php echo esc_html(get_option('rmenu_quick_view_close_text', 'Close')); ?></span>
+                    <span class="screen-reader-text"><?php echo esc_html(onepaquc_get_text_option('rmenu_quick_view_close_text', __('Close', 'one-page-quick-checkout-for-woocommerce'))); ?></span>
                 </div>
                 <div class="rmenu-quick-view-content">
                     <div class="rmenu-quick-view-loading">
@@ -817,14 +734,14 @@ class RMENU_Quick_View
                             <path fill="#fff" fill-opacity=".01" d="M0 0h1.32v1.32H0z" />
                             <path d="M.853.99.523.66l.33-.33" stroke="#fff" stroke-width=".11" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                        <span class="screen-reader-text"><?php echo esc_html(get_option('rmenu_quick_view_prev_text', 'Previous Product')); ?></span>
+                        <span class="screen-reader-text"><?php echo esc_html(onepaquc_get_text_option('rmenu_quick_view_prev_text', __('Previous Product', 'one-page-quick-checkout-for-woocommerce'))); ?></span>
                     </a>
                     <a href="#" class="rmenu-quick-view-next">
                         <svg width="22" height="22" viewBox="0 0 1.32 1.32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill="#fff" fill-opacity=".01" d="M0 0h1.32v1.32H0z" />
                             <path d="m.522.33.33.33-.33.33" stroke="#fff" stroke-width=".11" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                        <span class="screen-reader-text"><?php echo esc_html(get_option('rmenu_quick_view_next_text', 'Next Product')); ?></span>
+                        <span class="screen-reader-text"><?php echo esc_html(onepaquc_get_text_option('rmenu_quick_view_next_text', __('Next Product', 'one-page-quick-checkout-for-woocommerce'))); ?></span>
                     </a>
                 </div>
             </div>

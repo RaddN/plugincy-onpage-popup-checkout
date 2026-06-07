@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
   const modal = document.querySelector(".onepaqucpro-cr-modal");
   const modalContent = modal ? modal.querySelector(".onepaqucpro-cr-modal__content") : null;
   const body = document.body;
@@ -343,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (select.getAttribute("data-cr-select2") === "ajax") {
         options.ajax = {
-          url: window.ajaxurl || "admin-ajax.php",
+          url: (window.onepaqucCartRecoveryAdmin && window.onepaqucCartRecoveryAdmin.ajaxUrl) || window.ajaxurl,
           dataType: "json",
           delay: 250,
           data: function (params) {
@@ -938,7 +939,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      const maps = JSON.parse(source.textContent || "{}");
+      const maps = JSON.parse(source.getAttribute("data-cr-template-preview-tags") || "{}");
       return maps[layout] || maps.table || {};
     } catch (error) {
       return {};
@@ -1107,7 +1108,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const form = event.target.closest("form");
       if (form) {
         form.classList.add("is-autosaving");
-        form.submit();
+        if (typeof form.requestSubmit === "function") {
+          form.requestSubmit();
+        } else {
+          HTMLFormElement.prototype.submit.call(form);
+        }
       }
     }
   });

@@ -13,7 +13,7 @@
         'wc-checkout-block',
         plugins_url('plugincy_cart_block.js', __FILE__),
         array('wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor'),
-        filemtime(plugin_dir_path(__FILE__) . 'plugincy_cart_block.js'),
+        onepaquc_asset_version('includes/blocks/plugincy_cart_block.js'),
         true
     );
 
@@ -169,7 +169,7 @@ add_action('init', 'onepaquc_wc_checkout_block_register', 10);
 
 function onepaquc_wc_checkout_block_render($attributes = array()) {
     // Extract attributes with defaults
-    $attributes = wp_parse_args($attributes, array(
+    $attributes = wp_parse_args(is_array($attributes) ? $attributes : array(), array(
         // General
         'cartIcon' => 'cart',
         'drawerPosition' => 'right',
@@ -213,56 +213,99 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
         'checkoutBtnColor' => '#ffffff'
     ));
 
+    $number = static function ($value, $default, $minimum, $maximum) {
+        return is_numeric($value) ? min($maximum, max($minimum, (float) $value)) : $default;
+    };
+
+    $attributes['cartIcon']               = in_array($attributes['cartIcon'], array('cart', 'bag', 'basket'), true) ? $attributes['cartIcon'] : 'cart';
+    $attributes['drawerPosition']         = in_array($attributes['drawerPosition'], array('left', 'right'), true) ? $attributes['drawerPosition'] : 'right';
+    $attributes['productTitleTag']        = onepaquc_sanitize_heading_tag($attributes['productTitleTag'], 'p');
+    $attributes['cartIconSize']           = $number($attributes['cartIconSize'], 24, 8, 100);
+    $attributes['drawerWidth']            = $number($attributes['drawerWidth'], 400, 200, 1200);
+    $attributes['drawerPadding']          = $number($attributes['drawerPadding'], 20, 0, 100);
+    $attributes['drawerMargin']           = $number($attributes['drawerMargin'], 0, -100, 100);
+    $attributes['productImageWidth']      = $number($attributes['productImageWidth'], 80, 20, 500);
+    $attributes['productImageHeight']     = $number($attributes['productImageHeight'], 80, 20, 500);
+    $attributes['productTitleFontSize']   = $number($attributes['productTitleFontSize'], 16, 8, 72);
+    $attributes['productTitleLineHeight'] = $number($attributes['productTitleLineHeight'], 1.5, 0.8, 3);
+    $attributes['productPriceFontSize']   = $number($attributes['productPriceFontSize'], 14, 8, 72);
+    $attributes['productPriceLineHeight'] = $number($attributes['productPriceLineHeight'], 1.4, 0.8, 3);
+    $attributes['quantityWidth']          = $number($attributes['quantityWidth'], 80, 20, 300);
+    $attributes['quantityHeight']         = $number($attributes['quantityHeight'], 40, 20, 200);
+    $attributes['quantityPadding']        = $number($attributes['quantityPadding'], 5, 0, 50);
+    $attributes['removeButtonSize']       = $number($attributes['removeButtonSize'], 16, 8, 100);
+    $attributes['removeButtonPadding']    = $number($attributes['removeButtonPadding'], 5, 0, 50);
+    $attributes['subtotalFontSize']       = $number($attributes['subtotalFontSize'], 18, 8, 72);
+    $attributes['subtotalLineHeight']     = $number($attributes['subtotalLineHeight'], 1.5, 0.8, 3);
+    $attributes['subtotalPadding']        = $number($attributes['subtotalPadding'], 10, 0, 100);
+    $attributes['checkoutBtnFontSize']    = $number($attributes['checkoutBtnFontSize'], 16, 8, 72);
+    $attributes['checkoutBtnLineHeight']  = $number($attributes['checkoutBtnLineHeight'], 1.5, 0.8, 3);
+
+    foreach (array(
+        'cartIconColor'         => '#000000',
+        'drawerBackground'      => '#ffffff',
+        'productTitleColor'     => '#333333',
+        'productPriceColor'     => '#666666',
+        'subtotalColor'         => '#333333',
+        'checkoutBtnBackground' => '#333333',
+        'checkoutBtnColor'      => '#ffffff',
+    ) as $attribute => $default) {
+        $attributes[$attribute] = onepaquc_sanitize_hex_color($attributes[$attribute], $default);
+    }
+
+    $cart_id  = wp_unique_id('plugincy-cart-');
+    $selector = '#' . $cart_id;
+
     // Generate custom CSS based on attributes
     $custom_css = "
-        .rmenu-cart .rwc_cart-button .cart-icon svg {
+        {$selector} .rmenu-cart .rwc_cart-button .cart-icon svg {
             width: {$attributes['cartIconSize']}px !important;
             fill: {$attributes['cartIconColor']} !important;
         }
         
-        .rmenu-cart .cart-drawer {
+        {$selector} .rmenu-cart .cart-drawer {
             width: {$attributes['drawerWidth']}px !important;
             max-width: 100% !important;
             background-color: {$attributes['drawerBackground']} !important;
         }
         
-        .rmenu-cart .cart-drawer {
+        {$selector} .rmenu-cart .cart-drawer {
             padding: {$attributes['drawerPadding']}px !important;
             margin: {$attributes['drawerMargin']}px !important;
         }
         
-        .rmenu-cart .cart-item .thumbnail img {
+        {$selector} .rmenu-cart .cart-item .thumbnail img {
             width: {$attributes['productImageWidth']}px !important;
             height: {$attributes['productImageHeight']}px !important;
         }
         
-        .rmenu-cart .cart-item .item-title {
+        {$selector} .rmenu-cart .cart-item .item-title {
             font-size: {$attributes['productTitleFontSize']}px !important;
             line-height: {$attributes['productTitleLineHeight']} !important;
             color: {$attributes['productTitleColor']} !important;
         }
         
-        .rmenu-cart .cart-item .item-price {
+        {$selector} .rmenu-cart .cart-item .item-price {
             font-size: {$attributes['productPriceFontSize']}px !important;
             line-height: {$attributes['productPriceLineHeight']} !important;
             color: {$attributes['productPriceColor']} !important;
         }
         
-        .rmenu-cart .cart-item .quantity input.item-quantity {
+        {$selector} .rmenu-cart .cart-item .quantity input.item-quantity {
             width: {$attributes['quantityWidth']}px !important;
             height: {$attributes['quantityHeight']}px !important;
             padding: {$attributes['quantityPadding']}px !important;
         }
         
-        .rmenu-cart .cart-item .remove-item svg {
+        {$selector} .rmenu-cart .cart-item .remove-item svg {
             width: {$attributes['removeButtonSize']}px !important;
         }
         
-        .rmenu-cart .cart-item .remove-item {
+        {$selector} .rmenu-cart .cart-item .remove-item {
             padding: {$attributes['removeButtonPadding']}px !important;
         }
         
-        .rmenu-cart .cart-subtotal {
+        {$selector} .rmenu-cart .cart-subtotal {
             font-size: {$attributes['subtotalFontSize']}px !important;
             line-height: {$attributes['subtotalLineHeight']} !important;
             color: {$attributes['subtotalColor']} !important;
@@ -270,7 +313,7 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
             padding-bottom: 0 !important;
         }
         
-        .rmenu-cart .checkout-button {
+        {$selector} .rmenu-cart .checkout-button {
             background-color: {$attributes['checkoutBtnBackground']} !important;
             font-size: {$attributes['checkoutBtnFontSize']}px !important;
             line-height: {$attributes['checkoutBtnLineHeight']} !important;
@@ -279,36 +322,19 @@ function onepaquc_wc_checkout_block_render($attributes = array()) {
     ";
     
 
-    // Add data attributes to pass to the shortcode
-    add_filter('onepaquc_cart_data_attributes', function($attributes_array) use ($attributes) {
-        return array_merge(is_array($attributes_array) ? $attributes_array : [], array(
-            'data-cart-icon' => $attributes['cartIcon'],
-            'data-drawer-position' => $attributes['drawerPosition'],
-            'data-product-title-tag' => $attributes['productTitleTag'],
-            // You can add more data attributes here if needed
-        ));
-    });
-
     // Enqueue the custom CSS
     wp_register_style(
         'rmenu-cart-block-style',
-        false, // No actual CSS file
-        array(), // No dependencies
-        '1.3.8' // Version
+        false,
+        array(),
+        RMENU_VERSION
     );
     
-    // Now enqueue it
     wp_enqueue_style('rmenu-cart-block-style');
-    wp_add_inline_style( 'rmenu-cart-block-style', esc_html($custom_css), 999 );
-    
-    // Generate a unique ID for this cart instance
-    $cart_id = 'plugincy-cart-' . uniqid();
+    wp_add_inline_style('rmenu-cart-block-style', $custom_css);
     
     // Output the shortcode with custom wrapper for targeting
-    ob_start();
-    echo '<div id="' . esc_attr($cart_id) . '" class="plugincy-customized-cart">';
-    echo do_shortcode('[plugincy_cart drawer="' . esc_attr($attributes['drawerPosition']) . '" cart_icon="' . esc_attr($attributes['cartIcon']) . '" product_title_tag="' . esc_attr($attributes['productTitleTag']) . '"]');
-    echo '</div>';
-    
-    return ob_get_clean();
+    return '<div id="' . esc_attr($cart_id) . '" class="plugincy-customized-cart">'
+        . do_shortcode('[plugincy_cart drawer="' . esc_attr($attributes['drawerPosition']) . '" cart_icon="' . esc_attr($attributes['cartIcon']) . '" product_title_tag="' . esc_attr($attributes['productTitleTag']) . '"]')
+        . '</div>';
 }

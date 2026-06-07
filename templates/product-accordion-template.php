@@ -59,6 +59,7 @@ if (!defined('ABSPATH')) exit;
                                         <?php foreach ($attributes as $attribute) {
 
                                             $terms = wc_get_product_terms($product_id, $attribute->get_name(), ['fields' => 'names']);
+                                            $terms = is_wp_error($terms) || !is_array($terms) ? array() : $terms;
                                             if (!empty($terms)) {
                                                 echo '<li>' . esc_attr(wc_attribute_label($attribute->get_name())) . ': ' . esc_attr(implode(', ', $terms)) . '</li>';
                                             }
@@ -110,4 +111,4 @@ if (!defined('ABSPATH')) exit;
             }, 800);
         });
     });";
-    wp_add_inline_script('rmenu-cart-script', $inline_script,99);
+    wp_add_inline_script('rmenu-cart-script', $inline_script, 'after');

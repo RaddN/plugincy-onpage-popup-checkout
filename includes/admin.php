@@ -4,7 +4,6 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 // Admin Menu
 add_action('admin_menu', 'onepaquc_cart_menu');
-add_action('admin_head', 'onepaquc_cart_recovery_menu_badge_styles');
 
 
 function onepaquc_cart_menu()
@@ -57,30 +56,6 @@ function onepaquc_cart_menu()
         'onepaquc_cart_get_pro'
     );
 }
-
-function onepaquc_cart_recovery_menu_badge_styles()
-{
-?>
-    <style>
-        #adminmenu .onepaqucpro-menu-new-badge {
-            display: inline-block;
-            margin-left: 5px;
-            color: #f59e0b;
-            font-size: 9px;
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: 0;
-            text-transform: uppercase;
-            vertical-align: super;
-        }
-
-        #adminmenu a[href="admin.php?page=onepaqucpro_cart_recovery_template"] {
-            display: none !important;
-        }
-    </style>
-<?php
-}
-
 
 // Callback function for Get Pro page
 function onepaquc_cart_get_pro()
@@ -967,86 +942,6 @@ function onepaquc_cart_dashboard()
                 <?php esc_html_e('Plugin License', 'one-page-quick-checkout-for-woocommerce'); ?>
             </div>
         </div>
-        <script>
-            function getCheckboxByName(name, scope = document) {
-                return scope.querySelector(`input[type="checkbox"][name="${name}"]`);
-            }
-
-            function toggleDisabledClass(isDisabled, allinputFields) {
-                if (!Array.isArray(allinputFields)) {
-                    if (isDisabled) {
-                        allinputFields.classList.add('disabled');
-                        allinputFields.readOnly = true;
-                    } else {
-                        allinputFields.classList.remove('disabled');
-                        allinputFields.readOnly = false;
-                    }
-                } else {
-                    allinputFields.forEach(field => {
-                        if (isDisabled) {
-                            field.classList.add('disabled');
-                            field.readOnly = true;
-                        } else {
-                            field.classList.remove('disabled');
-                            field.readOnly = false;
-                        }
-                    });
-                }
-            }
-
-            function isColorDark(color) {
-                if (!color) return false;
-
-                // Remove # if present and convert to lowercase
-                const hex = color.replace('#', '').toLowerCase();
-
-                // Handle 3-digit hex
-                let fullHex = hex;
-                if (hex.length === 3) {
-                    fullHex = hex.split('').map(char => char + char).join('');
-                }
-
-                // Validate hex format
-                if (fullHex.length !== 6 || !/^[0-9a-f]{6}$/.test(fullHex)) {
-                    return false;
-                }
-
-                // Parse RGB values
-                const r = parseInt(fullHex.slice(0, 2), 16);
-                const g = parseInt(fullHex.slice(2, 4), 16);
-                const b = parseInt(fullHex.slice(4, 6), 16);
-
-                // Calculate relative luminance
-                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-                // Color is dark if luminance is less than 0.5
-                return luminance < 0.5;
-            }
-
-            function checkColors(checkoutColor, checkoutTextColor, is_warn_show = true) {
-                const bgColor = checkoutColor.value;
-                const textColor = checkoutTextColor.value;
-
-                if (!is_warn_show) {
-                    return;
-                }
-
-                if (isColorDark(bgColor) && isColorDark(textColor)) {
-                    showDirectCheckoutWarning(
-                        checkoutColor.closest('.rmenu-settings-row'),
-                        'Warning: Both background and text colors are dark. This may affect readability.'
-                    );
-                } else if (!isColorDark(bgColor) && !isColorDark(textColor)) {
-                    showDirectCheckoutWarning(
-                        checkoutTextColor.closest('.rmenu-settings-row'),
-                        'Warning: Both background and text colors are light. This may affect readability.'
-                    );
-                } else {
-                    removeDirectCheckoutWarning(checkoutColor.closest('.rmenu-settings-row'));
-                    removeDirectCheckoutWarning(checkoutTextColor.closest('.rmenu-settings-row'));
-                }
-            }
-        </script>
         <div class="tab-content" id="tab-100">
             <?php
             $license_manager = new onepaquc_License_Manager();
@@ -1103,52 +998,6 @@ function onepaquc_cart_dashboard()
             </div>
             <div class="tab-content" id="tab-2">
                 <!-- Tooltip CSS -->
-                <style>
-                    .tooltip {
-                        position: relative;
-                        display: inline-block;
-                        cursor: help;
-                        margin-left: 5px;
-                    }
-
-                    .tooltip .question-mark {
-                        display: inline-block;
-                        width: 16px;
-                        height: 16px;
-                        line-height: 16px;
-                        text-align: center;
-                        background: #f0f0f0;
-                        color: #555;
-                        border-radius: 50%;
-                        font-size: 12px;
-                        font-weight: bold;
-                    }
-
-                    .tooltip .tooltip-text {
-                        visibility: hidden;
-                        width: 250px;
-                        background-color: #555;
-                        color: #fff;
-                        text-align: left;
-                        border-radius: 4px;
-                        padding: 8px;
-                        position: absolute;
-                        z-index: 1;
-                        bottom: 125%;
-                        left: 50%;
-                        margin-left: -125px;
-                        opacity: 0;
-                        transition: opacity 0.3s;
-                        font-weight: normal;
-                        font-size: 12px;
-                        line-height: 1.4;
-                    }
-
-                    .tooltip:hover .tooltip-text {
-                        visibility: visible;
-                        opacity: 1;
-                    }
-                </style>
 
                 <div class="plugincy_row">
                     <div class="plugincy_col-5 plugincy_card">
@@ -1290,21 +1139,6 @@ function onepaquc_cart_dashboard()
                             </tr>
                         </table>
                     </div>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                            const enableCheckout = getCheckboxByName('onpage_checkout_enable', document.querySelector('div#tab-2'));
-
-                            const allinputFields = Array.from(document.querySelectorAll('div#tab-2 table:nth-of-type(1) input')).filter(
-                                el => !(el.name === "onpage_checkout_enable")
-                            );
-                            toggleDisabledClass(!enableCheckout.checked, allinputFields); // Set initial state
-                            enableCheckout.addEventListener('change', function() {
-                                toggleDisabledClass(!this.checked, allinputFields);
-                            });
-                        });
-                    </script>
                     <div class="plugincy_col-5 plugincy_card">
                         <?php
                         $onepaquc_helper->sec_head(
@@ -1447,7 +1281,7 @@ function onepaquc_cart_dashboard()
                                 );
                                 ?>
                                 <td class="rmenu-settings-control">
-                                    <input type="text" name="rmenu_cart_top_position" value="<?php echo esc_attr(get_option('rmenu_cart_top_position', '50%')); ?>"  />
+                                    <input type="text" name="rmenu_cart_top_position" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_cart_top_position', '50%')); ?>"  />
                                 </td>
                             </tr>
                             <tr>
@@ -1462,7 +1296,7 @@ function onepaquc_cart_dashboard()
                                 ?>
 
                                 <td class="rmenu-settings-control">
-                                    <input type="text" name="rmenu_cart_left_position" value="<?php echo esc_attr(get_option('rmenu_cart_left_position', '100%')); ?>"  />
+                                    <input type="text" name="rmenu_cart_left_position" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_cart_left_position', '100%')); ?>"  />
                                 </td>
                             </tr>
                         </table>
@@ -1490,7 +1324,7 @@ function onepaquc_cart_dashboard()
                                 <div class="rmenu-settings-control">
                                     <input type="color"
                                         name="rmenu_cart_bg_color"
-                                        value="<?php echo esc_attr(get_option('rmenu_cart_bg_color', '#96588a')); ?>"
+                                        value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_cart_bg_color', '#96588a')); ?>"
                                         class="rmenu-color-picker" />
                                 </div>
                             </div>
@@ -1505,7 +1339,7 @@ function onepaquc_cart_dashboard()
                                 <div class="rmenu-settings-control">
                                     <input type="color"
                                         name="rmenu_cart_text_color"
-                                        value="<?php echo esc_attr(get_option('rmenu_cart_text_color', '#ffffff')); ?>"
+                                        value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_cart_text_color', '#ffffff')); ?>"
                                         class="rmenu-color-picker" />
                                 </div>
                             </div>
@@ -1522,7 +1356,7 @@ function onepaquc_cart_dashboard()
                                 <div class="rmenu-settings-control">
                                     <input type="color"
                                         name="rmenu_cart_hover_bg"
-                                        value="<?php echo esc_attr(get_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>"
+                                        value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_cart_hover_bg', '#f8f8f8')); ?>"
                                         class="rmenu-color-picker" />
                                 </div>
                             </div>
@@ -1537,7 +1371,7 @@ function onepaquc_cart_dashboard()
                                 <div class="rmenu-settings-control">
                                     <input type="color"
                                         name="rmenu_cart_hover_text"
-                                        value="<?php echo esc_attr(get_option('rmenu_cart_hover_text', '#000000')); ?>"
+                                        value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_cart_hover_text', '#000000')); ?>"
                                         class="rmenu-color-picker" />
                                 </div>
                             </div>
@@ -1551,7 +1385,7 @@ function onepaquc_cart_dashboard()
                             </label>
 
                             <div class="rmenu-settings-control">
-                                <input type="text" name="rmenu_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_cart_border_radius', '5px 0 0 5px')); ?>" placeholder="0px 0px 0px 0px" />
+                                <input type="text" name="rmenu_cart_border_radius" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_cart_border_radius', '5px 0 0 5px')); ?>" placeholder="0px 0px 0px 0px" />
                             </div>
                         </div>
                     </div>
@@ -1590,20 +1424,6 @@ function onepaquc_cart_dashboard()
                         </div>
                     </div>
                 </div> -->
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // if the "Enable floating cart" checkbox is checked
-                        const enableCheckout = getCheckboxByName('rmenu_enable_sticky_cart', document.querySelector('div#tab-9'));
-
-                        const allinputFields = Array.from(document.querySelectorAll('div#tab-9 input,div#tab-9 select')).filter(
-                            el => !(el.name === "rmenu_enable_sticky_cart")
-                        );
-                        toggleDisabledClass(!enableCheckout.checked, allinputFields); // Set initial state
-                        enableCheckout.addEventListener('change', function() {
-                            toggleDisabledClass(!this.checked, allinputFields);
-                        });
-                    });
-                </script>
             </div>
                 <div class="onepaqucpro-floating-editor-right" aria-label="Floating cart visual preview">
                     <?php onepaquc_render_floating_cart_visual_editor_preview(); ?>
@@ -1804,6 +1624,7 @@ function onepaquc_cart_dashboard()
                                         'rmenu_show_quick_checkout_by_types',
                                         ["simple", "variable", "external"]
                                     );
+                                    $product_types_option = onepaquc_normalize_key_list($product_types_option, ["simple", "variable", "external"]);
                                     ?>
 
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
@@ -1839,7 +1660,12 @@ function onepaquc_cart_dashboard()
 
                             <div class="rmenu-settings-row">
                                 <div class="rmenu-settings-field">
-                                    <?php $product_types_option = get_option('rmenu_show_quick_checkout_by_page', ["single", "related", "upsells", "shop-page", "category-archives", "tag-archives", "featured-products", "on-sale", "recent", "widgets", "shortcodes"]); ?>
+                                    <?php
+                                    $product_types_option = onepaquc_normalize_key_list(
+                                        get_option('rmenu_show_quick_checkout_by_page', ["single", "related", "upsells", "shop-page", "category-archives", "tag-archives", "featured-products", "on-sale", "recent", "widgets", "shortcodes"]),
+                                        ["single", "related", "upsells", "shop-page", "category-archives", "tag-archives", "featured-products", "on-sale", "recent", "widgets", "shortcodes"]
+                                    );
+                                    ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
                                             <h4><?php esc_html_e('Product Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
@@ -2054,35 +1880,6 @@ function onepaquc_cart_dashboard()
                                 </tr>
                             </table>
 
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const checkoutMethodSelect = document.getElementById('rmenu-checkout-method');
-                                    const stickyCartCheckbox = getCheckboxByName('rmenu_enable_sticky_cart');
-                                    const sideCartOption = checkoutMethodSelect.querySelector('option[value="side_cart"]');
-
-                                    function updateSideCartOption() {
-                                        if (!stickyCartCheckbox.checked) {
-                                            sideCartOption.disabled = true;
-                                            if (checkoutMethodSelect.value === 'side_cart') {
-                                                showDirectCheckoutWarning(
-                                                    checkoutMethodSelect.closest('tr'),
-                                                    'Enable Sticky Cart in Floating Cart settings to use Side Cart Slide-in or use others Checkout Method.'
-                                                );
-                                            }
-                                        } else {
-                                            sideCartOption.disabled = false;
-                                            removeDirectCheckoutWarning(checkoutMethodSelect.closest('tr'));
-                                        }
-                                    }
-
-                                    stickyCartCheckbox.addEventListener('change', updateSideCartOption);
-                                    checkoutMethodSelect.addEventListener('change', updateSideCartOption);
-
-                                    // Initial check
-                                    updateSideCartOption();
-                                });
-                            </script>
-
                         </div>
                         <div class="rmenu-settings-section direct-button-style-section plugincy_card plugincy_col-5">
                             <?php
@@ -2126,7 +1923,7 @@ function onepaquc_cart_dashboard()
                                         </th>
 
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_wc_checkout_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_color', '#000')); ?>" class="rmenu-color-picker" />
+                                            <input type="color" name="rmenu_wc_checkout_color" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_wc_checkout_color', '#000')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -2135,7 +1932,7 @@ function onepaquc_cart_dashboard()
                                         </th>
 
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_wc_checkout_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                            <input type="color" name="rmenu_wc_checkout_text_color" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_wc_checkout_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
 
@@ -2144,7 +1941,7 @@ function onepaquc_cart_dashboard()
                                             <?php esc_html_e('Hover Background Color', 'one-page-quick-checkout-for-woocommerce'); ?>
                                         </th>
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_wc_checkout_hover_bg_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_hover_bg_color', '#222222')); ?>" class="rmenu-color-picker" />
+                                            <input type="color" name="rmenu_wc_checkout_hover_bg_color" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_wc_checkout_hover_bg_color', '#222222')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
 
@@ -2153,7 +1950,7 @@ function onepaquc_cart_dashboard()
                                             <?php esc_html_e('Hover Text Color', 'one-page-quick-checkout-for-woocommerce'); ?>
                                         </th>
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_wc_checkout_hover_text_color" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                            <input type="color" name="rmenu_wc_checkout_hover_text_color" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_wc_checkout_hover_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -2162,7 +1959,7 @@ function onepaquc_cart_dashboard()
                                         </th>
 
                                         <td class="rmenu-settings-control">
-                                            <input type="number" name="rmenu_wc_checkout_border_radius" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_border_radius', '4')); ?>" class="small-text" min="0" max="50" step="1" />
+                                            <input type="number" name="rmenu_wc_checkout_border_radius" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_wc_checkout_border_radius', '4')); ?>" class="small-text" min="0" max="50" step="1" />
                                             <span class="rmenu-unit">px</span>
                                         </td>
                                     </tr>
@@ -2171,7 +1968,7 @@ function onepaquc_cart_dashboard()
                                             <?php esc_html_e('Button Font Size', 'one-page-quick-checkout-for-woocommerce'); ?>
                                         </th>
                                         <td class="rmenu-settings-control">
-                                            <input type="number" name="rmenu_wc_checkout_font_size" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_font_size', '14')); ?>" class="small-text" min="10" max="30" step="1" />
+                                            <input type="number" name="rmenu_wc_checkout_font_size" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_wc_checkout_font_size', '14')); ?>" class="small-text" min="10" max="30" step="1" />
                                             <span class="rmenu-unit">px</span>
                                         </td>
                                     </tr>
@@ -2200,30 +1997,11 @@ function onepaquc_cart_dashboard()
                                     <tr id="rmenu-checkout-custom-width-row" style="<?php echo (get_option('rmenu_wc_checkout_width', 'auto') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
                                         <th class="rmenu-settings-label">Custom Width Value</th>
                                         <td class="rmenu-settings-control">
-                                            <input type="number" name="rmenu_wc_checkout_custom_width" value="<?php echo esc_attr(get_option('rmenu_wc_checkout_custom_width', '220')); ?>" class="small-text" min="50" max="500" step="1" />
+                                            <input type="number" name="rmenu_wc_checkout_custom_width" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_wc_checkout_custom_width', '220')); ?>" class="small-text" min="50" max="500" step="1" />
                                             <span class="rmenu-unit">px</span>
                                         </td>
                                     </tr>
 
-
-                                    <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-custom-css-row" style="<?php echo (get_option('rmenu_wc_checkout_style', 'default') == 'custom') ? 'display:flex;' : 'display:none;'; ?> grid-column: span 2;">
-                                        <th class="rmenu-settings-label">
-                                            <?php esc_html_e('Custom CSS', 'one-page-quick-checkout-for-woocommerce'); ?>
-                                        </th>
-
-                                        <td class="rmenu-settings-control" style="max-width: 100% !important;">
-                                            <textarea name="rmenu_wc_checkout_custom_css" class="rmenu-textarea-code" rows="6">
-        <?php echo esc_textarea(get_option('rmenu_wc_checkout_custom_css', '')); ?>
-    </textarea>
-                                            <p class="rmenu-field-description">
-                                                <?php esc_html_e(
-                                                    'Add custom CSS for advanced button styling. Use the class .opqcfw-btn to target the button.',
-                                                    'one-page-quick-checkout-for-woocommerce'
-                                                ); ?>
-                                            </p>
-                                        </td>
-
-                                    </tr>
 
                                     <tr>
                                         <th class="rmenu-settings-label">
@@ -2274,96 +2052,6 @@ function onepaquc_cart_dashboard()
                         </div>
 
                     </div>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                            const button_style = document.querySelector('div#tab-4 select[name="rmenu_wc_checkout_style"]');
-
-                            const buttonStyleSection = document.querySelector('.rmenu-settings-section.direct-button-style-section table tbody');
-                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(1);
-                            const checkoutWidthField = document.querySelector('select[name="rmenu_wc_checkout_width"]');
-                            const checkoutCustomWidthRow = document.getElementById('rmenu-checkout-custom-width-row');
-
-                            function toggleCheckoutCustomWidthRow() {
-                                if (!checkoutWidthField || !checkoutCustomWidthRow) {
-                                    return;
-                                }
-
-                                const isCustomWidth = checkoutWidthField.value === 'custom';
-                                const hasCustomStyleEnabled = button_style && button_style.value !== 'default';
-                                checkoutCustomWidthRow.style.display = (hasCustomStyleEnabled && isCustomWidth) ? 'flex' : 'none';
-                            }
-                            // if rmenu_wc_checkout_icon is 'none', disable the icon position field
-                            const iconSelect = document.querySelector('select[name="rmenu_wc_checkout_icon"]');
-                            const iconPositionField = document.querySelector('select[name="rmenu_wc_checkout_icon_position"]');
-                            if (iconSelect && iconPositionField) {
-                                iconSelect.addEventListener('change', function() {
-                                    toggleDisabledClass(this.value === 'none', iconPositionField);
-                                });
-
-                                // Trigger change event on page load to set initial visibility
-                                setTimeout(() => {
-                                    iconSelect.dispatchEvent(new Event('change'));
-                                }, 1000);
-                            }
-
-                            // if button_style !== 'custom', none all fields except the first two
-                            if (button_style) {
-                                button_style.addEventListener('change', function() {
-                                    if (this.value !== 'default') {
-                                        allFields.forEach(field => field.style.display = 'flex');
-                                        document.querySelector('#rmenu-custom-css-row').style.display = (this.value === 'custom') ? 'block' : 'none';
-                                        toggleCheckoutCustomWidthRow();
-                                    } else {
-                                        allFields.forEach(field => field.style.display = 'none');
-                                        if (checkoutCustomWidthRow) {
-                                            checkoutCustomWidthRow.style.display = 'none';
-                                        }
-                                    }
-                                });
-
-                                // Trigger change event on page load to set initial visibility
-                                button_style.dispatchEvent(new Event('change'));
-
-                            }
-
-                            if (checkoutWidthField) {
-                                checkoutWidthField.addEventListener('change', toggleCheckoutCustomWidthRow);
-                                checkoutWidthField.dispatchEvent(new Event('change'));
-                            }
-
-                            // if rmenu_wc_checkout_color (which is bg color) & rmenu_wc_checkout_text_color (which is text color) both are dark or light, show a warning message
-                            const checkoutColor = document.querySelector('input[name="rmenu_wc_checkout_color"]');
-                            const checkoutTextColor = document.querySelector('input[name="rmenu_wc_checkout_text_color"]');
-                            if (checkoutColor && checkoutTextColor) {
-                                checkoutColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                                });
-                                checkoutTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                                });
-
-                                // Initial check on page load
-                                checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                            }
-
-                            // if rmenu_wc_checkout_hover_bg_color (which is bg color) & rmenu_wc_checkout_hover_text_color (which is text color) both are dark or light, show a warning message
-                            const checkoutHoverColor = document.querySelector('input[name="rmenu_wc_checkout_hover_bg_color"]');
-                            const checkoutHoverTextColor = document.querySelector('input[name="rmenu_wc_checkout_hover_text_color"]');
-                            if (checkoutHoverColor && checkoutHoverTextColor) {
-                                checkoutHoverColor.addEventListener('change', function() {
-                                    checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
-                                });
-                                checkoutHoverTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
-                                });
-
-                                // Initial check on page load
-                                checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
-                            }
-
-                        });
-                    </script>
                 </div>
 
 
@@ -2435,23 +2123,6 @@ function onepaquc_cart_dashboard()
                                         <?php $onepaquc_helper->switcher('rmenu_show_variation_title', 0); ?>
                                     </td>
                                 </tr>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const variationLayoutSelect = document.querySelector('select[name="rmenu_variation_layout"]');
-                                        const variationTitleSwitch = getCheckboxByName('rmenu_show_variation_title');
-
-                                        // Initial check
-                                        setTimeout(() => {
-                                            toggleDisabledClass(variationLayoutSelect.value === 'combine', variationTitleSwitch);
-                                            variationLayoutSelect.dispatchEvent(new Event('change'));
-                                        }, 1000);
-
-                                        // Event listener for dropdown change
-                                        variationLayoutSelect.addEventListener('change', function() {
-                                            toggleDisabledClass(this.value === 'combine', variationTitleSwitch);
-                                        });
-                                    });
-                                </script>
                                 <tr>
                                     <?php
                                     $onepaquc_helper->sec_head(
@@ -2470,20 +2141,6 @@ function onepaquc_cart_dashboard()
                                     </td>
                                 </tr>
                             </table>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                                    const enableCheckout = getCheckboxByName('rmenu_variation_show_archive', document.querySelector('div#tab-4'));
-
-                                    const allinputFields = Array.from(document.querySelectorAll('div#tab-4 table.variable-product-table input, div#tab-4 table.variable-product-table select')).filter(
-                                        el => !(el.name === "rmenu_variation_show_archive")
-                                    );
-                                    toggleDisabledClass(!enableCheckout.checked, allinputFields); // Set initial state
-                                    enableCheckout.addEventListener('change', function() {
-                                        toggleDisabledClass(!this.checked, allinputFields);
-                                    });
-                                });
-                            </script>
                         </div>
 
                         <div class="rmenu-settings-section plugincy_card plugincy_col-5">
@@ -2522,361 +2179,7 @@ function onepaquc_cart_dashboard()
                         </div>
                     </div>
                 </div>
-
-                <style>
-                    .rmenu-settings-header {
-                        margin-bottom: 30px;
-                    }
-
-                    .rmenu-settings-header h2 {
-                        font-size: 24px;
-                        font-weight: 600;
-                        margin: 0 0 10px 0;
-                        padding: 0;
-                    }
-
-                    .rmenu-settings-description {
-                        font-size: 14px;
-                        color: #646970;
-                        margin: 0;
-                        padding: 0;
-                    }
-
-                    .rmenu-settings-section-header h3 {
-                        margin: 0;
-                        font-size: 14px;
-                        font-weight: 600;
-                        line-height: 1.4;
-                    }
-
-                    .rmenu-settings-section-header h3 .dashicons {
-                        font-size: 16px;
-                        height: 16px;
-                        width: 16px;
-                        margin-right: 6px;
-                        color: #646970;
-                    }
-
-                    .rmenu-settings-row {
-                        padding: 10px;
-                        position: relative;
-                        display: flex;
-                        flex-wrap: wrap;
-                    }
-
-                    .rmenu-settings-row:last-child {
-                        border-bottom: none;
-                    }
-
-                    .rmenu-settings-row-columns {
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 20px;
-                    }
-
-                    .rmenu-settings-column {
-                        flex: 1;
-                        min-width: 200px;
-                    }
-
-                    .rmenu-settings-label {
-                        font-weight: 600;
-                        margin-bottom: 8px;
-                        font-size: 14px;
-                    }
-
-                    .rmenu-field-description {
-                        color: #646970;
-                        font-size: 13px;
-                        margin: 5px 0 0;
-                        font-style: italic;
-                    }
-
-                    .rmenu-checkbox-group {
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 20px;
-                    }
-
-                    .rmenu-checkbox-column {
-                        flex: 1;
-                        min-width: 200px;
-                    }
-
-                    .rmenu-checkbox-column h4 {
-                        margin: 0 0 10px 0;
-                        padding: 0;
-                        font-size: 14px;
-                        color: #3c434a;
-                    }
-
-                    .rmenu-checkbox-container {
-                        display: block;
-                        position: relative;
-                        padding: 5px 0;
-                        cursor: pointer;
-                        user-select: none;
-                    }
-
-                    .rmenu-checkbox-label {
-                        margin-left: 5px;
-                        font-size: 13px;
-                    }
-
-                    .rmenu-toggle-switch {
-                        position: relative;
-                        display: inline-block;
-                        width: 40px;
-                        height: 22px;
-                    }
-
-                    .rmenu-toggle-switch input {
-                        opacity: 0;
-                        width: 0;
-                        height: 0;
-                    }
-
-                    .rmenu-toggle-slider {
-                        position: absolute;
-                        cursor: pointer;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        background-color: #ccc;
-                        transition: .4s;
-                        border-radius: 34px;
-                    }
-
-                    .rmenu-toggle-slider:before {
-                        position: absolute;
-                        content: "";
-                        height: 18px;
-                        width: 18px;
-                        left: 2px;
-                        bottom: 2px;
-                        background-color: white;
-                        transition: .4s;
-                        border-radius: 50%;
-                    }
-
-                    input:checked+.rmenu-toggle-slider {
-                        background-color: #4caf50;
-                    }
-
-                    input:focus+.rmenu-toggle-slider {
-                        box-shadow: 0 0 1px #4caf50;
-                    }
-
-                    input:checked+.rmenu-toggle-slider:before {
-                        transform: translateX(18px);
-                    }
-
-                    .rmenu-color-picker {
-                        padding: 0;
-                        border: 1px solid #8c8f94;
-                        border-radius: 4px;
-                        height: 30px;
-                        width: 60px;
-                    }
-
-                    .rmenu-textarea-code {
-                        min-height: 100px;
-                        width: 100%;
-                        font-family: monospace;
-                    }
-                </style>
-
-                <script type="text/javascript">
-                    jQuery(document).ready(function($) {
-                        $('#rmenu-style-select').on('change', function() {
-                            if ($(this).val() === 'custom') {
-                                $('#rmenu-custom-css-row').css('display', 'flex');
-                            } else {
-                                $('#rmenu-custom-css-row').hide();
-                            }
-                        });
-                    });
-                </script>
-                <script>
-                    function showDirectCheckoutWarning(highlightSection, message) {
-                        let popup = document.getElementById('rmenu-enable-atc-popup');
-                        if (highlightSection) {
-                            highlightSection.style.border = '2px solid #dc3545';
-                            highlightSection.style.padding = '10px';
-                        }
-                        if (!popup) {
-                            popup = document.createElement('div');
-                            popup.id = 'rmenu-enable-atc-popup';
-                            popup.innerHTML = `
-                                    <div style="
-                                        display: flex;
-                                        align-items: center;
-                                        gap: 10px;
-                                        background: #dc3545;
-                                        color: #fff;
-                                        padding: 16px 28px 16px 16px;
-                                        border-radius: 6px;
-                                        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-                                        font-size: 15px;
-                                        position: fixed;
-                                        top: 30px;
-                                        right: 30px;
-                                        z-index: 99999;
-                                    ">
-                                        <span style="font-size:18px;vertical-align:middle;" class="dashicons dashicons-warning"></span>
-                                        <span>
-                                            <b>${message}</b>
-                                        </span>
-                                        <span id="rmenu-enable-atc-popup-close" style="margin-left:12px;cursor:pointer;font-size:18px;">&times;</span>
-                                    </div>
-                                `;
-                            document.body.appendChild(popup);
-                            document.getElementById('rmenu-enable-atc-popup-close').onclick = function() {
-                                popup.remove();
-                            };
-                            // Only remove the popup if it's not being hovered
-                            let isHovered = false;
-                            popup.addEventListener('mouseenter', function() {
-                                isHovered = true;
-                            });
-                            popup.addEventListener('mouseleave', function() {
-                                isHovered = false;
-                            });
-                            setTimeout(function() {
-                                if (popup && !isHovered) popup.remove();
-                            }, 3500);
-                        }
-                    }
-                    // Reusable function to remove warning popup and highlight
-                    function removeDirectCheckoutWarning(highlightSection) {
-                        if (highlightSection) {
-                            highlightSection.style.border = '';
-                            highlightSection.style.padding = '';
-                        }
-                        const existingPopup = document.getElementById('rmenu-enable-atc-popup');
-                        if (existingPopup) {
-                            existingPopup.remove();
-                        }
-                    }
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Tab click handler for direct checkout settings tabs
-                        const tabItems = document.querySelectorAll('#tab-4 .rmenu-settings-tab-item');
-                        const tabContents = document.querySelectorAll('#tab-4 .tab-content');
-                        const enableDirectCheckout = getCheckboxByName('rmenu_add_direct_checkout_button');
-                        const typeCheckboxes = document.querySelectorAll('input[name="rmenu_show_quick_checkout_by_types[]"]');
-                        const highlightSection = document.getElementById('rmenu-direct-button-display-section');
-                        const highlight_enableSection = document.getElementById('rmenu-direct-checkout-enable-field');
-                        // rmenu_show_quick_checkout_by_page[]
-                        const pageCheckboxes = document.querySelectorAll('input[name="rmenu_show_quick_checkout_by_page[]"]');
-
-                        enableDirectCheckout.addEventListener('change', function() {
-                            if (enableDirectCheckout.checked) {
-                                removeDirectCheckoutWarning(highlight_enableSection);
-                                const allTypeUnchecked = Array.from(typeCheckboxes).every(checkbox => !checkbox.checked);
-                                const allPageUnchecked = Array.from(pageCheckboxes).every(checkbox => !checkbox.checked);
-                                if (allTypeUnchecked || allPageUnchecked) {
-                                    showDirectCheckoutWarning(
-                                        highlightSection,
-                                        'Please select at least one product type and one page to show changes.'
-                                    );
-                                }
-                            }
-                        });
-
-                        // On change pageCheckboxes & typeCheckboxes & if at least one of them is checked, remove highlight and popup
-                        function handleDirectCheckoutCheckboxChange() {
-                            const allChecked = Array.from(typeCheckboxes).some(checkbox => checkbox.checked);
-                            const allPageChecked = Array.from(pageCheckboxes).some(checkbox => checkbox.checked);
-                            if (allChecked && allPageChecked) {
-                                removeDirectCheckoutWarning(highlightSection);
-                            } else {
-                                if (enableDirectCheckout.checked) {
-                                    const allTypeUnchecked = Array.from(typeCheckboxes).every(checkbox => !checkbox.checked);
-                                    const allPageUnchecked = Array.from(pageCheckboxes).every(checkbox => !checkbox.checked);
-                                    if (allTypeUnchecked || allPageUnchecked) {
-                                        showDirectCheckoutWarning(
-                                            highlightSection,
-                                            'Please select at least one product type and one page to show changes.'
-                                        );
-                                    }
-                                }
-                            }
-                        }
-                        typeCheckboxes.forEach(checkbox => {
-                            checkbox.addEventListener('change', handleDirectCheckoutCheckboxChange);
-                        });
-                        pageCheckboxes.forEach(checkbox => {
-                            checkbox.addEventListener('change', handleDirectCheckoutCheckboxChange);
-                        });
-
-                        tabItems.forEach(function(tab) {
-                            tab.addEventListener('click', function() {
-                                // Remove active class from all tabs
-                                tabItems.forEach(function(t) {
-                                    t.classList.remove('active');
-                                });
-                                // Hide all tab contents
-                                tabContents.forEach(function(content) {
-                                    content.style.display = 'none';
-                                });
-
-                                // Add active class to clicked tab
-                                tab.classList.add('active');
-                                // Show the corresponding tab content
-                                const tabId = tab.getAttribute('data-tab');
-
-                                if (tabId !== "direct-general-settings" && enableDirectCheckout && !enableDirectCheckout.checked) {
-
-                                    showDirectCheckoutWarning(
-                                        highlight_enableSection,
-                                        '<b>Enable Direct Checkout</b> in the general settings tab to access these options.'
-                                    );
-                                } else {
-                                    // Hide any existing popup
-                                    const existingPopup = document.getElementById('rmenu-enable-atc-popup');
-                                    if (existingPopup) {
-                                        existingPopup.remove();
-                                    }
-                                }
-                                if (enableDirectCheckout.checked) {
-                                    const allTypeUnchecked = Array.from(typeCheckboxes).every(checkbox => !checkbox.checked);
-                                    const allPageUnchecked = Array.from(pageCheckboxes).every(checkbox => !checkbox.checked);
-                                    if (allTypeUnchecked || allPageUnchecked) {
-                                        showDirectCheckoutWarning(
-                                            highlightSection,
-                                            'Please select at least one product type and one page to show changes.'
-                                        );
-                                    }
-                                }
-                                const content = document.getElementById(tabId);
-                                if (content) {
-                                    content.style.display = 'block';
-                                }
-                            });
-                        });
-
-                        // Show only the first tab content by default
-                        tabContents.forEach(function(content, idx) {
-                            content.style.display = (idx === 0) ? 'block' : 'none';
-                        });
-                    });
-                </script>
             </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                    const enableCheckout = getCheckboxByName('rmenu_add_direct_checkout_button', document.querySelector('div#tab-4'));
-
-                    const allinputFields = Array.from(document.querySelectorAll('div#tab-4 input, div#tab-4 select')).filter(
-                        el => !(el.name === "rmenu_add_direct_checkout_button")
-                    );
-                    toggleDisabledClass(!enableCheckout.checked, allinputFields);
-                    enableCheckout.addEventListener('change', function() {
-                        toggleDisabledClass(!this.checked, allinputFields);
-                    });
-                });
-            </script>
             <div class="tab-content plugincy_card" id="tab-5" style="margin-top: 20px;">
                 <?php
                 $onepaquc_helper->sec_head(
@@ -3289,7 +2592,7 @@ function onepaquc_cart_dashboard()
                                         ?>
 
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_quick_view_button_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_button_color', '#000')); ?>" class="rmenu-color-picker" />
+                                            <input type="color" name="rmenu_quick_view_button_color" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_quick_view_button_color', '#000')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
 
@@ -3305,7 +2608,7 @@ function onepaquc_cart_dashboard()
                                         ?>
 
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_quick_view_text_color" value="<?php echo esc_attr(get_option('rmenu_quick_view_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
+                                            <input type="color" name="rmenu_quick_view_text_color" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_quick_view_text_color', '#ffffff')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
 
@@ -3331,78 +2634,10 @@ function onepaquc_cart_dashboard()
                                             </select>
                                         </td>
                                     </tr>
-                                    <tr id="rmenu-qv-custom-css-row" style="<?php echo (get_option('rmenu_quick_view_button_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
-                                        <?php
-                                        $onepaquc_helper->sec_head(
-                                            'th',
-                                            '',
-                                            '',
-                                            __('Custom CSS', 'one-page-quick-checkout-for-woocommerce'),
-                                            ''
-                                        );
-                                        ?>
-
-                                        <td class="rmenu-settings-control">
-                                            <textarea name="rmenu_quick_view_custom_css"
-                                                class="rmenu-textarea-code"
-                                                rows="6"><?php echo esc_textarea(get_option('rmenu_quick_view_custom_css', '')); ?></textarea>
-                                            <p class="rmenu-field-description">
-                                                <?php
-                                                echo wp_kses_post(
-                                                    __(
-                                                        'Add custom CSS for advanced button styling. Use the class <code>.opqvfw-btn</code> to target the button and <code>.opqvfw-modal</code> to target the modal.',
-                                                        'one-page-quick-checkout-for-woocommerce'
-                                                    )
-                                                );
-                                                ?>
-
-                                            </p>
-                                        </td>
-
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                            const button_style = document.querySelector('div#tab-7 select[name="rmenu_quick_view_button_style"]');
-
-                            const buttonStyleSection = document.querySelector('.rmenu-settings-section.quick-view-button-style table tbody');
-                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(1);
-
-                            // if button_style !== 'custom', none all fields except the first two
-                            if (button_style) {
-                                button_style.addEventListener('change', function() {
-                                    if (this.value !== 'default') {
-                                        allFields.forEach(field => field.style.display = 'flex');
-                                    } else {
-                                        allFields.forEach(field => field.style.display = 'none');
-                                    }
-                                });
-
-                                // Trigger change event on page load to set initial visibility
-                                button_style.dispatchEvent(new Event('change'));
-
-                            }
-
-                            // if rmenu_quick_view_button_color (which is bg color) & rmenu_quick_view_text_color (which is text color) both are dark or light, show a warning message
-                            const checkoutColor = document.querySelector('input[name="rmenu_quick_view_button_color"]');
-                            const checkoutTextColor = document.querySelector('input[name="rmenu_quick_view_text_color"]');
-                            if (checkoutColor && checkoutTextColor) {
-                                checkoutColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                                });
-                                checkoutTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                                });
-
-                                // Initial check on page load
-                                checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                            }
-                        });
-                    </script>
                 </div>
                 <div class="tab-content" id="quick-popup" style="padding: 0;">
                     <div class="plugincy_row mb-4">
@@ -3423,7 +2658,12 @@ function onepaquc_cart_dashboard()
                                         <?php esc_html_e('Content Elements', 'one-page-quick-checkout-for-woocommerce'); ?>
                                     </label>
 
-                                    <?php $content_elements_option = get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']); ?>
+                                    <?php
+                                    $content_elements_option = onepaquc_normalize_key_list(
+                                        get_option('rmenu_quick_view_content_elements', ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']),
+                                        ['image', 'title', 'rating', 'price', 'excerpt', 'add_to_cart', 'meta']
+                                    );
+                                    ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
                                             <label class="rmenu-checkbox-container">
@@ -3537,13 +2777,13 @@ function onepaquc_cart_dashboard()
                                     <tr id="rmenu-custom-size-row" style="<?php echo (get_option('rmenu_quick_view_modal_size', 'medium') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
                                         <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Custom Width', 'Custom width in pixels (e.g., 800).'); ?>
                                         <td class="rmenu-settings-control pro-only">
-                                            <input disabled type="text" name="rmenu_quick_view_custom_width" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_width', '800')); ?>"  />
+                                            <input disabled type="text" name="rmenu_quick_view_custom_width" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_quick_view_custom_width', '800')); ?>"  />
                                         </td>
                                     </tr>
                                     <tr id="rmenu-custom-size-row" style="<?php echo (get_option('rmenu_quick_view_modal_size', 'medium') == 'custom') ? 'display:flex;' : 'display:none;'; ?>">
                                         <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', 'Custom Height', 'Custom height in pixels (e.g., 600) or \'auto\'.'); ?>
                                         <td class="rmenu-settings-control pro-only">
-                                            <input disabled type="text" name="rmenu_quick_view_custom_height" value="<?php echo esc_attr(get_option('rmenu_quick_view_custom_height', '600')); ?>"  />
+                                            <input disabled type="text" name="rmenu_quick_view_custom_height" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_quick_view_custom_height', '600')); ?>"  />
                                         </td>
                                     </tr>
 
@@ -3595,7 +2835,12 @@ function onepaquc_cart_dashboard()
                                         <?php esc_html_e('Product Types', 'one-page-quick-checkout-for-woocommerce'); ?>
                                     </label>
 
-                                    <?php $product_types_option = get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]); ?>
+                                    <?php
+                                    $product_types_option = onepaquc_normalize_key_list(
+                                        get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', "grouped", "external"]),
+                                        ['simple', 'variable', "grouped", "external"]
+                                    );
+                                    ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <label class="rmenu-checkbox-container">
                                             <input type="checkbox" name="rmenu_show_quick_view_by_types[]" value="simple" <?php checked(in_array('simple', $product_types_option)); ?> />
@@ -3631,7 +2876,12 @@ function onepaquc_cart_dashboard()
 
                             <div class="rmenu-settings-row">
                                 <div class="rmenu-settings-field">
-                                    <?php $product_pages_option = get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']); ?>
+                                    <?php
+                                    $product_pages_option = onepaquc_normalize_key_list(
+                                        get_option('rmenu_show_quick_view_by_page', ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']),
+                                        ['shop-page', 'category-archives', 'tag-archives', 'brand-archives', 'attribute-archives', 'single', 'search', 'featured-products', 'on-sale', 'recent', 'widgets', 'shortcodes']
+                                    );
+                                    ?>
                                     <div class="rmenu-settings-control rmenu-checkbox-group">
                                         <div class="rmenu-checkbox-column">
                                             <h4><?php esc_html_e('Archive Pages', 'one-page-quick-checkout-for-woocommerce'); ?></h4>
@@ -3771,26 +3021,6 @@ function onepaquc_cart_dashboard()
                             </tr>
                         </table>
                     </div>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            // Select the checkbox and the text input
-                            const enableCheckout = document.getElementById('view_details_checkbox');
-                            const allInputFields = document.getElementById('view_details_text');
-
-                            // Function to toggle the disabled class
-                            function toggleDisabledClass(disable, inputField) {
-                                inputField.disabled = disable; // Toggle the disabled property
-                            }
-
-                            // Set initial state
-                            toggleDisabledClass(!enableCheckout.checked, allInputFields);
-
-                            // Add event listener for checkbox change
-                            enableCheckout.addEventListener('change', function() {
-                                toggleDisabledClass(!this.checked, allInputFields);
-                            });
-                        });
-                    </script>
                 </div>
                 <div class="tab-content" id="quick-advanced" style="padding: 0;">
                     <div class="plugincy_row mb-4">
@@ -3893,7 +3123,7 @@ function onepaquc_cart_dashboard()
                                     );
                                     ?>
                                     <td class="rmenu-settings-control pro-only">
-                                        <input disabled type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_category', 'one-page-quick-checkout-for-woocommerce')); ?>"  />
+                                        <input disabled type="text" name="rmenu_quick_view_event_category" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_quick_view_event_category', 'one-page-quick-checkout-for-woocommerce')); ?>"  />
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                     </td>
                                 </tr>
@@ -3909,7 +3139,7 @@ function onepaquc_cart_dashboard()
                                     );
                                     ?>
                                     <td class="rmenu-settings-control pro-only">
-                                        <input disabled type="text" name="rmenu_quick_view_event_action" value="<?php echo esc_attr(get_option('rmenu_quick_view_event_action', 'Quick View')); ?>"  />
+                                        <input disabled type="text" name="rmenu_quick_view_event_action" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_quick_view_event_action', 'Quick View')); ?>"  />
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                     </td>
                                 </tr>
@@ -3966,7 +3196,7 @@ function onepaquc_cart_dashboard()
                                 );
                                 ?>
                                 <td class="rmenu-settings-control pro-only">
-                                    <input disabled type="text" name="rmenu_quick_view_specific_pages" value="<?php echo esc_attr(get_option('rmenu_quick_view_specific_pages', '')); ?>"  />
+                                    <input disabled type="text" name="rmenu_quick_view_specific_pages" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_quick_view_specific_pages', '')); ?>"  />
                                 </td>
                             </tr>
 
@@ -3988,303 +3218,7 @@ function onepaquc_cart_dashboard()
 
                     </div>
                 </div>
-
-                <script>
-                    jQuery(document).ready(function($) {
-                        // Show/hide custom size fields based on modal size selection
-                        $('#rmenu-qv-style-select').on('change', function() {
-                            if ($(this).val() === 'custom') {
-                                $('#rmenu-qv-custom-css-row').show();
-                            } else {
-                                $('#rmenu-qv-custom-css-row').hide();
-                            }
-                        });
-
-                        // Show/hide specific pages field
-                        $('select[name="rmenu_quick_view_load_scripts"]').on('change', function() {
-                            if ($(this).val() === 'specific') {
-                                $('#rmenu-specific-pages-row').show();
-                            } else {
-                                $('#rmenu-specific-pages-row').hide();
-                            }
-                        });
-
-                        // Show/hide custom size fields based on modal size selection
-                        $('select[name="rmenu_quick_view_modal_size"]').on('change', function() {
-                            if ($(this).val() === 'custom') {
-                                $('#rmenu-custom-size-row').show();
-                            } else {
-                                $('#rmenu-custom-size-row').hide();
-                            }
-                        });
-                    });
-                </script>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Tab click handler for Add To Cart settings tabs
-                        const tabItems = document.querySelectorAll('#tab-7 .rmenu-settings-tab-item');
-                        const tabContents = document.querySelectorAll('#tab-7 > .tab-content');
-                        const enableCustomQuickView = getCheckboxByName('rmenu_enable_quick_view');
-                        const highlight_quick_view_enable_Section = document.querySelector('#rmenu-quick-view-enable-field');
-                        const highlight_popup_content_element_Section = document.querySelector('#rmenu-quick-view-content-elements');
-                        const highlight_quick_view_display_Section = document.querySelector('#quick-display');
-                        const productTypes = document.querySelectorAll('input[name="rmenu_show_quick_view_by_types[]"]');
-                        const productPages = document.querySelectorAll('input[name="rmenu_show_quick_view_by_page[]"]');
-
-                        tabItems.forEach(function(tab) {
-                            tab.addEventListener('click', function() {
-                                // Remove active class from all tabs
-                                tabItems.forEach(function(t) {
-                                    t.classList.remove('active');
-                                });
-                                // Hide all tab contents
-                                tabContents.forEach(function(content) {
-                                    content.style.display = 'none';
-                                });
-
-                                // Add active class to clicked tab
-                                tab.classList.add('active');
-                                // Show the corresponding tab content
-                                const tabId = tab.getAttribute('data-tab');
-                                if (tabId !== "quick-general-settings" && enableCustomQuickView && !enableCustomQuickView.checked) {
-                                    showDirectCheckoutWarning(
-                                        highlight_quick_view_enable_Section,
-                                        '<b>Enable Custom Quick View</b> in the general settings tab to access these options.'
-                                    );
-                                }
-                                const content = document.getElementById(tabId);
-                                if (content) {
-                                    content.style.display = 'block';
-                                }
-                            });
-                        });
-
-                        enableCustomQuickView.addEventListener('change', function() {
-                            if (this.checked) {
-                                removeDirectCheckoutWarning(highlight_quick_view_enable_Section);
-                                // in rmenu_quick_view_content_elements[] if no checkbox is checked. show a warning
-                                const contentElements = document.querySelectorAll('input[name="rmenu_quick_view_content_elements[]"]');
-                                let isAnyChecked = false;
-                                contentElements.forEach(function(element) {
-                                    if (element.checked) {
-                                        isAnyChecked = true;
-                                    }
-                                });
-                                if (!isAnyChecked) {
-                                    showDirectCheckoutWarning(
-                                        highlight_popup_content_element_Section,
-                                        '<b>Select at least one content element</b> in the Popup Manage tab to view the changes.'
-                                    );
-                                }
-
-                                // if rmenu_show_quick_view_by_types[] & rmenu_show_quick_view_by_page[] are empty, show a warning
-                                let isAnyTypeChecked = false;
-                                let isAnyPageChecked = false;
-                                productTypes.forEach(function(element) {
-                                    if (element.checked) {
-                                        isAnyTypeChecked = true;
-                                    }
-                                });
-                                productPages.forEach(function(element) {
-                                    if (element.checked) {
-                                        isAnyPageChecked = true;
-                                    }
-                                });
-                                if (!isAnyTypeChecked && !isAnyPageChecked) {
-                                    showDirectCheckoutWarning(
-                                        highlight_quick_view_display_Section,
-                                        '<b>Select at least one product type</b> and <b>one product page</b> in the Display tab to view the changes.'
-                                    );
-                                }
-                            }
-                        });
-
-                        // on changes in each productPages & productTypes. if productPages & productTypes  are empty show warning
-                        productTypes.forEach(function(element) {
-                            element.addEventListener('change', function() {
-                                let isAnyTypeChecked = false;
-                                let isAnyPageChecked = false;
-                                productTypes.forEach(function(el) {
-                                    if (el.checked) {
-                                        isAnyTypeChecked = true;
-                                    }
-                                });
-                                productPages.forEach(function(el) {
-                                    if (el.checked) {
-                                        isAnyPageChecked = true;
-                                    }
-                                });
-                                if (!isAnyTypeChecked || !isAnyPageChecked) {
-                                    showDirectCheckoutWarning(
-                                        highlight_quick_view_display_Section,
-                                        '<b>Select at least one product type</b> and <b>one product page</b> in the Display tab to view the changes.'
-                                    );
-                                } else {
-                                    removeDirectCheckoutWarning(highlight_quick_view_display_Section);
-                                }
-                            });
-                        });
-                        productPages.forEach(function(element) {
-                            element.addEventListener('change', function() {
-                                let isAnyTypeChecked = false;
-                                let isAnyPageChecked = false;
-                                productTypes.forEach(function(el) {
-                                    if (el.checked) {
-                                        isAnyTypeChecked = true;
-                                    }
-                                });
-                                productPages.forEach(function(el) {
-                                    if (el.checked) {
-                                        isAnyPageChecked = true;
-                                    }
-                                });
-                                if (!isAnyTypeChecked || !isAnyPageChecked) {
-                                    showDirectCheckoutWarning(
-                                        highlight_quick_view_display_Section,
-                                        '<b>Select at least one product type</b> and <b>one product page</b> in the Display tab to view the changes.'
-                                    );
-                                } else {
-                                    removeDirectCheckoutWarning(highlight_quick_view_display_Section);
-                                }
-                            });
-                        });
-
-
-
-                        // on changes in rmenu_quick_view_content_elements[] if no checkbox is checked. show a warning
-                        const contentElements = document.querySelectorAll('input[name="rmenu_quick_view_content_elements[]"]');
-                        contentElements.forEach(function(element) {
-                            element.addEventListener('change', function() {
-                                let isAnyChecked = false;
-                                contentElements.forEach(function(el) {
-                                    if (el.checked) {
-                                        isAnyChecked = true;
-                                        removeDirectCheckoutWarning(highlight_popup_content_element_Section);
-                                    }
-                                });
-                                if (!isAnyChecked) {
-                                    showDirectCheckoutWarning(
-                                        highlight_popup_content_element_Section,
-                                        '<b>Select at least one content element</b> in the Popup Manage tab to view the changes.'
-                                    );
-                                }
-
-                                // if rmenu_show_quick_view_by_types[] & rmenu_show_quick_view_by_page[] are empty, show a warning                                
-                                let isAnyTypeChecked = false;
-                                let isAnyPageChecked = false;
-                                productTypes.forEach(function(element) {
-                                    if (element.checked) {
-                                        isAnyTypeChecked = true;
-                                    }
-                                });
-                                productPages.forEach(function(element) {
-                                    if (element.checked) {
-                                        isAnyPageChecked = true;
-                                    }
-                                });
-                                if (!isAnyTypeChecked && !isAnyPageChecked) {
-                                    showDirectCheckoutWarning(
-                                        highlight_quick_view_display_Section,
-                                        '<b>Select at least one product type</b> and <b>one product page</b> in the Display tab to view the changes.'
-                                    );
-                                }
-                            });
-                        });
-
-                        // Show only the first tab content by default
-                        tabContents.forEach(function(content, idx) {
-                            content.style.display = (idx === 0) ? 'block' : 'none';
-                        });
-                    });
-                </script>
             </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                    const enableCheckout = getCheckboxByName('rmenu_enable_quick_view', document.querySelector('div#tab-7'));
-                    // if rmenu_quick_view_display_type is icon, disable the rmenu_quick_view_button_text
-                    const quickViewDisplayType = document.querySelector('div#tab-7 select[name="rmenu_quick_view_display_type"]');
-                    const quickViewButtonText = document.querySelector('div#tab-7 input[name="rmenu_quick_view_button_text"]');
-                    // if rmenu_quick_view_button_icon is none, show warning
-                    const quickViewButtonIcon = document.querySelector('div#tab-7 select[name="rmenu_quick_view_button_icon"]');
-                    const heighlight_quick_view_button_style = document.querySelector('#rmenu-quick-view-button-style-section');
-                    quickViewDisplayType.addEventListener('change', function() {
-                        toggleDisabledClass(this.value === 'icon', quickViewButtonText);
-
-                        if (this.value !== 'button') {
-                            if (quickViewButtonIcon.value === 'none') {
-                                showDirectCheckoutWarning(
-                                    heighlight_quick_view_button_style,
-                                    'Please select an icon for the Quick View button.'
-                                );
-                            }
-                        } else {
-                            removeDirectCheckoutWarning(heighlight_quick_view_button_style);
-                        }
-                    });
-
-                    // Trigger change event on page load to set initial visibility
-                    quickViewDisplayType.dispatchEvent(new Event('change'));
-
-                    quickViewButtonIcon.addEventListener('change', function() {
-                        if (this.value === 'none' && quickViewDisplayType.value !== 'button') {
-                            showDirectCheckoutWarning(
-                                heighlight_quick_view_button_style,
-                                'Please select an icon for the Quick View button.'
-                            );
-                        } else {
-                            removeDirectCheckoutWarning(heighlight_quick_view_button_style);
-                        }
-                    });
-
-                    const allinputFields = Array.from(document.querySelectorAll('div#tab-7 input, div#tab-7 select')).filter(
-                        el => !(el.name === "rmenu_enable_quick_view")
-                    );
-                    toggleDisabledClass(!enableCheckout.checked, allinputFields);
-                    enableCheckout.addEventListener('change', function() {
-                        toggleDisabledClass(!this.checked, allinputFields);
-                    });
-
-                    // Show/hide custom CSS row based on selected style after page load
-                    const styleSelect = document.querySelector('select[name="rmenu_quick_view_button_style"]');
-                    const customCssRow = document.querySelector('textarea[name="rmenu_quick_view_custom_css"]').closest('tr');
-                    const quickViewButtonIconPos = document.querySelector('div#tab-7 select[name="rmenu_quick_view_icon_position"]');
-                    const quickViewButtonIconRow = quickViewButtonIcon.closest('tr');
-                    const quickViewButtonIconPosRow = quickViewButtonIconPos.closest('tr');
-
-                    const updateQuickViewDisplayType = () => {
-                        if (quickViewDisplayType.value === 'button') {
-                            quickViewButtonIconRow.style.display = 'none';
-                            quickViewButtonIconPosRow.style.display = 'none';
-
-                        } else if (quickViewDisplayType.value === 'icon') {
-                            quickViewButtonIconRow.style.display = 'flex';
-                            quickViewButtonIconPosRow.style.display = 'none';
-                        } else {
-                            quickViewButtonIconRow.style.display = 'flex';
-                            quickViewButtonIconPosRow.style.display = 'flex';
-                        }
-                    };
-
-                    const updateCustomCssRowVisibility = () => {
-                        if (styleSelect.value === 'custom') {
-                            customCssRow.style.display = 'block';
-                        } else {
-                            customCssRow.style.display = 'none';
-                        }
-                        updateQuickViewDisplayType();
-                    };
-
-                    // Initial check
-                    updateCustomCssRowVisibility();
-
-                    // Add change event listener
-                    styleSelect.addEventListener('change', updateCustomCssRowVisibility);
-
-                    updateQuickViewDisplayType();
-                    quickViewDisplayType.addEventListener('change', updateQuickViewDisplayType);
-                });
-            </script>
             <div class="tab-content" id="tab-8">
                 <div class="plugincy_nav_card mb-4">
                     <?php
@@ -4359,7 +3293,7 @@ function onepaquc_cart_dashboard()
                                     );
                                     ?>
                                     <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(get_option('txt-add-to-cart', __('Add to Cart', 'one-page-quick-checkout-for-woocommerce'))); ?>"  />
+                                        <input type="text" name="txt-add-to-cart" value="<?php echo esc_attr(onepaquc_get_text_option('txt-add-to-cart', __('Add to Cart', 'one-page-quick-checkout-for-woocommerce'))); ?>"  />
                                     </td>
                                 </tr>
 
@@ -4374,7 +3308,7 @@ function onepaquc_cart_dashboard()
                                     );
                                     ?>
                                     <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-select-options" value="<?php echo esc_attr(get_option('txt-select-options', __('Select Options', 'one-page-quick-checkout-for-woocommerce'))); ?>"  />
+                                        <input type="text" name="txt-select-options" value="<?php echo esc_attr(onepaquc_get_text_option('txt-select-options', __('Select Options', 'one-page-quick-checkout-for-woocommerce'))); ?>"  />
                                     </td>
                                 </tr>
 
@@ -4389,7 +3323,7 @@ function onepaquc_cart_dashboard()
                                     );
                                     ?>
                                     <td class="rmenu-settings-control">
-                                        <input type="text" name="txt-read-more" value="<?php echo esc_attr(get_option('txt-read-more', __('Read More', 'one-page-quick-checkout-for-woocommerce'))); ?>"  />
+                                        <input type="text" name="txt-read-more" value="<?php echo esc_attr(onepaquc_get_text_option('txt-read-more', __('Read More', 'one-page-quick-checkout-for-woocommerce'))); ?>"  />
                                     </td>
                                 </tr>
 
@@ -4404,7 +3338,7 @@ function onepaquc_cart_dashboard()
                                     );
                                     ?>
                                     <td class="rmenu-settings-control">
-                                        <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_grouped_add_to_cart_text', __('View Products', 'one-page-quick-checkout-for-woocommerce'))); ?>"  />
+                                        <input type="text" name="rmenu_grouped_add_to_cart_text" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_grouped_add_to_cart_text', __('View Products', 'one-page-quick-checkout-for-woocommerce'))); ?>"  />
                                     </td>
                                 </tr>
                             </table>
@@ -4463,7 +3397,7 @@ function onepaquc_cart_dashboard()
                                         </th>
 
                                         <td class="rmenu-settings-control">
-                                            <input type="color" name="rmenu_add_to_cart_bg_color" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_bg_color', '#000')); ?>" class="rmenu-color-picker" />
+                                            <input type="color" name="rmenu_add_to_cart_bg_color" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_bg_color', '#000')); ?>" class="rmenu-color-picker" />
                                         </td>
                                     </tr>
 
@@ -4480,7 +3414,7 @@ function onepaquc_cart_dashboard()
                                         <td class="rmenu-settings-control">
                                             <input type="color"
                                                 name="rmenu_add_to_cart_text_color"
-                                                value="<?php echo esc_attr(get_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>"
+                                                value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_text_color', '#ffffff')); ?>"
                                                 class="rmenu-color-picker" />
                                         </td>
                                     </tr>
@@ -4499,7 +3433,7 @@ function onepaquc_cart_dashboard()
                                         <td class="rmenu-settings-control">
                                             <input type="color"
                                                 name="rmenu_add_to_cart_hover_bg_color"
-                                                value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>"
+                                                value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_hover_bg_color', '#7f4579')); ?>"
                                                 class="rmenu-color-picker" />
                                         </td>
                                     </tr>
@@ -4518,7 +3452,7 @@ function onepaquc_cart_dashboard()
                                         <td class="rmenu-settings-control">
                                             <input type="color"
                                                 name="rmenu_add_to_cart_hover_text_color"
-                                                value="<?php echo esc_attr(get_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>"
+                                                value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_hover_text_color', '#ffffff')); ?>"
                                                 class="rmenu-color-picker" />
                                         </td>
                                     </tr>
@@ -4530,7 +3464,7 @@ function onepaquc_cart_dashboard()
                                         </th>
 
                                         <td class="rmenu-settings-control">
-                                            <input type="number" name="rmenu_add_to_cart_border_radius" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_border_radius', '3')); ?>" class="small-text" min="0" max="50" step="1" />
+                                            <input type="number" name="rmenu_add_to_cart_border_radius" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_border_radius', '3')); ?>" class="small-text" min="0" max="50" step="1" />
                                             <span class="rmenu-unit">px</span>
                                         </td>
                                     </tr>
@@ -4540,7 +3474,7 @@ function onepaquc_cart_dashboard()
                                             <?php esc_html_e('Button Font Size', 'one-page-quick-checkout-for-woocommerce'); ?>
                                         </th>
                                         <td class="rmenu-settings-control">
-                                            <input type="number" name="rmenu_add_to_cart_font_size" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_font_size', '14')); ?>" class="small-text" min="10" max="24" step="1" />
+                                            <input type="number" name="rmenu_add_to_cart_font_size" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_font_size', '14')); ?>" class="small-text" min="10" max="24" step="1" />
                                             <span class="rmenu-unit">px</span>
                                         </td>
                                     </tr>
@@ -4570,7 +3504,7 @@ function onepaquc_cart_dashboard()
                                     <tr id="rmenu-atc-custom-width-row" style="<?php echo (get_option('rmenu_add_to_cart_width', 'auto') == 'custom') ? 'display:block;' : 'display:none;'; ?>">
                                         <th class="rmenu-settings-label">Custom Width Value</th>
                                         <td class="rmenu-settings-control">
-                                            <input type="number" name="rmenu_add_to_cart_custom_width" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_custom_width', '150')); ?>" class="small-text" min="50" max="500" step="1" />
+                                            <input type="number" name="rmenu_add_to_cart_custom_width" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_custom_width', '150')); ?>" class="small-text" min="50" max="500" step="1" />
                                             <span class="rmenu-unit">px</span>
                                         </td>
                                     </tr>
@@ -4636,118 +3570,10 @@ function onepaquc_cart_dashboard()
 
                                     </tr>
 
-                                    <tr class="rmenu-settings-row rmenu-custom-css-row" id="rmenu-atc-custom-css-row" style="<?php echo (get_option('rmenu_add_to_cart_style', 'default') == 'custom') ? 'display:block;' : 'display:none;'; ?> grid-column: span 2;">
-                                        <?php
-                                        $onepaquc_helper->sec_head(
-                                            'th',
-                                            'rmenu-settings-label',
-                                            '',
-                                            __('Custom CSS', 'one-page-quick-checkout-for-woocommerce'),
-                                            ''
-                                        );
-                                        ?>
-
-                                        <td class="rmenu-settings-control">
-                                            <textarea name="rmenu_add_to_cart_custom_css"
-                                                class="rmenu-textarea-code"
-                                                rows="6"><?php echo esc_textarea(get_option('rmenu_add_to_cart_custom_css', '')); ?></textarea>
-                                            <p class="rmenu-field-description">
-                                                <?php esc_html_e('Add custom CSS for advanced button styling. Use the class <code>.product_type_simple.add_to_cart_button</code> to target the button.', 'one-page-quick-checkout-for-woocommerce'); ?>
-                                            </p>
-                                        </td>
-
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                            const button_style = document.querySelector('div#tab-8 select[name="rmenu_add_to_cart_style"]');
-
-                            // Select all children except the first two in the .button-style-section & except div#rmenu-atc-custom-width-row
-                            const buttonStyleSection = document.querySelector('.button-style-section table tbody');
-                            const allFields = Array.from(buttonStyleSection ? buttonStyleSection.children : []).slice(1);
-                            const customWidthRow = document.getElementById('rmenu-atc-custom-width-row');
-                            // if rmenu_add_to_cart_icon is none, hide the rmenu-atc-icon-position-row
-                            const iconPositionRow = document.getElementById('rmenu-atc-icon-position-row');
-                            const iconSelect = document.querySelector('select[name="rmenu_add_to_cart_icon"]');
-                            const customwidth = document.querySelector('select[name="rmenu_add_to_cart_width"]');
-
-                            if (iconSelect && iconPositionRow) {
-                                iconSelect.addEventListener('change', function() {
-                                    if (this.value === 'none') {
-                                        iconPositionRow.style.display = 'none';
-                                    } else {
-                                        iconPositionRow.style.display = 'flex';
-                                    }
-                                });
-
-                                // Trigger change event on page load to set initial visibility
-                                setTimeout(() => {
-                                    iconSelect.dispatchEvent(new Event('change'));
-                                }, 1000);
-                            }
-
-                            if (customWidthRow) {
-                                allFields.splice(allFields.indexOf(customWidthRow), 1); // Remove custom width row from the list
-                            }
-
-
-                            // if button_style !== 'custom', none all fields except the first two
-                            if (button_style) {
-                                button_style.addEventListener('change', function() {
-                                    if (this.value !== 'default') {
-                                        allFields.forEach(field => field.style.display = 'flex');
-                                        if (this.value !== 'custom') {
-                                            document.getElementById('rmenu-atc-custom-css-row').style.display = 'none';
-                                        } else {
-                                            document.getElementById('rmenu-atc-custom-css-row').style.display = 'block';
-                                        }
-                                        customwidth.dispatchEvent(new Event('change'));
-                                    } else {
-                                        allFields.forEach(field => field.style.display = 'none');
-                                        customWidthRow.style.display = 'none';
-                                    }
-                                });
-
-                                // Trigger change event on page load to set initial visibility
-                                button_style.dispatchEvent(new Event('change'));
-
-                            }
-
-                            // if rmenu_add_to_cart_bg_color (which is bg color) & rmenu_add_to_cart_text_color (which is text color) both are dark or light, show a warning message
-                            const checkoutColor = document.querySelector('input[name="rmenu_add_to_cart_bg_color"]');
-                            const checkoutTextColor = document.querySelector('input[name="rmenu_add_to_cart_text_color"]');
-                            if (checkoutColor && checkoutTextColor) {
-                                checkoutColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                                });
-                                checkoutTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                                });
-
-                                // Initial check on page load
-                                checkColors(checkoutColor, checkoutTextColor, button_style && button_style.value !== 'default');
-                            }
-
-                            // if rmenu_add_to_cart_hover_bg_color (which is bg color) & rmenu_add_to_cart_hover_text_color (which is text color) both are dark or light, show a warning message
-                            const checkoutHoverColor = document.querySelector('input[name="rmenu_add_to_cart_hover_bg_color"]');
-                            const checkoutHoverTextColor = document.querySelector('input[name="rmenu_add_to_cart_hover_text_color"]');
-                            if (checkoutHoverColor && checkoutHoverTextColor) {
-                                checkoutHoverColor.addEventListener('change', function() {
-                                    checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
-                                });
-                                checkoutHoverTextColor.addEventListener('change', function() {
-                                    checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
-                                });
-
-                                // Initial check on page load
-                                checkColors(checkoutHoverColor, checkoutHoverTextColor, button_style && button_style.value !== 'default');
-                            }
-                        });
-                    </script>
                 </div>
                 <div class="tab-content" id="button-behavior" style="padding: 0;">
                     <div class="rmenu-settings-section plugincy_card mb-4">
@@ -4788,7 +3614,7 @@ function onepaquc_cart_dashboard()
                                     <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', __('Default Quantity', 'one-page-quick-checkout-for-woocommerce'), __('Set the default quantity when adding products to cart from archive pages.', 'one-page-quick-checkout-for-woocommerce')); ?>
                                     <td>
                                         <div class="rmenu-settings-control pro-only">
-                                            <input disabled type="number" name="rmenu_add_to_cart_default_qty" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_default_qty', '1')); ?>" class="small-text" min="1" max="100" step="1" />
+                                            <input disabled type="number" name="rmenu_add_to_cart_default_qty" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_default_qty', '1')); ?>" class="small-text" min="1" max="100" step="1" />
                                             <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                         </div>
                                     </td>
@@ -4855,7 +3681,7 @@ function onepaquc_cart_dashboard()
                                 <tr>
                                     <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', __('Success Message', 'one-page-quick-checkout-for-woocommerce'), __('Customize the success message shown after adding to cart. Use {product} as a placeholder for the product name.', 'one-page-quick-checkout-for-woocommerce')); ?>
                                     <td class="rmenu-settings-control pro-only">
-                                        <input disabled type="text" name="rmenu_add_to_cart_success_message" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_success_message', '{product} has been added to your cart.')); ?>"  />
+                                        <input disabled type="text" name="rmenu_add_to_cart_success_message" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_success_message', '{product} has been added to your cart.')); ?>"  />
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                     </td>
                                 </tr>
@@ -4877,45 +3703,13 @@ function onepaquc_cart_dashboard()
                                 <tr>
                                     <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', __('Notification Duration', 'one-page-quick-checkout-for-woocommerce'), __('How long to display the notification for (in milliseconds).', 'one-page-quick-checkout-for-woocommerce')); ?>
                                     <td class="rmenu-settings-control pro-only">
-                                        <input disabled type="number" name="rmenu_add_to_cart_notification_duration" value="<?php echo esc_attr(get_option('rmenu_add_to_cart_notification_duration', '3000')); ?>" class="small-text" min="1000" max="10000" step="500" />
+                                        <input disabled type="number" name="rmenu_add_to_cart_notification_duration" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_add_to_cart_notification_duration', '3000')); ?>" class="small-text" min="1000" max="10000" step="500" />
                                         <span class="rmenu-unit">ms</span>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const checkbox = getCheckboxByName('rmenu_enable_ajax_add_to_cart');
-                            const redirect_atc = document.querySelector('select[name="rmenu_redirect_after_add"]');
-                            const settingsInputs = Array.from(document.querySelectorAll('#add_to_cart_behave input, #add_to_cart_behave select, #add_to_cart_notification input, #add_to_cart_notification select')).filter(
-                                el => !(el.name === "rmenu_enable_ajax_add_to_cart")
-                            );
-
-                            function updateSettings() {
-                                const enabled_checkbox = getCheckboxByName('rmenu_enable_ajax_add_to_cart').checked;
-
-                                toggleDisabledClass(!enabled_checkbox, settingsInputs);
-
-                            }
-
-                            function notificationVisibilityHandle() {
-                                const redirectAtcVal = document.querySelector('select[name="rmenu_redirect_after_add"]').value; // Use .value
-
-                                const notiSettings = Array.from(document.querySelectorAll('#add_to_cart_notification input, #add_to_cart_notification select'));
-                                toggleDisabledClass(redirectAtcVal !== 'none', notiSettings);
-                            }
-
-                            // Initial update on page load
-                            setTimeout(updateSettings, 2000);
-                            setTimeout(notificationVisibilityHandle, 2000);
-
-                            // Update when the checkbox changes
-                            checkbox.addEventListener('change', updateSettings);
-                            redirect_atc.addEventListener('change', notificationVisibilityHandle);
-                        });
-                    </script>
                 </div>
                 <div class="tab-content" id="advanced" style="padding: 0;">
                     <div class="plugincy_row mb-4">
@@ -4933,7 +3727,7 @@ function onepaquc_cart_dashboard()
                                 <tr>
                                     <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', __('Mobile Button Text', 'one-page-quick-checkout-for-woocommerce'), __('Set a different button text for mobile devices. Leave empty to use the default text.', 'one-page-quick-checkout-for-woocommerce')); ?>
                                     <td class="rmenu-settings-control pro-only">
-                                        <input disabled type="text" name="rmenu_mobile_add_to_cart_text" value="<?php echo esc_attr(get_option('rmenu_mobile_add_to_cart_text', '')); ?>"  />
+                                        <input disabled type="text" name="rmenu_mobile_add_to_cart_text" value="<?php echo esc_attr(onepaquc_get_text_option('rmenu_mobile_add_to_cart_text', '')); ?>"  />
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                     </td>
                                 </tr>
@@ -4942,10 +3736,10 @@ function onepaquc_cart_dashboard()
                                     <?php $onepaquc_helper->sec_head('th', 'rmenu-settings-label', '', __('Mobile Button Size', 'one-page-quick-checkout-for-woocommerce'), __('Choose button size optimization for mobile devices.', 'one-page-quick-checkout-for-woocommerce')); ?>
                                     <td class="rmenu-settings-control pro-only">
                                         <select disabled name="rmenu_mobile_button_size" class="rmenu-select">
-                                            <option value="default" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'default'); ?>> <?php _e('Same as Desktop', 'one-page-quick-checkout-for-woocommerce'); ?></option>
-                                            <option value="larger" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'larger'); ?>> <?php _e('Larger', 'one-page-quick-checkout-for-woocommerce'); ?></option>
-                                            <option value="smaller" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'smaller'); ?>> <?php _e('Smaller', 'one-page-quick-checkout-for-woocommerce'); ?></option>
-                                            <option value="full" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'full'); ?>> <?php _e('Full Width', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                                            <option value="default" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'default'); ?>> <?php esc_html_e('Same as Desktop', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                                            <option value="larger" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'larger'); ?>> <?php esc_html_e('Larger', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                                            <option value="smaller" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'smaller'); ?>> <?php esc_html_e('Smaller', 'one-page-quick-checkout-for-woocommerce'); ?></option>
+                                            <option value="full" <?php selected(get_option('rmenu_mobile_button_size', 'default'), 'full'); ?>> <?php esc_html_e('Full Width', 'one-page-quick-checkout-for-woocommerce'); ?></option>
                                         </select>
                                         <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                     </td>
@@ -5006,110 +3800,7 @@ function onepaquc_cart_dashboard()
                     </div>
                 </div>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Tab click handler for Add To Cart settings tabs
-                        const tabItems = document.querySelectorAll('#tab-8 .rmenu-settings-tab-item');
-                        const tabContents = document.querySelectorAll('#tab-8  .tab-content');
-                        const btn_display = document.querySelector('select[name="rmenu_add_to_cart_catalog_display"]');
-
-                        btn_display.addEventListener('change', function() {
-                            if (this.value === 'hide') {
-                                // disable all inputs in the tab except btn_display
-                                tabContents.forEach(function(content) {
-                                    const inputs = content.querySelectorAll('input, select, textarea');
-                                    inputs.forEach(function(input) {
-                                        toggleDisabledClass(input !== btn_display, input);
-                                    });
-                                });
-                            } else {
-                                // enable all inputs in the tab
-                                tabContents.forEach(function(content) {
-                                    const inputs = content.querySelectorAll('input, select, textarea');
-                                    inputs.forEach(function(input) {
-                                        toggleDisabledClass(false, input);
-                                    });
-                                });
-                            }
-                        });
-
-                        tabItems.forEach(function(tab) {
-                            tab.addEventListener('click', function() {
-                                // Remove active class from all tabs
-                                tabItems.forEach(function(t) {
-                                    t.classList.remove('active');
-                                });
-                                // Hide all tab contents
-                                tabContents.forEach(function(content) {
-                                    content.style.display = 'none';
-                                });
-
-                                // Add active class to clicked tab
-                                tab.classList.add('active');
-                                // Show the corresponding tab content
-                                const tabId = tab.getAttribute('data-tab');
-                                const highlight_add_to_cart_enable_Section = document.querySelector('#rmenu-enable-custom-add-to-cart');
-                                // If "Enable Custom Add to Cart" is not enabled, show a popup message and prevent tab switching
-                                const enableCustomAddToCart = getCheckboxByName('rmenu_enable_custom_add_to_cart');
-
-                                if (tabId !== "general-settings" && enableCustomAddToCart && !enableCustomAddToCart.checked) {
-                                    showDirectCheckoutWarning(
-                                        highlight_add_to_cart_enable_Section,
-                                        '<b>Enable Custom Add to Cart</b> in the general settings tab to access these options.'
-                                    );
-                                }
-                                enableCustomAddToCart.addEventListener('change', function() {
-                                    if (this.checked) {
-                                        removeDirectCheckoutWarning(highlight_add_to_cart_enable_Section);
-                                    }
-                                });
-
-                                const highlight_rmenu_add_to_cart_archive_display_Section = document.querySelector('#rmenu-add-to-cart-archive-display');
-
-                                // If the tab is not "button-behavior" and the button display is set to hide, show a popup message
-                                if (tabId !== "button-behavior" && btn_display && btn_display.value === 'hide') {
-                                    showDirectCheckoutWarning(
-                                        highlight_rmenu_add_to_cart_archive_display_Section,
-                                        '<b>Button Display is set to Hide</b>. You can change this in the Button Behavior -> Display Settings.'
-                                    );
-                                }
-                                btn_display.addEventListener('change', function() {
-                                    if (this.value !== 'hide') {
-                                        removeDirectCheckoutWarning(highlight_rmenu_add_to_cart_archive_display_Section);
-                                    }
-                                });
-
-                                const content = document.getElementById(tabId);
-                                if (content) {
-                                    content.style.display = 'block';
-                                }
-                            });
-                        });
-
-                        // Show only the first tab content by default
-                        tabContents.forEach(function(content, idx) {
-                            content.style.display = (idx === 0) ? 'block' : 'none';
-                        });
-                    });
-                </script>
-
             </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // if the "Enable One Page Checkout" checkbox is checked, enable the "Checkout Layout" select
-                    const enableCheckout = getCheckboxByName('rmenu_enable_custom_add_to_cart', document.querySelector('div#tab-8'));
-                    const btn_display = document.querySelector('select[name="rmenu_add_to_cart_catalog_display"]');
-                    const btn_display_hidden = btn_display && btn_display.value === 'hide';
-
-                    const allinputFields = Array.from(document.querySelectorAll('div#tab-8 input, div#tab-8 select, div#tab-8 textarea')).filter(
-                        el => !(el.name === "rmenu_enable_custom_add_to_cart" || el.name === "rmenu_add_to_cart_catalog_display")
-                    );
-                    toggleDisabledClass(!enableCheckout.checked || btn_display_hidden, allinputFields);
-                    enableCheckout.addEventListener('change', function() {
-                        toggleDisabledClass(!this.checked, allinputFields);
-                    });
-                });
-            </script>
             <div style="text-align: right;display: flex;justify-content: flex-end;width: 98.5%;margin-top: 42px;align-items: center;padding: 20px;box-sizing: border-box;">
                 <button type="submit" class="button button-primary" style="padding: 4px 20px;border: none;display: flex;gap: 5px;align-items: center;">
                     <span style="margin-bottom: -7px;"><svg fill="#fff" width="16" height="16" viewBox="0 0 0.48 0.48" xmlns="http://www.w3.org/2000/svg">
@@ -5329,86 +4020,6 @@ function onepaquc_cart_dashboard()
                     </div>
                 </div>
             </div>
-
-            <style>
-                .tutorial-container {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                    gap: 25px;
-                    margin-top: 20px;
-                }
-
-                .tutorial-topic {
-                    background: #fff;
-                    border: 1px solid #e5e5e5;
-                    border-radius: 8px;
-                    padding: 20px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-                    transition: box-shadow 0.3s ease;
-                }
-
-                .tutorial-topic:hover {
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                }
-
-                .tutorial-video {
-                    margin-bottom: 15px;
-                    border-radius: 5px;
-                    overflow: hidden;
-                    background: #000;
-                }
-
-                .tutorial-video video {
-                    width: 100%;
-                    display: block;
-                }
-
-                .tutorial-topic h3 {
-                    margin-top: 0;
-                    margin-bottom: 10px;
-                    color: #23282d;
-                    font-size: 18px;
-                }
-
-                .tutorial-topic p {
-                    margin-bottom: 15px;
-                    color: #555;
-                    line-height: 1.5;
-                }
-
-                .tutorial-shortcode,
-                .tutorial-tips {
-                    background: #f8f9fa;
-                    border-left: 4px solid #0073aa;
-                    padding: 12px 15px;
-                    margin-top: 15px;
-                    border-radius: 0 4px 4px 0;
-                }
-
-                .tutorial-shortcode h4,
-                .tutorial-tips h4 {
-                    margin-top: 0;
-                    margin-bottom: 8px;
-                    font-size: 14px;
-                    color: #23282d;
-                }
-
-                .tutorial-shortcode code {
-                    display: block;
-                    background: #eaeaea;
-                    padding: 8px 12px;
-                    border-radius: 4px;
-                    font-family: monospace;
-                    font-size: 14px;
-                    color: #0073aa;
-                    overflow-x: auto;
-                }
-
-                .tutorial-tips p {
-                    margin-bottom: 0;
-                    font-size: 14px;
-                }
-            </style>
         </div>
 
     </div>
@@ -5421,11 +4032,14 @@ add_action('admin_init', 'onepaquc_cart_settings');
 function onepaquc_handle_reset_settings()
 {
     // verify nonce
-    if (!isset($_POST['onepaquc_reset_settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['onepaquc_reset_settings_nonce'])), 'onepaquc_reset_settings')) {
+    if (!isset($_POST['onepaquc_reset_settings_nonce']) || !is_scalar($_POST['onepaquc_reset_settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['onepaquc_reset_settings_nonce'])), 'onepaquc_reset_settings')) {
+        return;
+    }
+    if (!current_user_can('manage_options')) {
         return;
     }
 
-    if (isset($_POST['onepaquc_reset_settings']) && $_POST['onepaquc_reset_settings'] == '1') {
+    if (isset($_POST['onepaquc_reset_settings']) && is_scalar($_POST['onepaquc_reset_settings']) && '1' === (string) wp_unslash($_POST['onepaquc_reset_settings'])) {
         global $onepaquc_string_settings_fields;
         foreach (onepaquc_rmenu_fields() as $key => $field) {
             delete_option($key);
@@ -5434,12 +4048,14 @@ function onepaquc_handle_reset_settings()
             delete_option($key);
         }
 
-        foreach ($onepaquc_string_settings_fields as $field) {
+        foreach (is_array($onepaquc_string_settings_fields) ? $onepaquc_string_settings_fields : array() as $field) {
             delete_option($field);
         }
 
         global $onepaquc_checkoutformfields, $onepaquc_productpageformfields;
-        $settings = array_merge(array_keys($onepaquc_checkoutformfields), array_keys($onepaquc_productpageformfields));
+        $checkout_fields = is_array($onepaquc_checkoutformfields) ? $onepaquc_checkoutformfields : array();
+        $product_fields  = is_array($onepaquc_productpageformfields) ? $onepaquc_productpageformfields : array();
+        $settings = array_merge(array_keys($checkout_fields), array_keys($product_fields));
 
         foreach ($settings as $setting) {
             delete_option($setting);
@@ -5465,7 +4081,7 @@ function onepaquc_handle_reset_settings()
         }
 
         // Redirect to the same page to avoid resubmission
-        $current_url = isset($_SERVER['REQUEST_URI']) ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI'])) : '';
+        $current_url = isset($_SERVER['REQUEST_URI']) && is_string($_SERVER['REQUEST_URI']) ? esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])) : admin_url('admin.php?page=onepaquc_cart');
 
         // Check if the URL already has a query string
         if (strpos($current_url, '?') !== false) {
@@ -5475,7 +4091,7 @@ function onepaquc_handle_reset_settings()
             // Add the action parameter as the first query parameter
             $redirect_url = $current_url . '?action=reset_success';
         }
-        wp_redirect($redirect_url);
+        wp_safe_redirect($redirect_url);
         exit;
     }
 }
@@ -5511,15 +4127,6 @@ function onepaquc_cart_settings()
     register_setting('onepaquc_cart_settings', "rmenu_show_quick_view_by_types", 'onepaquc_sanitize_array_of_text');
     register_setting('onepaquc_cart_settings', "rmenu_show_quick_view_by_page", 'onepaquc_sanitize_array_of_text');
     register_setting('onepaquc_cart_settings', "onepaquc_my_trust_badges_items", 'onepaquc_sanitize_trust_badges_items');
-    register_setting('onepaquc_cart_settings', 'onepaquc_trust_badge_custom_html', [
-        'type' => 'string',
-        'sanitize_callback' => function ($value) {
-            // Allow HTML, CSS, JS (no sanitization)
-            return $value;
-        },
-        'show_in_rest' => false,
-        'default' => '<!-- Custom Trust Badges HTML with CSS --> <div class="custom-trust-badges"> <!-- Payment Security Badge --> <div class="trust-badge payment-badge"> <div class="badge-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect> <path d="M7 11V7a5 5 0 0 1 10 0v4"></path> </svg> </div> <div class="badge-content"> <h4>Secure Payment</h4> <p>Your payment information is encrypted</p> </div> </div> <!-- Money Back Guarantee Badge --> <div class="trust-badge guarantee-badge"> <div class="badge-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"></circle> <path d="M8 14s1.5 2 4 2 4-2 4-2"></path> <line x1="9" y1="9" x2="9.01" y2="9"></line> <line x1="15" y1="9" x2="15.01" y2="9"></line> </svg> </div> <div class="badge-content"> <h4>30-Day Guarantee</h4> <p>Not satisfied? Get a full refund</p> </div> </div> <!-- Fast Shipping Badge --> <div class="trust-badge shipping-badge"> <div class="badge-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="1" y="3" width="15" height="13"></rect> <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon> <circle cx="5.5" cy="18.5" r="2.5"></circle> <circle cx="18.5" cy="18.5" r="2.5"></circle> </svg> </div> <div class="badge-content"> <h4>Fast Shipping</h4> <p>Delivery within 2-4 business days</p> </div> </div> <!-- Privacy Badge --> <div class="trust-badge privacy-badge"> <div class="badge-icon"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path> </svg> </div> <div class="badge-content"> <h4>Privacy Protected</h4> <p>Your data is never shared with third parties</p> </div> </div> </div> <style> .custom-trust-badges { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; margin: 30px 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; } .custom-trust-badges .trust-badge { flex: 1; min-width: 200px; display: flex; align-items: center; padding: 15px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; position: relative; overflow: hidden; } .custom-trust-badges .trust-badge::before { content: \'\'; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: currentColor; opacity: 0.8; } .custom-trust-badges .trust-badge:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); } .custom-trust-badges .badge-icon { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; margin-right: 15px; flex-shrink: 0; } .custom-trust-badges .badge-icon svg { width: 28px; height: 28px; } .custom-trust-badges .badge-content { flex-grow: 1; } .custom-trust-badges .badge-content h4 { margin: 0 0 4px 0; font-size: 16px; font-weight: 600; } .custom-trust-badges .badge-content p { margin: 0; font-size: 13px; opacity: 0.7; line-height: 1.4; } ge specific colors */ .custom-trust-badges .payment-badge { color: #3498db; } .custom-trust-badges .payment-badge .badge-icon { background-color: rgba(52, 152, 219, 0.1); } .custom-trust-badges .guarantee-badge { color: #2ecc71; } .custom-trust-badges .guarantee-badge .badge-icon { background-color: rgba(46, 204, 113, 0.1); } .custom-trust-badges .shipping-badge { color: #e67e22; } .custom-trust-badges .shipping-badge .badge-icon { background-color: rgba(230, 126, 34, 0.1); } .custom-trust-badges .privacy-badge { color: #9b59b6; } .custom-trust-badges .privacy-badge .badge-icon { background-color: rgba(155, 89, 182, 0.1); } ponsive design */ @media (max-width: 768px) { .custom-trust-badges { flex-direction: column; gap: 15px; } .custom-trust-badges .trust-badge { width: 100%; } } </style>'
-    ]);
 }
 
 function onepaquc_sanitize_trust_badges_items($items)
@@ -5539,7 +4146,7 @@ function onepaquc_sanitize_trust_badges_items($items)
         // Remove empty trust badge rows (all fields empty)
         $has_content = false;
         foreach ($item as $value) {
-            if (trim($value) !== '') {
+            if (is_scalar($value) && trim((string) $value) !== '') {
                 $has_content = true;
                 break;
             }
@@ -5548,14 +4155,18 @@ function onepaquc_sanitize_trust_badges_items($items)
             continue;
         }
         // Remove if text is "New Badge"
-        if (isset($item['text']) && trim($item['text']) === 'New Badge') {
+        if (isset($item['text']) && is_scalar($item['text']) && trim((string) $item['text']) === 'New Badge') {
             continue;
         }
         // Sanitize each field
         $sanitized_item = [];
         foreach ($item as $key => $value) {
-            $sanitized_item[$key] = sanitize_text_field($value);
+            if (!is_scalar($key) || !is_scalar($value)) {
+                continue;
+            }
+            $sanitized_item[sanitize_key((string) $key)] = sanitize_text_field((string) $value);
         }
+        $sanitized_item = wp_parse_args($sanitized_item, array('icon' => '', 'text' => ''));
         $sanitized[] = $sanitized_item;
     }
 
@@ -5576,13 +4187,14 @@ function onepaquc_sanitize_array_of_text($value)
         return [];
     }
 
-    return array_map('sanitize_text_field', $value);
+    return array_values(array_filter(array_map('sanitize_text_field', array_filter($value, 'is_scalar'))));
 }
 
 
 function onepaquc_cart_custom_css()
 {
     global $onepaquc_rcheckoutformfields;
+    $onepaquc_rcheckoutformfields = is_array($onepaquc_rcheckoutformfields) ? $onepaquc_rcheckoutformfields : array();
 
     // Initialize an empty string for the custom CSS
     $custom_css = '';
@@ -5594,14 +4206,8 @@ function onepaquc_cart_custom_css()
         }
     }
 
-    foreach (onepaquc_onpcheckout_heading() as $key => $field) {
-        if (get_option($key)) {
-            $custom_css .= "{$field['selector']} { display: none !important; }";
-        }
-    }
-
-    if (get_option('onepaquc_checkout_fields')) {
-        $checkout_fields = get_option('onepaquc_checkout_fields');
+    $checkout_fields = onepaquc_normalize_key_list(get_option('onepaquc_checkout_fields', array()));
+    if ($checkout_fields) {
         foreach ($checkout_fields as $field) {
             if (isset($onepaquc_rcheckoutformfields[$field])) {
                 $selector = $onepaquc_rcheckoutformfields[$field]['selector'];
@@ -5611,7 +4217,7 @@ function onepaquc_cart_custom_css()
     }
 
     // Add the inline styles
-    wp_add_inline_style('rmenu-cart-style', esc_html($custom_css));
+    wp_add_inline_style('rmenu-cart-style', $custom_css);
 }
 
 // Hook to enqueue the styles

@@ -1,0 +1,292 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e9]:
+        - link "plugincy on page checkout" [ref=e15] [cursor=pointer]:
+          - /url: http://free-one-page-checkout.local/
+        - generic [ref=e16]:
+          - navigation "Primary Site Navigation" [ref=e20]:
+            - list [ref=e22]:
+              - listitem [ref=e23]:
+                - link [ref=e24] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/604-2/
+              - listitem [ref=e25]:
+                - link "block Checkout" [ref=e26] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/block-checkout/
+              - listitem [ref=e27]:
+                - link "Buy now button Block" [ref=e28] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/buy-now-button-block/
+              - listitem [ref=e29]:
+                - link "Cart" [ref=e30] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/cart/
+              - listitem [ref=e31]:
+                - link "Checkout" [ref=e32] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/checkout/
+              - listitem [ref=e33]:
+                - 'link "Elementor #453" [ref=e34] [cursor=pointer]':
+                  - /url: http://free-one-page-checkout.local/elementor-453/
+              - listitem [ref=e35]:
+                - link "My account" [ref=e36] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/my-account/
+              - listitem [ref=e37]:
+                - link "Sample Page" [ref=e38] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/sample-page/
+              - listitem [ref=e39]:
+                - link "shop" [ref=e40] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/shop/
+              - listitem [ref=e41]:
+                - link "test" [ref=e42] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/
+          - link "View Shopping Cart, empty" [ref=e46] [cursor=pointer]:
+            - /url: http://free-one-page-checkout.local/cart/
+            - generic [ref=e48]:
+              - img [ref=e50]
+              - text: "0"
+    - main [ref=e55]:
+      - generic [ref=e56]:
+        - navigation "Breadcrumb" [ref=e57]:
+          - link "Home" [ref=e58] [cursor=pointer]:
+            - /url: http://free-one-page-checkout.local
+          - text: / shop
+        - heading "shop" [level=1] [ref=e60]
+        - status [ref=e61]: Showing 1–12 of 84 results
+        - combobox "Shop order" [ref=e63]:
+          - option "Default sorting" [selected]
+          - option "Sort by popularity"
+          - option "Sort by average rating"
+          - option "Sort by latest"
+          - 'option "Sort by price: low to high"'
+          - 'option "Sort by price: high to low"'
+        - list [ref=e64]:
+          - listitem [ref=e65]:
+            - link "Placeholder" [ref=e67] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/affiliate-product/
+              - img "Placeholder" [ref=e68]
+            - generic [ref=e69]:
+              - generic [ref=e70]: Uncategorized
+              - link "affiliate product" [ref=e71] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/affiliate-product/
+                - heading "affiliate product" [level=2] [ref=e72]
+              - link "buy now" [ref=e73] [cursor=pointer]:
+                - /url: https://chatgpt.com/g/g-p-6896dd3a45ec8191b9ee35a37542a64d-raihan-ashfuq/c/68bbbaf9-0ae0-8323-8a0e-5b6970830d4b
+          - listitem [ref=e75]:
+            - link "Apple Laptop Out of stock" [ref=e77] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/apple-laptop/
+              - img "Apple Laptop" [ref=e78]
+              - generic [ref=e79]: Out of stock
+            - generic [ref=e80]:
+              - generic [ref=e81]: Electronics
+              - link "Apple Laptop" [ref=e82] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/apple-laptop/
+                - heading "Apple Laptop" [level=2] [ref=e83]
+              - link "Read more about “Apple Laptop”" [ref=e84] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/apple-laptop/
+                - text: Select Options
+          - listitem [ref=e86]:
+            - link "Assembled Desktop Computer SSD128" [ref=e88] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/assembled-desktop-computer-ssd128/
+              - img "Assembled Desktop Computer SSD128" [ref=e89]
+            - generic [ref=e90]:
+              - generic [ref=e91]: Desktop
+              - link "Assembled Desktop Computer SSD128" [ref=e92] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/assembled-desktop-computer-ssd128/
+                - heading "Assembled Desktop Computer SSD128" [level=2] [ref=e93]
+              - generic [ref=e96]: ৳ 500.00
+              - generic [ref=e100]:
+                - button "AMD Athlon" [ref=e101] [cursor=pointer]
+                - button "AMD Ryzen 5" [ref=e102] [cursor=pointer]
+                - button "AMD Ryzen 7" [ref=e103] [cursor=pointer]
+              - link "Select options for “Assembled Desktop Computer SSD128”" [ref=e104] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/assembled-desktop-computer-ssd128/
+                - text: Select Options
+              - generic [ref=e105] [cursor=pointer]: Buy Now
+              - generic [ref=e106]: This product has multiple variants. The options may be chosen on the product page
+          - listitem [ref=e107]:
+            - link "ATest Group Products" [ref=e109] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/test-group-products/
+              - img "ATest Group Products" [ref=e110]
+            - generic [ref=e111]:
+              - generic [ref=e112]: Uncategorized
+              - link "ATest Group Products" [ref=e113] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/test-group-products/
+                - heading "ATest Group Products" [level=2] [ref=e114]
+              - generic [ref=e115]:
+                - generic [ref=e117]: ৳ 29.99
+                - text: –
+                - generic [ref=e119]: ৳ 500.00
+                - generic [ref=e120]: "Price range: ৳ 29.99 through ৳ 500.00"
+              - link "View products in the “ATest Group Products” group" [ref=e121] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/test-group-products/
+                - text: View Products
+          - listitem [ref=e123]:
+            - link "Placeholder" [ref=e125] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/best-macbook/
+              - img "Placeholder" [ref=e126]
+            - generic [ref=e127]:
+              - generic [ref=e128]: Electronics
+              - link "Best MacBook" [ref=e129] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/best-macbook/
+                - heading "Best MacBook" [level=2] [ref=e130]
+              - generic [ref=e133]: ৳ 650.00
+              - 'link "Add to cart: “Best MacBook”" [ref=e134] [cursor=pointer]':
+                - /url: /shop/?add-to-cart=79
+                - img [ref=e136]
+                - generic [ref=e140]: Add to Cart
+              - generic [ref=e141] [cursor=pointer]: Buy Now
+          - listitem [ref=e143]:
+            - link "Placeholder" [ref=e145] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/bl100-pro-wireless-gaming-headset-for-pc/
+              - img "Placeholder" [ref=e146]
+            - generic [ref=e147]:
+              - generic [ref=e148]: Electronics
+              - link "Bl100 Pro Wireless Gaming Headset For Pc" [ref=e149] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/bl100-pro-wireless-gaming-headset-for-pc/
+                - heading "Bl100 Pro Wireless Gaming Headset For Pc" [level=2] [ref=e150]
+              - generic [ref=e153]: ৳ 540.00
+              - 'link "Add to cart: “Bl100 Pro Wireless Gaming Headset For Pc”" [ref=e154] [cursor=pointer]':
+                - /url: /shop/?add-to-cart=71
+                - img [ref=e156]
+                - generic [ref=e160]: Add to Cart
+              - generic [ref=e161] [cursor=pointer]: Buy Now
+          - listitem [ref=e163]:
+            - link "Placeholder" [ref=e165] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/brown-leather-shoes/
+              - img "Placeholder" [ref=e166]
+            - generic [ref=e167]:
+              - generic [ref=e168]: Shoes
+              - link "Brown Leather Shoes" [ref=e169] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/brown-leather-shoes/
+                - heading "Brown Leather Shoes" [level=2] [ref=e170]
+              - generic [ref=e173]: ৳ 530.00
+              - 'link "Add to cart: “Brown Leather Shoes”" [ref=e174] [cursor=pointer]':
+                - /url: /shop/?add-to-cart=132
+                - img [ref=e176]
+                - generic [ref=e180]: Add to Cart
+              - generic [ref=e181] [cursor=pointer]: Buy Now
+          - listitem [ref=e183]:
+            - link "Placeholder" [ref=e185] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/brown-shoes/
+              - img "Placeholder" [ref=e186]
+            - generic [ref=e187]:
+              - generic [ref=e188]: Shoes
+              - link "Brown Shoes" [ref=e189] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/brown-shoes/
+                - heading "Brown Shoes" [level=2] [ref=e190]
+              - generic [ref=e193]: ৳ 500.00
+              - 'link "Add to cart: “Brown Shoes”" [ref=e194] [cursor=pointer]':
+                - /url: /shop/?add-to-cart=131
+                - img [ref=e196]
+                - generic [ref=e200]: Add to Cart
+              - generic [ref=e201] [cursor=pointer]: Buy Now
+          - listitem [ref=e203]:
+            - link "Placeholder" [ref=e205] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/brown-shoes-copy-5/
+              - img "Placeholder" [ref=e206]
+            - generic [ref=e207]:
+              - generic [ref=e208]: Shoes
+              - link "Brown Shoes (Copy)" [ref=e209] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/brown-shoes-copy-5/
+                - heading "Brown Shoes (Copy)" [level=2] [ref=e210]
+              - generic [ref=e213]: ৳ 580.00
+              - 'link "Add to cart: “Brown Shoes (Copy)”" [ref=e214] [cursor=pointer]':
+                - /url: /shop/?add-to-cart=140
+                - img [ref=e216]
+                - generic [ref=e220]: Add to Cart
+              - generic [ref=e221] [cursor=pointer]: Buy Now
+          - listitem [ref=e223]:
+            - link "Placeholder" [ref=e225] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/brown-shoes-copy-4/
+              - img "Placeholder" [ref=e226]
+            - generic [ref=e227]:
+              - generic [ref=e228]: Shoes
+              - link "Brown Shoes (Copy)" [ref=e229] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/brown-shoes-copy-4/
+                - heading "Brown Shoes (Copy)" [level=2] [ref=e230]
+              - generic [ref=e233]: ৳ 500.00
+              - 'link "Add to cart: “Brown Shoes (Copy)”" [ref=e234] [cursor=pointer]':
+                - /url: /shop/?add-to-cart=139
+                - img [ref=e236]
+                - generic [ref=e240]: Add to Cart
+              - generic [ref=e241] [cursor=pointer]: Buy Now
+          - listitem [ref=e243]:
+            - link "Placeholder" [ref=e245] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/brown-shoes-copy-3/
+              - img "Placeholder" [ref=e246]
+            - generic [ref=e247]:
+              - generic [ref=e248]: Shoes
+              - link "Brown Shoes (Copy)" [ref=e249] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/brown-shoes-copy-3/
+                - heading "Brown Shoes (Copy)" [level=2] [ref=e250]
+              - generic [ref=e253]: ৳ 570.00
+              - 'link "Add to cart: “Brown Shoes (Copy)”" [ref=e254] [cursor=pointer]':
+                - /url: /shop/?add-to-cart=138
+                - img [ref=e256]
+                - generic [ref=e260]: Add to Cart
+              - generic [ref=e261] [cursor=pointer]: Buy Now
+          - listitem [ref=e263]:
+            - link "Placeholder" [ref=e265] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product/brown-shoes-copy/
+              - img "Placeholder" [ref=e266]
+            - generic [ref=e267]:
+              - generic [ref=e268]: Shoes
+              - link "Brown Shoes (Copy)" [ref=e269] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/brown-shoes-copy/
+                - heading "Brown Shoes (Copy)" [level=2] [ref=e270]
+              - generic [ref=e273]: ৳ 550.00
+              - 'link "Add to cart: “Brown Shoes (Copy)”" [ref=e274] [cursor=pointer]':
+                - /url: /shop/?add-to-cart=136
+                - img [ref=e276]
+                - generic [ref=e280]: Add to Cart
+              - generic [ref=e281] [cursor=pointer]: Buy Now
+        - navigation "Product Pagination" [ref=e283]:
+          - list [ref=e284]:
+            - listitem [ref=e285]:
+              - generic "Page 1" [ref=e286]: "1"
+            - listitem [ref=e287]:
+              - link "Page 2" [ref=e288] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/shop/page/2/
+                - text: "2"
+            - listitem [ref=e289]:
+              - link "Page 3" [ref=e290] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/shop/page/3/
+                - text: "3"
+            - listitem [ref=e291]:
+              - link "Page 4" [ref=e292] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/shop/page/4/
+                - text: "4"
+            - listitem [ref=e293]:
+              - link "Page 5" [ref=e294] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/shop/page/5/
+                - text: "5"
+            - listitem [ref=e295]:
+              - link "Page 6" [ref=e296] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/shop/page/6/
+                - text: "6"
+            - listitem [ref=e297]:
+              - link "Page 7" [ref=e298] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/shop/page/7/
+                - text: "7"
+            - listitem [ref=e299]:
+              - link "→" [ref=e300] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/shop/page/2/
+    - contentinfo [ref=e301]:
+      - paragraph [ref=e308]:
+        - text: Copyright © 2026 plugincy on page checkout | Powered by
+        - link "Astra WordPress Theme" [ref=e309] [cursor=pointer]:
+          - /url: https://wpastra.com
+  - generic:
+    - button "0" [ref=e310] [cursor=pointer]:
+      - img [ref=e312]
+      - generic [ref=e316]: "0"
+    - generic [ref=e318]:
+      - generic [ref=e319]:
+        - heading "আমার কার্ট" [level=2] [ref=e320]
+        - button [ref=e321] [cursor=pointer]
+      - generic [ref=e323]:
+        - img [ref=e324]
+        - generic [ref=e326]: Your Cart is Empty
+        - link "Shop Now" [ref=e327] [cursor=pointer]:
+          - /url: http://free-one-page-checkout.local/shop/
+  - status [ref=e330]

@@ -1,0 +1,269 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation "Toolbar":
+      - menu:
+        - group [ref=e3]:
+          - menuitem "About WordPress" [ref=e4] [cursor=pointer]:
+            - generic [ref=e6]: About WordPress
+        - group [ref=e7]:
+          - menuitem "plugincy on page checkout" [ref=e8] [cursor=pointer]
+        - group [ref=e9]:
+          - menuitem "Live" [ref=e10] [cursor=pointer]
+        - group [ref=e11]:
+          - menuitem "Customize" [ref=e12] [cursor=pointer]
+        - group [ref=e13]:
+          - menuitem "0 Comments in moderation" [ref=e14] [cursor=pointer]:
+            - generic [ref=e16]: "0"
+            - generic [ref=e17]: 0 Comments in moderation
+        - group [ref=e18]:
+          - menuitem "New" [ref=e19] [cursor=pointer]:
+            - generic [ref=e21]: New
+        - group [ref=e22]:
+          - menuitem "Edit product" [ref=e23] [cursor=pointer]
+      - menu [ref=e24]:
+        - group [ref=e25]:
+          - menuitem [ref=e26] [cursor=pointer]:
+            - img [ref=e28]
+        - group [ref=e32]:
+          - menuitem "Howdy, admin" [ref=e33] [cursor=pointer]
+        - group [ref=e34]:
+          - menuitem "Search" [ref=e35]:
+            - generic [ref=e36]:
+              - textbox "Search" [ref=e37] [cursor=pointer]
+              - generic [ref=e38]: Search
+  - link "Skip to content" [ref=e39] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=e40]:
+    - banner [ref=e41]:
+      - generic [ref=e46]:
+        - link "plugincy on page checkout" [ref=e52] [cursor=pointer]:
+          - /url: http://free-one-page-checkout.local/
+        - generic [ref=e53]:
+          - navigation "Primary Site Navigation" [ref=e57]:
+            - list [ref=e59]:
+              - listitem [ref=e60]:
+                - link [ref=e61] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/604-2/
+              - listitem [ref=e62]:
+                - link "block Checkout" [ref=e63] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/block-checkout/
+              - listitem [ref=e64]:
+                - link "Buy now button Block" [ref=e65] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/buy-now-button-block/
+              - listitem [ref=e66]:
+                - link "Cart" [ref=e67] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/cart/
+              - listitem [ref=e68]:
+                - link "Checkout" [ref=e69] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/checkout/
+              - listitem [ref=e70]:
+                - 'link "Elementor #453" [ref=e71] [cursor=pointer]':
+                  - /url: http://free-one-page-checkout.local/elementor-453/
+              - listitem [ref=e72]:
+                - link "My account" [ref=e73] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/my-account/
+              - listitem [ref=e74]:
+                - link "Sample Page" [ref=e75] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/sample-page/
+              - listitem [ref=e76]:
+                - link "shop" [ref=e77] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/shop/
+              - listitem [ref=e78]:
+                - link "test" [ref=e79] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/
+          - link "View Shopping Cart, 3 items" [ref=e83] [cursor=pointer]:
+            - /url: http://free-one-page-checkout.local/cart/
+            - generic [ref=e85]:
+              - img [ref=e87]
+              - text: "3"
+    - main [ref=e92]:
+      - generic [ref=e94]:
+        - img "Awaiting product image" [ref=e98]
+        - generic [ref=e99]:
+          - navigation "Breadcrumb" [ref=e100]:
+            - link "Home" [ref=e101] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local
+            - text: /
+            - link "Electronics" [ref=e102] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product-category/electronics/
+            - text: / Surface Pro 11th Edition Sapphire Compare Render
+          - generic [ref=e103]:
+            - link "Electronics" [ref=e104] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product-category/electronics/
+            - text: ","
+            - link "Laptop" [ref=e105] [cursor=pointer]:
+              - /url: http://free-one-page-checkout.local/product-category/laptop/
+          - heading "Surface Pro 11th Edition Sapphire Compare Render" [level=1] [ref=e106]
+          - paragraph [ref=e107]:
+            - generic [ref=e109]: ৳ 570.00
+          - paragraph [ref=e111]: This comfortable cotton t-shirt features the Divi logo on the front and back. It is the perfect tee for any occasion.
+          - generic [ref=e112]:
+            - generic [ref=e113]:
+              - generic [ref=e114]: Surface Pro 11th Edition Sapphire Compare Render quantity
+              - spinbutton "Product quantity" [ref=e115]: "1"
+            - button "Add to Cart" [ref=e116] [cursor=pointer]:
+              - img [ref=e118]
+              - generic [ref=e122]: Add to Cart
+            - generic [ref=e123] [cursor=pointer]: Buy Now
+          - generic [ref=e124]:
+            - generic [ref=e125]:
+              - text: "Categories:"
+              - link "Electronics" [ref=e126] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product-category/electronics/
+              - text: ","
+              - link "Laptop" [ref=e127] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product-category/laptop/
+            - generic [ref=e128]:
+              - text: "Brand:"
+              - link "Asus" [ref=e129] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/brand/asus/
+        - generic [ref=e130]:
+          - tablist [ref=e131]:
+            - tab [selected]
+            - tab "Reviews (0)" [ref=e132] [cursor=pointer]
+          - tabpanel [ref=e133]:
+            - table "Product Details" [ref=e134]:
+              - rowgroup [ref=e135]:
+                - row "Brand Lenevo" [ref=e136]:
+                  - rowheader "Brand" [ref=e137]
+                  - cell "Lenevo" [ref=e138]:
+                    - paragraph [ref=e139]: Lenevo
+                - row "Processor AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e140]:
+                  - rowheader "Processor" [ref=e141]
+                  - cell "AMD Athlon, AMD Ryzen 5, AMD Ryzen 7" [ref=e142]:
+                    - paragraph [ref=e143]: AMD Athlon, AMD Ryzen 5, AMD Ryzen 7
+          - text:     
+        - generic [ref=e144]:
+          - heading "Related products" [level=2] [ref=e145]
+          - list [ref=e146]:
+            - listitem [ref=e147]:
+              - link "Placeholder" [ref=e149] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/desktop-computer-windows/
+                - img "Placeholder" [ref=e150]
+              - generic [ref=e151]:
+                - generic [ref=e152]: Desktop
+                - link "Desktop Computer, Windows" [ref=e153] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product/desktop-computer-windows/
+                  - heading "Desktop Computer, Windows" [level=2] [ref=e154]
+                - generic [ref=e157]: ৳ 550.00
+                - 'link "Add to cart: “Desktop Computer, Windows”" [ref=e158] [cursor=pointer]':
+                  - /url: /product/surface-pro-11th-edition-sapphire-compare-render/?add-to-cart=72
+                  - img [ref=e160]
+                  - generic [ref=e164]: Add to Cart
+                - generic [ref=e165] [cursor=pointer]: Buy Now
+            - listitem [ref=e167]:
+              - link "Placeholder" [ref=e169] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/bl100-pro-wireless-gaming-headset-for-pc/
+                - img "Placeholder" [ref=e170]
+              - generic [ref=e171]:
+                - generic [ref=e172]: Electronics
+                - link "Bl100 Pro Wireless Gaming Headset For Pc" [ref=e173] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product/bl100-pro-wireless-gaming-headset-for-pc/
+                  - heading "Bl100 Pro Wireless Gaming Headset For Pc" [level=2] [ref=e174]
+                - generic [ref=e177]: ৳ 540.00
+                - 'link "Add to cart: “Bl100 Pro Wireless Gaming Headset For Pc”" [ref=e178] [cursor=pointer]':
+                  - /url: /product/surface-pro-11th-edition-sapphire-compare-render/?add-to-cart=71
+                  - img [ref=e180]
+                  - generic [ref=e184]: Add to Cart
+                - generic [ref=e185] [cursor=pointer]: Buy Now
+            - listitem [ref=e187]:
+              - link "Placeholder" [ref=e189] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/hp-proone-440-g6-all-in-one-intel-core-i5-10th-gen-8gb-ram/
+                - img "Placeholder" [ref=e190]
+              - generic [ref=e191]:
+                - generic [ref=e192]: Desktop
+                - link "HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM" [ref=e193] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product/hp-proone-440-g6-all-in-one-intel-core-i5-10th-gen-8gb-ram/
+                  - heading "HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM" [level=2] [ref=e194]
+                - generic [ref=e197]: ৳ 560.00
+                - 'link "Add to cart: “HP ProOne 440 G6 All-in-One Intel Core i5 10th Gen 8GB RAM”" [ref=e198] [cursor=pointer]':
+                  - /url: /product/surface-pro-11th-edition-sapphire-compare-render/?add-to-cart=73
+                  - img [ref=e200]
+                  - generic [ref=e204]: Add to Cart
+                - generic [ref=e205] [cursor=pointer]: Buy Now
+            - listitem [ref=e207]:
+              - link "Apple Laptop Out of stock" [ref=e209] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/product/apple-laptop/
+                - img "Apple Laptop" [ref=e210]
+                - generic [ref=e211]: Out of stock
+              - generic [ref=e212]:
+                - generic [ref=e213]: Electronics
+                - link "Apple Laptop" [ref=e214] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product/apple-laptop/
+                  - heading "Apple Laptop" [level=2] [ref=e215]
+                - link "Read more about “Apple Laptop”" [ref=e216] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/product/apple-laptop/
+                  - text: Select Options
+    - contentinfo [ref=e218]:
+      - paragraph [ref=e225]:
+        - text: Copyright © 2026 plugincy on page checkout | Powered by
+        - link "Astra WordPress Theme" [ref=e226] [cursor=pointer]:
+          - /url: https://wpastra.com
+  - generic:
+    - button "3" [ref=e227] [cursor=pointer]:
+      - img [ref=e229]
+      - generic [ref=e233]: "3"
+    - generic [ref=e235]:
+      - generic [ref=e236]:
+        - heading "আমার কার্ট" [level=2] [ref=e237]
+        - button [ref=e238] [cursor=pointer]
+      - generic [ref=e239]:
+        - checkbox [ref=e241]
+        - generic [ref=e242]: 0 gulo selected
+      - generic [ref=e243]:
+        - generic [ref=e244]:
+          - checkbox [ref=e246]
+          - generic [ref=e247]:
+            - img "Asus ProArt P16" [ref=e248]
+            - button [ref=e249] [cursor=pointer]:
+              - img [ref=e250]
+          - generic [ref=e252]:
+            - generic [ref=e253]:
+              - paragraph [ref=e254]: Asus ProArt P16
+              - paragraph [ref=e255]:
+                - generic [ref=e256]: ৳ 600.00
+            - generic [ref=e257]:
+              - button "-" [ref=e258] [cursor=pointer]
+              - spinbutton [ref=e259]: "1"
+              - button "+" [ref=e260] [cursor=pointer]
+        - generic [ref=e261]:
+          - checkbox [ref=e263]
+          - generic [ref=e264]:
+            - img "Placeholder" [ref=e265]
+            - button [ref=e266] [cursor=pointer]:
+              - img [ref=e267]
+          - generic [ref=e269]:
+            - generic [ref=e270]:
+              - paragraph [ref=e271]: Fastest MacBook
+              - paragraph [ref=e272]:
+                - generic [ref=e273]: ৳ 650.00
+            - generic [ref=e274]:
+              - button "-" [ref=e275] [cursor=pointer]
+              - spinbutton [ref=e276]: "1"
+              - button "+" [ref=e277] [cursor=pointer]
+        - generic [ref=e278]:
+          - checkbox [ref=e280]
+          - generic [ref=e281]:
+            - img "Placeholder" [ref=e282]
+            - button [ref=e283] [cursor=pointer]:
+              - img [ref=e284]
+          - generic [ref=e286]:
+            - generic [ref=e287]:
+              - paragraph [ref=e288]: Best MacBook
+              - paragraph [ref=e289]:
+                - generic [ref=e290]: ৳ 650.00
+            - generic [ref=e291]:
+              - button "-" [ref=e292] [cursor=pointer]
+              - spinbutton [ref=e293]: "1"
+              - button "+" [ref=e294] [cursor=pointer]
+      - generic [ref=e296]:
+        - textbox "Enter coupon code" [ref=e297]
+        - button "Apply" [ref=e298] [cursor=pointer]
+      - generic [ref=e299]:
+        - generic [ref=e300]:
+          - text: "সর্বমোট:"
+          - generic [ref=e302]: ৳ 1,900.00
+        - generic [ref=e305]: ৳ 1,900.00
+      - link "চেক আউট" [ref=e307] [cursor=pointer]:
+        - /url: http://free-one-page-checkout.local/checkout/
+  - status [ref=e310]

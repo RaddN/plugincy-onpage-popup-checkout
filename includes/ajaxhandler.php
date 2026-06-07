@@ -2,6 +2,24 @@
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
 // ajaxhandler.php
 
+/**
+ * Return the WooCommerce cart or end the AJAX request with a safe error.
+ *
+ * @return WC_Cart
+ */
+function onepaquc_ajax_get_cart_or_error()
+{
+    $cart = function_exists('onepaquc_get_wc_cart') ? onepaquc_get_wc_cart() : null;
+    if (!$cart) {
+        wp_send_json_error(
+            array('message' => esc_html__('The cart is not available. Please reload the page and try again.', 'one-page-quick-checkout-for-woocommerce')),
+            503
+        );
+    }
+
+    return $cart;
+}
+
 // update cart content
 
 add_action('wp_ajax_onepaquc_get_cart_content', 'onepaquc_get_cart_content');
@@ -9,10 +27,14 @@ add_action('wp_ajax_nopriv_onepaquc_get_cart_content', 'onepaquc_get_cart_conten
 function onepaquc_get_cart_content()
 {
     check_ajax_referer('get_cart_content_none', 'nonce');
+    $cart = onepaquc_ajax_get_cart_or_error();
+
     //get the values from the ajax request cart_icon: cartIcon, product_title_tag: productTitleTag, drawer_position: drawerPosition
-    $cartIcon = isset($_POST['cart_icon']) ? sanitize_text_field(wp_unslash($_POST['cart_icon'])) : 'cart';
-    $productTitleTag = isset($_POST['product_title_tag']) ? sanitize_text_field(wp_unslash($_POST['product_title_tag'])) : 'h2';
-    $drawerPosition = isset($_POST['drawer_position']) ? sanitize_text_field(wp_unslash($_POST['drawer_position'])) : 'right';
+    $cartIcon = isset($_POST['cart_icon']) && is_scalar($_POST['cart_icon']) ? sanitize_key(wp_unslash($_POST['cart_icon'])) : 'cart';
+    $cartIcon = in_array($cartIcon, array('cart', 'shopping-bag', 'basket'), true) ? $cartIcon : 'cart';
+    $productTitleTag = isset($_POST['product_title_tag']) && is_scalar($_POST['product_title_tag']) ? onepaquc_sanitize_heading_tag(wp_unslash($_POST['product_title_tag']), 'h2') : 'h2';
+    $drawerPosition = isset($_POST['drawer_position']) && is_scalar($_POST['drawer_position']) ? sanitize_key(wp_unslash($_POST['drawer_position'])) : 'right';
+    $drawerPosition = in_array($drawerPosition, array('left', 'right'), true) ? $drawerPosition : 'right';
     ob_start();
 
     // Use include to load the template from your plugin's directory
@@ -23,7 +45,7 @@ function onepaquc_get_cart_content()
     // Send response with cart HTML and count
     wp_send_json_success([
         'cart_html' => $cart_html,
-        'cart_count' => WC()->cart->get_cart_contents_count()
+        'cart_count' => $cart->get_cart_contents_count()
     ]);
 }
 
@@ -34,12 +56,17 @@ add_action('wp_ajax_nopriv_onepaquc_update_cart_item_quantity', 'onepaquc_update
 function onepaquc_update_cart_item_quantity()
 {
     check_ajax_referer('update_cart_item_quantity', 'nonce');
-    $cart_item_key = isset($_POST['cart_item_key']) ? sanitize_text_field(wp_unslash($_POST['cart_item_key'])) : '';
-    $quantity = isset($_POST['quantity']) ? (int)sanitize_text_field(wp_unslash($_POST['quantity'])) : 0;
+    $cart = onepaquc_ajax_get_cart_or_error();
+    $cart_item_key = isset($_POST['cart_item_key']) && is_scalar($_POST['cart_item_key']) ? sanitize_text_field(wp_unslash($_POST['cart_item_key'])) : '';
+    $raw_quantity = isset($_POST['quantity']) && is_scalar($_POST['quantity']) ? wp_unslash($_POST['quantity']) : 0;
+    $quantity = function_exists('wc_stock_amount') ? wc_stock_amount($raw_quantity) : (int) $raw_quantity;
 
+    $cart_contents = $cart->get_cart();
+    if ('' === $cart_item_key || !isset($cart_contents[$cart_item_key]) || $quantity < 0) {
+        wp_send_json_error(array('message' => esc_html__('Invalid cart item or quantity.', 'one-page-quick-checkout-for-woocommerce')), 400);
+    }
 
-    if (WC()->cart->set_quantity($cart_item_key, $quantity)) {
-        $cart = WC()->cart;
+    if ($cart->set_quantity($cart_item_key, $quantity)) {
 
         // Get updated cart data
         $subtotal = wc_price($cart->get_subtotal());
@@ -53,7 +80,7 @@ function onepaquc_update_cart_item_quantity()
             'total' => $total
         ));
     } else {
-        wp_send_json_error('Could not update quantity.');
+        wp_send_json_error(array('message' => esc_html__('Could not update quantity.', 'one-page-quick-checkout-for-woocommerce')), 400);
     }
 }
 
@@ -65,29 +92,34 @@ add_action('wp_ajax_nopriv_onepaquc_remove_cart_item', 'onepaquc_handle_remove_c
 function onepaquc_handle_remove_cart_item()
 {
     check_ajax_referer('remove_cart_item', 'nonce');
+    $cart = onepaquc_ajax_get_cart_or_error();
     $cart_item_keys = array();
     if (isset($_POST['cart_item_key']) && is_array($_POST['cart_item_key'])) {
-        $cart_item_keys = array_map('sanitize_text_field', wp_unslash($_POST['cart_item_key']));
-    } elseif (isset($_POST['cart_item_key'])) {
+        $cart_item_keys = wp_unslash($_POST['cart_item_key']);
+    } elseif (isset($_POST['cart_item_key']) && is_scalar($_POST['cart_item_key'])) {
         $cart_item_keys = array(sanitize_text_field(wp_unslash($_POST['cart_item_key'])));
     } else {
-        wp_send_json_error('No cart item key provided.');
+        wp_send_json_error(array('message' => esc_html__('No cart item key provided.', 'one-page-quick-checkout-for-woocommerce')), 400);
     }
     $sanitized_keys = array();
     foreach ($cart_item_keys as $key) {
-        $sanitized_keys[] = sanitize_text_field(wp_unslash($key));
+        if (is_scalar($key)) {
+            $sanitized_key = sanitize_text_field(wp_unslash($key));
+            if ('' !== $sanitized_key) {
+                $sanitized_keys[] = $sanitized_key;
+            }
+        }
     }
+    $sanitized_keys = array_values(array_unique($sanitized_keys));
 
     $failed_keys = array();
+    $cart_contents = $cart->get_cart();
 
     foreach ($sanitized_keys as $key) {
-        if (!WC()->cart->remove_cart_item($key)) {
+        if (!isset($cart_contents[$key]) || !$cart->remove_cart_item($key)) {
             $failed_keys[] = $key;
         }
     }
-
-
-    $cart = WC()->cart;
 
     // Get updated cart data
     $subtotal = wc_price($cart->get_subtotal());
@@ -110,6 +142,9 @@ function onepaquc_handle_remove_cart_item()
 // update checkout form on ajax complete
 function onepaquc_update_checkout_form()
 {
+    check_ajax_referer('onepaquc_update_checkout', 'nonce');
+    onepaquc_ajax_get_cart_or_error();
+
     ob_start();
 
     // Use include to load the template from your plugin's directory
@@ -132,21 +167,23 @@ function onepaquc_refresh_checkout_product_list()
 {
     // Check nonce for security
     check_ajax_referer('onepaquc_refresh_checkout_product_list', 'nonce');
-    if (!isset($_POST['product_ids'])) {
-        wp_die();
+    $cart = onepaquc_ajax_get_cart_or_error();
+    if (!isset($_POST['product_ids']) || !is_scalar($_POST['product_ids'])) {
+        wp_send_json_error(array('message' => esc_html__('Invalid product list.', 'one-page-quick-checkout-for-woocommerce')), 400);
     }
 
     $product_ids = explode(',', sanitize_text_field(wp_unslash($_POST['product_ids'])));
-    $product_ids = array_map('trim', $product_ids);
+    $product_ids = array_slice(array_values(array_unique(array_filter(array_map('absint', $product_ids)))), 0, 200);
+    $cart_items  = $cart->get_cart();
 
     ob_start();
 
     // Loop through each product ID
     foreach ($product_ids as $item_id) {
-        $product_id = intval($item_id);
+        $product_id = absint($item_id);
         $product = wc_get_product($product_id);
 
-        if ($product) {
+        if ($product instanceof WC_Product && 'publish' === $product->get_status()) {
             $product_name = $product->get_name();
             $product_image = $product->get_image(array(60, 60), array('class' => 'one-page-checkout-product-image'));
 
@@ -154,8 +191,8 @@ function onepaquc_refresh_checkout_product_list()
             $in_cart = false;
             $cart_item_key = '';
 
-            foreach (WC()->cart->get_cart() as $key => $cart_item) {
-                if ($cart_item['product_id'] == $product_id) {
+            foreach ($cart_items as $key => $cart_item) {
+                if (is_array($cart_item) && isset($cart_item['product_id']) && (int) $cart_item['product_id'] === $product_id) {
                     $in_cart = true;
                     $cart_item_key = $key;
                     break;
@@ -191,7 +228,9 @@ add_action('wp_ajax_nopriv_woocommerce_clear_cart', 'onepaquc_clear_cart');
 
 function onepaquc_clear_cart()
 {
-    WC()->cart->empty_cart();
+    check_ajax_referer('onepaquc_clear_cart', 'nonce');
+    $cart = onepaquc_ajax_get_cart_or_error();
+    $cart->empty_cart();
     wp_send_json_success();
 }
 
@@ -205,44 +244,75 @@ add_action('wp_ajax_nopriv_onepaquc_ajax_add_to_cart', 'onepaquc_ajax_add_to_car
 function onepaquc_ajax_add_to_cart()
 {
     check_ajax_referer('rmenu-ajax-nonce', 'nonce');
+    $cart = onepaquc_ajax_get_cart_or_error();
 
-    $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint(isset($_POST['product_id']) ? $_POST['product_id'] : 0));
+    $raw_product_id = isset($_POST['product_id']) && is_scalar($_POST['product_id']) ? wp_unslash($_POST['product_id']) : 0;
+    $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($raw_product_id));
+    $product_id = is_numeric($product_id) ? absint($product_id) : 0;
 
     // Get default quantity from settings if quantity is not provided
     $default_qty = 1;
 
     // Use posted quantity if available, otherwise use default
-    $quantity = empty($_POST['quantity']) ? $default_qty : (int) sanitize_text_field(wp_unslash($_POST['quantity']));
+    $quantity = empty($_POST['quantity']) || !is_scalar($_POST['quantity'])
+        ? $default_qty
+        : max(1, function_exists('wc_stock_amount') ? wc_stock_amount(wp_unslash($_POST['quantity'])) : (int) wp_unslash($_POST['quantity']));
 
-    $variation_id = empty($_POST['variation_id']) ? 0 : absint($_POST['variation_id']);
-    $variations = !empty($_POST['variations']) ? array_map('sanitize_text_field', wp_unslash($_POST['variations'])) : array();
+    $variation_id = empty($_POST['variation_id']) || !is_scalar($_POST['variation_id']) ? 0 : absint(wp_unslash($_POST['variation_id']));
+    $variations = array();
+    if (!empty($_POST['variations']) && is_array($_POST['variations'])) {
+        foreach (wp_unslash($_POST['variations']) as $attribute => $value) {
+            if (!is_scalar($attribute) || !is_scalar($value)) {
+                continue;
+            }
+            $attribute = sanitize_key($attribute);
+            if (0 !== strpos($attribute, 'attribute_')) {
+                $attribute = 'attribute_' . $attribute;
+            }
+            $variations[$attribute] = wc_clean($value);
+        }
+    }
+
+    $product = function_exists('wc_get_product') ? wc_get_product($product_id) : false;
+    if (!$product instanceof WC_Product || 'publish' !== $product->get_status() || !$product->is_purchasable()) {
+        wp_send_json_error(array('message' => esc_html__('This product cannot be added to the cart.', 'one-page-quick-checkout-for-woocommerce')), 400);
+    }
+
+    if ($variation_id) {
+        $variation_product = wc_get_product($variation_id);
+        if (!$variation_product instanceof WC_Product_Variation || $variation_product->get_parent_id() !== $product_id) {
+            wp_send_json_error(array('message' => esc_html__('Invalid product variation.', 'one-page-quick-checkout-for-woocommerce')), 400);
+        }
+    }
 
     $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations);
 
-    if ($passed_validation && WC()->cart->add_to_cart($product_id, $quantity, $variation_id, $variations)) {
+    if ($passed_validation && $cart->add_to_cart($product_id, $quantity, $variation_id, $variations)) {
 
         do_action('woocommerce_ajax_added_to_cart', $product_id);
 
         // Get product name for the message
-        $product = wc_get_product($product_id);
         $product_name = $product ? $product->get_name() : '';
 
         // Get cart URL
-        $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : WC()->cart->get_cart_url();
+        $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : '';
 
         // Get checkout URL
-        $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : WC()->cart->get_checkout_url();
+        $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : '';
 
         // Render cart items
         $cart_items_html = "";
-        $cart_count = WC()->cart->get_cart_contents_count();
-        $cart_items = WC()->cart->get_cart();
+        $cart_count = $cart->get_cart_contents_count();
+        $cart_items = $cart->get_cart();
 
         foreach ($cart_items as $cart_item_key => $cart_item) {
-            $_product = $cart_item['data'];
+            $_product = is_array($cart_item) && isset($cart_item['data']) ? $cart_item['data'] : null;
+            if (!$_product instanceof WC_Product) {
+                continue;
+            }
             $thumbnail = $_product->get_image();
             $product_price = wc_price($_product->get_price());
-            $product_quantity = $cart_item['quantity'];
+            $product_quantity = isset($cart_item['quantity']) && is_numeric($cart_item['quantity']) ? (float) $cart_item['quantity'] : 0;
             $product_total = wc_price($_product->get_price() * $product_quantity);
 
             $cart_items_html .= '<div class="cart-item" data-cart-item-key="' . esc_attr($cart_item_key) . '">
@@ -294,7 +364,7 @@ function onepaquc_ajax_add_to_cart()
             'product_name' => $product_name,
             'cart_url' => $cart_url,
             'checkout_url' => $checkout_url,
-            'cart_total' => WC()->cart->get_cart_total(),
+            'cart_total' => $cart->get_cart_total(),
             'cart_count' => $cart_count,
             'cart_items_html' => $cart_items_html,
             'redirect' => $redirect_option !== 'none',
@@ -322,11 +392,14 @@ add_action('wp_ajax_nopriv_apply_coupon', 'onepaquc_apply_coupon');
 function onepaquc_apply_coupon()
 {
     check_ajax_referer('apply-coupon', 'security');
+    $cart = onepaquc_ajax_get_cart_or_error();
 
-    $coupon_code = isset($_POST['coupon_code']) ? sanitize_text_field(wp_unslash($_POST['coupon_code'])) : '';
+    $coupon_code = isset($_POST['coupon_code']) && is_scalar($_POST['coupon_code']) ? sanitize_text_field(wp_unslash($_POST['coupon_code'])) : '';
+    if ('' === $coupon_code) {
+        wp_send_json_error(array('message' => esc_html__('Please enter a coupon code.', 'one-page-quick-checkout-for-woocommerce')), 400);
+    }
 
     // Apply coupon
-    $cart = WC()->cart;
     $result = $cart->apply_coupon($coupon_code);
 
     if ($result) {
@@ -351,12 +424,17 @@ add_action('wp_ajax_nopriv_remove_coupon', 'onepaquc_remove_coupon');
 function onepaquc_remove_coupon()
 {
     check_ajax_referer('apply-coupon', 'security');
+    $cart = onepaquc_ajax_get_cart_or_error();
 
-    $coupon_code = isset($_POST['coupon_code']) ? sanitize_text_field(wp_unslash($_POST['coupon_code'])) : '';
+    $coupon_code = isset($_POST['coupon_code']) && is_scalar($_POST['coupon_code']) ? sanitize_text_field(wp_unslash($_POST['coupon_code'])) : '';
+    if ('' === $coupon_code || !in_array(wc_format_coupon_code($coupon_code), $cart->get_applied_coupons(), true)) {
+        wp_send_json_error(array('message' => esc_html__('Coupon is not applied to the cart.', 'one-page-quick-checkout-for-woocommerce')), 400);
+    }
 
     // Remove coupon
-    $cart = WC()->cart;
-    $cart->remove_coupon($coupon_code);
+    if (!$cart->remove_coupon($coupon_code)) {
+        wp_send_json_error(array('message' => esc_html__('Could not remove the coupon.', 'one-page-quick-checkout-for-woocommerce')), 400);
+    }
 
     // Get updated cart data
     $subtotal = wc_price($cart->get_subtotal());
@@ -376,12 +454,17 @@ function onepaquc_remove_coupon()
  */
 function onepaquc_get_all_products_quick_view() {
     // Verify nonce for security
-    if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'rmenu_quick_view_nonce')) {
+    if (!isset($_POST['nonce']) || !is_scalar($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'rmenu_quick_view_nonce')) {
         wp_send_json_error(array('message' => 'Security check failed'));
     }
     
     // Get product IDs from the request
-    $product_ids = isset($_POST['product_ids']) ? array_map('intval', $_POST['product_ids']) : array();
+    $product_ids = isset($_POST['product_ids']) && is_array($_POST['product_ids'])
+        ? array_values(array_unique(array_filter(array_map('absint', array_filter(wp_unslash($_POST['product_ids']), 'is_numeric')))))
+        : array();
+    $max_products = apply_filters('onepaquc_quick_view_max_products', 50);
+    $max_products = is_numeric($max_products) ? max(1, min(100, absint($max_products))) : 50;
+    $product_ids  = array_slice($product_ids, 0, $max_products);
     
     if (empty($product_ids)) {
         wp_send_json_error(array('message' => 'No product IDs provided'));
@@ -392,7 +475,7 @@ function onepaquc_get_all_products_quick_view() {
     foreach ($product_ids as $product_id) {
         $product = wc_get_product($product_id);
         
-        if (!$product) {
+        if (!$product instanceof WC_Product || 'publish' !== $product->get_status() || !$product->is_visible()) {
             continue; // Skip if product doesn't exist
         }
         
@@ -437,7 +520,10 @@ function onepaquc_get_all_products_quick_view() {
         if ($categories && !is_wp_error($categories)) {
             $category_links = array();
             foreach ($categories as $category) {
-                $category_links[] = '<a href="' . esc_url(get_term_link($category)) . '">' . esc_html($category->name) . '</a>';
+                $term_link = get_term_link($category);
+                if (!is_wp_error($term_link)) {
+                    $category_links[] = '<a href="' . esc_url($term_link) . '">' . esc_html($category->name) . '</a>';
+                }
             }
             $categories_html = implode(', ', $category_links);
         }
@@ -449,7 +535,10 @@ function onepaquc_get_all_products_quick_view() {
             if ($brands && !is_wp_error($brands)) {
                 $brand_links = array();
                 foreach ($brands as $brand) {
-                    $brand_links[] = '<a href="' . esc_url(get_term_link($brand)) . '">' . esc_html($brand->name) . '</a>';
+                    $term_link = get_term_link($brand);
+                    if (!is_wp_error($term_link)) {
+                        $brand_links[] = '<a href="' . esc_url($term_link) . '">' . esc_html($brand->name) . '</a>';
+                    }
                 }
                 $brands_html = implode(', ', $brand_links);
             }
@@ -461,7 +550,10 @@ function onepaquc_get_all_products_quick_view() {
         if ($tags && !is_wp_error($tags)) {
             $tag_links = array();
             foreach ($tags as $tag) {
-                $tag_links[] = '<a href="' . esc_url(get_term_link($tag)) . '">' . esc_html($tag->name) . '</a>';
+                $term_link = get_term_link($tag);
+                if (!is_wp_error($term_link)) {
+                    $tag_links[] = '<a href="' . esc_url($term_link) . '">' . esc_html($tag->name) . '</a>';
+                }
             }
             $tags_html = implode(', ', $tag_links);
         }

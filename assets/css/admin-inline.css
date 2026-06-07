@@ -1,0 +1,393 @@
+#adminmenu .onepaqucpro-menu-new-badge {
+    display: inline-block;
+    margin-left: 5px;
+    color: #f59e0b;
+    font-size: 9px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    vertical-align: super;
+}
+
+#adminmenu a[href="admin.php?page=onepaqucpro_cart_recovery_template"] {
+    display: none !important;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    margin-left: 5px;
+}
+
+.tooltip .question-mark {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    background: #f0f0f0;
+    color: #555;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 220px;
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    border-radius: 4px;
+    padding: 8px;
+    position: absolute;
+    z-index: 100;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.2s ease;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.tooltip:hover .tooltip-text,
+.tooltip:focus-within .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.onepaquc-field-warning {
+    border: 2px solid #dc3545 !important;
+    padding: 10px !important;
+}
+
+.onepaquc-warning-popup {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 100000;
+    max-width: 360px;
+    padding: 12px 16px;
+    border-left: 4px solid #dc3545;
+    background: #fff;
+    color: #1d2327;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.onepaquc-warning-popup.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tutorial-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.tutorial-topic {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.tutorial-topic:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.onepaquc-ny-wrap {
+    padding: 24px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #312e81 50%, #1e1b4b 75%, #0f172a 100%);
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.onepaquc-ny-icon {
+    font-size: 28px;
+    height: 28px;
+    width: 28px;
+    color: #1e1b4b;
+    background: #fbbf24;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    z-index: 1;
+}
+
+.onepaquc-ny-content {
+    flex: 1;
+    min-width: 240px;
+}
+
+.onepaquc-ny-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #1e1b4b;
+    background: #fde68a;
+    padding: 7px 16px;
+    border-radius: 999px;
+}
+
+.onepaquc-ny-heading {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #fff;
+    font-weight: 900;
+    margin: 0 0 6px;
+}
+
+.onepaquc-ny-sub {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    font-weight: 600;
+    margin: 0;
+}
+
+.onepaquc-ny-sub code {
+    background: #fde047;
+    color: #1e1b4b;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 900;
+}
+
+.onepaquc-ny-cta.button.button-primary {
+    background: #92400e !important;
+    border-color: #d97706 !important;
+    color: #fff !important;
+    font-weight: 900 !important;
+}
+
+.notice-dismiss-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.onepaquc-ny-dismiss-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 32px;
+    min-width: 180px;
+    background: #fff;
+    border: 1px solid #dcdcde;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
+.onepaquc-ny-dismiss-menu.active {
+    display: block;
+}
+
+.onepaquc-ny-dismiss-menu a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+}
+
+.onepaquc-ny-confetti,
+.onepaquc-ny-sparkle,
+.onepaquc-ny-firework,
+.onepaquc-ny-blast {
+    display: none;
+}
+
+.trust-badges-container {
+    margin-bottom: 20px;
+}
+
+.badge-items-wrapper {
+    margin-bottom: 15px;
+}
+
+.badge-item {
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.badge-header {
+    padding: 8px 12px;
+    background: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.badge-content {
+    padding: 12px;
+}
+
+.badge-controls a {
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.preview-icon {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.preview-icon .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.modal-overlay-notice {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    animation: onepaqucFadeIn 0.3s ease;
+}
+
+.modal-overlay-notice.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-notice {
+    background: #fff;
+    border-radius: 16px;
+    padding: 0;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    animation: onepaqucSlideUp 0.3s ease;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.modal-notice-header {
+    padding: 24px 24px 16px;
+    text-align: center;
+}
+
+.modal-notice-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+.modal-notice-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #dc2626;
+    margin: 0 0 8px 0;
+}
+
+.modal-notice-body {
+    padding: 0 24px 24px;
+    text-align: center;
+}
+
+.modal-notice-message {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.modal-notice-footer {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px 24px;
+}
+
+.modal-notice-btn {
+    flex: 1;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-notice-btn-cancel {
+    background: #f1f3f5;
+    color: #495057;
+}
+
+.modal-notice-btn-cancel:hover {
+    background: #e9ecef;
+}
+
+.modal-notice-btn-confirm {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #fff;
+}
+
+.modal-notice-btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+@keyframes onepaqucFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes onepaqucSlideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

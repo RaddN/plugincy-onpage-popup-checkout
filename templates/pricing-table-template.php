@@ -37,41 +37,6 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                 }
             }
         ?>
-            <style>
-                .feature-column {
-                    width: 20%;
-                    /* Fixed width for feature column */
-                    min-width: 120px;
-                    position: sticky;
-                    left: 0;
-                    background: #fff;
-                    z-index: 10;
-                    border-right: 2px solid #ddd;
-                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-                    padding: 10px 8px;
-                    vertical-align: top;
-                }
-
-                .feature-name {
-                    font-weight: bold;
-                    background-color: #f8f9fa;
-                    position: sticky;
-                    left: 0;
-                    z-index: 5;
-                    border-right: 2px solid #ddd;
-                    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-                }
-
-                tr.feature-row:hover {
-                    background: #eee;
-                }
-
-                /* Hide scrollbar but keep functionality */
-                #tableContainer {
-                    scrollbar-color: #c1c1c1 #f1f1f1;
-                    scrollbar-width: thin;
-                }
-            </style>
             <div style="overflow: auto; width: 100%; height: 100vh; max-height: max-content; position: relative;" id="tableContainer">
                 <table class="comparison-table">
                     <!-- Product Headers -->
@@ -99,6 +64,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                                         if (in_array($taxonomy, array('color', 'colours', 'colors', 'color-family'))) {
                                             echo '<div class="product-variations">';
                                             $terms = wc_get_product_terms($product->get_id(), $attribute_name, array('fields' => 'all'));
+                                            $terms = is_wp_error($terms) || !is_array($terms) ? array() : $terms;
                                             foreach ($terms as $term) {
                                                 echo '<span class="variation-option ' . esc_attr($term->slug) . '" title="' . esc_attr($term->name) . '"></span>';
                                             }
@@ -345,4 +311,4 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
         });
     });';
 // Enqueue the script
-wp_add_inline_script('rmenu-cart-script', $inline_script, 99);
+wp_add_inline_script('rmenu-cart-script', $inline_script, 'after');

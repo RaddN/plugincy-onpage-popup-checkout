@@ -1,5 +1,6 @@
 // rmenu-cart.js
 jQuery(document).ready(function ($) {
+    "use strict";
 
     let updateCartContent_timer;
 
@@ -20,7 +21,7 @@ jQuery(document).ready(function ($) {
     }
 
     const checkout_popup = $('.checkout-popup');
-    $isonepagewidget = (checkout_popup.length) ? checkout_popup.data('isonepagewidget') : false;
+    var $isonepagewidget = (checkout_popup.length) ? checkout_popup.data('isonepagewidget') : false;
 
     var checkoutIframe = $('<iframe>', {
         src: onepaquc_rmsgValue.checkout_url + '?hide_header_footer=1',
@@ -32,7 +33,7 @@ jQuery(document).ready(function ($) {
     window.createCheckoutIframe = function () {
         if (!$('form.checkout.woocommerce-checkout').length && checkout_popup.length && $(".checkout-popup #checkout-form").length && !$(".checkout-popup #checkout-form #checkout-iframe").length) {
             // Show loading spinner before iframe loads
-            $('.checkout-popup #checkout-form').html('<style>div#checkout-form { overflow: hidden !important; display: flex ; flex-direction: column; justify-content: center; }</style><div class="plugincy_preloader"> <svg class="plugincy_cart" role="img" aria-label="Shopping plugincy_cart line animation" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg"> <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"> <g class="plugincy_cart__track" stroke="hsla(0,10%,10%,0.1)"> <polyline points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" /> <circle cx="43" cy="111" r="13" /> <circle cx="102" cy="111" r="13" /> </g> <g class="plugincy_cart__lines" stroke="currentColor"> <polyline class="plugincy_cart__top" points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" stroke-dasharray="338 338" stroke-dashoffset="-338" /> <g class="plugincy_cart__wheel1" transform="rotate(-90,43,111)"> <circle class="plugincy_cart__wheel-stroke" cx="43" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" /> </g> <g class="plugincy_cart__wheel2" transform="rotate(90,102,111)"> <circle class="plugincy_cart__wheel-stroke" cx="102" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" /> </g> </g> </g> </svg> <div class="plugincy_preloader__text"> <p class="plugincy_preloader__msg">' + fcStr('preloader_msg', 'Bringing you the goods\u2026') + '</p> <p class="plugincy_preloader__msg plugincy_preloader__msg--last">' + fcStr('preloader_slow', 'This is taking long. Something\u2019s wrong.') + '</p> </div> </div>');
+            $('.checkout-popup #checkout-form').addClass('onepaquc-checkout-loading').html('<div class="plugincy_preloader"> <svg class="plugincy_cart" role="img" aria-label="Shopping plugincy_cart line animation" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg"> <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"> <g class="plugincy_cart__track" stroke="hsla(0,10%,10%,0.1)"> <polyline points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" /> <circle cx="43" cy="111" r="13" /> <circle cx="102" cy="111" r="13" /> </g> <g class="plugincy_cart__lines" stroke="currentColor"> <polyline class="plugincy_cart__top" points="4,4 21,4 26,22 124,22 112,64 35,64 39,80 106,80" stroke-dasharray="338 338" stroke-dashoffset="-338" /> <g class="plugincy_cart__wheel1" transform="rotate(-90,43,111)"> <circle class="plugincy_cart__wheel-stroke" cx="43" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" /> </g> <g class="plugincy_cart__wheel2" transform="rotate(90,102,111)"> <circle class="plugincy_cart__wheel-stroke" cx="102" cy="111" r="13" stroke-dasharray="81.68 81.68" stroke-dashoffset="81.68" /> </g> </g> </g> </svg> <div class="plugincy_preloader__text"> <p class="plugincy_preloader__msg">' + fcStr('preloader_msg', 'Bringing you the goods\u2026') + '</p> <p class="plugincy_preloader__msg plugincy_preloader__msg--last">' + fcStr('preloader_slow', 'This is taking long. Something\u2019s wrong.') + '</p> </div> </div>');
             $('.checkout-popup #checkout-form').append(checkoutIframe);
 
             $(".checkout-popup div#checkout-form").css("overflow", "hidden");
@@ -40,10 +41,11 @@ jQuery(document).ready(function ($) {
             // Remove spinner when iframe is loaded
             checkoutIframe.on('load', function () {
                 $('.plugincy_preloader').remove();
+                $('.checkout-popup #checkout-form').removeClass('onepaquc-checkout-loading');
             });
 
             checkoutIframe.on('error', function () {
-                $('.checkout-popup #checkout-form').html('<p>' + fcStr('iframe_error', 'Error loading checkout. Please try again.') + '</p>');
+                $('.checkout-popup #checkout-form').removeClass('onepaquc-checkout-loading').html('<p>' + fcStr('iframe_error', 'Error loading checkout. Please try again.') + '</p>');
             });
         }
     }
@@ -56,7 +58,7 @@ jQuery(document).ready(function ($) {
     };
 
     // Click event to close cart drawer and checkout popup
-    $(document).click(function (event) {
+    $(document).on('click', function (event) {
         if (!$(event.target).closest('.cart-drawer, .rwc_cart-button, .checkout-popup').length) {
             closeCartAndCheckout();
         }
@@ -97,14 +99,7 @@ jQuery(document).ready(function ($) {
             }, 2000);
         }
 
-        $('body').append(`
-            <style id="cart-drawer-style">
-                .cart-drawer {
-                opacity: 0 !important;
-                visibility: hidden !important;
-                }
-            </style>
-        `);
+        $('body').addClass('onepaquc-hide-cart-drawer');
     };
 
     // Function to close the cart drawer and checkout popup
@@ -116,7 +111,7 @@ jQuery(document).ready(function ($) {
         if (cartDrawer && cartDrawer.length) cartDrawer.removeClass('open');
         $('.overlay').hide(); // Hide overlay when cart is closed
         document.body.style.overflow = '';
-        if ($('#cart-drawer-style')) $('#cart-drawer-style').remove();
+        $('body').removeClass('onepaquc-hide-cart-drawer');
         clearInterval(updateCartContent_timer);
     }
 
@@ -361,6 +356,8 @@ jQuery(document).ready(function ($) {
 // variation selection handle
 
 jQuery(function ($) {
+    "use strict";
+
     // Keep overlays attached directly to .product
     $('.overlay-variations').each(function () {
         var $variations = $(this);
@@ -391,10 +388,10 @@ jQuery(function ($) {
         var attrKeys = [];
 
         try {
-            variations = JSON.parse($box.find('script.var-map').text() || '[]');
+            variations = JSON.parse($box.attr('data-var-map') || '[]');
         } catch (e) { }
         try {
-            attrKeys = JSON.parse($box.find('script.attr-keys').text() || '[]');
+            attrKeys = JSON.parse($box.attr('data-attr-keys') || '[]');
         } catch (e) { }
 
         var selected = {}; // attr_key => slug

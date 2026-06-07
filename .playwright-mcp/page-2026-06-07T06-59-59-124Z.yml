@@ -1,0 +1,186 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation "Toolbar":
+      - menu:
+        - group [ref=e3]:
+          - menuitem "About WordPress" [ref=e4] [cursor=pointer]:
+            - generic [ref=e6]: About WordPress
+        - group [ref=e7]:
+          - menuitem "plugincy on page checkout" [ref=e8] [cursor=pointer]
+        - group [ref=e9]:
+          - menuitem "Live" [ref=e10] [cursor=pointer]
+        - group [ref=e11]:
+          - menuitem "Customize" [ref=e12] [cursor=pointer]
+        - group [ref=e13]:
+          - menuitem "0 Comments in moderation" [ref=e14] [cursor=pointer]:
+            - generic [ref=e16]: "0"
+            - generic [ref=e17]: 0 Comments in moderation
+        - group [ref=e18]:
+          - menuitem "New" [ref=e19] [cursor=pointer]:
+            - generic [ref=e21]: New
+        - group [ref=e22]:
+          - menuitem "Edit Page" [ref=e23] [cursor=pointer]
+      - menu [ref=e24]:
+        - group [ref=e25]:
+          - menuitem [ref=e26] [cursor=pointer]:
+            - img [ref=e28]
+        - group [ref=e32]:
+          - menuitem "Howdy, admin" [ref=e33] [cursor=pointer]
+        - group [ref=e34]:
+          - menuitem "Search" [ref=e35]:
+            - generic [ref=e36]:
+              - textbox "Search" [ref=e37] [cursor=pointer]
+              - generic [ref=e38]: Search
+  - link "Skip to content" [ref=e39] [cursor=pointer]:
+    - /url: "#content"
+  - generic [ref=e40]:
+    - banner [ref=e41]:
+      - generic [ref=e46]:
+        - link "plugincy on page checkout" [ref=e52] [cursor=pointer]:
+          - /url: http://free-one-page-checkout.local/
+        - generic [ref=e53]:
+          - navigation "Primary Site Navigation" [ref=e57]:
+            - list [ref=e59]:
+              - listitem [ref=e60]:
+                - link [ref=e61] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/604-2/
+              - listitem [ref=e62]:
+                - link "block Checkout" [ref=e63] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/block-checkout/
+              - listitem [ref=e64]:
+                - link "Buy now button Block" [ref=e65] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/buy-now-button-block/
+              - listitem [ref=e66]:
+                - link "Cart" [ref=e67] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/cart/
+              - listitem [ref=e68]:
+                - link "Checkout" [ref=e69] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/checkout/
+              - listitem [ref=e70]:
+                - 'link "Elementor #453" [ref=e71] [cursor=pointer]':
+                  - /url: http://free-one-page-checkout.local/elementor-453/
+              - listitem [ref=e72]:
+                - link "My account" [ref=e73] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/my-account/
+              - listitem [ref=e74]:
+                - link "Sample Page" [ref=e75] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/sample-page/
+              - listitem [ref=e76]:
+                - link "shop" [ref=e77] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/shop/
+              - listitem [ref=e78]:
+                - link "test" [ref=e79] [cursor=pointer]:
+                  - /url: http://free-one-page-checkout.local/
+          - link "View Shopping Cart, 3 items" [ref=e83] [cursor=pointer]:
+            - /url: http://free-one-page-checkout.local/cart/
+            - generic [ref=e85]:
+              - img [ref=e87]
+              - text: "3"
+    - main [ref=e92]:
+      - article [ref=e93]:
+        - heading "Cart" [level=1] [ref=e95]
+        - generic [ref=e96]:
+          - generic [ref=e98]:
+            - table "Products in cart" [ref=e100]:
+              - caption [ref=e101]:
+                - heading "Products in cart" [level=2] [ref=e102]
+              - rowgroup [ref=e103]:
+                - row "Product Total" [ref=e104]:
+                  - columnheader "Product" [ref=e105]
+                  - columnheader "Total" [ref=e106]
+              - rowgroup [ref=e107]:
+                - row "Loading products in cart…" [ref=e108]:
+                  - cell [ref=e109]
+                  - cell [ref=e111]
+                  - cell [ref=e115]
+                - row "Loading products in cart…" [ref=e117]:
+                  - cell [ref=e118]
+                  - cell [ref=e120]
+                  - cell [ref=e124]
+            - generic [ref=e126]:
+              - generic [ref=e127]:
+                - heading "Cart totals" [level=2] [ref=e128]
+                - heading "Add coupons" [level=2] [ref=e130]:
+                  - button "Add coupons" [ref=e131] [cursor=pointer]:
+                    - img [ref=e132]
+                    - text: Add coupons
+                - generic [ref=e135]:
+                  - generic [ref=e136]: Estimated total
+                  - generic "Loading price…" [ref=e137]
+              - link "Proceed to Checkout" [ref=e140] [cursor=pointer]:
+                - /url: http://free-one-page-checkout.local/checkout/
+                - generic [ref=e141]: Proceed to Checkout
+          - text: 
+    - contentinfo [ref=e142]:
+      - paragraph [ref=e149]:
+        - text: Copyright © 2026 plugincy on page checkout | Powered by
+        - link "Astra WordPress Theme" [ref=e150] [cursor=pointer]:
+          - /url: https://wpastra.com
+  - generic:
+    - button "3" [ref=e151] [cursor=pointer]:
+      - img [ref=e153]
+      - generic [ref=e157]: "3"
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - heading "আমার কার্ট" [level=2] [ref=e161]
+        - button [ref=e162] [cursor=pointer]
+      - generic [ref=e163]:
+        - checkbox [ref=e165]
+        - generic [ref=e166]: 0 gulo selected
+      - generic [ref=e167]:
+        - generic [ref=e168]:
+          - checkbox [ref=e170]
+          - generic [ref=e171]:
+            - img "Asus ProArt P16" [ref=e172]
+            - button [ref=e173] [cursor=pointer]:
+              - img [ref=e174]
+          - generic [ref=e176]:
+            - generic [ref=e177]:
+              - paragraph [ref=e178]: Asus ProArt P16
+              - paragraph [ref=e179]:
+                - generic [ref=e180]: ৳ 600.00
+            - generic [ref=e181]:
+              - button "-" [ref=e182] [cursor=pointer]
+              - spinbutton [ref=e183]: "1"
+              - button "+" [ref=e184] [cursor=pointer]
+        - generic [ref=e185]:
+          - checkbox [ref=e187]
+          - generic [ref=e188]:
+            - img "Placeholder" [ref=e189]
+            - button [ref=e190] [cursor=pointer]:
+              - img [ref=e191]
+          - generic [ref=e193]:
+            - generic [ref=e194]:
+              - paragraph [ref=e195]: Fastest MacBook
+              - paragraph [ref=e196]:
+                - generic [ref=e197]: ৳ 650.00
+            - generic [ref=e198]:
+              - button "-" [ref=e199] [cursor=pointer]
+              - spinbutton [ref=e200]: "1"
+              - button "+" [ref=e201] [cursor=pointer]
+        - generic [ref=e202]:
+          - checkbox [ref=e204]
+          - generic [ref=e205]:
+            - img "Placeholder" [ref=e206]
+            - button [ref=e207] [cursor=pointer]:
+              - img [ref=e208]
+          - generic [ref=e210]:
+            - generic [ref=e211]:
+              - paragraph [ref=e212]: Best MacBook
+              - paragraph [ref=e213]:
+                - generic [ref=e214]: ৳ 650.00
+            - generic [ref=e215]:
+              - button "-" [ref=e216] [cursor=pointer]
+              - spinbutton [ref=e217]: "1"
+              - button "+" [ref=e218] [cursor=pointer]
+      - generic [ref=e220]:
+        - textbox "Enter coupon code" [ref=e221]
+        - button "Apply" [ref=e222] [cursor=pointer]
+      - generic [ref=e223]:
+        - generic [ref=e224]:
+          - text: "সর্বমোট:"
+          - generic [ref=e226]: ৳ 1,900.00
+        - generic [ref=e229]: ৳ 1,900.00
+      - link "চেক আউট" [ref=e231] [cursor=pointer]:
+        - /url: http://free-one-page-checkout.local/checkout/
+  - status [ref=e234]

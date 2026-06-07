@@ -35,8 +35,21 @@ add_filter('product_type_options', 'onepaquc_add_one_page_checkout_to_product_ty
  */
 function onepaquc_save_one_page_checkout_option($post_id)
 {
-    // Check if our nonce is set and valid
-    check_ajax_referer('onepaquc_save_meta', 'onepaquc_nonce');
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    if (
+        !isset($_POST['onepaquc_nonce']) ||
+        !is_scalar($_POST['onepaquc_nonce']) ||
+        !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['onepaquc_nonce'])), 'onepaquc_save_meta')
+    ) {
+        return;
+    }
 
     $is_one_page_checkout = isset($_POST['_one_page_checkout']) ? 'yes' : 'no';
     update_post_meta($post_id, '_one_page_checkout', $is_one_page_checkout);
