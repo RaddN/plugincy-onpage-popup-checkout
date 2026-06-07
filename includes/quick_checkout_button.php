@@ -931,7 +931,7 @@ class onepaquc_add_checkout_button_on_archive
 
     public function onepaquc_add_checkout_button()
     {
-        global $product;
+        global $product; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WooCommerce public loop global.
         global $onepaquc_onepaquc_allowed_tags;
 
         if (!onepaquc_should_display_button($product)) {
@@ -1089,7 +1089,7 @@ function onepaquc_button_shortcode_handler($atts = [])
         return '';
     }
 
-    $product = $resolved_product;
+    $product = $resolved_product; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Preserve WooCommerce's public product global for shortcode rendering.
 
     // Basic checks unless forced
     if ((!isset($atts['force']) || !is_scalar($atts['force']) || '1' !== (string) $atts['force']) && !onepaquc_should_display_button($product)) {

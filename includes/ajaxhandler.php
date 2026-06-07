@@ -32,7 +32,7 @@ function onepaquc_get_cart_content()
     //get the values from the ajax request cart_icon: cartIcon, product_title_tag: productTitleTag, drawer_position: drawerPosition
     $cartIcon = isset($_POST['cart_icon']) && is_scalar($_POST['cart_icon']) ? sanitize_key(wp_unslash($_POST['cart_icon'])) : 'cart';
     $cartIcon = in_array($cartIcon, array('cart', 'shopping-bag', 'basket'), true) ? $cartIcon : 'cart';
-    $productTitleTag = isset($_POST['product_title_tag']) && is_scalar($_POST['product_title_tag']) ? onepaquc_sanitize_heading_tag(wp_unslash($_POST['product_title_tag']), 'h2') : 'h2';
+    $productTitleTag = isset($_POST['product_title_tag']) && is_scalar($_POST['product_title_tag']) ? onepaquc_sanitize_heading_tag(sanitize_text_field(wp_unslash($_POST['product_title_tag'])), 'h2') : 'h2';
     $drawerPosition = isset($_POST['drawer_position']) && is_scalar($_POST['drawer_position']) ? sanitize_key(wp_unslash($_POST['drawer_position'])) : 'right';
     $drawerPosition = in_array($drawerPosition, array('left', 'right'), true) ? $drawerPosition : 'right';
     ob_start();
@@ -58,7 +58,7 @@ function onepaquc_update_cart_item_quantity()
     check_ajax_referer('update_cart_item_quantity', 'nonce');
     $cart = onepaquc_ajax_get_cart_or_error();
     $cart_item_key = isset($_POST['cart_item_key']) && is_scalar($_POST['cart_item_key']) ? sanitize_text_field(wp_unslash($_POST['cart_item_key'])) : '';
-    $raw_quantity = isset($_POST['quantity']) && is_scalar($_POST['quantity']) ? wp_unslash($_POST['quantity']) : 0;
+    $raw_quantity = isset($_POST['quantity']) && is_scalar($_POST['quantity']) ? sanitize_text_field(wp_unslash($_POST['quantity'])) : 0;
     $quantity = function_exists('wc_stock_amount') ? wc_stock_amount($raw_quantity) : (int) $raw_quantity;
 
     $cart_contents = $cart->get_cart();
@@ -95,7 +95,7 @@ function onepaquc_handle_remove_cart_item()
     $cart = onepaquc_ajax_get_cart_or_error();
     $cart_item_keys = array();
     if (isset($_POST['cart_item_key']) && is_array($_POST['cart_item_key'])) {
-        $cart_item_keys = wp_unslash($_POST['cart_item_key']);
+        $cart_item_keys = wp_unslash($_POST['cart_item_key']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Each array item is sanitized and validated below.
     } elseif (isset($_POST['cart_item_key']) && is_scalar($_POST['cart_item_key'])) {
         $cart_item_keys = array(sanitize_text_field(wp_unslash($_POST['cart_item_key'])));
     } else {
@@ -246,21 +246,26 @@ function onepaquc_ajax_add_to_cart()
     check_ajax_referer('rmenu-ajax-nonce', 'nonce');
     $cart = onepaquc_ajax_get_cart_or_error();
 
-    $raw_product_id = isset($_POST['product_id']) && is_scalar($_POST['product_id']) ? wp_unslash($_POST['product_id']) : 0;
-    $product_id = apply_filters('woocommerce_add_to_cart_product_id', absint($raw_product_id));
+    $raw_product_id = isset($_POST['product_id']) && is_scalar($_POST['product_id']) ? absint(wp_unslash($_POST['product_id'])) : 0;
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce core compatibility hook.
+    $product_id = apply_filters('woocommerce_add_to_cart_product_id', $raw_product_id);
     $product_id = is_numeric($product_id) ? absint($product_id) : 0;
 
     // Get default quantity from settings if quantity is not provided
     $default_qty = 1;
 
     // Use posted quantity if available, otherwise use default
-    $quantity = empty($_POST['quantity']) || !is_scalar($_POST['quantity'])
+    $posted_quantity = !empty($_POST['quantity']) && is_scalar($_POST['quantity'])
+        ? sanitize_text_field(wp_unslash($_POST['quantity']))
+        : '';
+    $quantity = '' === $posted_quantity
         ? $default_qty
-        : max(1, function_exists('wc_stock_amount') ? wc_stock_amount(wp_unslash($_POST['quantity'])) : (int) wp_unslash($_POST['quantity']));
+        : max(1, function_exists('wc_stock_amount') ? wc_stock_amount($posted_quantity) : (int) $posted_quantity);
 
     $variation_id = empty($_POST['variation_id']) || !is_scalar($_POST['variation_id']) ? 0 : absint(wp_unslash($_POST['variation_id']));
     $variations = array();
     if (!empty($_POST['variations']) && is_array($_POST['variations'])) {
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Variation keys and values are sanitized individually below.
         foreach (wp_unslash($_POST['variations']) as $attribute => $value) {
             if (!is_scalar($attribute) || !is_scalar($value)) {
                 continue;
@@ -285,10 +290,12 @@ function onepaquc_ajax_add_to_cart()
         }
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce core compatibility hook.
     $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations);
 
     if ($passed_validation && $cart->add_to_cart($product_id, $quantity, $variation_id, $variations)) {
 
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce core compatibility hook.
         do_action('woocommerce_ajax_added_to_cart', $product_id);
 
         // Get product name for the message
@@ -459,9 +466,10 @@ function onepaquc_get_all_products_quick_view() {
     }
     
     // Get product IDs from the request
-    $product_ids = isset($_POST['product_ids']) && is_array($_POST['product_ids'])
-        ? array_values(array_unique(array_filter(array_map('absint', array_filter(wp_unslash($_POST['product_ids']), 'is_numeric')))))
+    $raw_product_ids = isset($_POST['product_ids']) && is_array($_POST['product_ids'])
+        ? wp_unslash($_POST['product_ids']) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Numeric product IDs are allowlisted through is_numeric() and absint() below.
         : array();
+    $product_ids = array_values(array_unique(array_filter(array_map('absint', array_filter($raw_product_ids, 'is_numeric')))));
     $max_products = apply_filters('onepaquc_quick_view_max_products', 50);
     $max_products = is_numeric($max_products) ? max(1, min(100, absint($max_products))) : 50;
     $product_ids  = array_slice($product_ids, 0, $max_products);

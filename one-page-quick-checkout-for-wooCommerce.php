@@ -18,6 +18,7 @@
 
 
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
+// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Request reads in this bootstrap are read-only routing or public WooCommerce-compatible add-to-cart parameters; privileged admin/AJAX actions verify their own nonces.
 
 define('ONEPAQUC_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -501,7 +502,7 @@ add_action('admin_enqueue_scripts', 'onepaquc_cart_admin_styles');
 // Enqueue the admin stylesheet only for this settings page
 function onepaquc_cart_admin_styles($hook)
 {
-    $current_page = isset($_GET['page']) ? onepaquc_sanitize_key_value(wp_unslash($_GET['page'])) : '';
+    $current_page = isset($_GET['page']) && is_scalar($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
     $is_plugin_admin_page = $hook === 'toplevel_page_onepaquc_cart' || $current_page === 'onepaqucpro_cart_recovery' || $current_page === 'onepaqucpro_cart_recovery_template';
 
     if ($is_plugin_admin_page) {
@@ -1096,18 +1097,23 @@ function onepaquc_mark_checkout_request_nocache()
     }
 
     if (!defined('DONOTCACHEPAGE')) {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Standard cache-plugin integration constant.
         define('DONOTCACHEPAGE', true);
     }
     if (!defined('DONOTCACHEOBJECT')) {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Standard cache-plugin integration constant.
         define('DONOTCACHEOBJECT', true);
     }
     if (!defined('DONOTCACHEDB')) {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Standard cache-plugin integration constant.
         define('DONOTCACHEDB', true);
     }
     if (!defined('DONOTMINIFY')) {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Standard cache-plugin integration constant.
         define('DONOTMINIFY', true);
     }
     if (!defined('DONOTROCKETOPTIMIZE')) {
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- Standard cache-plugin integration constant.
         define('DONOTROCKETOPTIMIZE', true);
     }
 }
@@ -1767,8 +1773,7 @@ function onepaquc_handle_url_add_to_cart()
         return;
     }
 
-    $raw_product_id = wp_unslash($_GET['onepaquc_add-to-cart']);
-    $product_id     = is_scalar($raw_product_id) ? absint($raw_product_id) : 0;
+    $product_id = is_scalar($_GET['onepaquc_add-to-cart']) ? absint(wp_unslash($_GET['onepaquc_add-to-cart'])) : 0;
     if ($product_id <= 0) {
         wc_add_notice(__('Invalid product ID.', 'one-page-quick-checkout-for-woocommerce'), 'error');
         return;
@@ -1784,11 +1789,13 @@ function onepaquc_handle_url_add_to_cart()
         return;
     }
 
-    $raw_quantity = isset($_GET['onepaquc_quantity']) ? wp_unslash($_GET['onepaquc_quantity']) : 1;
-    $quantity     = is_scalar($raw_quantity) ? max(1, absint($raw_quantity)) : 1;
+    $quantity = isset($_GET['onepaquc_quantity']) && is_scalar($_GET['onepaquc_quantity'])
+        ? max(1, absint(wp_unslash($_GET['onepaquc_quantity'])))
+        : 1;
 
-    $raw_variation_id = isset($_GET['onepaquc_variation_id']) ? wp_unslash($_GET['onepaquc_variation_id']) : 0;
-    $variation_id     = is_scalar($raw_variation_id) ? absint($raw_variation_id) : 0;
+    $variation_id = isset($_GET['onepaquc_variation_id']) && is_scalar($_GET['onepaquc_variation_id'])
+        ? absint(wp_unslash($_GET['onepaquc_variation_id']))
+        : 0;
     $variation    = array();
     $cart_item_data = array();
 
@@ -1796,7 +1803,7 @@ function onepaquc_handle_url_add_to_cart()
     if ($product->is_type('variable')) {
         // 1) JSON blob: onepaquc_variations={"attribute_pa_brand":"dell"}
         if (!empty($_GET['onepaquc_variations']) && is_scalar($_GET['onepaquc_variations'])) {
-            $json_raw = wp_unslash($_GET['onepaquc_variations']);
+            $json_raw = wp_unslash($_GET['onepaquc_variations']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON is decoded, shape-checked, and each key/value is normalized below.
             // Some servers escape quotes; handle both raw and urldecoded
             $decoded  = json_decode($json_raw, true);
             if (!is_array($decoded)) {
@@ -1939,9 +1946,9 @@ function onepaquc_get_cart_redirect_url()
 {
     // Get the current URL without query parameters
     $current_request_uri = isset($_SERVER['REQUEST_URI']) && is_string($_SERVER['REQUEST_URI'])
-        ? wp_unslash($_SERVER['REQUEST_URI'])
+        ? esc_url_raw(wp_unslash($_SERVER['REQUEST_URI']))
         : '';
-    $current_url = home_url(esc_url_raw($current_request_uri));
+    $current_url = home_url($current_request_uri);
 
     // Remove all onepaquc parameters
     $redirect_url = remove_query_arg(

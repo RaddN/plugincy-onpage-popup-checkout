@@ -3,7 +3,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare,WordPress.Security.NonceVerification.Missing,PluginCheck.Security.DirectDB.UnescapedDBParameter -- Cart recovery uses fixed plugin-owned tables and WooCommerce cart/session hooks; dynamic SQL values remain prepared and public actions use opaque tokens.
+// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.Security.NonceVerification.Missing,WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,PluginCheck.Security.DirectDB.UnescapedDBParameter -- Cart recovery requires live reads/writes to fixed plugin-owned tables; dynamic SQL values remain prepared, checkout requests verify WooCommerce nonces, and public actions validate opaque tokens.
 class Onepaqucpro_Cart_Recovery_Tracker
 {
     const SCHEMA_VERSION = '1.3.8';

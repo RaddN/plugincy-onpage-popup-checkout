@@ -1,5 +1,6 @@
 <?php
 if (!defined('ABSPATH')) exit;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Included inside onepaquc_one_page_checkout_shortcode(); these variables are function-local template context.
 // Shortcode: [plugincy_one_page_checkout product_ids="" template="product-slider"]
 
 wp_enqueue_style( 'owl-carousel', plugin_dir_url(__FILE__) . '../assets/css/owl.carousel.min.css', array(), ONEPAQUC_VERSION);

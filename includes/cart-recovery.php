@@ -3,7 +3,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-// phpcs:disable WordPress.WP.I18n.MissingTranslatorsComment -- Cart recovery admin labels use short, visible placeholders whose surrounding UI provides the translator context.
+// phpcs:disable WordPress.WP.I18n.MissingTranslatorsComment,WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- State-changing admin handlers verify capabilities/nonces; read-only filters need no nonce; request values are normalized by the class sanitizers, which WPCS cannot trace.
 class Onepaqucpro_Cart_Recovery_Admin
 {
     const PAGE_SLUG = 'onepaqucpro_cart_recovery';

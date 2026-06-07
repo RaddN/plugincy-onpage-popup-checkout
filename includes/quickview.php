@@ -84,8 +84,8 @@ class ONEPAQUC_Quick_View
 
     public function onepaquc_display_quick_view_button_to_add_to_cart($link, $product)
     {
-        global $displayed_quick_view_buttons;
-        $displayed_quick_view_buttons = true;
+        global $displayed_quick_view_buttons; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Existing integration global retained for backward compatibility.
+        $displayed_quick_view_buttons = true; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Existing integration global retained for backward compatibility.
         if (!$product instanceof WC_Product) {
             return $link;
         }
@@ -285,6 +285,7 @@ class ONEPAQUC_Quick_View
         );
 
 
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Existing public compatibility hook retained for third-party integrations.
         echo wp_kses_post(apply_filters('rmenu_quick_view_button_html', $button_html, $product));
     }
 
@@ -452,7 +453,7 @@ class ONEPAQUC_Quick_View
      */
     public function add_product_data()
     {
-        global $product;
+        global $product; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WooCommerce public loop global.
 
         static $displayed_product_data = array();
 
@@ -751,7 +752,7 @@ class ONEPAQUC_Quick_View
 }
 
 // Initialize the quick view class
-$rmenu_quick_view = new ONEPAQUC_Quick_View();
+$rmenu_quick_view = new ONEPAQUC_Quick_View(); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Existing integration global retained for backward compatibility.
 
 /**
  * Add shortcode for quick view button

@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  */
 
 
-$iscustomaddtocart = get_option('rmenu_enable_custom_add_to_cart', 0);
+$iscustomaddtocart = get_option('rmenu_enable_custom_add_to_cart', 0); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Existing bootstrap global retained for backward compatibility.
 
 if ($iscustomaddtocart) {
     add_action('wp_enqueue_scripts', 'onepaquc_apply_add_to_cart_styles', 40);

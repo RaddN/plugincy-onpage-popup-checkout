@@ -1,5 +1,6 @@
 <?php
 if (!defined('ABSPATH')) exit;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Included inside onepaquc_one_page_checkout_shortcode(); these variables are function-local template context.
 // Shortcode: [plugincy_one_page_checkout product_ids="" template="product-accordion"]
 ?>
 <div class="product-accordion-template">

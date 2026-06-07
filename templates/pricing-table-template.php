@@ -1,5 +1,6 @@
 <?php
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- Included inside onepaquc_one_page_checkout_shortcode(); these variables are function-local template context.
 // pricing table template - using actual product data
 // shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" template="pricing-table"]
 ?>

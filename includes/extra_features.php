@@ -372,6 +372,7 @@ function onepaquc_add_random_product_if_cart_empty()
 
 if (get_option('rmenu_disable_cart_page', 0)) {
     add_action('template_redirect', 'disable_cart_page_redirect');
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Existing callback name retained for backward compatibility.
     function disable_cart_page_redirect()
     {
         if (function_exists('is_cart') && is_cart() && function_exists('wc_get_checkout_url')) {

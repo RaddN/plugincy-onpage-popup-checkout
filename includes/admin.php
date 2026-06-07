@@ -4039,7 +4039,7 @@ function onepaquc_handle_reset_settings()
         return;
     }
 
-    if (isset($_POST['onepaquc_reset_settings']) && is_scalar($_POST['onepaquc_reset_settings']) && '1' === (string) wp_unslash($_POST['onepaquc_reset_settings'])) {
+    if (isset($_POST['onepaquc_reset_settings']) && is_scalar($_POST['onepaquc_reset_settings']) && '1' === sanitize_text_field(wp_unslash($_POST['onepaquc_reset_settings']))) {
         global $onepaquc_string_settings_fields;
         foreach (onepaquc_rmenu_fields() as $key => $field) {
             delete_option($key);
