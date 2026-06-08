@@ -62,6 +62,26 @@
         });
     }
 
+    function bindDisabledClassEvents() {
+        $(document).on("click change keydown keyup keypress input paste cut mousedown", ".disabled", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        });
+    }
+
+    function initRemoveCheckoutFieldsSelect2() {
+        if (!$.fn.select2) {
+            return;
+        }
+
+        $(".remove_checkout_fields").select2({
+            placeholder: "Select fields to remove",
+            allowClear: true,
+            width: "100%"
+        });
+    }
+
     function isColorDark(color) {
         if (!color) {
             return false;
@@ -192,6 +212,85 @@
         });
 
         activate(root.querySelector(".rmenu-settings-tab-item.active") || tabs[0]);
+    }
+
+    function bindTopLevelTabs() {
+        var tabContainer = document.querySelector(".tab-container");
+        if (!tabContainer) {
+            return;
+        }
+
+        var tabsRoot = null;
+        for (var i = 0; i < tabContainer.children.length; i++) {
+            if (tabContainer.children[i].classList.contains("tabs")) {
+                tabsRoot = tabContainer.children[i];
+                break;
+            }
+        }
+
+        if (!tabsRoot) {
+            return;
+        }
+
+        var tabs = Array.prototype.slice.call(tabsRoot.children).filter(function (tab) {
+            return tab.classList.contains("tab") && tab.getAttribute("data-tab");
+        });
+
+        if (!tabs.length) {
+            return;
+        }
+
+        var contents = tabs.map(function (tab) {
+            return document.getElementById("tab-" + tab.getAttribute("data-tab"));
+        }).filter(Boolean);
+        var storageKey = "active_tab";
+
+        function saveActiveTab(tabIndex) {
+            try {
+                localStorage.setItem(storageKey, tabIndex);
+            } catch (error) {
+                return;
+            }
+        }
+
+        function getActiveTab() {
+            try {
+                return localStorage.getItem(storageKey);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function activateTab(tabIndex) {
+            var targetTab = tabs.filter(function (tab) {
+                return tab.getAttribute("data-tab") === tabIndex;
+            })[0];
+
+            if (!targetTab) {
+                targetTab = tabs[0];
+                tabIndex = targetTab.getAttribute("data-tab");
+            }
+
+            tabs.forEach(function (tab) {
+                tab.classList.toggle("active", tab === targetTab);
+            });
+
+            contents.forEach(function (content) {
+                content.classList.toggle("active", content.id === "tab-" + tabIndex);
+            });
+
+            saveActiveTab(tabIndex);
+        }
+
+        tabs.forEach(function (tab) {
+            tab.addEventListener("click", function (event) {
+                event.preventDefault();
+                activateTab(tab.getAttribute("data-tab"));
+            });
+        });
+
+        var urlParams = new URLSearchParams(window.location.search);
+        activateTab(urlParams.get("tab") || getActiveTab() || tabs[0].getAttribute("data-tab"));
     }
 
     function bindRowsForSelect(selectSelector, rows, predicate) {
@@ -400,12 +499,100 @@
         });
     }
 
+    function initNoticeModal() {
+        var checkboxes = Array.prototype.slice.call(document.querySelectorAll('input[type="checkbox"][data-notice]')).filter(function (checkbox) {
+            return checkbox.getAttribute("data-notice") !== "";
+        });
+
+        if (!checkboxes.length) {
+            return;
+        }
+
+        if (!document.getElementById("modalOverlayNotice")) {
+            document.body.insertAdjacentHTML(
+                "beforeend",
+                [
+                    '<div class="modal-overlay-notice" id="modalOverlayNotice">',
+                    '<div class="modal-notice">',
+                    '<div class="modal-notice-header">',
+                    '<div class="modal-notice-icon"><svg width="18" height="18" viewBox="0 0 0.54 0.54" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.27.332A.02.02 0 0 1 .253.315V.202Q.255.187.27.185C.285.183.287.193.287.202v.112A.02.02 0 0 1 .27.331m0 .074H.266L.262.404.258.402.255.399Q.248.392.248.383q0-.012.007-.016L.258.364.262.362.266.361h.009l.004.001.004.002.003.003q.007.007.007.016 0 .012-.007.016L.283.402.279.404.275.405H.271" fill="#fff"/><path d="M.406.499H.134Q.067.499.039.454.013.409.046.35L.182.104Q.217.042.27.041C.323.04.335.063.358.104l.136.245q.032.059.007.104Q.474.497.406.498M.27.075Q.237.075.212.12L.076.366Q.053.408.069.437c.016.029.034.028.065.028h.273q.049 0 .065-.028C.488.409.48.394.465.366L.328.121Q.303.077.27.076" fill="#fff"/></svg></div>',
+                    '<h3 class="modal-notice-title">Confirm Action</h3>',
+                    "</div>",
+                    '<div class="modal-notice-body">',
+                    '<p class="modal-notice-message" id="modalNoticeMessage"></p>',
+                    "</div>",
+                    '<div class="modal-notice-footer">',
+                    '<button class="modal-notice-btn modal-notice-btn-cancel" id="btnNoticeCancel" type="button">Cancel</button>',
+                    '<button class="modal-notice-btn modal-notice-btn-confirm" id="btnNoticeConfirm" type="button">Confirm</button>',
+                    "</div>",
+                    "</div>",
+                    "</div>"
+                ].join("")
+            );
+        }
+
+        var modalOverlay = document.getElementById("modalOverlayNotice");
+        var modalMessage = document.getElementById("modalNoticeMessage");
+        var btnCancel = document.getElementById("btnNoticeCancel");
+        var btnConfirm = document.getElementById("btnNoticeConfirm");
+        var currentCheckbox = null;
+        var previousState = {};
+
+        if (!modalOverlay || !modalMessage || !btnCancel || !btnConfirm) {
+            return;
+        }
+
+        checkboxes.forEach(function (checkbox) {
+            previousState[checkbox.name] = checkbox.checked;
+
+            checkbox.addEventListener("change", function () {
+                if (previousState[this.name] === true && this.checked === false) {
+                    currentCheckbox = this;
+                    modalMessage.textContent = this.getAttribute("data-notice");
+                    modalOverlay.classList.add("active");
+                    this.checked = true;
+                    return;
+                }
+
+                previousState[this.name] = this.checked;
+            });
+        });
+
+        btnCancel.addEventListener("click", function () {
+            modalOverlay.classList.remove("active");
+            if (currentCheckbox) {
+                currentCheckbox.checked = true;
+                previousState[currentCheckbox.name] = true;
+            }
+            currentCheckbox = null;
+        });
+
+        btnConfirm.addEventListener("click", function () {
+            modalOverlay.classList.remove("active");
+            if (currentCheckbox) {
+                currentCheckbox.checked = false;
+                previousState[currentCheckbox.name] = false;
+            }
+            currentCheckbox = null;
+        });
+
+        modalOverlay.addEventListener("click", function (event) {
+            if (event.target === modalOverlay) {
+                btnCancel.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+            }
+        });
+    }
+
     onReady(function () {
         window.getCheckboxByName = getCheckboxByName;
         window.toggleDisabledClass = toggleDisabledClass;
         window.showDirectCheckoutWarning = showDirectCheckoutWarning;
         window.removeDirectCheckoutWarning = removeDirectCheckoutWarning;
         window.checkColors = checkColors;
+
+        bindDisabledClassEvents();
+        initRemoveCheckoutFieldsSelect2();
+        bindTopLevelTabs();
 
         bindMasterToggle({
             master: "onpage_checkout_enable",
@@ -459,5 +646,6 @@
         initAddToCartControls();
         initTrustBadges();
         initLicenseEye();
+        initNoticeModal();
     });
 })(jQuery);
