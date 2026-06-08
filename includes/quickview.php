@@ -160,19 +160,25 @@ class ONEPAQUC_Quick_View
             'allowedTypes' => onepaquc_normalize_key_list(get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', 'grouped', 'external']), ['simple', 'variable', 'grouped', 'external']),
         );
 
-        $inline_script = 'jQuery(function($){'
-            . 'var quickViewConfig=' . wp_json_encode($config) . ';'
-            . 'function addQuickViewButton($product,productId){var $wrap=$("<div/>",{"class":"rmenu-quick-view-overlay "+quickViewConfig.buttonPos});var $button=$("<a/>",{"href":"#","class":quickViewConfig.buttonClass,"data-product-id":productId}).html(quickViewConfig.contents);$wrap.append($button);if(quickViewConfig.buttonPos==="after_image"){var $image=$product.find("img").first();if($image.length){$image.after($wrap);}else{$product.append($wrap);}}else{$product.append($wrap);}}'
-            . 'function initQuickViewButtons(container){container=container||$(document);container.find(".product").each(function(){var $this=$(this);if($("body").hasClass("single-product")&&!$this.closest("ul.products, .products").length){return;}if($this.has(".rmenu-quick-view-overlay").length||$this.has(".opqvfw-btn").length){return;}var productIdMatch=($this.attr("class")||"").match(/post-(\d+)/);var productId=productIdMatch?productIdMatch[1]:($this.find(".button").length?$this.find(".button").data("product_id"):null);var productTypeMatch=($this.attr("class")||"").match(/product-type-(\w+)/);var productType=productTypeMatch?productTypeMatch[1]:($this.find(".button").length?$this.find(".button").data("product-type"):null);if(quickViewConfig.allowedTypes.indexOf(productType)!==-1&&productId){addQuickViewButton($this,productId);}});cleanupOrphanedQuickViewButtons();}'
-            . 'function cleanupOrphanedQuickViewButtons(){$(".rmenu-quick-view-overlay").each(function(){if(!$(this).closest(".product").length){$(this).remove();}});}'
-            . 'function refreshQuickViewButtons(container){container=container||$(document);container.find(".rmenu-quick-view-overlay").remove();initQuickViewButtons(container);}'
-            . 'initQuickViewButtons();'
-            . '$(document).ajaxComplete(function(){window.setTimeout(function(){initQuickViewButtons();},100);});'
-            . '$("body").on("wc_fragments_loaded wc_fragments_refreshed",function(){initQuickViewButtons();});'
-            . '$("body").on("post-load",function(event,data){if(data&&data.length){initQuickViewButtons($(data));}});'
-            . '$("body").on("woocommerce_updated_cart_totals updated_checkout updated_shipping_method",function(){window.setTimeout(function(){initQuickViewButtons();},100);});'
-            . 'window.initQuickViewButtons=initQuickViewButtons;window.refreshQuickViewButtons=refreshQuickViewButtons;window.cleanupOrphanedQuickViewButtons=cleanupOrphanedQuickViewButtons;'
-            . '});';
+        $inline_script_parts = array(
+            'jQuery(function($){',
+            'var quickViewConfig=' . wp_json_encode($config) . ';',
+            'var namespace=window.onepaqucQuickViewButtons=window.onepaqucQuickViewButtons||{};',
+            'var scheduled=false;',
+            'function getQuickViewProductData($product){var $button=$product.find(".button[data-product_id],.button[data-product-id],a[data-product_id],a[data-product-id],button[data-product_id],button[data-product-id]").first();var productId=$button.data("product_id")||$button.data("product-id")||$product.data("product_id")||$product.data("product-id");if(!productId){var idMatch=($product.attr("class")||"").match(/post-(\d+)/);productId=idMatch?idMatch[1]:null;}var productType=$button.data("product_type")||$button.data("product-type")||$product.data("product_type")||$product.data("product-type");if(!productType){var typeMatch=($product.attr("class")||"").match(/product-type-([A-Za-z0-9_-]+)/);productType=typeMatch?typeMatch[1]:null;}if(!productType&&$button.length){if($button.hasClass("product_type_simple")){productType="simple";}else if($button.hasClass("product_type_variable")){productType="variable";}else if($button.hasClass("product_type_grouped")){productType="grouped";}else if($button.hasClass("product_type_external")){productType="external";}}return{id:productId,type:productType};}',
+            'function addQuickViewButton($product,productId){var $wrap=$("<div/>",{"class":"rmenu-quick-view-overlay "+quickViewConfig.buttonPos});var $button=$("<a/>",{"href":"#","class":quickViewConfig.buttonClass,"data-product-id":productId}).html(quickViewConfig.contents);$wrap.append($button);if(quickViewConfig.buttonPos==="after_image"){var $image=$product.find("img").first();if($image.length){$image.after($wrap);}else{$product.append($wrap);}}else{$product.append($wrap);}}',
+            'function initQuickViewButtons(container){var $container=container?$(container):$(document);$container.find(".product").addBack(".product").each(function(){var $this=$(this);if($("body").hasClass("single-product")&&!$this.closest("ul.products, .products").length){return;}if($this.find(".rmenu-quick-view-overlay,.opqvfw-btn").length){return;}var productData=getQuickViewProductData($this);if(quickViewConfig.allowedTypes.indexOf(productData.type)!==-1&&productData.id){addQuickViewButton($this,productData.id);}});cleanupOrphanedQuickViewButtons();}',
+            'function cleanupOrphanedQuickViewButtons(){$(".rmenu-quick-view-overlay").each(function(){if(!$(this).closest(".product").length){$(this).remove();}});}',
+            'function refreshQuickViewButtons(container){container=container||$(document);$(container).find(".rmenu-quick-view-overlay").remove();initQuickViewButtons(container);}',
+            'function scheduleQuickViewButtons(container){if(scheduled){return;}scheduled=true;window.setTimeout(function(){scheduled=false;initQuickViewButtons(container);},100);}',
+            'function observeQuickViewProductLists(){if(namespace.observer||!window.MutationObserver){return;}var target=document.querySelector(".woocommerce,.products,.wc-block-grid__products,.site-main")||document.body;if(!target){return;}namespace.observer=new MutationObserver(function(mutations){for(var i=0;i<mutations.length;i++){if(mutations[i].addedNodes&&mutations[i].addedNodes.length){scheduleQuickViewButtons();break;}}});namespace.observer.observe(target,{childList:true,subtree:true});}',
+            'initQuickViewButtons();observeQuickViewProductLists();',
+            '$("body").on("wc_fragments_loaded.onepaqucQuickView wc_fragments_refreshed.onepaqucQuickView post-load.onepaqucQuickView woocommerce_updated_cart_totals.onepaqucQuickView updated_checkout.onepaqucQuickView updated_shipping_method.onepaqucQuickView",function(event,data){if(data&&data.length){scheduleQuickViewButtons($(data));}else{scheduleQuickViewButtons();}});',
+            'namespace.init=initQuickViewButtons;namespace.refresh=refreshQuickViewButtons;namespace.cleanup=cleanupOrphanedQuickViewButtons;',
+            'window.initQuickViewButtons=initQuickViewButtons;window.refreshQuickViewButtons=refreshQuickViewButtons;window.cleanupOrphanedQuickViewButtons=cleanupOrphanedQuickViewButtons;',
+            '});',
+        );
+        $inline_script = implode('', $inline_script_parts);
 
         wp_add_inline_script('rmenu-quick-view-scripts', $inline_script);
     }

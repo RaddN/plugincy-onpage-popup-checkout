@@ -1,7 +1,7 @@
 <?php
 if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
-// shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" category="" tags="" attribute="" terms="" template=""]
+// shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" category="" tags="" attribute="" terms="" template="" allow_empty_query="no"]
 function onepaquc_one_page_checkout_shortcode($atts)
 {
     $atts = is_array($atts) ? $atts : array();
@@ -13,11 +13,13 @@ function onepaquc_one_page_checkout_shortcode($atts)
         'terms'       => '',
         'template'    => 'product-table',
         'limit'       => 100,
+        'allow_empty_query' => 'no',
     ), $atts);
-    foreach (array('product_ids', 'category', 'tags', 'attribute', 'terms', 'template') as $attribute_key) {
+    foreach (array('product_ids', 'category', 'tags', 'attribute', 'terms', 'template', 'allow_empty_query') as $attribute_key) {
         $atts[$attribute_key] = is_scalar($atts[$attribute_key]) ? sanitize_text_field((string) $atts[$attribute_key]) : '';
     }
     $query_limit = is_scalar($atts['limit']) ? min(200, max(1, absint($atts['limit']))) : 100;
+    $allow_empty_query = in_array(strtolower($atts['allow_empty_query']), array('1', 'yes', 'true', 'on'), true);
 
     ob_start();
 
@@ -28,11 +30,18 @@ function onepaquc_one_page_checkout_shortcode($atts)
         $product_ids = explode(',', $atts['product_ids']);
         $product_ids = array_slice(array_values(array_unique(array_filter(array_map('absint', $product_ids)))), 0, 200);
     } else {
+        if ('' === $atts['category'] && '' === $atts['tags'] && ('' === $atts['attribute'] || '' === $atts['terms']) && !$allow_empty_query) {
+            return '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs, category, tags, or attribute terms.', 'one-page-quick-checkout-for-woocommerce') . '</p></div>';
+        }
+
         $args = array(
-            'post_type'      => 'product',
-            'posts_per_page' => $query_limit,
-            'fields'         => 'ids',
-            'post_status'    => 'publish',
+            'post_type'              => 'product',
+            'posts_per_page'         => $query_limit,
+            'fields'                 => 'ids',
+            'post_status'            => 'publish',
+            'no_found_rows'          => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
         );
 
         $tax_query = array();

@@ -499,11 +499,23 @@ add_action('wp_enqueue_scripts', 'onepaquc_cart_enqueue_scripts', 20);
 
 add_action('admin_enqueue_scripts', 'onepaquc_cart_admin_styles');
 
-// Enqueue the admin stylesheet only for this settings page
+// Enqueue admin assets only where each admin surface needs them.
 function onepaquc_cart_admin_styles($hook)
 {
     $current_page = isset($_GET['page']) && is_scalar($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
-    $is_plugin_admin_page = $hook === 'toplevel_page_onepaquc_cart' || $current_page === 'onepaqucpro_cart_recovery' || $current_page === 'onepaqucpro_cart_recovery_template';
+    $is_main_settings_page  = $hook === 'toplevel_page_onepaquc_cart';
+    $is_cart_recovery_page  = in_array($current_page, array('onepaqucpro_cart_recovery', 'onepaqucpro_cart_recovery_template'), true);
+    $is_documentation_page  = $current_page === 'onepaquc_cart_documentation';
+    $is_plugin_admin_page   = $is_main_settings_page || $is_cart_recovery_page;
+
+    if (current_user_can('manage_options')) {
+        wp_enqueue_style(
+            'onepaquc-admin-menu',
+            plugin_dir_url(__FILE__) . 'assets/css/admin-menu.css',
+            array(),
+            onepaquc_asset_version('assets/css/admin-menu.css')
+        );
+    }
 
     if ($is_plugin_admin_page) {
         wp_enqueue_style(
@@ -517,7 +529,7 @@ function onepaquc_cart_admin_styles($hook)
         wp_enqueue_script('select2-js', plugin_dir_url(__FILE__) . 'assets/js/select2.min.js', array('jquery'), ONEPAQUC_VERSION, true);
     }
 
-    if ($hook === 'toplevel_page_onepaquc_cart') {
+    if ($is_main_settings_page) {
         wp_enqueue_script(
             'onepaquc-admin-settings',
             plugin_dir_url(__FILE__) . 'assets/js/admin-settings.js',
@@ -527,7 +539,7 @@ function onepaquc_cart_admin_styles($hook)
         );
     }
 
-    if ($current_page === 'onepaqucpro_cart_recovery' || $current_page === 'onepaqucpro_cart_recovery_template') {
+    if ($is_cart_recovery_page) {
         wp_enqueue_style(
             'onepaquc_cart_recovery_admin_css',
             plugin_dir_url(__FILE__) . 'assets/css/cart-recovery-admin.css',
@@ -551,8 +563,21 @@ function onepaquc_cart_admin_styles($hook)
         wp_enqueue_editor();
     }
 
-    wp_enqueue_style('onepaquc_cart_admin_css', plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css', array(), ONEPAQUC_VERSION);
-    wp_enqueue_script('rmenu-admin-script', plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js', array('jquery'), ONEPAQUC_VERSION, true);
+    if ($is_documentation_page) {
+        wp_enqueue_style(
+            'onepaquc-admin-documentation',
+            plugin_dir_url(__FILE__) . 'assets/css/admin-documentation.css',
+            array(),
+            onepaquc_asset_version('assets/css/admin-documentation.css')
+        );
+        wp_enqueue_script(
+            'rmenu-admin-script',
+            plugin_dir_url(__FILE__) . 'assets/js/admin-documentation.js',
+            array('jquery'),
+            onepaquc_asset_version('assets/js/admin-documentation.js'),
+            true
+        );
+    }
 }
 
 // add shortcode
@@ -1215,7 +1240,7 @@ add_filter('woocommerce_checkout_fields', 'onepaquc_remove_required_checkout_fie
 add_filter('woocommerce_default_address_fields', 'onepaquc_remove_required_default_address_fields', 999);
 add_filter('woocommerce_billing_fields', 'onepaquc_remove_required_billing_fields', 999);
 add_filter('woocommerce_shipping_fields', 'onepaquc_remove_required_shipping_fields', 999);
-add_filter('woocommerce_shared_settings', 'onepaquc_remove_required_block_checkout_fields', 999);
+add_action('woocommerce_blocks_checkout_enqueue_data', 'onepaquc_enqueue_block_checkout_field_settings', 20);
 add_filter('woocommerce_checkout_fields', 'onepaquc_apply_custom_checkout_field_labels', 1000);
 add_filter('woocommerce_default_address_fields', 'onepaquc_apply_custom_default_address_field_labels', 1000);
 
@@ -1464,8 +1489,67 @@ function onepaquc_remove_required_shipping_fields($fields)
 }
 
 /**
- * WooCommerce Blocks checkout fields are driven by shared settings (defaultFields/countryData).
- * Mirror admin-selected removals there so Blocks and Elementor blocks respect the same setup.
+ * Field settings used by the Blocks checkout wcSettings compatibility script.
+ *
+ * @return array
+ */
+function onepaquc_get_block_checkout_field_settings()
+{
+    $labels = [];
+    foreach (onepaquc_get_checkout_label_option_map() as $field_key => $option_key) {
+        $custom_label = onepaquc_get_custom_checkout_label($option_key);
+        if ('' === $custom_label) {
+            continue;
+        }
+
+        $labels[$field_key] = [
+            'label' => $custom_label,
+            'optionalLabel' => sprintf(
+                /* translators: %s: checkout field label. */
+                __('%s (optional)', 'one-page-quick-checkout-for-woocommerce'),
+                $custom_label
+            ),
+        ];
+    }
+
+    return [
+        'removedFields' => onepaquc_get_removed_checkout_fields(),
+        'labels' => $labels,
+    ];
+}
+
+/**
+ * Apply checkout field customizations to WooCommerce Blocks without using the
+ * deprecated shared-settings filter.
+ */
+function onepaquc_enqueue_block_checkout_field_settings()
+{
+    $settings = onepaquc_get_block_checkout_field_settings();
+    if (empty($settings['removedFields']) && empty($settings['labels'])) {
+        return;
+    }
+
+    $config = wp_json_encode($settings);
+    if (!is_string($config) || '' === $config) {
+        return;
+    }
+
+    $script = '(function(settings,config){'
+        . 'if(!settings||!config){return;}'
+        . 'var removed=Array.isArray(config.removedFields)?config.removedFields:[];'
+        . 'var labels=config.labels||{};'
+        . 'function matchesRemovedField(fieldKey){fieldKey=String(fieldKey||"");for(var i=0;i<removed.length;i++){if(removed[i]!==""&&fieldKey.indexOf(removed[i])!==-1){return true;}}return false;}'
+        . 'function applyField(fieldKey,field){if(!field||typeof field!=="object"){return;}if(labels[fieldKey]){field.label=labels[fieldKey].label;field.optionalLabel=labels[fieldKey].optionalLabel;}if(matchesRemovedField(fieldKey)){field.required=false;field.hidden=true;if(!field.optionalLabel&&field.label){field.optionalLabel=String(field.label)+" (optional)";}}}'
+        . 'if(settings.defaultFields){Object.keys(settings.defaultFields).forEach(function(fieldKey){applyField(fieldKey,settings.defaultFields[fieldKey]);});}'
+        . 'if(settings.countryData){Object.keys(settings.countryData).forEach(function(countryCode){var country=settings.countryData[countryCode]||{};country.locale=country.locale||{};removed.forEach(function(fieldKey){country.locale[fieldKey]=country.locale[fieldKey]||{};country.locale[fieldKey].required=false;country.locale[fieldKey].hidden=true;});});}'
+        . '})(window.wcSettings,' . $config . ');';
+
+    wp_add_inline_script('wc-settings', $script, 'after');
+}
+
+/**
+ * WooCommerce Blocks checkout fields are driven by wcSettings (defaultFields/countryData).
+ * Mirror admin-selected removals there so Blocks respect the same setup.
  *
  * @param array $settings
  * @return array

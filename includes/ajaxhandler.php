@@ -20,6 +20,24 @@ function onepaquc_ajax_get_cart_or_error()
     return $cart;
 }
 
+/**
+ * Validate a plugin AJAX nonce without stopping other plugins that share a legacy action.
+ *
+ * @param string $action Nonce action.
+ * @param string $field  Request field name.
+ * @return bool
+ */
+function onepaquc_ajax_request_has_valid_nonce($action, $field)
+{
+    if (!isset($_REQUEST[$field]) || !is_scalar($_REQUEST[$field])) {
+        return false;
+    }
+
+    $nonce = sanitize_text_field(wp_unslash($_REQUEST[$field]));
+
+    return '' !== $nonce && (bool) wp_verify_nonce($nonce, $action);
+}
+
 // update cart content
 
 add_action('wp_ajax_onepaquc_get_cart_content', 'onepaquc_get_cart_content');
@@ -223,8 +241,10 @@ function onepaquc_refresh_checkout_product_list()
 }
 
 
-add_action('wp_ajax_woocommerce_clear_cart', 'onepaquc_clear_cart');
-add_action('wp_ajax_nopriv_woocommerce_clear_cart', 'onepaquc_clear_cart');
+add_action('wp_ajax_onepaquc_clear_cart', 'onepaquc_clear_cart');
+add_action('wp_ajax_nopriv_onepaquc_clear_cart', 'onepaquc_clear_cart');
+add_action('wp_ajax_woocommerce_clear_cart', 'onepaquc_legacy_clear_cart');
+add_action('wp_ajax_nopriv_woocommerce_clear_cart', 'onepaquc_legacy_clear_cart');
 
 function onepaquc_clear_cart()
 {
@@ -232,6 +252,15 @@ function onepaquc_clear_cart()
     $cart = onepaquc_ajax_get_cart_or_error();
     $cart->empty_cart();
     wp_send_json_success();
+}
+
+function onepaquc_legacy_clear_cart()
+{
+    if (!onepaquc_ajax_request_has_valid_nonce('onepaquc_clear_cart', 'nonce')) {
+        return;
+    }
+
+    onepaquc_clear_cart();
 }
 
 
@@ -393,8 +422,10 @@ function onepaquc_ajax_add_to_cart()
 
 
 // coupon ajax handler
-add_action('wp_ajax_apply_coupon', 'onepaquc_apply_coupon');
-add_action('wp_ajax_nopriv_apply_coupon', 'onepaquc_apply_coupon');
+add_action('wp_ajax_onepaquc_apply_coupon', 'onepaquc_apply_coupon');
+add_action('wp_ajax_nopriv_onepaquc_apply_coupon', 'onepaquc_apply_coupon');
+add_action('wp_ajax_apply_coupon', 'onepaquc_legacy_apply_coupon');
+add_action('wp_ajax_nopriv_apply_coupon', 'onepaquc_legacy_apply_coupon');
 
 function onepaquc_apply_coupon()
 {
@@ -421,12 +452,23 @@ function onepaquc_apply_coupon()
             'total' => $total
         ));
     } else {
-        wp_send_json_error(array('message' => 'Invalid coupon code.'));
+        wp_send_json_error(array('message' => esc_html__('Invalid coupon code.', 'one-page-quick-checkout-for-woocommerce')), 400);
     }
 }
 
-add_action('wp_ajax_remove_coupon', 'onepaquc_remove_coupon');
-add_action('wp_ajax_nopriv_remove_coupon', 'onepaquc_remove_coupon');
+function onepaquc_legacy_apply_coupon()
+{
+    if (!onepaquc_ajax_request_has_valid_nonce('apply-coupon', 'security')) {
+        return;
+    }
+
+    onepaquc_apply_coupon();
+}
+
+add_action('wp_ajax_onepaquc_remove_coupon', 'onepaquc_remove_coupon');
+add_action('wp_ajax_nopriv_onepaquc_remove_coupon', 'onepaquc_remove_coupon');
+add_action('wp_ajax_remove_coupon', 'onepaquc_legacy_remove_coupon');
+add_action('wp_ajax_nopriv_remove_coupon', 'onepaquc_legacy_remove_coupon');
 
 function onepaquc_remove_coupon()
 {
@@ -453,6 +495,15 @@ function onepaquc_remove_coupon()
         'discount_total' => $cart->get_discount_total(),
         'total' => $total
     ));
+}
+
+function onepaquc_legacy_remove_coupon()
+{
+    if (!onepaquc_ajax_request_has_valid_nonce('apply-coupon', 'security')) {
+        return;
+    }
+
+    onepaquc_remove_coupon();
 }
 
 

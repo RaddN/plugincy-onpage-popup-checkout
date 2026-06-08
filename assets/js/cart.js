@@ -794,7 +794,7 @@ jQuery(document).ready(function ($) {
                 type: 'POST',
                 url: onepaquc_wc_cart_params.ajax_url,
                 data: {
-                    action: 'woocommerce_clear_cart',
+                    action: 'onepaquc_clear_cart',
                     nonce: onepaquc_wc_cart_params.clear_cart
                 },
                 success: function () {

@@ -187,7 +187,7 @@ jQuery(document).ready(function ($) {
         showMessage(fcStr('applying_coupon', 'Applying coupon\u2026'), 'loading');
 
         const data = {
-            action: 'apply_coupon',
+            action: 'onepaquc_apply_coupon',
             coupon_code: couponCode,
             security: onepaquc_rmsgValue.apply_coupon
         };
@@ -238,7 +238,7 @@ jQuery(document).ready(function ($) {
         showMessage(fcStr('removing_coupon', 'Removing coupon\u2026'), 'loading');
 
         const data = {
-            action: 'remove_coupon',
+            action: 'onepaquc_remove_coupon',
             coupon_code: couponCode,
             security: onepaquc_rmsgValue.apply_coupon
         };
