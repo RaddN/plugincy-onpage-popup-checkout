@@ -291,6 +291,10 @@ table.form-table tbody {
   justify-content: center;
 }
 
+.welcome-banner .button-row a .dashicons{
+  color: currentColor !important;
+}
+
 .welcome-banner .button {
   display: inline-flex;
   align-items: center;
