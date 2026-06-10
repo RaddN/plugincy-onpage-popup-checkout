@@ -215,7 +215,7 @@ function onepaquc_get_floating_cart_pro_text_defaults()
         'txt_Selected' => 'selected',
         'txt_subtotal' => 'Subtotal',
         'txt_total' => 'Total',
-        'txt_checkout' => 'Checkout',
+        'onepaquc_txt_checkout' => 'Checkout',
         'txt_you_may_like' => 'You may also like',
         'rmenu_floating_cart_empty_title' => 'Your Cart is Empty',
         'rmenu_floating_cart_shop_button_text' => 'Shop Now',
@@ -379,7 +379,7 @@ function onepaquc_get_floating_cart_pro_text_groups()
                 'rmenu_floating_cart_shipping_label' => __('Shipping Label', 'one-page-quick-checkout-for-woocommerce'),
                 'rmenu_floating_cart_tax_label' => __('Tax Label', 'one-page-quick-checkout-for-woocommerce'),
                 'txt_total' => __('Total Label', 'one-page-quick-checkout-for-woocommerce'),
-                'txt_checkout' => __('Checkout Button', 'one-page-quick-checkout-for-woocommerce'),
+                'onepaquc_txt_checkout' => __('Checkout Button', 'one-page-quick-checkout-for-woocommerce'),
             ),
         ),
     );
@@ -816,7 +816,7 @@ function onepaquc_render_floating_cart_visual_editor_preview()
                         <div class="total"><span><?php echo esc_html($text_defaults['txt_total']); ?></span><strong>1,210.00&#2547;</strong></div>
                     </div>
                 </div>
-                <button type="button" class="onepaqucpro-floating-preview-checkout" disabled><?php echo esc_html($text_defaults['txt_checkout']); ?></button>
+                <button type="button" class="onepaqucpro-floating-preview-checkout" disabled><?php echo esc_html($text_defaults['onepaquc_txt_checkout']); ?></button>
             </div>
         </div>
     </div>

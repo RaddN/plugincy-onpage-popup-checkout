@@ -226,7 +226,7 @@ if (class_exists('Onepaqucpro_Cart_Recovery_Tracker')) {
 global $onepaquc_checkoutformfields, $onepaquc_productpageformfields, $onepaquc_rcheckoutformfields, $onepaquc_string_settings_fields;
 
 $onepaquc_string_settings_fields = [
-    "rmsg_editor",
+    "onepaquc_editor",
     "onpage_checkout_position",
     "onpage_checkout_cart_empty",
     "onpage_checkout_enable",
@@ -458,8 +458,8 @@ function onepaquc_cart_enqueue_scripts()
         );
     }
 
-    // Retrieve the rmsg_editor value
-    $rmsg_editor_value = get_option('rmsg_editor', '');
+    // Retrieve the onepaquc_editor value
+    $onepaquc_editor_value = get_option('onepaquc_editor', '');
     $currency_symbol = get_woocommerce_currency_symbol();
 
     $plugincy_all_settings = [];
@@ -484,9 +484,9 @@ function onepaquc_cart_enqueue_scripts()
         $plugincy_all_settings[$field] = get_option($field, []);
     }
 
-    // Localize the script with the rmsg_editor value
+    // Localize the script with the onepaquc_editor value
     wp_localize_script('rmenu-cart-script', 'onepaquc_rmsgValue', array(
-        'rmsgEditor' => $rmsg_editor_value,
+        'rmsgEditor' => $onepaquc_editor_value,
         'checkout_url' => wc_get_checkout_url(),
         'apply_coupon' => esc_js(wp_create_nonce('apply-coupon')),
         'currency_symbol' => $currency_symbol,

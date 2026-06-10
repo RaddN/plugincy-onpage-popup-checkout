@@ -4,7 +4,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 $onepaquc_checkoutformfields = [
     "your_cart"                   => "Your Cart",
     "txt_subtotal"                => "Subtotal",
-    "txt_checkout"                => "Place order",
+    "onepaquc_txt_checkout"                => "Place order",
     "txt_billing_details"         => "Billing details",
     "txt_email_address"           => "Email address",
     "txt_first_name"              => "First name",
@@ -1111,7 +1111,7 @@ $onepaquc_onepaquc_allowed_tags = array(
 
 // Allow extensive CSS properties for WordPress
 add_filter('safe_style_css', function ($styles) {
-    return array_merge($styles, array(
+    return array_merge((array) $styles, array(
         // Layout & Positioning
         'display',
         'visibility',

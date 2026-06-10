@@ -637,7 +637,7 @@ class Onepaqucpro_Cart_Recovery_Admin
 
         echo '<div class="wrap onepaqucpro-cr-template-screen">';
         echo '<h1 class="screen-reader-text">' . esc_html($title) . '</h1>';
-        ?>
+    ?>
         <div class="onepaqucpro-cr-template-page-head">
             <div class="onepaqucpro-cr-template-page-head__copy">
                 <span class="onepaqucpro-cr-template-page-head__eyebrow"><?php esc_html_e('Recovery Email Builder', 'one-page-quick-checkout-for-woocommerce'); ?></span>
@@ -1210,7 +1210,7 @@ class Onepaqucpro_Cart_Recovery_Admin
         }
 
         list($type, $message) = $messages[$notice];
-    ?>
+        ?>
         <div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
             <p><?php echo esc_html($message); ?></p>
         </div>
@@ -3600,19 +3600,19 @@ class Onepaqucpro_Cart_Recovery_Admin
                                     <td><?php echo esc_html($row['trigger_label']); ?></td>
                                 <?php endif; ?>
                                 <?php if (in_array('sent', $visible_columns, true)) : ?>
-                                    <td ><strong><?php echo esc_html(number_format_i18n($row['sent'])); ?></strong></td>
+                                    <td><strong><?php echo esc_html(number_format_i18n($row['sent'])); ?></strong></td>
                                 <?php endif; ?>
                                 <?php if (in_array('open_rate', $visible_columns, true)) : ?>
-                                    <td ><?php echo esc_html(self::format_percent($row['open_rate'])); ?></td>
+                                    <td><?php echo esc_html(self::format_percent($row['open_rate'])); ?></td>
                                 <?php endif; ?>
                                 <?php if (in_array('click_rate', $visible_columns, true)) : ?>
-                                    <td ><?php echo esc_html(self::format_percent($row['click_rate'])); ?></td>
+                                    <td><?php echo esc_html(self::format_percent($row['click_rate'])); ?></td>
                                 <?php endif; ?>
                                 <?php if (in_array('conversion_rate', $visible_columns, true)) : ?>
-                                    <td ><?php echo esc_html(self::format_percent($row['conversion_rate'])); ?></td>
+                                    <td><?php echo esc_html(self::format_percent($row['conversion_rate'])); ?></td>
                                 <?php endif; ?>
                                 <?php if (in_array('unsubscribed', $visible_columns, true)) : ?>
-                                    <td ><?php echo esc_html(number_format_i18n($row['unsubscribed'])); ?></td>
+                                    <td><?php echo esc_html(number_format_i18n($row['unsubscribed'])); ?></td>
                                 <?php endif; ?>
                                 <?php if (in_array('updated', $visible_columns, true)) : ?>
                                     <td><span class="onepaqucpro-cr-template-date"><?php echo esc_html(self::format_datetime($template['updated_at'])); ?></span></td>
@@ -3680,11 +3680,11 @@ class Onepaqucpro_Cart_Recovery_Admin
     private static function get_template_page_url($template_id = 'new', $args = array())
     {
         $base = array(
-            'page' => self::TEMPLATE_PAGE_SLUG,
+            'page'        => self::TEMPLATE_PAGE_SLUG,
             'template_id' => $template_id ? $template_id : 'new',
         );
 
-        return add_query_arg(array_merge($base, $args), admin_url('admin.php'));
+        return add_query_arg(array_merge((array) $base, (array) $args), admin_url('admin.php'));
     }
 
     private static function get_template_action_url($template_id, $action)
@@ -3865,20 +3865,20 @@ class Onepaqucpro_Cart_Recovery_Admin
 
         return wp_kses_post(
             '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;margin:0 auto;font-family:Arial,Helvetica,sans-serif;color:#111827;">' .
-            '<tr><td style="padding:8px 0 0;">' .
-            '<p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2563eb;">' . esc_html($copy['eyebrow']) . '</p>' .
-            '<h2 style="margin:0 0 12px;font-size:28px;line-height:1.25;color:#111827;">' . esc_html($copy['title']) . '</h2>' .
-            '<p style="margin:0 0 22px;font-size:16px;line-height:1.65;color:#4b5563;">' . esc_html($copy['intro']) . '</p>' .
-            '<div style="margin:0 0 22px;">{cart_items}</div>' .
-            '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="width:100%;margin:0 0 24px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;">' .
-            '<tr><td style="padding:16px 0;font-size:14px;font-weight:700;color:#374151;">' . esc_html__('Cart total', 'one-page-quick-checkout-for-woocommerce') . '</td><td align="right" style="padding:16px 0;font-size:18px;font-weight:800;color:#111827;">{cart_total}</td></tr>' .
-            '</table>' .
-            '<p style="margin:0 0 18px;"><a href="{cart_link}" style="display:inline-block;padding:13px 22px;border-radius:6px;background:#2563eb;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;">' . esc_html($copy['button']) . '</a></p>' .
-            '<p style="margin:0 0 18px;font-size:14px;line-height:1.6;color:#4b5563;">' . esc_html($copy['note']) . '</p>' .
-            '<p style="margin:0 0 8px;font-size:14px;line-height:1.6;color:#6b7280;">' . esc_html__('If you already completed your purchase, you can ignore this email.', 'one-page-quick-checkout-for-woocommerce') . '</p>' .
-            '<p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#6b7280;">' . esc_html__('Thanks,', 'one-page-quick-checkout-for-woocommerce') . '<br>{sitename}</p>' .
-            '<p style="margin:0;font-size:12px;color:#9ca3af;"><a href="{unsubscribe_link}" style="color:#6b7280;text-decoration:underline;">' . esc_html__('Unsubscribe', 'one-page-quick-checkout-for-woocommerce') . '</a></p>' .
-            '</td></tr></table>'
+                '<tr><td style="padding:8px 0 0;">' .
+                '<p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2563eb;">' . esc_html($copy['eyebrow']) . '</p>' .
+                '<h2 style="margin:0 0 12px;font-size:28px;line-height:1.25;color:#111827;">' . esc_html($copy['title']) . '</h2>' .
+                '<p style="margin:0 0 22px;font-size:16px;line-height:1.65;color:#4b5563;">' . esc_html($copy['intro']) . '</p>' .
+                '<div style="margin:0 0 22px;">{cart_items}</div>' .
+                '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="width:100%;margin:0 0 24px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;">' .
+                '<tr><td style="padding:16px 0;font-size:14px;font-weight:700;color:#374151;">' . esc_html__('Cart total', 'one-page-quick-checkout-for-woocommerce') . '</td><td align="right" style="padding:16px 0;font-size:18px;font-weight:800;color:#111827;">{cart_total}</td></tr>' .
+                '</table>' .
+                '<p style="margin:0 0 18px;"><a href="{cart_link}" style="display:inline-block;padding:13px 22px;border-radius:6px;background:#2563eb;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;">' . esc_html($copy['button']) . '</a></p>' .
+                '<p style="margin:0 0 18px;font-size:14px;line-height:1.6;color:#4b5563;">' . esc_html($copy['note']) . '</p>' .
+                '<p style="margin:0 0 8px;font-size:14px;line-height:1.6;color:#6b7280;">' . esc_html__('If you already completed your purchase, you can ignore this email.', 'one-page-quick-checkout-for-woocommerce') . '</p>' .
+                '<p style="margin:0 0 16px;font-size:14px;line-height:1.6;color:#6b7280;">' . esc_html__('Thanks,', 'one-page-quick-checkout-for-woocommerce') . '<br>{sitename}</p>' .
+                '<p style="margin:0;font-size:12px;color:#9ca3af;"><a href="{unsubscribe_link}" style="color:#6b7280;text-decoration:underline;">' . esc_html__('Unsubscribe', 'one-page-quick-checkout-for-woocommerce') . '</a></p>' .
+                '</td></tr></table>'
         );
     }
 
@@ -4114,13 +4114,13 @@ class Onepaqucpro_Cart_Recovery_Admin
     {
         $ranges    = self::get_quick_select_ranges();
         $preserved = self::get_preserved_query_args($preserved_keys);
-        ?>
+    ?>
         <div class="onepaqucpro-cr-quick-select" aria-label="<?php esc_attr_e('Quick date range select', 'one-page-quick-checkout-for-woocommerce'); ?>">
             <span class="onepaqucpro-cr-quick-select__label"><?php esc_html_e('Quick Select', 'one-page-quick-checkout-for-woocommerce'); ?></span>
             <div class="onepaqucpro-cr-quick-select__actions">
                 <?php foreach ($ranges as $range_key => $range) : ?>
                     <?php
-                    $args = array_merge($base_args, $preserved, array(
+                    $args = array_merge((array) $base_args, $preserved, array(
                         $from_key => $range['from'],
                         $to_key   => $range['to'],
                     ));
@@ -4133,7 +4133,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                 <?php endforeach; ?>
             </div>
         </div>
-        <?php
+    <?php
     }
 
     private static function render_chart_card($title, $description, $config, $embedded = false)
@@ -4827,7 +4827,7 @@ class Onepaqucpro_Cart_Recovery_Admin
     {
         $base = array('page' => self::PAGE_SLUG);
 
-        return add_query_arg(array_merge($base, $args), admin_url('admin.php'));
+        return add_query_arg(array_merge((array) $base, (array) $args), admin_url('admin.php'));
     }
 
     private static function get_product_label($product_id)
@@ -5567,7 +5567,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                 );
 
                 if (! self::is_locked_mode()) {
-                    $searchable_fields = array_merge($searchable_fields, array(
+                    $searchable_fields = array_merge((array) $searchable_fields, array(
                         $cart['email'],
                         $cart['customer_phone'],
                         $cart['customer_company'],

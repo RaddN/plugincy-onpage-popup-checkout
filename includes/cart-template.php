@@ -303,13 +303,13 @@ function onepaquc_cart($drawer_position = 'right', $cart_icon = 'cart', $product
 
                     <!-- Checkout Button -->
                     <div class="cart-actions">
-                        <a style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link"><?php echo esc_html(onepaquc_get_text_option('txt_checkout', __('Checkout', 'one-page-quick-checkout-for-woocommerce'))); ?></a>
+                        <a style="display: none;flex-direction: column;justify-content: center;align-items: center;" class="checkout-button checkout-button-drawer-link"><?php echo esc_html(onepaquc_get_text_option('onepaquc_txt_checkout', __('Checkout', 'one-page-quick-checkout-for-woocommerce'))); ?></a>
                         <!-- <button class="checkout-button checkout-button-drawer" onclick="openCheckoutPopup()">
-                            <?php //echo get_option("txt_checkout") ? esc_attr(get_option("txt_checkout", 'Checkout')) : "Checkout"; 
+                            <?php //echo get_option("onepaquc_txt_checkout") ? esc_attr(get_option("onepaquc_txt_checkout", 'Checkout')) : "Checkout"; 
                             ?>
                         </button> -->
                         <a href="<?php echo esc_url(wc_get_checkout_url()); ?>" class="checkout-button checkout-button-drawer">
-                            <?php echo esc_html(onepaquc_get_text_option('txt_checkout', __('Checkout', 'one-page-quick-checkout-for-woocommerce'))); ?>
+                            <?php echo esc_html(onepaquc_get_text_option('onepaquc_txt_checkout', __('Checkout', 'one-page-quick-checkout-for-woocommerce'))); ?>
                         </a>
                     </div>
             <?php }

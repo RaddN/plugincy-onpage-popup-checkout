@@ -262,7 +262,7 @@ class ONEPAQUC_Add_To_Cart_Handler
     {
         wp_enqueue_script(
             'rmenu-ajax-add-to-cart',
-            plugin_dir_url(__FILE__) . '../assets/js/add-to-cart.js',
+            plugins_url('assets/js/add-to-cart.js', dirname(__FILE__)),
             array('jquery'),
             ONEPAQUC_VERSION,
             true
@@ -376,7 +376,7 @@ class ONEPAQUC_Add_To_Cart_Handler
     {
         wp_enqueue_style(
             'rmenu-notifications',
-            plugin_dir_url(__FILE__) . '../assets/css/notifications.css',
+            plugins_url('assets/css/notifications.css', dirname(__FILE__)),
             array(),
             ONEPAQUC_VERSION
         );
@@ -420,7 +420,7 @@ class ONEPAQUC_Add_To_Cart_Handler
 
         // Update mini cart content
         ob_start();
-    ?>
+?>
         <span class="rmenu-cart-count"><?php echo esc_html($cart->get_cart_contents_count()); ?></span>
         <?php
         $fragments['span.rmenu-cart-count'] = ob_get_clean();

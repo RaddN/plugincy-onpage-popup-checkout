@@ -1752,8 +1752,8 @@ class Onepaqucpro_Cart_Recovery_Tracker
 
             $product_ids[] = $product_id;
             $item_category_ids = wp_get_post_terms($product_id, 'product_cat', array('fields' => 'ids'));
-            if (! is_wp_error($item_category_ids)) {
-                $category_ids = array_merge($category_ids, $item_category_ids);
+            if (! is_wp_error($item_category_ids) && is_array($item_category_ids)) {
+                $category_ids = array_merge((array) $category_ids, $item_category_ids);
             }
         }
 
@@ -1871,8 +1871,29 @@ class Onepaqucpro_Cart_Recovery_Tracker
             self::get_carts_table(),
             $data,
             array(
-                '%s', '%d', '%s', '%s', '%f', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s',
-                '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d',
+                '%s',
+                '%d',
+                '%s',
+                '%s',
+                '%f',
+                '%s',
+                '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
             )
         );
     }
