@@ -1,0 +1,97 @@
+<wpml-config>
+  <custom-fields>
+    <custom-field action="copy">_one_page_checkout</custom-field>
+  </custom-fields>
+  <admin-texts>
+    <key name="your_cart" />
+    <key name="txt_subtotal" />
+    <key name="onepaquc_txt_checkout" />
+    <key name="txt_billing_details" />
+    <key name="txt_email_address" />
+    <key name="txt_first_name" />
+    <key name="txt_last_name" />
+    <key name="txt_country" />
+    <key name="txt_street" />
+    <key name="txt_city" />
+    <key name="txt_district" />
+    <key name="txt_postcode" />
+    <key name="txt_phone_number" />
+    <key name="txt_notes" />
+    <key name="txt_product" />
+    <key name="txt_shipping" />
+    <key name="txt_additional_info" />
+    <key name="txt_your_order" />
+    <key name="txt_shipping_address_head" />
+    <key name="txt_Select_All" />
+    <key name="txt_Selected" />
+    <key name="txt_you_may_like" />
+    <key name="txt_total" />
+    <key name="txt_discount" />
+    <key name="txt-have_coupon" />
+    <key name="txt-apply_coupon_below" />
+    <key name="txt-complete_your_purchase" />
+    <key name="txt-add-to-cart" />
+    <key name="txt-select-options" />
+    <key name="txt-read-more" />
+    <key name="txt-direct-checkout" />
+    <key name="rmenu_grouped_add_to_cart_text" />
+    <key name="rmenu_out_of_stock_text" />
+    <key name="rmenu_add_to_cart_success_message" />
+    <key name="rmenu_mobile_add_to_cart_text" />
+    <key name="rmenu_quick_view_button_text" />
+    <key name="rmenu_quick_view_details_text" />
+    <key name="rmenu_quick_view_close_text" />
+    <key name="rmenu_quick_view_prev_text" />
+    <key name="rmenu_quick_view_next_text" />
+    <key name="onepaquc_my_trust_badges_items">
+      <key name="*">
+        <key name="text" />
+      </key>
+    </key>
+  </admin-texts>
+  <shortcodes>
+    <shortcode>
+      <tag ignore-content="1">plugincy_one_page_checkout</tag>
+      <attributes>
+        <attribute type="post-ids" sub-type="product">product_ids</attribute>
+        <attribute>category</attribute>
+        <attribute>tags</attribute>
+        <attribute>attribute</attribute>
+        <attribute>terms</attribute>
+      </attributes>
+    </shortcode>
+    <shortcode>
+      <tag ignore-content="1">onepaquc_checkout</tag>
+      <attributes>
+        <attribute type="post-ids" sub-type="product">product_id</attribute>
+        <attribute type="post-ids" sub-type="product_variation">variation_id</attribute>
+      </attributes>
+    </shortcode>
+    <shortcode>
+      <tag ignore-content="1">onepaquc_button</tag>
+      <attributes>
+        <attribute type="post-ids" sub-type="product">product_id</attribute>
+        <attribute type="post-ids" sub-type="product_variation">variation_id</attribute>
+        <attribute>text</attribute>
+      </attributes>
+    </shortcode>
+  </shortcodes>
+  <gutenberg-blocks>
+    <gutenberg-block type="plugincy/one-page-checkout" translate="1">
+      <key name="product_ids" type="post-ids" sub-type="product" />
+      <key name="category" />
+      <key name="tags" />
+      <key name="attribute" />
+      <key name="terms" />
+    </gutenberg-block>
+    <gutenberg-block type="wc/buy-btn" translate="1">
+      <key name="product_id" type="post-ids" sub-type="product" />
+      <key name="variation_id" type="post-ids" sub-type="product_variation" />
+      <key name="text" />
+    </gutenberg-block>
+    <gutenberg-block type="wc/checkout-form" translate="1">
+      <key name="product_id" type="post-ids" sub-type="product" />
+      <key name="variation_id" type="post-ids" sub-type="product_variation" />
+    </gutenberg-block>
+  </gutenberg-blocks>
+</wpml-config>

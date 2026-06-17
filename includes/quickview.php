@@ -398,9 +398,9 @@ class ONEPAQUC_Quick_View
         $icon_position = sanitize_key(is_scalar(get_option('rmenu_quick_view_icon_position', 'left')) ? get_option('rmenu_quick_view_icon_position', 'left') : 'left');
         $icon_position = in_array($icon_position, array('left', 'right'), true) ? $icon_position : 'left';
         $button_position = sanitize_key(is_scalar(get_option('rmenu_quick_view_button_position', 'image_overlay')) ? get_option('rmenu_quick_view_button_position', 'image_overlay') : 'image_overlay');
-        $button_text = get_option('rmenu_quick_view_button_text', '');
+        $button_text = onepaquc_get_text_option('rmenu_quick_view_button_text', __('Quick View', 'one-page-quick-checkout-for-woocommerce'));
         if (!is_scalar($button_text) || empty($button_text)) {
-            $button_text = 'Quick View';
+            $button_text = __('Quick View', 'one-page-quick-checkout-for-woocommerce');
         }
 
         // Generate icon HTML if needed

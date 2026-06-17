@@ -29,6 +29,7 @@ function onepaquc_one_page_checkout_shortcode($atts)
     if (!empty($atts['product_ids'])) {
         $product_ids = explode(',', $atts['product_ids']);
         $product_ids = array_slice(array_values(array_unique(array_filter(array_map('absint', $product_ids)))), 0, 200);
+        $product_ids = function_exists('onepaquc_wpml_product_ids') ? onepaquc_wpml_product_ids($product_ids) : $product_ids;
     } else {
         if ('' === $atts['category'] && '' === $atts['tags'] && ('' === $atts['attribute'] || '' === $atts['terms']) && !$allow_empty_query) {
             return '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs, category, tags, or attribute terms.', 'one-page-quick-checkout-for-woocommerce') . '</p></div>';
@@ -47,26 +48,33 @@ function onepaquc_one_page_checkout_shortcode($atts)
         $tax_query = array();
 
         if (!empty($atts['category'])) {
+            $category_terms = array_values(array_filter(array_map('sanitize_title', explode(',', $atts['category']))));
+            $category_terms = function_exists('onepaquc_wpml_translate_term_slugs') ? onepaquc_wpml_translate_term_slugs($category_terms, 'product_cat') : $category_terms;
             $tax_query[] = array(
                 'taxonomy' => 'product_cat',
                 'field'    => 'slug',
-                'terms'    => array_values(array_filter(array_map('sanitize_title', explode(',', $atts['category'])))),
+                'terms'    => $category_terms,
             );
         }
 
         if (!empty($atts['tags'])) {
+            $tag_terms = array_values(array_filter(array_map('sanitize_title', explode(',', $atts['tags']))));
+            $tag_terms = function_exists('onepaquc_wpml_translate_term_slugs') ? onepaquc_wpml_translate_term_slugs($tag_terms, 'product_tag') : $tag_terms;
             $tax_query[] = array(
                 'taxonomy' => 'product_tag',
                 'field'    => 'slug',
-                'terms'    => array_values(array_filter(array_map('sanitize_title', explode(',', $atts['tags'])))),
+                'terms'    => $tag_terms,
             );
         }
 
         if (!empty($atts['attribute']) && !empty($atts['terms'])) {
+            $attribute_taxonomy = 'pa_' . wc_sanitize_taxonomy_name($atts['attribute']);
+            $attribute_terms = array_values(array_filter(array_map('sanitize_title', explode(',', $atts['terms']))));
+            $attribute_terms = function_exists('onepaquc_wpml_translate_term_slugs') ? onepaquc_wpml_translate_term_slugs($attribute_terms, $attribute_taxonomy) : $attribute_terms;
             $tax_query[] = array(
-                'taxonomy' => 'pa_' . wc_sanitize_taxonomy_name($atts['attribute']),
+                'taxonomy' => $attribute_taxonomy,
                 'field'    => 'slug',
-                'terms'    => array_values(array_filter(array_map('sanitize_title', explode(',', $atts['terms'])))),
+                'terms'    => $attribute_terms,
             );
         }
 
@@ -76,11 +84,13 @@ function onepaquc_one_page_checkout_shortcode($atts)
 
         $query = new WP_Query($args);
         $product_ids = $query->posts;
+        $product_ids = function_exists('onepaquc_wpml_product_ids') ? onepaquc_wpml_product_ids($product_ids) : $product_ids;
     }
 
     if (empty($product_ids)) {
         return '<div class="rmenu-one-page-checkout"><p>' . esc_html__('Please provide product IDs, category, tags, or attribute terms.', 'one-page-quick-checkout-for-woocommerce') . '</p></div>';
     }
+    $atts['product_ids'] = implode(',', array_map('absint', $product_ids));
 
     $cart = function_exists('onepaquc_get_wc_cart') ? onepaquc_get_wc_cart() : null;
     if ($cart && get_option("onpage_checkout_widget_cart_empty", "1") === "1") {
@@ -163,6 +173,8 @@ add_action('init', function () {
         $clear_cart   = in_array($clear_cart_value, ['yes', 'true', '1'], true);
         $product_id   = is_scalar($atts['product_id']) ? absint($atts['product_id']) : 0;
         $variation_id = is_scalar($atts['variation_id']) ? absint($atts['variation_id']) : 0;
+        $product_id   = function_exists('onepaquc_wpml_product_id') ? onepaquc_wpml_product_id($product_id) : $product_id;
+        $variation_id = function_exists('onepaquc_wpml_product_id') ? onepaquc_wpml_product_id($variation_id) : $variation_id;
         $qty          = is_scalar($atts['qty']) ? max(1, absint($atts['qty'])) : 1;
 
         // --- Add to cart behavior ---

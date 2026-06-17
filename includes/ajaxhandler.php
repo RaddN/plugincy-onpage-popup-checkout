@@ -192,6 +192,7 @@ function onepaquc_refresh_checkout_product_list()
 
     $product_ids = explode(',', sanitize_text_field(wp_unslash($_POST['product_ids'])));
     $product_ids = array_slice(array_values(array_unique(array_filter(array_map('absint', $product_ids)))), 0, 200);
+    $product_ids = function_exists('onepaquc_wpml_product_ids') ? onepaquc_wpml_product_ids($product_ids) : $product_ids;
     $cart_items  = $cart->get_cart();
 
     ob_start();
@@ -279,6 +280,7 @@ function onepaquc_ajax_add_to_cart()
     // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce core compatibility hook.
     $product_id = apply_filters('woocommerce_add_to_cart_product_id', $raw_product_id);
     $product_id = is_numeric($product_id) ? absint($product_id) : 0;
+    $product_id = function_exists('onepaquc_wpml_product_id') ? onepaquc_wpml_product_id($product_id) : $product_id;
 
     // Get default quantity from settings if quantity is not provided
     $default_qty = 1;
@@ -292,6 +294,7 @@ function onepaquc_ajax_add_to_cart()
         : max(1, function_exists('wc_stock_amount') ? wc_stock_amount($posted_quantity) : (int) $posted_quantity);
 
     $variation_id = empty($_POST['variation_id']) || !is_scalar($_POST['variation_id']) ? 0 : absint(wp_unslash($_POST['variation_id']));
+    $variation_id = function_exists('onepaquc_wpml_product_id') ? onepaquc_wpml_product_id($variation_id) : $variation_id;
     $variations = array();
     if (!empty($_POST['variations']) && is_array($_POST['variations'])) {
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Variation keys and values are sanitized individually below.
@@ -524,6 +527,7 @@ function onepaquc_get_all_products_quick_view() {
     $max_products = apply_filters('onepaquc_quick_view_max_products', 50);
     $max_products = is_numeric($max_products) ? max(1, min(100, absint($max_products))) : 50;
     $product_ids  = array_slice($product_ids, 0, $max_products);
+    $product_ids  = function_exists('onepaquc_wpml_product_ids') ? onepaquc_wpml_product_ids($product_ids) : $product_ids;
     
     if (empty($product_ids)) {
         wp_send_json_error(array('message' => 'No product IDs provided'));

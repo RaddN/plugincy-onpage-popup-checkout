@@ -146,8 +146,181 @@ function onepaquc_get_numeric_option($option_name, $default, $minimum, $maximum)
 function onepaquc_get_text_option($option_name, $default = '')
 {
     $value = get_option($option_name, $default);
+    $value = is_scalar($value) ? (string) $value : (string) $default;
 
-    return is_scalar($value) ? (string) $value : (string) $default;
+    return in_array((string) $option_name, onepaquc_wpml_user_text_option_names(), true)
+        ? onepaquc_wpml_translate_string($value, $option_name)
+        : $value;
+}
+
+function onepaquc_wpml_string_context()
+{
+    return 'One Page Quick Checkout for WooCommerce';
+}
+
+function onepaquc_wpml_translate_string($value, $name, $context = '')
+{
+    if (!is_scalar($value)) {
+        return '';
+    }
+
+    $value = (string) $value;
+    if ($value === '') {
+        return $value;
+    }
+
+    return apply_filters('wpml_translate_single_string', $value, $context ? $context : onepaquc_wpml_string_context(), (string) $name);
+}
+
+function onepaquc_wpml_register_string($value, $name, $context = '')
+{
+    if (!is_scalar($value) || (string) $value === '' || !has_action('wpml_register_single_string')) {
+        return;
+    }
+
+    do_action('wpml_register_single_string', $context ? $context : onepaquc_wpml_string_context(), (string) $name, (string) $value);
+}
+
+function onepaquc_wpml_user_text_option_names()
+{
+    $names = array(
+        'txt-direct-checkout',
+        'rmenu_add_to_cart_success_message',
+        'rmenu_mobile_add_to_cart_text',
+        'rmenu_quick_view_button_text',
+        'rmenu_quick_view_details_text',
+        'rmenu_quick_view_close_text',
+        'rmenu_quick_view_prev_text',
+        'rmenu_quick_view_next_text',
+        'rmenu_quick_view_event_category',
+        'rmenu_quick_view_event_action',
+    );
+
+    foreach (array('onepaquc_checkoutformfields', 'onepaquc_productpageformfields') as $global_name) {
+        if (!empty($GLOBALS[$global_name]) && is_array($GLOBALS[$global_name])) {
+            $names = array_merge($names, array_keys($GLOBALS[$global_name]));
+        }
+    }
+
+    $names = array_filter(array_map(static function ($name) {
+        return is_scalar($name) ? (string) $name : '';
+    }, $names));
+
+    return array_values(array_unique($names));
+}
+
+function onepaquc_wpml_register_option_strings()
+{
+    foreach (onepaquc_wpml_user_text_option_names() as $option_name) {
+        $value = get_option($option_name, '');
+        if (is_scalar($value) && (string) $value !== '') {
+            onepaquc_wpml_register_string($value, $option_name);
+        }
+    }
+
+    $badges = get_option('onepaquc_my_trust_badges_items', array());
+    if (is_array($badges)) {
+        foreach ($badges as $index => $badge) {
+            if (is_array($badge) && isset($badge['text']) && is_scalar($badge['text'])) {
+                onepaquc_wpml_register_string($badge['text'], 'onepaquc_my_trust_badges_items_' . absint($index) . '_text');
+            }
+        }
+    }
+}
+add_action('init', 'onepaquc_wpml_register_option_strings', 20);
+
+function onepaquc_wpml_translate_settings_array($settings)
+{
+    if (!is_array($settings)) {
+        return array();
+    }
+
+    $text_options = array_flip(onepaquc_wpml_user_text_option_names());
+    foreach ($settings as $key => $value) {
+        if (isset($text_options[$key]) && is_scalar($value)) {
+            $settings[$key] = onepaquc_wpml_translate_string($value, $key);
+        }
+    }
+
+    if (!empty($settings['onepaquc_my_trust_badges_items']) && is_array($settings['onepaquc_my_trust_badges_items'])) {
+        foreach ($settings['onepaquc_my_trust_badges_items'] as $index => $badge) {
+            if (is_array($badge) && isset($badge['text']) && is_scalar($badge['text'])) {
+                $settings['onepaquc_my_trust_badges_items'][$index]['text'] = onepaquc_wpml_translate_string(
+                    $badge['text'],
+                    'onepaquc_my_trust_badges_items_' . absint($index) . '_text'
+                );
+            }
+        }
+    }
+
+    return $settings;
+}
+
+function onepaquc_wpml_object_id($id, $type = 'product')
+{
+    $id = absint($id);
+    if ($id <= 0) {
+        return 0;
+    }
+
+    $translated_id = apply_filters('wpml_object_id', $id, $type, true);
+    $translated_id = is_numeric($translated_id) ? absint($translated_id) : 0;
+
+    return $translated_id > 0 ? $translated_id : $id;
+}
+
+function onepaquc_wpml_product_id($product_id)
+{
+    $post_type = get_post_type(absint($product_id));
+    $type = in_array($post_type, array('product', 'product_variation'), true) ? $post_type : 'product';
+
+    return onepaquc_wpml_object_id($product_id, $type);
+}
+
+function onepaquc_wpml_product_ids($product_ids)
+{
+    $translated_ids = array();
+
+    foreach ((array) $product_ids as $product_id) {
+        $translated_id = onepaquc_wpml_product_id($product_id);
+        if ($translated_id > 0) {
+            $translated_ids[] = $translated_id;
+        }
+    }
+
+    return array_values(array_unique($translated_ids));
+}
+
+function onepaquc_wpml_translate_term_slugs($slugs, $taxonomy)
+{
+    $taxonomy = is_scalar($taxonomy) ? (string) $taxonomy : '';
+    if ($taxonomy === '' || !taxonomy_exists($taxonomy)) {
+        return array_values(array_filter(array_map('sanitize_title', (array) $slugs)));
+    }
+
+    $translated_slugs = array();
+    foreach ((array) $slugs as $slug) {
+        $slug = sanitize_title($slug);
+        if ($slug === '') {
+            continue;
+        }
+
+        $term = get_term_by('slug', $slug, $taxonomy);
+        if (!$term || is_wp_error($term)) {
+            $translated_slugs[] = $slug;
+            continue;
+        }
+
+        $translated_id = apply_filters('wpml_object_id', $term->term_id, $taxonomy, true);
+        $translated_term = $translated_id ? get_term(absint($translated_id), $taxonomy) : null;
+        if ($translated_term && !is_wp_error($translated_term) && !empty($translated_term->slug)) {
+            $translated_slugs[] = $translated_term->slug;
+        } else {
+            $translated_slugs[] = $slug;
+        }
+    }
+
+    return array_values(array_unique($translated_slugs));
 }
 
 function onepaquc_sanitize_text_value($value, $default = '')
@@ -358,7 +531,7 @@ function onepaquc_get_txt_selected_suffix()
 {
     $saved = get_option('txt_Selected');
     if ($saved !== false && $saved !== '') {
-        return $saved;
+        return onepaquc_wpml_translate_string($saved, 'txt_Selected');
     }
 
     return __('selected', 'one-page-quick-checkout-for-woocommerce');
@@ -483,6 +656,7 @@ function onepaquc_cart_enqueue_scripts()
     foreach ($others_settings as $field) {
         $plugincy_all_settings[$field] = get_option($field, []);
     }
+    $plugincy_all_settings = onepaquc_wpml_translate_settings_array($plugincy_all_settings);
 
     // Localize the script with the onepaquc_editor value
     wp_localize_script('rmenu-cart-script', 'onepaquc_rmsgValue', array(
@@ -1858,6 +2032,7 @@ function onepaquc_handle_url_add_to_cart()
     }
 
     $product_id = is_scalar($_GET['onepaquc_add-to-cart']) ? absint(wp_unslash($_GET['onepaquc_add-to-cart'])) : 0;
+    $product_id = onepaquc_wpml_product_id($product_id);
     if ($product_id <= 0) {
         wc_add_notice(__('Invalid product ID.', 'one-page-quick-checkout-for-woocommerce'), 'error');
         return;
@@ -1880,6 +2055,7 @@ function onepaquc_handle_url_add_to_cart()
     $variation_id = isset($_GET['onepaquc_variation_id']) && is_scalar($_GET['onepaquc_variation_id'])
         ? absint(wp_unslash($_GET['onepaquc_variation_id']))
         : 0;
+    $variation_id = onepaquc_wpml_product_id($variation_id);
     $variation    = array();
     $cart_item_data = array();
 

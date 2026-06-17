@@ -1096,7 +1096,8 @@ function onepaquc_button_shortcode_handler($atts = [])
 
     // 1) Explicit ID
     if (!empty($atts['product_id']) && is_scalar($atts['product_id']) && function_exists('wc_get_product')) {
-        $resolved_product = wc_get_product(absint($atts['product_id']));
+        $explicit_product_id = function_exists('onepaquc_wpml_product_id') ? onepaquc_wpml_product_id(absint($atts['product_id'])) : absint($atts['product_id']);
+        $resolved_product = wc_get_product($explicit_product_id);
     }
 
     // 2) Contextual auto-detect (single product, loops, etc.)
@@ -1137,6 +1138,7 @@ function onepaquc_button_shortcode_handler($atts = [])
     $variation_id = '';
     if (!empty($atts['variation_id']) && is_scalar($atts['variation_id'])) {
         $variation_id = absint($atts['variation_id']);
+        $variation_id = function_exists('onepaquc_wpml_product_id') ? onepaquc_wpml_product_id($variation_id) : $variation_id;
     } elseif ($product_type === 'variable' && isset($atts['detect_variation']) && is_scalar($atts['detect_variation']) && '1' === (string) $atts['detect_variation']) {
         $variation_id = onepaquc_pick_variation_id($product);
     }
