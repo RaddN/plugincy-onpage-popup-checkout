@@ -66,6 +66,11 @@ class onepaquc_License_Manager
 
     public function show_admin_notices()
     {
+        $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+        if (!current_user_can('install_plugins') || (function_exists('onepaquc_is_plugin_admin_screen') && !onepaquc_is_plugin_admin_screen($screen))) {
+            return;
+        }
+
         $notice = get_transient('onepaquc_admin_notice');
         if (is_array($notice) && !empty($notice['message'])) {
             $class = isset($notice['type']) && $notice['type'] === 'error' ? 'notice-error' : 'notice-success';

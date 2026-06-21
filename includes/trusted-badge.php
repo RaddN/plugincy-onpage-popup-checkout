@@ -101,8 +101,8 @@ function onepaquc_trust_badges_settings_content() {
                                 <div class="badge-header">
                                     <span class="badge-title"><?php echo esc_html($badge['text']); ?></span>
                                     <span class="badge-controls">
-                                        <a href="#" class="badge-toggle"><?php echo !empty($badge['enabled']) ? '👁️' : '👁️‍🗨️'; ?></a>
-                                        <a href="#" class="badge-remove">❌</a>
+                                        <button type="button" class="badge-toggle"><?php echo !empty($badge['enabled']) ? '👁️' : '👁️‍🗨️'; ?></button>
+                                        <button type="button" class="badge-remove">❌</button>
                                     </span>
                                 </div>
                                 <div class="badge-content">
@@ -147,8 +147,8 @@ function onepaquc_trust_badges_settings_content() {
                 <div class="badge-header">
                     <span class="badge-title"><?php esc_html_e('New Badge', 'one-page-quick-checkout-for-woocommerce'); ?></span>
                     <span class="badge-controls">
-                        <a href="#" class="badge-toggle">👁️</a>
-                        <a href="#" class="badge-remove">❌</a>
+                        <button type="button" class="badge-toggle">👁️</button>
+                        <button type="button" class="badge-remove">❌</button>
                     </span>
                 </div>
                 <div class="badge-content">

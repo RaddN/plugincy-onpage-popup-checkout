@@ -40,7 +40,7 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
                             echo do_shortcode('[add_to_cart id="' . esc_attr($product_id) . '" style="" show_price="false" quantity="1" class="add-to-order-button"]');
                             ?>
 
-                            <a href="#" class="modify-complete-order"><?php echo esc_html__('Modify & complete order below', 'one-page-quick-checkout-for-woocommerce'); ?></a>
+                            <button type="button" class="modify-complete-order"><?php echo esc_html__('Modify & complete order below', 'one-page-quick-checkout-for-woocommerce'); ?></button>
                         </div>
 
                         <div class="one-page-checkout-product-meta">

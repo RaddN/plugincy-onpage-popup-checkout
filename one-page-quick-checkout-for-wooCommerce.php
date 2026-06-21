@@ -158,6 +158,38 @@ function onepaquc_wpml_string_context()
     return 'One Page Quick Checkout for WooCommerce';
 }
 
+function onepaquc_wpml_get_current_language()
+{
+    if (!has_filter('wpml_current_language')) {
+        return '';
+    }
+
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this third-party API hook name.
+    $language = apply_filters('wpml_current_language', null);
+
+    return is_scalar($language) ? sanitize_key((string) $language) : '';
+}
+
+function onepaquc_wpml_get_default_language()
+{
+    if (!has_filter('wpml_default_language')) {
+        return '';
+    }
+
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this third-party API hook name.
+    $language = apply_filters('wpml_default_language', null);
+
+    return is_scalar($language) ? sanitize_key((string) $language) : '';
+}
+
+function onepaquc_wpml_is_default_language_context()
+{
+    $current_language = onepaquc_wpml_get_current_language();
+    $default_language = onepaquc_wpml_get_default_language();
+
+    return '' === $current_language || '' === $default_language || $current_language === $default_language;
+}
+
 function onepaquc_wpml_translate_string($value, $name, $context = '')
 {
     if (!is_scalar($value)) {
@@ -169,15 +201,17 @@ function onepaquc_wpml_translate_string($value, $name, $context = '')
         return $value;
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this third-party API hook name.
     return apply_filters('wpml_translate_single_string', $value, $context ? $context : onepaquc_wpml_string_context(), (string) $name);
 }
 
 function onepaquc_wpml_register_string($value, $name, $context = '')
 {
-    if (!is_scalar($value) || (string) $value === '' || !has_action('wpml_register_single_string')) {
+    if (!is_scalar($value) || (string) $value === '' || !has_action('wpml_register_single_string') || !onepaquc_wpml_is_default_language_context()) {
         return;
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this third-party API hook name.
     do_action('wpml_register_single_string', $context ? $context : onepaquc_wpml_string_context(), (string) $name, (string) $value);
 }
 
@@ -263,6 +297,7 @@ function onepaquc_wpml_object_id($id, $type = 'product')
         return 0;
     }
 
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this third-party API hook name.
     $translated_id = apply_filters('wpml_object_id', $id, $type, true);
     $translated_id = is_numeric($translated_id) ? absint($translated_id) : 0;
 
@@ -311,6 +346,7 @@ function onepaquc_wpml_translate_term_slugs($slugs, $taxonomy)
             continue;
         }
 
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML exposes this third-party API hook name.
         $translated_id = apply_filters('wpml_object_id', $term->term_id, $taxonomy, true);
         $translated_term = $translated_id ? get_term(absint($translated_id), $taxonomy) : null;
         if ($translated_term && !is_wp_error($translated_term) && !empty($translated_term->slug)) {
@@ -375,6 +411,47 @@ function onepaquc_sanitize_css_lengths($value, $default)
 
     return implode(' ', $sanitized);
 }
+
+/**
+ * Whether the current admin screen belongs to this plugin.
+ *
+ * @param WP_Screen|null $screen Admin screen object.
+ * @return bool
+ */
+function onepaquc_is_plugin_admin_screen($screen = null)
+{
+    if (!is_admin()) {
+        return false;
+    }
+
+    if (!$screen && function_exists('get_current_screen')) {
+        $screen = get_current_screen();
+    }
+
+    if (!is_object($screen) || empty($screen->id)) {
+        return false;
+    }
+
+    $screen_id = (string) $screen->id;
+    $allowed   = array(
+        'toplevel_page_onepaquc_cart',
+        'one-page-quick-checkout_page_onepaquc_cart_documentation',
+        'one-page-quick-checkout_page_onepaqucpro_cart_recovery',
+        'one-page-quick-checkout_page_onepaqucpro_cart_recovery_template',
+    );
+
+    if (in_array($screen_id, $allowed, true)) {
+        return true;
+    }
+
+    return false !== strpos($screen_id, 'onepaquc');
+}
+
+add_action('before_woocommerce_init', function () {
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
 
 // Include the admin notice file
 require_once plugin_dir_path(__FILE__) . 'includes/admin-notice.php';
@@ -525,7 +602,7 @@ require_once plugin_dir_path(__FILE__) . 'admin/license-tab.php';
 require_once plugin_dir_path(__FILE__) . 'includes/analytics.php';
 
 /**
- * Suffix word for selected-item count ("N …"), matching option txt_Selected when set.
+ * Suffix word for selected-item count, matching option txt_Selected when set.
  */
 function onepaquc_get_txt_selected_suffix()
 {
@@ -650,12 +727,16 @@ function onepaquc_cart_enqueue_scripts()
     $string_settings_fields = isset($GLOBALS['onepaquc_string_settings_fields']) && is_array($GLOBALS['onepaquc_string_settings_fields'])
         ? $GLOBALS['onepaquc_string_settings_fields']
         : array();
-    foreach ($string_settings_fields as $field) {
-        $plugincy_all_settings[$field] = get_option($field, '');
-    }
-    foreach ($others_settings as $field) {
-        $plugincy_all_settings[$field] = get_option($field, []);
-    }
+    $string_settings = array_map(static function ($field) {
+        return get_option($field, '');
+    }, $string_settings_fields);
+    $other_settings  = array_map(static function ($field) {
+        return get_option($field, array());
+    }, $others_settings);
+    $plugincy_all_settings = array_merge(
+        !empty($string_settings_fields) ? array_combine($string_settings_fields, $string_settings) : array(),
+        !empty($others_settings) ? array_combine($others_settings, $other_settings) : array()
+    );
     $plugincy_all_settings = onepaquc_wpml_translate_settings_array($plugincy_all_settings);
 
     // Localize the script with the onepaquc_editor value
@@ -2059,31 +2140,7 @@ function onepaquc_handle_url_add_to_cart()
     $variation    = array();
     $cart_item_data = array();
 
-    // Collect variations from either JSON or prefixed query args
     if ($product->is_type('variable')) {
-        // 1) JSON blob: onepaquc_variations={"attribute_pa_brand":"dell"}
-        if (!empty($_GET['onepaquc_variations']) && is_scalar($_GET['onepaquc_variations'])) {
-            $json_raw = wp_unslash($_GET['onepaquc_variations']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON is decoded, shape-checked, and each key/value is normalized below.
-            // Some servers escape quotes; handle both raw and urldecoded
-            $decoded  = json_decode($json_raw, true);
-            if (!is_array($decoded)) {
-                $decoded = json_decode(urldecode($json_raw), true);
-            }
-            if (is_array($decoded)) {
-                foreach ($decoded as $k => $v) {
-                    $variation[onepaquc_normalize_attr_key($k)] = onepaquc_normalize_attr_value($v);
-                }
-            }
-        }
-
-        // 2) Fallback: query params like onepaquc_attribute_pa_color=blue
-        foreach ($_GET as $key => $value) {
-            if (is_string($key) && is_scalar($value) && strpos($key, 'onepaquc_attribute_') === 0) {
-                $attr_key = substr($key, strlen('onepaquc_attribute_'));
-                $variation[onepaquc_normalize_attr_key($attr_key)] = onepaquc_normalize_attr_value($value);
-            }
-        }
-
         if ($variation_id <= 0) {
             wc_add_notice(__('Please select product options before adding to cart.', 'one-page-quick-checkout-for-woocommerce'), 'error');
             return;
@@ -2095,8 +2152,49 @@ function onepaquc_handle_url_add_to_cart()
             return;
         }
 
-        // Ensure we provide all attributes required by this variation
         $required = $variation_product->get_variation_attributes(); // already like ['attribute_pa_color'=>'blue']
+        $allowed_attribute_keys = array();
+        foreach (array_keys($required) as $required_key) {
+            $normalized_key = onepaquc_normalize_attr_key($required_key);
+            if ('' !== $normalized_key) {
+                $allowed_attribute_keys[$normalized_key] = true;
+            }
+        }
+
+        // Collect variations from either JSON or allowlisted prefixed query args.
+        // 1) JSON blob: onepaquc_variations={"attribute_pa_brand":"dell"}
+        if (!empty($_GET['onepaquc_variations']) && is_scalar($_GET['onepaquc_variations'])) {
+            $json_raw = wp_unslash($_GET['onepaquc_variations']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON is decoded, shape-checked, and each key/value is normalized below.
+            // Some servers escape quotes; handle both raw and urldecoded
+            $decoded  = json_decode($json_raw, true);
+            if (!is_array($decoded)) {
+                $decoded = json_decode(urldecode($json_raw), true);
+            }
+            if (is_array($decoded)) {
+                foreach ($decoded as $k => $v) {
+                    $attr_key = onepaquc_normalize_attr_key($k);
+                    if (isset($allowed_attribute_keys[$attr_key])) {
+                        $variation[$attr_key] = onepaquc_normalize_attr_value($v);
+                    }
+                }
+            }
+        }
+
+        // 2) Fallback: query params like onepaquc_attribute_pa_color=blue
+        foreach (array_keys($allowed_attribute_keys) as $attr_key) {
+            $query_keys = array_unique(array(
+                'onepaquc_' . $attr_key,
+                'onepaquc_attribute_' . preg_replace('/^attribute_/', '', $attr_key),
+            ));
+            foreach ($query_keys as $query_key) {
+                if (isset($_GET[$query_key]) && is_scalar($_GET[$query_key])) {
+                    $variation[$attr_key] = onepaquc_normalize_attr_value(sanitize_text_field(wp_unslash($_GET[$query_key])));
+                    break;
+                }
+            }
+        }
+
+        // Ensure we provide all attributes required by this variation
         foreach ($required as $req_key => $req_val) {
             if (empty($variation[$req_key])) {
                 $variation[$req_key] = $req_val;
@@ -2150,15 +2248,6 @@ function onepaquc_get_clean_checkout_url()
 
     // Remove any left-over params if we landed on /checkout/?onepaquc_* already
     $remove = array('onepaquc_add-to-cart', 'onepaquc_quantity', 'onepaquc_variation_id', 'onepaquc_variations');
-    // Also strip any per-attribute params
-    if (!empty($_GET)) {
-        foreach (array_keys($_GET) as $k) {
-            if (is_string($k) && strpos($k, 'onepaquc_attribute_') === 0) {
-                $remove[] = $k;
-            }
-        }
-    }
-
     $checkout_url = remove_query_arg(array_unique($remove), $checkout_url);
     return $checkout_url;
 }

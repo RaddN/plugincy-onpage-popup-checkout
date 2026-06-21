@@ -93,15 +93,18 @@ function onepaquc_one_page_checkout_shortcode($atts)
     $atts['product_ids'] = implode(',', array_map('absint', $product_ids));
 
     $cart = function_exists('onepaquc_get_wc_cart') ? onepaquc_get_wc_cart() : null;
-    if ($cart && get_option("onpage_checkout_widget_cart_empty", "1") === "1") {
+    $should_empty_cart = get_option("onpage_checkout_widget_cart_empty", "1") === "1";
+    $should_auto_add   = get_option("onpage_checkout_widget_cart_add", "1") === "1";
+
+    if ($cart && $should_empty_cart) {
         $cart->empty_cart();
     }
 
     foreach ($product_ids as $product_id) {
         $product_id = intval($product_id);
-        if ($product_id > 0 && $cart && get_option("onpage_checkout_widget_cart_add", "1") === "1") {
+        if ($product_id > 0 && $cart && $should_auto_add) {
             $product = wc_get_product($product_id);
-            if ($product && $product->is_type('variable')) {
+            if ($product instanceof WC_Product && $product->is_type('variable')) {
                 $available_variations = onepaquc_get_validated_variations( $product );
                 if (!empty($available_variations)) {
                     $variation_id = $available_variations[0]['variation_id'];
@@ -115,7 +118,7 @@ function onepaquc_one_page_checkout_shortcode($atts)
                 }
             } else {
                 // Check if the product is purchasable before adding to cart
-                if ($product && $product->is_purchasable()) {
+                if ($product instanceof WC_Product && $product->is_purchasable()) {
                     $cart->add_to_cart($product_id);
                 }
             }

@@ -7,7 +7,7 @@
         $(".onepaquc-ny-dismiss-menu").toggleClass("active");
     });
 
-    $(document).on("click", ".onepaquc-ny-dismiss-menu a", function (event) {
+    $(document).on("click", ".onepaquc-ny-dismiss-menu button", function (event) {
         event.preventDefault();
 
         var hours = $(this).data("hours");

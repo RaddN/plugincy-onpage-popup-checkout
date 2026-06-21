@@ -30,6 +30,9 @@ class Onepaqucpro_Cart_Recovery_Tracker
         add_action('woocommerce_cart_emptied', array(__CLASS__, 'handle_cart_emptied'));
 
         add_action('template_redirect', array(__CLASS__, 'handle_public_requests'), 1);
+        add_action('admin_init', array(__CLASS__, 'register_privacy_policy_content'));
+        add_filter('wp_privacy_personal_data_exporters', array(__CLASS__, 'register_personal_data_exporter'));
+        add_filter('wp_privacy_personal_data_erasers', array(__CLASS__, 'register_personal_data_eraser'));
     }
 
     private static function is_free_mode()
@@ -193,6 +196,7 @@ class Onepaqucpro_Cart_Recovery_Tracker
         $checkout_data = array();
         if (is_string($post_data) && '' !== $post_data) {
             parse_str($post_data, $checkout_data);
+            $checkout_data = self::sanitize_recursive($checkout_data);
         }
 
         self::capture_cart(
@@ -205,14 +209,18 @@ class Onepaqucpro_Cart_Recovery_Tracker
 
     public static function capture_checkout_request()
     {
-        $nonce_value = isset($_REQUEST['woocommerce-process-checkout-nonce'])
-            ? wp_unslash($_REQUEST['woocommerce-process-checkout-nonce'])
-            : (isset($_REQUEST['_wpnonce']) ? wp_unslash($_REQUEST['_wpnonce']) : '');
-        if (!is_scalar($nonce_value) || !wp_verify_nonce(sanitize_text_field((string) $nonce_value), 'woocommerce-process_checkout')) {
+        $nonce_value = '';
+        if (isset($_REQUEST['woocommerce-process-checkout-nonce']) && is_scalar($_REQUEST['woocommerce-process-checkout-nonce'])) {
+            $nonce_value = sanitize_text_field(wp_unslash($_REQUEST['woocommerce-process-checkout-nonce']));
+        } elseif (isset($_REQUEST['_wpnonce']) && is_scalar($_REQUEST['_wpnonce'])) {
+            $nonce_value = sanitize_text_field(wp_unslash($_REQUEST['_wpnonce']));
+        }
+
+        if ('' === $nonce_value || !wp_verify_nonce($nonce_value, 'woocommerce-process_checkout')) {
             return;
         }
 
-        $checkout_data = isset($_POST) ? wp_unslash($_POST) : array();
+        $checkout_data = isset($_POST) && is_array($_POST) ? self::sanitize_recursive(wp_unslash($_POST)) : array();
         self::capture_cart(
             array(
                 'checkout_data' => is_array($checkout_data) ? $checkout_data : array(),
@@ -652,6 +660,292 @@ class Onepaqucpro_Cart_Recovery_Tracker
         }
     }
 
+    public static function register_privacy_policy_content()
+    {
+        if (!function_exists('wp_add_privacy_policy_content')) {
+            return;
+        }
+
+        $content = wpautop(
+            esc_html__(
+                'When cart recovery is enabled, One Page Quick Checkout for WooCommerce may store cart contents, checkout contact fields, customer name, email address, customer ID, IP address, user agent, recovery email status, open/click timestamps, and related cart recovery events. This data is used to restore carts, measure recovery activity, and send configured recovery emails. The retention period is controlled from the cart recovery settings, and expired rows are cleaned up by the plugin.',
+                'one-page-quick-checkout-for-woocommerce'
+            )
+        );
+
+        wp_add_privacy_policy_content(
+            __('One Page Quick Checkout for WooCommerce', 'one-page-quick-checkout-for-woocommerce'),
+            $content
+        );
+    }
+
+    public static function register_personal_data_exporter($exporters)
+    {
+        $exporters['onepaquc-cart-recovery'] = array(
+            'exporter_friendly_name' => __('One Page Quick Checkout Cart Recovery', 'one-page-quick-checkout-for-woocommerce'),
+            'callback'               => array(__CLASS__, 'export_personal_data'),
+        );
+
+        return $exporters;
+    }
+
+    public static function register_personal_data_eraser($erasers)
+    {
+        $erasers['onepaquc-cart-recovery'] = array(
+            'eraser_friendly_name' => __('One Page Quick Checkout Cart Recovery', 'one-page-quick-checkout-for-woocommerce'),
+            'callback'             => array(__CLASS__, 'erase_personal_data'),
+        );
+
+        return $erasers;
+    }
+
+    public static function export_personal_data($email_address, $page = 1)
+    {
+        $email_address = sanitize_email($email_address);
+        $page          = max(1, absint($page));
+        $per_page      = 50;
+        $data          = array();
+
+        if (!is_email($email_address)) {
+            return array(
+                'data' => $data,
+                'done' => true,
+            );
+        }
+
+        $cart_rows  = self::get_privacy_cart_rows_by_email($email_address, $page, $per_page);
+        $email_rows = self::get_privacy_email_rows_by_recipient($email_address, $page, $per_page);
+
+        foreach ($cart_rows as $row) {
+            $data[] = self::format_privacy_cart_export_item($row);
+        }
+
+        foreach ($email_rows as $row) {
+            $data[] = self::format_privacy_email_export_item($row);
+        }
+
+        return array(
+            'data' => $data,
+            'done' => count($cart_rows) < $per_page && count($email_rows) < $per_page,
+        );
+    }
+
+    public static function erase_personal_data($email_address, $page = 1)
+    {
+        global $wpdb;
+
+        $email_address  = sanitize_email($email_address);
+        $page           = max(1, absint($page));
+        $per_page       = 50;
+        $items_removed  = false;
+        $items_retained = false;
+        $messages       = array();
+
+        if (!is_email($email_address)) {
+            return array(
+                'items_removed'  => false,
+                'items_retained' => false,
+                'messages'       => $messages,
+                'done'           => true,
+            );
+        }
+
+        $cart_rows  = self::get_privacy_cart_rows_by_email($email_address, $page, $per_page);
+        $email_rows = self::get_privacy_email_rows_by_recipient($email_address, $page, $per_page);
+        $cart_ids   = array();
+
+        foreach ($cart_rows as $row) {
+            $cart_ids[] = absint($row['id']);
+            if (self::anonymize_privacy_cart_row($row)) {
+                $items_removed = true;
+            } else {
+                $items_retained = true;
+            }
+        }
+
+        if (self::privacy_table_exists(self::get_emails_table())) {
+            foreach ($email_rows as $row) {
+                $email_id = absint($row['id']);
+                if (!$email_id) {
+                    continue;
+                }
+
+                $updated = $wpdb->update(
+                    self::get_emails_table(),
+                    array(
+                        'recipient'     => '',
+                        'open_token'    => self::erased_token('open', $email_id),
+                        'click_token'   => self::erased_token('click', $email_id),
+                        'discount_code' => '',
+                    ),
+                    array('id' => $email_id),
+                    array('%s', '%s', '%s', '%s'),
+                    array('%d')
+                );
+
+                if (false === $updated) {
+                    $items_retained = true;
+                } else {
+                    $items_removed = true;
+                }
+            }
+
+            foreach (array_unique($cart_ids) as $cart_id) {
+                $wpdb->update(
+                    self::get_emails_table(),
+                    array('recipient' => ''),
+                    array('cart_id' => absint($cart_id)),
+                    array('%s'),
+                    array('%d')
+                );
+            }
+        }
+
+        return array(
+            'items_removed'  => $items_removed,
+            'items_retained' => $items_retained,
+            'messages'       => $messages,
+            'done'           => count($cart_rows) < $per_page && count($email_rows) < $per_page,
+        );
+    }
+
+    private static function get_privacy_cart_rows_by_email($email_address, $page, $per_page)
+    {
+        global $wpdb;
+
+        if (!self::privacy_table_exists(self::get_carts_table())) {
+            return array();
+        }
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM " . self::get_carts_table() . " WHERE email = %s ORDER BY updated_at DESC LIMIT %d OFFSET %d",
+                $email_address,
+                max(1, absint($per_page)),
+                max(0, (max(1, absint($page)) - 1) * max(1, absint($per_page)))
+            ),
+            ARRAY_A
+        );
+    }
+
+    private static function get_privacy_email_rows_by_recipient($email_address, $page, $per_page)
+    {
+        global $wpdb;
+
+        if (!self::privacy_table_exists(self::get_emails_table())) {
+            return array();
+        }
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM " . self::get_emails_table() . " WHERE recipient = %s ORDER BY sent_at DESC LIMIT %d OFFSET %d",
+                $email_address,
+                max(1, absint($per_page)),
+                max(0, (max(1, absint($page)) - 1) * max(1, absint($per_page)))
+            ),
+            ARRAY_A
+        );
+    }
+
+    private static function format_privacy_cart_export_item($row)
+    {
+        $metadata      = self::decode_json(isset($row['metadata']) ? $row['metadata'] : '', array());
+        $checkout_data = self::decode_json(isset($row['checkout_data']) ? $row['checkout_data'] : '', array());
+        $cart_items    = self::decode_json(isset($row['cart_snapshot']) ? $row['cart_snapshot'] : '', array());
+
+        return array(
+            'group_id'    => 'onepaquc-cart-recovery',
+            'group_label' => __('One Page Quick Checkout Cart Recovery', 'one-page-quick-checkout-for-woocommerce'),
+            'item_id'     => 'onepaquc-cart-recovery-' . absint($row['id']),
+            'data'        => array(
+                array('name' => __('Customer name', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['customer_name']) ? $row['customer_name'] : ''),
+                array('name' => __('Email address', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['email']) ? $row['email'] : ''),
+                array('name' => __('Customer ID', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['customer_id']) ? (string) absint($row['customer_id']) : ''),
+                array('name' => __('Cart status', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['status']) ? $row['status'] : ''),
+                array('name' => __('Cart total', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['cart_total']) ? (string) $row['cart_total'] : ''),
+                array('name' => __('Currency', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['currency']) ? $row['currency'] : ''),
+                array('name' => __('Item count', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['item_count']) ? (string) absint($row['item_count']) : ''),
+                array('name' => __('Product context', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['product_context']) ? $row['product_context'] : ''),
+                array('name' => __('IP address', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['ip_address']) ? $row['ip_address'] : ''),
+                array('name' => __('User agent', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['user_agent']) ? $row['user_agent'] : ''),
+                array('name' => __('Created at', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['created_at']) ? $row['created_at'] : ''),
+                array('name' => __('Updated at', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['updated_at']) ? $row['updated_at'] : ''),
+                array('name' => __('Abandoned at', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['abandoned_at']) ? $row['abandoned_at'] : ''),
+                array('name' => __('Restored at', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['restored_at']) ? $row['restored_at'] : ''),
+                array('name' => __('Recovered at', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['recovered_at']) ? $row['recovered_at'] : ''),
+                array('name' => __('Cart items', 'one-page-quick-checkout-for-woocommerce'), 'value' => wp_json_encode($cart_items)),
+                array('name' => __('Checkout data', 'one-page-quick-checkout-for-woocommerce'), 'value' => wp_json_encode($checkout_data)),
+                array('name' => __('Metadata', 'one-page-quick-checkout-for-woocommerce'), 'value' => wp_json_encode($metadata)),
+            ),
+        );
+    }
+
+    private static function format_privacy_email_export_item($row)
+    {
+        return array(
+            'group_id'    => 'onepaquc-cart-recovery-email',
+            'group_label' => __('One Page Quick Checkout Recovery Emails', 'one-page-quick-checkout-for-woocommerce'),
+            'item_id'     => 'onepaquc-cart-recovery-email-' . absint($row['id']),
+            'data'        => array(
+                array('name' => __('Recipient', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['recipient']) ? $row['recipient'] : ''),
+                array('name' => __('Subject', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['subject']) ? $row['subject'] : ''),
+                array('name' => __('Status', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['status']) ? $row['status'] : ''),
+                array('name' => __('Sent at', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['sent_at']) ? $row['sent_at'] : ''),
+                array('name' => __('Opened at', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['opened_at']) ? $row['opened_at'] : ''),
+                array('name' => __('Clicked at', 'one-page-quick-checkout-for-woocommerce'), 'value' => isset($row['clicked_at']) ? $row['clicked_at'] : ''),
+            ),
+        );
+    }
+
+    private static function anonymize_privacy_cart_row($row)
+    {
+        $cart_id = isset($row['id']) ? absint($row['id']) : 0;
+        if (!$cart_id) {
+            return false;
+        }
+
+        $metadata = self::decode_json(isset($row['metadata']) ? $row['metadata'] : '', array());
+        unset($metadata['customer_profile']);
+        $metadata['privacy_state'] = 'erased_by_personal_data_request';
+
+        return false !== self::update_cart_row(
+            $cart_id,
+            array(
+                'session_id'          => '',
+                'customer_id'         => 0,
+                'customer_name'       => __('Anonymized Customer', 'one-page-quick-checkout-for-woocommerce'),
+                'email'               => '',
+                'cart_total'          => 0,
+                'item_count'          => 0,
+                'product_context'     => '',
+                'ip_address'          => '',
+                'user_agent'          => '',
+                'recovery_token'      => self::erased_token('cart', $cart_id),
+                'recovered_order_id'  => 0,
+                'cart_snapshot'       => wp_json_encode(array()),
+                'checkout_data'       => wp_json_encode(array()),
+                'metadata'            => wp_json_encode($metadata),
+            )
+        );
+    }
+
+    private static function privacy_table_exists($table_name)
+    {
+        global $wpdb;
+
+        $table_name = is_scalar($table_name) ? (string) $table_name : '';
+        if ('' === $table_name) {
+            return false;
+        }
+
+        return $table_name === $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name));
+    }
+
+    private static function erased_token($type, $id)
+    {
+        return substr(sanitize_key('erased_' . $type . '_' . absint($id) . '_' . wp_hash($type . ':' . absint($id))), 0, 64);
+    }
+
     private static function capture_cart($context)
     {
         if (! self::should_capture_cart()) {
@@ -986,11 +1280,8 @@ class Onepaqucpro_Cart_Recovery_Tracker
                     'clicked_at'     => null,
                     'payload'        => wp_json_encode(array(
                         'heading'      => $heading,
-                        'cart_link'    => $merge_tags['{cart_link}'],
                         'template_id'  => $template['id'],
-                        'body'         => $body,
-                        'sender_email' => $sender_email,
-                        'reply_to'     => $reply_to,
+                        'privacy_note' => 'rendered_body_and_recovery_link_not_stored',
                     )),
                     'delivery_error' => __('wp_mail returned false.', 'one-page-quick-checkout-for-woocommerce'),
                 )
@@ -1026,11 +1317,8 @@ class Onepaqucpro_Cart_Recovery_Tracker
                 'clicked_at'     => null,
                 'payload'        => wp_json_encode(array(
                     'heading'      => $heading,
-                    'cart_link'    => $merge_tags['{cart_link}'],
                     'template_id'  => $template['id'],
-                    'body'         => $body,
-                    'sender_email' => $sender_email,
-                    'reply_to'     => $reply_to,
+                    'privacy_note' => 'rendered_body_and_recovery_link_not_stored',
                 )),
                 'delivery_error' => '',
             )
@@ -2004,16 +2292,19 @@ class Onepaqucpro_Cart_Recovery_Tracker
     {
         global $wpdb;
 
+        $cart_ids = array_values(array_unique(array_filter(array_map('absint', (array) $cart_ids))));
         if (empty($cart_ids)) {
             return array();
         }
 
         $placeholders = implode(',', array_fill(0, count($cart_ids), '%d'));
-        $query        = $wpdb->prepare(
-            "SELECT * FROM " . self::get_events_table() . " WHERE cart_id IN ({$placeholders}) ORDER BY event_time DESC",
-            $cart_ids
+        $rows         = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM " . self::get_events_table() . " WHERE cart_id IN ({$placeholders}) ORDER BY event_time DESC",
+                ...$cart_ids
+            ),
+            ARRAY_A
         );
-        $rows         = $wpdb->get_results($query, ARRAY_A);
         $grouped      = array();
 
         foreach ($rows as $row) {
@@ -2041,16 +2332,19 @@ class Onepaqucpro_Cart_Recovery_Tracker
     {
         global $wpdb;
 
+        $cart_ids = array_values(array_unique(array_filter(array_map('absint', (array) $cart_ids))));
         if (empty($cart_ids)) {
             return array();
         }
 
         $placeholders = implode(',', array_fill(0, count($cart_ids), '%d'));
-        $query        = $wpdb->prepare(
-            "SELECT * FROM " . self::get_emails_table() . " WHERE cart_id IN ({$placeholders}) ORDER BY sent_at DESC",
-            $cart_ids
+        $rows         = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM " . self::get_emails_table() . " WHERE cart_id IN ({$placeholders}) ORDER BY sent_at DESC",
+                ...$cart_ids
+            ),
+            ARRAY_A
         );
-        $rows         = $wpdb->get_results($query, ARRAY_A);
         $grouped      = array();
 
         foreach ($rows as $row) {
@@ -2970,7 +3264,7 @@ class Onepaqucpro_Cart_Recovery_Tracker
             return;
         }
 
-        wp_remote_post($url, array(
+        $response = wp_remote_post($url, array(
             'timeout'  => 5,
             'blocking' => false,
             'headers'  => array(
@@ -2982,6 +3276,10 @@ class Onepaqucpro_Cart_Recovery_Tracker
                 'site'    => home_url('/'),
             )),
         ));
+
+        if (is_wp_error($response)) {
+            return;
+        }
     }
 
     private static function delay_to_seconds($value, $unit)

@@ -175,6 +175,15 @@ function onepaquc_cart_get_pro()
 function onepaquc_cart_text_change_form($textvariable)
 {
     $onepaquc_helper = new onepaquc_helper();
+    $option_names    = array_keys((array) $textvariable);
+    $option_values   = !empty($option_names)
+        ? array_combine(
+            $option_names,
+            array_map(static function ($name) {
+                return get_option($name, '');
+            }, $option_names)
+        )
+        : array();
 
     echo '<div class="plugincy_card">';
     $onepaquc_helper->sec_head('h3', 'plugincy_sec_head', '<svg fill="#fff" width="18" height="18" viewBox="0 0 0.27 0.27" xmlns="http://www.w3.org/2000/svg"><path d="M.27.022v.045a.022.022 0 0 1-.045 0V.045H.158v.18H.18a.022.022 0 0 1 0 .045H.09a.022.022 0 0 1 0-.045h.022v-.18H.045v.022a.022.022 0 1 1-.045 0V.022A.02.02 0 0 1 .022 0h.225a.02.02 0 0 1 .022.022"/></svg>', esc_html__('Cart Text Changes', 'one-page-quick-checkout-for-woocommerce'));
@@ -183,7 +192,7 @@ function onepaquc_cart_text_change_form($textvariable)
 
     foreach (array_chunk($textvariable, 4, true) as $column) {
         foreach ($column as $name => $label) {
-            $value = esc_attr(get_option($name, ''));
+            $value = isset($option_values[$name]) ? esc_attr($option_values[$name]) : '';
     ?>
             <label>
                 <?php $onepaquc_helper->sec_head('p', '', '', esc_html($label), 'You can find "' . esc_html($label) . '" in the checkout form or drawer' . ($name === "txt-complete_your_purchase" ? " on single product pages." : ".")); ?>

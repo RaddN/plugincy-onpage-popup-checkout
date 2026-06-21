@@ -6,9 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
 
-// Admin notice for successful installation
-add_action('admin_notices', 'onepaquc_cart_notice');
-
 function onepaquc_cart_notice()
 {
     // $page_param = onepaquc_get_page_parameter_from_current_url();
@@ -88,9 +85,13 @@ function onepaquc_dismiss_ny_notice_handler()
 add_action('admin_notices', 'onepaquc_show_new_year_notice');
 add_action('admin_enqueue_scripts', 'onepaquc_enqueue_new_year_notice_assets');
 
-function onepaquc_should_show_new_year_notice()
+function onepaquc_should_show_new_year_notice($screen = null)
 {
     if (!current_user_can('manage_options')) {
+        return false;
+    }
+
+    if (function_exists('onepaquc_is_plugin_admin_screen') && !onepaquc_is_plugin_admin_screen($screen)) {
         return false;
     }
 
@@ -103,9 +104,10 @@ function onepaquc_should_show_new_year_notice()
     return !($dismissed_until && time() < $dismissed_until);
 }
 
-function onepaquc_enqueue_new_year_notice_assets()
+function onepaquc_enqueue_new_year_notice_assets($hook)
 {
-    if (!onepaquc_should_show_new_year_notice()) {
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    if (!onepaquc_should_show_new_year_notice($screen)) {
         return;
     }
 
@@ -136,7 +138,13 @@ function onepaquc_enqueue_new_year_notice_assets()
 
 function onepaquc_show_new_year_notice()
 {
-    if (!onepaquc_should_show_new_year_notice()) {
+    $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+    if (!current_user_can('manage_options') || !onepaquc_should_show_new_year_notice($screen)) {
+        return;
+    }
+
+    $dismissed_until = get_user_meta(get_current_user_id(), 'onepaquc_ny_notice_dismissed_until', true);
+    if ($dismissed_until && time() < $dismissed_until) {
         return;
     }
 
@@ -144,9 +152,9 @@ function onepaquc_show_new_year_notice()
     echo '  <div class="notice-dismiss-wrapper">';
     echo '      <button type="button" class="notice-dismiss onepaquc-ny-dismiss-trigger"><span class="screen-reader-text">Dismiss this notice.</span></button>';
     echo '      <div class="onepaquc-ny-dismiss-menu">';
-    echo '          <a href="#" data-hours="3">Show again in 3 hours</a>';
-    echo '          <a href="#" data-hours="12">Show again in 12 hours</a>';
-    echo '          <a href="#" data-hours="24">Show again in 1 day</a>';
+    echo '          <button type="button" data-hours="3">Show again in 3 hours</button>';
+    echo '          <button type="button" data-hours="12">Show again in 12 hours</button>';
+    echo '          <button type="button" data-hours="24">Show again in 1 day</button>';
     echo '      </div>';
     echo '  </div>';
     echo '  <div class="onepaquc-ny-wrap">';

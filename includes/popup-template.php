@@ -7,8 +7,7 @@ function onepaquc_rmenu_checkout($isonepagewidget = false)
     <?php if (!$isonepagewidget) { ?>
       <div style=" display: flex; justify-content: space-between; ">
         <h2><?php echo esc_html(onepaquc_get_text_option('onepaquc_txt_checkout', __('Checkout', 'one-page-quick-checkout-for-woocommerce'))); ?></h2>
-        <div class="close_button" onclick="closeCheckoutPopup()">
-        </div>
+        <button type="button" class="close_button" onclick="closeCheckoutPopup()" aria-label="<?php esc_attr_e('Close checkout popup', 'one-page-quick-checkout-for-woocommerce'); ?>"></button>
       </div>
 
     <?php } ?>

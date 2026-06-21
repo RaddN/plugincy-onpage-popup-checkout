@@ -193,10 +193,21 @@
     display: block;
 }
 
-.onepaquc-ny-dismiss-menu a {
+.onepaquc-ny-dismiss-menu button {
     display: block;
+    width: 100%;
     padding: 8px 12px;
+    border: 0;
+    background: transparent;
+    color: #1d2327;
+    cursor: pointer;
+    text-align: left;
     text-decoration: none;
+}
+
+.onepaquc-ny-dismiss-menu button:hover,
+.onepaquc-ny-dismiss-menu button:focus {
+    background: #f0f0f1;
 }
 
 .onepaquc-ny-confetti,
@@ -234,8 +245,12 @@
     padding: 12px;
 }
 
-.badge-controls a {
+.badge-controls button {
     margin-left: 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
     text-decoration: none;
 }
 

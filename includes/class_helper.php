@@ -1091,3 +1091,59 @@ class onepaquc_helper
 <?php
     }
 }
+
+function onepaquc_get_attachment_image_data($attachment_id, $image_size = 'woocommerce_single', $thumb_size = 'woocommerce_thumbnail')
+{
+    $attachment_id = absint($attachment_id);
+    if (!$attachment_id) {
+        return null;
+    }
+
+    $image_src = wp_get_attachment_image_src($attachment_id, $image_size);
+    $thumb_src = wp_get_attachment_image_src($attachment_id, $thumb_size);
+    $full_src  = wp_get_attachment_image_src($attachment_id, 'full');
+
+    if (!$image_src && !$thumb_src && !$full_src) {
+        return null;
+    }
+
+    return array(
+        'id'    => $attachment_id,
+        'src'   => $image_src ? $image_src[0] : wc_placeholder_img_src(),
+        'thumb' => $thumb_src ? $thumb_src[0] : wc_placeholder_img_src('thumbnail'),
+        'full'  => $full_src ? $full_src[0] : wc_placeholder_img_src('full'),
+        'alt'   => sanitize_text_field((string) get_post_meta($attachment_id, '_wp_attachment_image_alt', true)),
+    );
+}
+
+function onepaquc_get_product_gallery_image_data($attachment_ids, $thumb_size = 'woocommerce_thumbnail', $include_placeholder = true)
+{
+    $attachment_ids = is_array($attachment_ids) ? $attachment_ids : array();
+    $attachment_ids = array_values(array_unique(array_filter(array_map('absint', $attachment_ids))));
+
+    if (empty($attachment_ids)) {
+        return $include_placeholder ? array(
+            array(
+                'id'    => 0,
+                'src'   => wc_placeholder_img_src(),
+                'thumb' => wc_placeholder_img_src('thumbnail'),
+                'full'  => wc_placeholder_img_src('full'),
+                'alt'   => esc_html__('Placeholder', 'one-page-quick-checkout-for-woocommerce'),
+            ),
+        ) : array();
+    }
+
+    update_meta_cache('post', $attachment_ids);
+    if (function_exists('_prime_post_caches')) {
+        _prime_post_caches($attachment_ids, false, true);
+    }
+
+    $images = array_map(
+        static function ($attachment_id) use ($thumb_size) {
+            return onepaquc_get_attachment_image_data($attachment_id, 'woocommerce_single', $thumb_size);
+        },
+        $attachment_ids
+    );
+
+    return array_values(array_filter($images));
+}

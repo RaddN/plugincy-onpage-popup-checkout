@@ -157,6 +157,7 @@ class ONEPAQUC_Quick_View
             'buttonPos'    => sanitize_key(is_scalar(get_option('rmenu_quick_view_button_position', 'image_overlay')) ? get_option('rmenu_quick_view_button_position', 'image_overlay') : 'image_overlay'),
             'contents'     => wp_kses($button_contents['button_content'], $onepaquc_onepaquc_allowed_tags),
             'buttonClass'  => sanitize_text_field(implode(' ', $button_contents['button_classes'])),
+            'buttonLabel'  => sanitize_text_field($button_contents['button_label']),
             'allowedTypes' => onepaquc_normalize_key_list(get_option('rmenu_show_quick_view_by_types', ['simple', 'variable', 'grouped', 'external']), ['simple', 'variable', 'grouped', 'external']),
         );
 
@@ -166,7 +167,7 @@ class ONEPAQUC_Quick_View
             'var namespace=window.onepaqucQuickViewButtons=window.onepaqucQuickViewButtons||{};',
             'var scheduled=false;',
             'function getQuickViewProductData($product){var $button=$product.find(".button[data-product_id],.button[data-product-id],a[data-product_id],a[data-product-id],button[data-product_id],button[data-product-id]").first();var productId=$button.data("product_id")||$button.data("product-id")||$product.data("product_id")||$product.data("product-id");if(!productId){var idMatch=($product.attr("class")||"").match(/post-(\d+)/);productId=idMatch?idMatch[1]:null;}var productType=$button.data("product_type")||$button.data("product-type")||$product.data("product_type")||$product.data("product-type");if(!productType){var typeMatch=($product.attr("class")||"").match(/product-type-([A-Za-z0-9_-]+)/);productType=typeMatch?typeMatch[1]:null;}if(!productType&&$button.length){if($button.hasClass("product_type_simple")){productType="simple";}else if($button.hasClass("product_type_variable")){productType="variable";}else if($button.hasClass("product_type_grouped")){productType="grouped";}else if($button.hasClass("product_type_external")){productType="external";}}return{id:productId,type:productType};}',
-            'function addQuickViewButton($product,productId){var $wrap=$("<div/>",{"class":"rmenu-quick-view-overlay "+quickViewConfig.buttonPos});var $button=$("<a/>",{"href":"#","class":quickViewConfig.buttonClass,"data-product-id":productId}).html(quickViewConfig.contents);$wrap.append($button);if(quickViewConfig.buttonPos==="after_image"){var $image=$product.find("img").first();if($image.length){$image.after($wrap);}else{$product.append($wrap);}}else{$product.append($wrap);}}',
+            'function addQuickViewButton($product,productId){var $wrap=$("<div/>",{"class":"rmenu-quick-view-overlay "+quickViewConfig.buttonPos});var $button=$("<button/>",{"type":"button","class":quickViewConfig.buttonClass,"data-product-id":productId,"aria-label":quickViewConfig.buttonLabel,"title":quickViewConfig.buttonLabel}).html(quickViewConfig.contents);$wrap.append($button);if(quickViewConfig.buttonPos==="after_image"){var $image=$product.find("img").first();if($image.length){$image.after($wrap);}else{$product.append($wrap);}}else{$product.append($wrap);}}',
             'function initQuickViewButtons(container){var $container=container?$(container):$(document);$container.find(".product").addBack(".product").each(function(){var $this=$(this);if($("body").hasClass("single-product")&&!$this.closest("ul.products, .products").length){return;}if($this.find(".rmenu-quick-view-overlay,.opqvfw-btn").length){return;}var productData=getQuickViewProductData($this);if(quickViewConfig.allowedTypes.indexOf(productData.type)!==-1&&productData.id){addQuickViewButton($this,productData.id);}});cleanupOrphanedQuickViewButtons();}',
             'function cleanupOrphanedQuickViewButtons(){$(".rmenu-quick-view-overlay").each(function(){if(!$(this).closest(".product").length){$(this).remove();}});}',
             'function refreshQuickViewButtons(container){container=container||$(document);$(container).find(".rmenu-quick-view-overlay").remove();initQuickViewButtons(container);}',
@@ -284,9 +285,10 @@ class ONEPAQUC_Quick_View
 
         // Output button HTML with data-product-id attribute
         $button_html = sprintf(
-            '<a href="#" class="%1$s" data-product-id="%2$s">%3$s</a>',
+            '<button type="button" class="%1$s" data-product-id="%2$s" aria-label="%3$s" title="%3$s">%4$s</button>',
             esc_attr(implode(' ', $button_contents['button_classes'])),
             esc_attr($product->get_id()),
+            esc_attr($button_contents['button_label']),
             $button_contents['button_content']
         );
 
@@ -450,7 +452,8 @@ class ONEPAQUC_Quick_View
 
         return [
             "button_classes" => $button_classes,
-            "button_content" => $button_content
+            "button_content" => $button_content,
+            "button_label"   => wp_strip_all_tags((string) $button_text),
         ];
     }
 
@@ -545,43 +548,16 @@ class ONEPAQUC_Quick_View
             $product_data['sku'] = $product->get_sku();
         }
 
-        // Get product images
+        $image_ids = array();
         $image_id = $product->get_image_id();
         if ($image_id) {
-            $image_src = wp_get_attachment_image_src($image_id, 'woocommerce_single');
-            $image_thumb = wp_get_attachment_image_src($image_id, 'shop_thumbnail');
-            $image_full = wp_get_attachment_image_src($image_id, 'full');
-
-            if ($image_src && $image_thumb && $image_full) {
-                $product_data['images'][] = array(
-                    'id' => $image_id,
-                    'src' => $image_src[0],
-                    'thumb' => $image_thumb[0],
-                    'full' => $image_full[0],
-                    'alt' => get_post_meta($image_id, '_wp_attachment_image_alt', true),
-                );
-            }
+            $image_ids[] = $image_id;
         }
-
-        // Get gallery images
         $gallery_ids = $product->get_gallery_image_ids();
         if (!empty($gallery_ids)) {
-            foreach ($gallery_ids as $gallery_id) {
-                $image_src = wp_get_attachment_image_src($gallery_id, 'woocommerce_single');
-                $image_thumb = wp_get_attachment_image_src($gallery_id, 'shop_thumbnail');
-                $image_full = wp_get_attachment_image_src($gallery_id, 'full');
-
-                if ($image_src && $image_thumb && $image_full) {
-                    $product_data['images'][] = array(
-                        'id' => $gallery_id,
-                        'src' => $image_src[0],
-                        'thumb' => $image_thumb[0],
-                        'full' => $image_full[0],
-                        'alt' => get_post_meta($gallery_id, '_wp_attachment_image_alt', true),
-                    );
-                }
-            }
+            $image_ids = array_merge($image_ids, $gallery_ids);
         }
+        $product_data['images'] = onepaquc_get_product_gallery_image_data($image_ids, 'shop_thumbnail', false);
 
         // Add variation data for variable products
         if ($product->is_type('variable')) {
@@ -723,12 +699,12 @@ class ONEPAQUC_Quick_View
         <div class="opqvfw-modal-container">
             <div class="opqvfw-modal-overlay"></div>
             <div class="opqvfw-modal">
-                <div class="rmenu-quick-view-close">
+                <button type="button" class="rmenu-quick-view-close">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M15 5 5 15M5 5l10 10" />
                     </svg>
                     <span class="screen-reader-text"><?php echo esc_html(onepaquc_get_text_option('rmenu_quick_view_close_text', __('Close', 'one-page-quick-checkout-for-woocommerce'))); ?></span>
-                </div>
+                </button>
                 <div class="rmenu-quick-view-content">
                     <div class="rmenu-quick-view-loading">
                         <div class="rmenu-loader"></div>
@@ -736,20 +712,20 @@ class ONEPAQUC_Quick_View
                     <div class="rmenu-quick-view-inner"></div>
                 </div>
                 <div class="rmenu-quick-view-nav">
-                    <a href="#" class="rmenu-quick-view-prev">
+                    <button type="button" class="rmenu-quick-view-prev">
                         <svg width="22" height="22" viewBox="0 0 1.32 1.32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill="#fff" fill-opacity=".01" d="M0 0h1.32v1.32H0z" />
                             <path d="M.853.99.523.66l.33-.33" stroke="#fff" stroke-width=".11" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         <span class="screen-reader-text"><?php echo esc_html(onepaquc_get_text_option('rmenu_quick_view_prev_text', __('Previous Product', 'one-page-quick-checkout-for-woocommerce'))); ?></span>
-                    </a>
-                    <a href="#" class="rmenu-quick-view-next">
+                    </button>
+                    <button type="button" class="rmenu-quick-view-next">
                         <svg width="22" height="22" viewBox="0 0 1.32 1.32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill="#fff" fill-opacity=".01" d="M0 0h1.32v1.32H0z" />
                             <path d="m.522.33.33.33-.33.33" stroke="#fff" stroke-width=".11" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         <span class="screen-reader-text"><?php echo esc_html(onepaquc_get_text_option('rmenu_quick_view_next_text', __('Next Product', 'one-page-quick-checkout-for-woocommerce'))); ?></span>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

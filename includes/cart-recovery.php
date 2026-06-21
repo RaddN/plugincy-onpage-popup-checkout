@@ -4897,15 +4897,16 @@ class Onepaqucpro_Cart_Recovery_Admin
                 continue;
             }
 
-            $value = wp_unslash($_GET[$key]);
-            if (is_array($value)) {
+            $raw_value = wp_unslash($_GET[$key]); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Allowed query keys are sanitized by expected text type below.
+            if (is_array($raw_value)) {
                 continue;
             }
+            $value = sanitize_text_field($raw_value);
 
             printf(
                 '<input type="hidden" name="%1$s" value="%2$s">',
                 esc_attr($key),
-                esc_attr(sanitize_text_field($value))
+                esc_attr($value)
             );
         }
     }
@@ -4919,12 +4920,12 @@ class Onepaqucpro_Cart_Recovery_Admin
                 continue;
             }
 
-            $value = wp_unslash($_GET[$key]);
-            if (is_array($value)) {
+            $raw_value = wp_unslash($_GET[$key]); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Allowed query keys are sanitized by expected text type below.
+            if (is_array($raw_value)) {
                 continue;
             }
 
-            $args[$key] = sanitize_text_field($value);
+            $args[$key] = sanitize_text_field($raw_value);
         }
 
         return $args;
@@ -6811,9 +6812,9 @@ class Onepaqucpro_Cart_Recovery_Admin
         return array(
             array(
                 'id'              => 'cart_1001',
-                'customer_name'   => 'Pejovicmarko21',
+                'customer_name'   => 'Example Customer A',
                 'customer_id'     => '',
-                'email'           => 'pejovicmarko21@gmail.com',
+                'email'           => 'customer.a@example.com',
                 'cart_total'      => 39,
                 'currency'        => 'USD',
                 'status'          => 'abandoned',
@@ -6824,7 +6825,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                 'recovered_at'    => '',
                 'session_id'      => 'e_f8d0fa3f1f71f92175db0a6b063e81',
                 'product_context' => 'One Page Quick Checkout For WooCommerce Pro',
-                'ip_address'      => '31.223.142.171',
+                'ip_address'      => '192.0.2.10',
                 'user_agent'      => $ua_browser,
                 'items'           => array(
                     array(
@@ -6840,7 +6841,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'title' => __('Cart Abandoned', 'one-page-quick-checkout-for-woocommerce'),
                         'time'  => '2026-03-07 01:20:00',
                         'meta'  => array(
-                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '2a02:4780:b:1041:0:26e9:db1f:1',
+                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '2001:db8::10',
                             __('User Agent', 'one-page-quick-checkout-for-woocommerce') => $ua_store,
                         ),
                     ),
@@ -6851,7 +6852,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'meta'  => array(
                             __('Cart Total', 'one-page-quick-checkout-for-woocommerce') => self::format_currency(39, 'USD'),
                             __('Item Count', 'one-page-quick-checkout-for-woocommerce') => '1',
-                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '31.223.142.171',
+                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '192.0.2.10',
                             __('User Agent', 'one-page-quick-checkout-for-woocommerce') => $ua_browser,
                         ),
                     ),
@@ -6862,9 +6863,9 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'meta'  => array(
                             __('Cart Total', 'one-page-quick-checkout-for-woocommerce')   => self::format_currency(39, 'USD'),
                             __('Item Count', 'one-page-quick-checkout-for-woocommerce')   => '1',
-                            __('Email', 'one-page-quick-checkout-for-woocommerce')        => 'pejovicmarko21@gmail.com',
-                            __('Customer Name', 'one-page-quick-checkout-for-woocommerce') => 'Pejovicmarko21',
-                            __('IP Address', 'one-page-quick-checkout-for-woocommerce')   => '31.223.142.171',
+                            __('Email', 'one-page-quick-checkout-for-woocommerce')        => 'customer.a@example.com',
+                            __('Customer Name', 'one-page-quick-checkout-for-woocommerce') => 'Example Customer A',
+                            __('IP Address', 'one-page-quick-checkout-for-woocommerce')   => '192.0.2.10',
                             __('User Agent', 'one-page-quick-checkout-for-woocommerce')   => $ua_browser,
                         ),
                     ),
@@ -6904,9 +6905,9 @@ class Onepaqucpro_Cart_Recovery_Admin
             ),
             array(
                 'id'              => 'cart_1002',
-                'customer_name'   => 'Arpit Shah',
+                'customer_name'   => 'Example Customer B',
                 'customer_id'     => '',
-                'email'           => 'developers@justdogs.in',
+                'email'           => 'customer.b@example.com',
                 'cart_total'      => 79,
                 'currency'        => 'USD',
                 'status'          => 'abandoned',
@@ -6917,7 +6918,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                 'recovered_at'    => '',
                 'session_id'      => 'b_392381fa3db9c98152648a22ff0f881',
                 'product_context' => 'Multi Location Product & Inventory Management for WooCommerce Pro',
-                'ip_address'      => '91.223.41.80',
+                'ip_address'      => '192.0.2.20',
                 'user_agent'      => $ua_browser,
                 'items'           => array(
                     array(
@@ -6935,7 +6936,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'meta'  => array(
                             __('Email', 'one-page-quick-checkout-for-woocommerce')      => __('Final Attempt', 'one-page-quick-checkout-for-woocommerce'),
                             __('Subject', 'one-page-quick-checkout-for-woocommerce')    => __('Your cart is about to expire', 'one-page-quick-checkout-for-woocommerce'),
-                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '91.223.41.80',
+                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '192.0.2.20',
                         ),
                     ),
                     array(
@@ -6944,7 +6945,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'time'  => '2026-03-01 10:02:00',
                         'meta'  => array(
                             __('Cart Total', 'one-page-quick-checkout-for-woocommerce') => self::format_currency(79, 'USD'),
-                            __('Email', 'one-page-quick-checkout-for-woocommerce')      => 'developers@justdogs.in',
+                            __('Email', 'one-page-quick-checkout-for-woocommerce')      => 'customer.b@example.com',
                         ),
                     ),
                     array(
@@ -6953,8 +6954,8 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'time'  => '2026-03-01 09:10:00',
                         'meta'  => array(
                             __('Item Count', 'one-page-quick-checkout-for-woocommerce')   => '1',
-                            __('Customer Name', 'one-page-quick-checkout-for-woocommerce') => 'Arpit Shah',
-                            __('IP Address', 'one-page-quick-checkout-for-woocommerce')   => '91.223.41.80',
+                            __('Customer Name', 'one-page-quick-checkout-for-woocommerce') => 'Example Customer B',
+                            __('IP Address', 'one-page-quick-checkout-for-woocommerce')   => '192.0.2.20',
                         ),
                     ),
                 ),
@@ -6993,9 +6994,9 @@ class Onepaqucpro_Cart_Recovery_Admin
             ),
             array(
                 'id'              => 'cart_1003',
-                'customer_name'   => 'G.weulenkranenbarg',
+                'customer_name'   => 'Example Customer C',
                 'customer_id'     => '',
-                'email'           => 'g.weulenkranenbarg@kusterenergy.com',
+                'email'           => 'customer.c@example.com',
                 'cart_total'      => 299,
                 'currency'        => 'USD',
                 'status'          => 'abandoned',
@@ -7006,7 +7007,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                 'recovered_at'    => '',
                 'session_id'      => 'c_09bc4b10c91f4921939e5ca12db78a3',
                 'product_context' => 'Multi Location Product & Inventory Management for WooCommerce Pro',
-                'ip_address'      => '67.11.24.18',
+                'ip_address'      => '192.0.2.30',
                 'user_agent'      => $ua_browser,
                 'items'           => array(
                     array(
@@ -7041,7 +7042,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'time'  => '2026-03-01 12:01:00',
                         'meta'  => array(
                             __('Cart Total', 'one-page-quick-checkout-for-woocommerce') => self::format_currency(299, 'USD'),
-                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '67.11.24.18',
+                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '192.0.2.30',
                         ),
                     ),
                     array(
@@ -7049,8 +7050,8 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'title' => __('Cart Created', 'one-page-quick-checkout-for-woocommerce'),
                         'time'  => '2026-03-01 10:15:00',
                         'meta'  => array(
-                            __('Email', 'one-page-quick-checkout-for-woocommerce')        => 'g.weulenkranenbarg@kusterenergy.com',
-                            __('Customer Name', 'one-page-quick-checkout-for-woocommerce') => 'G.weulenkranenbarg',
+                            __('Email', 'one-page-quick-checkout-for-woocommerce')        => 'customer.c@example.com',
+                            __('Customer Name', 'one-page-quick-checkout-for-woocommerce') => 'Example Customer C',
                             __('Item Count', 'one-page-quick-checkout-for-woocommerce')   => '1',
                         ),
                     ),
@@ -7090,9 +7091,9 @@ class Onepaqucpro_Cart_Recovery_Admin
             ),
             array(
                 'id'              => 'cart_1004',
-                'customer_name'   => 'Jezael Melgoza Jimenez',
+                'customer_name'   => 'Example Customer D',
                 'customer_id'     => '',
-                'email'           => 'jezael.melgoza@masvida.org',
+                'email'           => 'customer.d@example.com',
                 'cart_total'      => 79,
                 'currency'        => 'USD',
                 'status'          => 'abandoned',
@@ -7103,7 +7104,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                 'recovered_at'    => '',
                 'session_id'      => 'd_b31a9c97119a45939f0cafa763de991',
                 'product_context' => 'Multi Location Product & Inventory Management for WooCommerce Pro',
-                'ip_address'      => '31.94.222.17',
+                'ip_address'      => '192.0.2.40',
                 'user_agent'      => $ua_browser,
                 'items'           => array(
                     array(
@@ -7138,7 +7139,7 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'time'  => '2026-03-07 06:55:00',
                         'meta'  => array(
                             __('Cart Total', 'one-page-quick-checkout-for-woocommerce') => self::format_currency(79, 'USD'),
-                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '31.94.222.17',
+                            __('IP Address', 'one-page-quick-checkout-for-woocommerce') => '192.0.2.40',
                         ),
                     ),
                     array(
@@ -7146,8 +7147,8 @@ class Onepaqucpro_Cart_Recovery_Admin
                         'title' => __('Cart Created', 'one-page-quick-checkout-for-woocommerce'),
                         'time'  => '2026-03-07 06:10:00',
                         'meta'  => array(
-                            __('Email', 'one-page-quick-checkout-for-woocommerce')        => 'jezael.melgoza@masvida.org',
-                            __('Customer Name', 'one-page-quick-checkout-for-woocommerce') => 'Jezael Melgoza Jimenez',
+                            __('Email', 'one-page-quick-checkout-for-woocommerce')        => 'customer.d@example.com',
+                            __('Customer Name', 'one-page-quick-checkout-for-woocommerce') => 'Example Customer D',
                             __('Item Count', 'one-page-quick-checkout-for-woocommerce')   => '1',
                         ),
                     ),
@@ -7256,11 +7257,11 @@ class Onepaqucpro_Cart_Recovery_Admin
                 continue;
             }
 
-            $value = wp_unslash($_GET[$key]);
-            if (is_array($value)) {
+            $raw_value = wp_unslash($_GET[$key]); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Allowed pagination query keys are sanitized by expected text type below.
+            if (is_array($raw_value)) {
                 continue;
             }
-            $base_args[$key] = sanitize_text_field($value);
+            $base_args[$key] = sanitize_text_field($raw_value);
         }
 
         $get_page_url = function ($page) use ($base_args, $page_key) {
