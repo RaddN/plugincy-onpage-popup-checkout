@@ -19,7 +19,7 @@ With additional features like product quick view popups and variation selection 
 
 [&raquo; Buy Pro](https://plugincy.com/one-page-quick-checkout-for-woocommerce/) | [&raquo; Demos](https://demo.plugincy.com/one-page-quick-checkout-for-woocommerce/) | [&raquo; More info](https://plugincy.com/one-page-quick-checkout-for-woocommerce/)  | [&raquo; Docs](https://plugincy.com/documentations/)
 
-== Key Features at a Glance ==
+== 😍 Key Features at a Glance: ==
 ➜ Quick and Easy Popup Checkout
 ➜ Direct Checkout from Shop, Category, Archive, and Product Pages
 ➜ One-Page / Single-Page Checkout Flow
@@ -29,25 +29,235 @@ With additional features like product quick view popups and variation selection 
 ➜ Smooth AJAX-Powered Checkout Experience
 ➜ Floating Cart Drawer with Coupon, Quantity, and Remove Controls
 ➜ Shortcode, Gutenberg Block, and Elementor Widget Placement
-➜ Cart Recovery Tracking Dashboard with Pro Email Automation
+➜ Cart Recovery Tracking Dashboard with Email Automation
 
-== Screenshots ==
+== 🔥 Core Features: ==
+Need a faster, smoother way to boost WooCommerce sales? Plugincy’s WooCommerce One Page Quick Checkout combines popup checkout, direct checkout, one-page checkout, and product quick view—all in one powerful plugin designed to simplify the buying experience and reduce cart abandonment. Take a look at the core features:
 
-1. Checkout popup
-2. Single Product – One Page Checkout
-3. Quick View
-4. Cart drawer
-5. Settings - Checkout From Manage
-6. Settings - Text Manage
-7. Settings - One Page Checkout
-8. Settings - Add to Cart
-9. Settings - Direct Checkout Manage
-10. Settings - Quick View (General Settings)
-11. Settings - Quick View (Popup Manage)
-12. Settings - Features
-13. Settings - Advanced Settings
+= ✅️ Popup Checkout: =
+Allow your customers to complete their orders without leaving the current page.
 
-== Usage ==
+* **Popup Checkout Form**
+Allows customers to complete purchases in a stylish popup window without leaving the current page, minimizing friction and boosting conversions.
+
+* **AJAX Checkout Experience**
+Processes cart drawer actions, add-to-cart flows, coupon updates, checkout refreshes, and related checkout interactions without unnecessary page reloads.
+
+= ✅️ Direct Checkout: =
+Skip the cart and send buyers straight to checkout from any product - saving time and reducing drop-offs.
+
+* **One-Click Direct Checkout**
+A simple way to move customers directly to checkout after clicking “Add to Cart.”
+
+* **Customizable Quick Checkout Buttons**
+Enable instant checkout buttons on product and archive pages (categories, tags) to speed up purchases. Customize their style and appearance to match your brand and boost the shopping experience.
+
+* **Dynamic Button Behavior Customization**
+Customize button actions to redirect to cart, checkout, or enable popup checkout for a smoothly purchasing experience.
+
+* **Buy Now Shortcode, Block, and Elementor Widget**
+Place a direct checkout button anywhere using the built-in shortcode, Gutenberg block, or Elementor widget.
+
+* **URL-Based Direct Checkout Links**
+Create checkout links with product, quantity, variation, and attribute parameters for simple and variable products.
+
+* **Direct Checkout Popup Option**
+Allows customers to complete their purchase in a popup without navigating to a separate new page.
+
+* **Variation Selection on shop/category/archive Page**
+Allow customers to select product variations directly from the archive page, shop page or product category - enabling instant checkout for a smooth and hassle-free purchasing experience.
+
+* **Hide "Select Option" Button for Variations**
+Simplify your product listings by removing the default “Select Option” button for variable products. This improves the user experience and encourages quicker purchasing decisions.
+
+= ✅️ One Page / Single Page Checkout: =
+Provide customers with a complete, all-in-one checkout page - everything they need to edit, and place their order without navigating away.
+
+* **One Page Checkout for All Products**
+Turn any product into a complete one-page checkout flow, allowing customers to purchase without extra steps or page transitions.
+
+* **One page Multi product checkout**
+Allow customers to purchase multiple products from a single page using a fast, simplified checkout process that boosts conversions. Available Layout Options:
+
+> * Product Table
+> * Product List
+> * Single Product
+> * Product Slider
+> * Product Accordion
+> * Tab Layout
+> * Pricing Table
+
+* **Flexible Product Query Controls**
+Build one-page checkout layouts from product IDs, product categories, tags, or attribute terms, with a configurable product limit.
+
+* **Checkout Form Shortcode**
+Place a live checkout form anywhere with optional auto-add, clear-cart, quantity, product, and variation controls.
+
+= ✅️ Product Quick View Popup: =
+Let customers preview product details instantly in a sleek popup -  no need to leave the page. Keep customers focused and speed up the process to purchase with a smooth, modern preview experience. Enhance shopping flow and boost engagement with these powerful features:
+
+* Customizable text, icons, and button appearance
+* Full control over popup content
+* Product type and page targeting for shop, category, tag, brand, attribute, search, single product, featured, sale, recent, widget, and shortcode loops
+* Keyboard shortcut support
+* Social sharing, product attributes, and gallery view
+* Mobile-optimized design
+* Adjustable popup size and animation effects
+* Built-in analytics to track interactions
+
+= ✅️ Cart Recovery: =
+Track cart activity, abandoned carts, recovered carts, customer journey events, and cart recovery analytics from a dedicated admin page. Recovery email templates and automation are Pro features.
+
+* **Cart Recovery Tracking Dashboard**
+Monitor cart activity, abandoned carts, recovered carts, and recovery performance from one admin area.
+
+* **Customer Journey Insights**
+Review useful cart events and customer journey details so you can understand where shoppers drop off.
+
+* **Recovery Email Automation**
+Use recovery email templates and automated recovery actions to follow up with abandoned carts.
+
+= ✅️ Floating Cart / Cart Drawer: =
+Give customers a convenient floating cart drawer they can open while shopping, review cart contents, adjust items, and continue checkout without leaving the flow.
+
+* **Slide-Out Floating Cart**
+A modern side-drawer cart that users can access from store pages for faster cart review.
+
+* **AJAX Cart Drawer Actions**
+Update quantities, remove items, refresh checkout totals, clear the cart, and apply or remove coupons without forcing extra page reloads.
+
+* **Shortcode, Gutenberg Block, and Elementor Placement**
+Place the floating cart with dedicated shortcode, Gutenberg block, and Elementor widget support.
+
+* **Advanced Floating Cart Design Controls**
+Customize cart icons, empty-cart behavior, drawer elements, item data, grouping, drawer text, notices, feedback text, and visual cart editor settings.
+
+= ✅️ Add to Cart Controls: =
+Customize the add-to-cart experience across product and archive pages so customers can move from browsing to checkout with fewer steps.
+
+* **Button Style and Label Controls**
+Adjust add-to-cart button text, styling, and related button behavior to match your store.
+
+* **Add-to-Cart Behavior Control**
+Control what happens after a customer clicks add to cart, including standard add-to-cart behavior, cart or checkout redirects, and popup checkout flows where enabled.
+
+* **Default Quantity and Success Messages**
+Set default quantity behavior per product and customize success messages shown after products are added to cart.
+
+* **Archive Quantity and Mobile Controls**
+Show quantity selectors on archive pages, use sticky add-to-cart behavior on mobile, and apply mobile-specific design adjustments.
+
+== 🌟 Additional Features & Enhancements: ==
+Take your WooCommerce checkout experience even further with these powerful tools and customizations. From editing to security options, these features add convenience, flexibility, and control across the shopping journey.
+
+* **Advanced Layout & Form Management**
+Customize your checkout page with an easy-to-use editor. Show or hide fields, set them as required or optional, change labels and placeholders, and design a layout that matches your store’s design and user flow.
+
+* **Customizable Checkout Form**
+Easily edit field labels, placeholder text, required status, and more to customize the checkout form for your store’s needs.
+
+* **Checkout Section Visibility Controls**
+Hide checkout fields and sections such as coupon, shipping address, privacy text, payment options, product table, billing heading, additional details, and order review heading.
+
+* **WooCommerce Checkout Blocks Support**
+Apply supported checkout field labels, field removal, product links, and quantity controls across classic checkout and WooCommerce Checkout Blocks.
+
+* **Product Quantity Controls**
+Allow customers to adjust product quantities directly from the checkout form without navigating away.
+
+* **Remove Items Directly on Checkout**
+Allow users to remove products instantly from the checkout page - no need to return to the cart.
+
+* **Product Image Thumbnails**
+Show clear product images during checkout to improve visual confirmation and ensure accuracy.
+
+* **Linked Product Titles**
+Make product names clickable on the checkout page so users can easily revisit product details if needed.
+
+* **Disable WooCommerce Cart Page**
+Optionally bypass the default WooCommerce cart page to streamline the checkout process.
+
+* **Checkout Cache Protection**
+Helps prevent stale checkout output by marking checkout and popup checkout requests as no-cache for popular cache plugins.
+
+* **Trusted Badge on Checkout Form**
+Boost customer confidence by displaying trust badges and security seals within the checkout form.
+
+* **Login Enforcement**
+Add an extra layer of protection by requiring users to log in before proceeding to checkout.
+
+* **Shortcode and Page Builder Integrations**
+Use shortcodes with any page builder that supports WordPress shortcodes, plus dedicated Gutenberg blocks and Elementor widgets for one-page checkout, checkout form placement, buy now buttons, and the floating cart.
+
+== 🎬 How to Use One Page Quick Checkout for WooCommerce ==
+[youtube https://youtu.be/BRnzvqKWja8]
+
+== 👉️ Why Use This Plugin? ==
+Speed up checkout, reduce cart abandonment, recover lost sales, and boost conversions with one-page checkout, popup checkout, direct checkout, quick view, floating cart, add-to-cart controls, and cart recovery tools - a flexible solution for a faster, smoother WooCommerce shopping experience.
+
+* **Faster Checkout = More Sales**
+Let customers complete their purchase instantly - no redirects, no slow reloads. A faster process means a lower chance of cart abandonment.
+
+* **Reduce Cart Abandonment**
+Direct checkout, one-click buy buttons, and popup checkout reduce drop-offs by keeping users focused through to payment.
+
+* **Recover More Abandoned Carts**
+Track cart activity, abandoned carts, recovered carts, customer journey events, and recovery analytics from a dedicated cart recovery dashboard.
+
+* **All-in-One Checkout Page**
+Turn any product into a complete one-page checkout, helping customers stay focused and convert more easily.
+
+* **Floating Cart for Faster Shopping**
+Let customers open a slide-out cart drawer, review products, update quantities, apply coupons, and continue checkout without leaving the shopping flow.
+
+* **Flexible Add-to-Cart Behavior**
+Control add-to-cart button labels, styles, default quantities, success messages, redirects, and popup checkout behavior where enabled.
+
+* **Mobile-Friendly Shopping**
+Optimized for smartphones with fast-loading, touch-ready checkout options and popups.
+
+* **Customizable Checkout Buttons**
+Match your site’s branding and add instant purchase buttons where they matter - on product, category, or tag pages.
+
+* **Supports Key WooCommerce Product Types**
+Works with simple, variable, and external / affiliate product flows, with additional grouped product support in relevant cart, quick view, and Pro direct-checkout paths.
+
+* **Popup Checkout with AJAX-powered**
+Keep customers on the same page with AJAX-powered popup checkout that doesn’t interrupt the shopping flow.
+
+* **Quick View with Instant Purchase**
+Let users preview and buy products in seconds using a stylish quick view popup.
+
+* **Works with Shortcodes, Builders & Themes**
+Use shortcodes in page builders that support WordPress shortcodes, plus dedicated Gutenberg blocks, Elementor widgets, and fallback placement hooks for modern WooCommerce themes.
+
+* **Boost Conversions Without Complex Setup**
+Easy to use, powerful out-of-the-box features to upgrade your store’s checkout experience with minimal effort.
+
+* **Excellent Documentation & Support**
+We’ve Got Your Back Every Step of the Way.
+
+== Installation ==
+
+= From your WordPress dashboard: =
+
+1. Go to **Plugins > Add New**.
+2. Search for **One Page Quick Checkout for WooCommerce**.
+3. Click **Install Now** and then **Activate**.
+
+= Manual Installation =
+
+1. Download the plugin ZIP file.
+2. Upload it to your WordPress site under the **wp-content/plugins/** directory.
+3. Go to **Plugins** and activate **One Page Quick Checkout for WooCommerce**.
+
+= Recommended Requirements =
+
+* WordPress 5.3 or higher
+* WooCommerce 3.6.0 or higher
+* PHP 7.2 or higher
+
+== 👉️ Usage: ==
 
 = 1. Configure the Main Plugin Settings =
 After activation, open **One Page Quick Checkout** in the WordPress admin and configure the features you want to use:
@@ -160,25 +370,21 @@ The Pro plugin uses the `onepaqucpro_` prefix:
 ?onepaqucpro_add-to-cart=123&onepaqucpro_variation_id=456&onepaqucpro_quantity=1&onepaqucpro_attribute_pa_color=blue
 ```
 
-== Installation ==
+== Screenshots ==
 
-= From your WordPress dashboard: =
-
-1. Go to **Plugins > Add New**.
-2. Search for **One Page Quick Checkout for WooCommerce**.
-3. Click **Install Now** and then **Activate**.
-
-= Manual Installation =
-
-1. Download the plugin ZIP file.
-2. Upload it to your WordPress site under the **wp-content/plugins/** directory.
-3. Go to **Plugins** and activate **One Page Quick Checkout for WooCommerce**.
-
-= Recommended Requirements =
-
-* WordPress 5.3 or higher
-* WooCommerce 3.6.0 or higher
-* PHP 7.2 or higher
+1. Checkout popup
+2. Single Product – One Page Checkout
+3. Quick View
+4. Cart drawer
+5. Settings - Checkout From Manage
+6. Settings - Text Manage
+7. Settings - One Page Checkout
+8. Settings - Add to Cart
+9. Settings - Direct Checkout Manage
+10. Settings - Quick View (General Settings)
+11. Settings - Quick View (Popup Manage)
+12. Settings - Features
+13. Settings - Advanced Settings
 
 == Frequently Asked Questions ==
 
