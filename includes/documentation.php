@@ -32,7 +32,7 @@ function onepaquc_cart_documentation()
                             </ul>
                         </li>
                         <li>
-                            <a href="#one-page-checkout">One Page Checkout</a>
+                            <a href="#one-page-checkout">One Page Checkout (Pro)</a>
                             <ul>
                                 <li><a href="#single-product">Single Product Checkout</a></li>
                                 <li><a href="#multiple-products">Multiple Products Checkout</a></li>
@@ -99,23 +99,23 @@ function onepaquc_cart_documentation()
                 </div>
 
                 <div id="one-page-checkout" class="plugincy-section">
-                    <h2>One Page Checkout</h2>
+                    <h2>One Page Checkout (Pro) <span class="onepaquc-pro-feature-badge">Pro Feature</span></h2>
 
                     <div id="single-product" class="plugincy-card">
-                        <h3 class="plugincy-card-title">Single Product One Page Checkout</h3>
+                        <h3 class="plugincy-card-title">Single Product One Page Checkout (Pro)</h3>
                         <p>To enable one-page checkout for a specific product:</p>
                         <div class="plugincy-step">Edit the product in WooCommerce</div>
-                        <div class="plugincy-step">Check the "One Page Checkout" option in the product data panel</div>
+                        <div class="plugincy-step">The "One Page Checkout (Pro)" option is shown in the product data panel</div>
                         <div class="plugincy-step">Save the product</div>
 
                         <p>To customize the checkout form position and settings:</p>
                         <div class="plugincy-step">Navigate to On page checkout</div>
-                        <div class="plugincy-step">Go to the "One Page Checkout" tab</div>
+                        <div class="plugincy-step">Go to the "One Page Checkout (Pro)" tab</div>
                         <div class="plugincy-step">Adjust the position and other settings as needed</div>
                     </div>
 
                     <div id="multiple-products" class="plugincy-card">
-                        <h3 class="plugincy-card-title">Multiple Products One Page Checkout</h3>
+                        <h3 class="plugincy-card-title">Multiple Products One Page Checkout (Pro)</h3>
                         <p>You can create a one-page checkout with multiple selected products using shortcodes or blocks.</p>
                         
                         <h4>Shortcode Example</h4>
@@ -197,7 +197,7 @@ function onepaquc_cart_documentation()
                             </tr>
                             <tr>
                                 <td><code>plugincy_one_page_checkout]</code></td>
-                                <td>Creates a one-page checkout</td>
+                                <td>Creates a one-page checkout (Pro)</td>
                                 <td><code>product_ids</code>, <code>template</code></td>
                             </tr>
                         </tbody>
@@ -209,7 +209,7 @@ function onepaquc_cart_documentation()
                     <p>Floating Cart provides two dedicated Elementor widgets:</p>
                     <ol>
                         <li><strong>Plugincy WC Cart</strong> - For adding a mini cart</li>
-                        <li><strong>Plugincy One Page Checkout</strong> - For creating Multiple Products One Page Checkout</li>
+                        <li><strong>Plugincy One Page Checkout (Pro)</strong> - For creating Multiple Products One Page Checkout (Pro)</li>
                     </ol>
                 </div>
 
@@ -218,7 +218,7 @@ function onepaquc_cart_documentation()
                     <p>Floating Cart provides two dedicated Gutenberg blocks:</p>
                     <ol>
                         <li><strong>Plugincy WC Cart</strong> - For adding a mini cart</li>
-                        <li><strong>Plugincy One Page Checkout</strong> - For creating Multiple Products One Page Checkout</li>
+                        <li><strong>Plugincy One Page Checkout (Pro)</strong> - For creating Multiple Products One Page Checkout (Pro)</li>
                     </ol>
                 </div>
 

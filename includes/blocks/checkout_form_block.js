@@ -7,7 +7,7 @@
     const BLOCK_NAME = 'wc/one-page-checkout';
 
     blocks.registerBlockType(BLOCK_NAME, {
-        title: 'One-Page Checkout',
+        title: 'One-Page Checkout (Pro)',
         icon: 'onepaquc_one_page_cart',
         category: 'plugincy',
         attributes: {
@@ -20,6 +20,20 @@
 
         edit: function ({ attributes, setAttributes }) {
             const { auto_add, clear_cart, product_id, variation_id, qty } = attributes;
+            return el(
+                'div',
+                {
+                    className: 'onepaquc-opc-editor-preview onepaquc-pro-only-block',
+                    style: {
+                        border: '1px dashed #d63638',
+                        padding: '16px',
+                        borderRadius: '6px',
+                        background: '#fff7f7'
+                    }
+                },
+                el('strong', null, 'One-Page Checkout is a Pro feature'),
+                el('p', { style: { marginBottom: 0, color: '#555' } }, 'Upgrade to Pro to use this block.')
+            );
 
             // Build a human-readable shortcode for the editor preview box
             const shortcode =

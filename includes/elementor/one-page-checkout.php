@@ -38,7 +38,7 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
      * Get widget title.
      */
     public function get_title() {
-        return esc_html__('Multi Product One Page Checkout', 'one-page-quick-checkout-for-woocommerce');
+        return esc_html__('Multi Product One Page Checkout (Pro)', 'one-page-quick-checkout-for-woocommerce');
     }
 
     /**
@@ -418,6 +418,17 @@ class onepaquc_One_Page_Checkout_Widget extends \Elementor\Widget_Base {
      * Render widget output on the frontend.
      */
     protected function render() {
+        $is_editor = isset(\Elementor\Plugin::$instance)
+            && \Elementor\Plugin::$instance->editor
+            && \Elementor\Plugin::$instance->editor->is_edit_mode();
+
+        if ($is_editor) {
+            echo '<div class="elementor-alert elementor-alert-warning">' .
+                esc_html__('Multi Product One Page Checkout is a Pro feature.', 'one-page-quick-checkout-for-woocommerce') .
+                '</div>';
+        }
+        return;
+
         $settings = $this->get_settings_for_display();
 
         // Build shortcode attributes

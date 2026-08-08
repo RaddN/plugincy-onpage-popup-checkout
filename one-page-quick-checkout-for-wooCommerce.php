@@ -145,12 +145,54 @@ function onepaquc_get_numeric_option($option_name, $default, $minimum, $maximum)
  */
 function onepaquc_get_text_option($option_name, $default = '')
 {
-    $value = get_option($option_name, $default);
+    $value = get_option($option_name, null);
     $value = is_scalar($value) ? (string) $value : (string) $default;
+
+    if (trim($value) === '') {
+        $value = is_scalar($default) ? (string) $default : '';
+    }
 
     return in_array((string) $option_name, onepaquc_wpml_user_text_option_names(), true)
         ? onepaquc_wpml_translate_string($value, $option_name)
         : $value;
+}
+
+/**
+ * Text Manage should affect only public storefront rendering and storefront
+ * checkout/cart requests, not wp-admin screens.
+ */
+function onepaquc_is_frontend_text_context()
+{
+    if (defined('REST_REQUEST') && REST_REQUEST) {
+        $request_uri = isset($_SERVER['REQUEST_URI']) && is_scalar($_SERVER['REQUEST_URI']) ? (string) wp_unslash($_SERVER['REQUEST_URI']) : '';
+        return false !== strpos($request_uri, '/wc/store/');
+    }
+
+    if (is_admin()) {
+        if (!wp_doing_ajax()) {
+            return false;
+        }
+
+        $action = isset($_REQUEST['action']) && is_scalar($_REQUEST['action']) ? sanitize_key(wp_unslash($_REQUEST['action'])) : '';
+
+        return in_array($action, array(
+            'onepaquc_get_cart_content',
+            'onepaquc_update_cart_item_quantity',
+            'onepaquc_remove_cart_item',
+            'onepaquc_update_checkout',
+            'onepaquc_refresh_checkout_product_list',
+            'onepaquc_clear_cart',
+            'onepaquc_ajax_add_to_cart',
+            'onepaquc_apply_coupon',
+            'onepaquc_remove_coupon',
+            'rmenu_get_all_products_quick_view',
+            'apply_coupon',
+            'remove_coupon',
+            'woocommerce_clear_cart',
+        ), true);
+    }
+
+    return true;
 }
 
 function onepaquc_wpml_string_context()
@@ -477,14 +519,6 @@ global $onepaquc_checkoutformfields, $onepaquc_productpageformfields, $onepaquc_
 
 $onepaquc_string_settings_fields = [
     "onepaquc_editor",
-    "onpage_checkout_position",
-    "onpage_checkout_cart_empty",
-    "onpage_checkout_enable",
-    "onpage_checkout_enable_all",
-    "onpage_checkout_cart_add",
-    "onpage_checkout_widget_cart_empty",
-    "onpage_checkout_widget_cart_add",
-    "onpage_checkout_hide_cart_button",
     "rmenu_quantity_control",
     "rmenu_at_one_product_cart",
     "rmenu_disable_cart_page",
@@ -606,12 +640,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/analytics.php';
  */
 function onepaquc_get_txt_selected_suffix()
 {
-    $saved = get_option('txt_Selected');
-    if ($saved !== false && $saved !== '') {
-        return onepaquc_wpml_translate_string($saved, 'txt_Selected');
-    }
-
-    return __('selected', 'one-page-quick-checkout-for-woocommerce');
+    return onepaquc_get_text_option('txt_Selected', __('selected', 'one-page-quick-checkout-for-woocommerce'));
 }
 
 /**
@@ -907,6 +936,8 @@ require_once plugin_dir_path(__FILE__) . 'admin/product_edit_page_setup.php';
 
 function onepaquc_display_checkout_on_single_product()
 {
+    return;
+
     // if(is_checkout()){
     //     return;
     // }
@@ -1015,10 +1046,6 @@ function onepaquc_display_checkout_on_single_product()
     //     }
     // }
 }
-
-
-add_action('wp', 'onepaquc_display_checkout_on_single_product', 99);
-
 
 
 /**
@@ -1161,6 +1188,8 @@ function onepaquc_checkout_already_rendered(): bool
  */
 function onepaquc_display_one_page_checkout_form(): bool
 {
+    return false;
+
     $cart = onepaquc_get_wc_cart();
     if (onepaquc_checkout_already_rendered() || !$cart || $cart->is_empty()) {
         return false;
@@ -1225,13 +1254,13 @@ function onepaquc_add_checkout_inline_styles()
 // if current page contains the shortcode plugincy_one_page_checkout
 function onepaquc_check_shortcode_and_enqueue_styles()
 {
+    return;
+
     $post = is_page() ? get_post() : null;
     if ($post instanceof WP_Post && has_shortcode($post->post_content, 'plugincy_one_page_checkout')) {
         add_action('wp_enqueue_scripts', 'onepaquc_add_checkout_inline_styles', 99);
     }
 }
-add_action('wp', 'onepaquc_check_shortcode_and_enqueue_styles', 99);
-
 /**
  * Replace the default quantity display with quantity controls in checkout
  */
@@ -1302,50 +1331,6 @@ function onepaquc_is_checkout_rendered(){
     }
     if (!$post_id && isset($GLOBALS['post']->ID)) {
         $post_id = (int) $GLOBALS['post']->ID;
-    }
-
-    // (1) Current page has [plugincy_one_page_checkout] shortcode
-    $has_opc_shortcode = onepaquc_page_has_shortcode('plugincy_one_page_checkout');
-    $has_opcs_shortcode = onepaquc_page_has_shortcode('onepaquc_checkout');
-    $has_checkout_block = false;
-    if (function_exists('has_block')) {
-        $has_checkout_block = has_block('plugincy/one-page-checkout', $post_id ?: null) || has_block('wc/one-page-checkout', $post_id ?: null);
-    }
-
-    $has_elementor_widget = false;
-    if ($post_id && function_exists('get_post_meta')) {
-        $elementor_data = get_post_meta($post_id, '_elementor_data', true);
-        if (is_string($elementor_data) && $elementor_data !== '') {
-            $has_elementor_widget = (strpos($elementor_data, '"widgetType":"onepaquc_checkout"') !== false) || (strpos($elementor_data, '"widgetType":"plugincy"') !== false);
-        }
-    }
-    
-
-    
-
-    // (3) Single product page & (global enable-all OR per-product enabled)
-    $enable_all_opc    = onepaquc_is_enabled_option('onpage_checkout_enable_all', '0');
-    $is_single_product = function_exists('is_product') && is_product();
-    
-
-    $per_product_enabled = false;
-    if ($is_single_product && !$enable_all_opc) {
-        // Resolve current product ID safely
-        $product_id = $post_id;
-        if ($product_id) {
-            $per_product_enabled = (bool) get_post_meta($product_id, '_one_page_checkout', true);
-        }
-    }
-
-    // Apply your OR conditions
-    if (
-        $has_opc_shortcode
-        || $has_opcs_shortcode
-        || $has_checkout_block
-        || $has_elementor_widget
-        || ($is_single_product && ($enable_all_opc || $per_product_enabled))
-    ) {
-        return true;
     }
 
     return false;
@@ -1610,6 +1595,10 @@ function onepaquc_get_custom_checkout_label($option_key)
  */
 function onepaquc_apply_custom_checkout_field_labels($fields)
 {
+    if (!onepaquc_is_frontend_text_context()) {
+        return $fields;
+    }
+
     if (!is_array($fields) || empty($fields)) {
         return $fields;
     }
@@ -1663,6 +1652,10 @@ function onepaquc_apply_custom_checkout_field_labels($fields)
  */
 function onepaquc_apply_custom_default_address_field_labels($fields)
 {
+    if (!onepaquc_is_frontend_text_context()) {
+        return $fields;
+    }
+
     if (!is_array($fields) || empty($fields)) {
         return $fields;
     }
@@ -1750,6 +1743,13 @@ function onepaquc_remove_required_shipping_fields($fields)
  */
 function onepaquc_get_block_checkout_field_settings()
 {
+    if (!onepaquc_is_frontend_text_context()) {
+        return [
+            'removedFields' => [],
+            'labels' => [],
+        ];
+    }
+
     $labels = [];
     foreach (onepaquc_get_checkout_label_option_map() as $field_key => $option_key) {
         $custom_label = onepaquc_get_custom_checkout_label($option_key);
@@ -1811,6 +1811,10 @@ function onepaquc_enqueue_block_checkout_field_settings()
  */
 function onepaquc_remove_required_block_checkout_fields($settings)
 {
+    if (!onepaquc_is_frontend_text_context()) {
+        return $settings;
+    }
+
     if (!is_array($settings)) {
         return $settings;
     }

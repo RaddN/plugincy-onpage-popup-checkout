@@ -98,6 +98,12 @@ add_action( 'init', 'onepaquc_register_one_page_checkout_block' );
  */
 function onepaquc_render_one_page_checkout_block($attributes)
 {
+    if (!is_admin()) {
+        return '';
+    }
+
+    return '<div class="plugincy-one-page-checkout-block onepaquc-pro-only-block" style="border:1px dashed #d63638;padding:16px;border-radius:6px;background:#fff7f7;"><strong>' . esc_html__('Multi Product One Page Checkout is a Pro feature.', 'one-page-quick-checkout-for-woocommerce') . '</strong></div>';
+
     $attributes = onepaquc_validate_block_attributes(is_array($attributes) ? $attributes : array());
 
     // Extract and sanitize attributes

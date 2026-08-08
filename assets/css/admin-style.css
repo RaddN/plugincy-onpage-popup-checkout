@@ -535,6 +535,7 @@ span.plugincy_sec_icon {
   box-sizing: border-box;
 }
 .plugincy_card {
+  position: relative;
   padding: 2rem;
   background: #fff;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -1144,7 +1145,7 @@ table.form-table .plugincy_grid,
   position: relative;
 }
 
-#tab-9 .onepaquc-pro-feature-badge {
+.onepaquc-pro-feature-badge {
   position: absolute;
   top: 0;
   right: 0;

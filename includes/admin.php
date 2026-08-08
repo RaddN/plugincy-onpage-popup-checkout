@@ -1017,27 +1017,29 @@ function onepaquc_cart_dashboard()
                             '<svg fill="#fff" height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.24 10.24" xml:space="preserve">
         <path d="M8.424 2.56H7.57v.426a.855.855 0 0 1-1.708 0V2.56H4.156v.426a.855.855 0 0 1-1.708 0V2.56h-.85c0 4.266-.426 7.68-.426 7.68h7.68c-.002 0-.428-3.414-.428-7.68m-5.12.854c.236 0 .426-.19.426-.426v-.854c0-.708.572-1.28 1.28-1.28s1.28.572 1.28 1.28v.854a.425.425 0 1 0 .852 0v-.854C7.144.956 6.188 0 5.01 0S2.876.956 2.876 2.134v.854a.43.43 0 0 0 .428.426" />
     </svg>',
-                            __('One Page Checkout in Single Product', 'one-page-quick-checkout-for-woocommerce'),
+                            __('One Page Checkout in Single Product (Pro)', 'one-page-quick-checkout-for-woocommerce'),
                             __('Configure one-page checkout for individual product pages. Enable one-page checkout for specific products from the WooCommerce product edit screen.', 'one-page-quick-checkout-for-woocommerce')
                         );
+                        onepaquc_render_floating_cart_pro_badge();
                         ?>
 
-                        <table class="form-table plugincy_table">
+                        <table class="form-table plugincy_table pro-only top-50">
                             <tr valign="top">
                                 <?php
                                 $onepaquc_helper->sec_head(
                                     'th',
                                     '',
                                     '',
-                                    __('Enable One Page Checkout', 'one-page-quick-checkout-for-woocommerce'),
+                                    __('Enable One Page Checkout (Pro)', 'one-page-quick-checkout-for-woocommerce'),
                                     __('Enable one-page checkout for single product page.', 'one-page-quick-checkout-for-woocommerce')
                                 );
                                 ?>
 
                                 <td>
                                     <?php
-                                    $onepaquc_helper->switcher('onpage_checkout_enable');
+                                    $onepaquc_helper->switcher('onpage_checkout_enable', 1, '', true);
                                     ?>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -1052,7 +1054,8 @@ function onepaquc_cart_dashboard()
                                 ?>
 
                                 <td>
-                                    <?php $onepaquc_helper->switcher('onpage_checkout_enable_all', 0); ?>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_enable_all', 0, '', true); ?>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
 
                                 </td>
                             </tr>
@@ -1075,7 +1078,8 @@ function onepaquc_cart_dashboard()
                                         $onpage_checkout_position = 9;
                                     }
                                     ?>
-                                    <input type="number" name="onpage_checkout_position" value="<?php echo esc_attr($onpage_checkout_position); ?>" />
+                                    <input type="number" name="onpage_checkout_position" value="<?php echo esc_attr($onpage_checkout_position); ?>" disabled />
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -1090,7 +1094,8 @@ function onepaquc_cart_dashboard()
                                 ?>
 
                                 <td>
-                                    <?php $onepaquc_helper->switcher('onpage_checkout_cart_empty', 0); ?>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_cart_empty', 0, '', true); ?>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                 </td>
                             </tr>
 
@@ -1108,7 +1113,8 @@ function onepaquc_cart_dashboard()
                                 ?>
 
                                 <td>
-                                    <?php $onepaquc_helper->switcher('onpage_checkout_cart_add', 1, "If you turn it off one page checkout will not work properly."); ?>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_cart_add', 1, "If you turn it off one page checkout will not work properly.", true); ?>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -1123,7 +1129,8 @@ function onepaquc_cart_dashboard()
                                 ?>
 
                                 <td>
-                                    <?php $onepaquc_helper->switcher('onpage_checkout_hide_cart_button', 0); ?>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_hide_cart_button', 0, '', true); ?>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -1154,12 +1161,13 @@ function onepaquc_cart_dashboard()
                             'h2',
                             'plugincy_sec_head',
                             '<span class="dashicons dashicons-forms"></span>',
-                            __('Multi-product One Page Checkout', 'one-page-quick-checkout-for-woocommerce'),
-                            __('Configure settings for the multi-product one-page checkout shortcode. Use: [plugincy_one_page_checkout product_ids="152,153,151,142" template="product-tabs"]', 'one-page-quick-checkout-for-woocommerce')
+                            __('Multi-product One Page Checkout (Pro)', 'one-page-quick-checkout-for-woocommerce'),
+                            __('Configure settings for the multi-product one-page checkout shortcode. Available in Pro.', 'one-page-quick-checkout-for-woocommerce')
                         );
+                        onepaquc_render_floating_cart_pro_badge();
                         ?>
 
-                        <table class="form-table plugincy_table">
+                        <table class="form-table plugincy_table pro-only top-50">
                             <tr valign="top">
                                 <?php
                                 $onepaquc_helper->sec_head(
@@ -1172,7 +1180,8 @@ function onepaquc_cart_dashboard()
                                 ?>
 
                                 <td>
-                                    <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_empty'); ?>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_empty', 1, '', true); ?>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -1187,7 +1196,8 @@ function onepaquc_cart_dashboard()
                                 ?>
 
                                 <td>
-                                    <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_add'); ?>
+                                    <?php $onepaquc_helper->switcher('onpage_checkout_widget_cart_add', 1, '', true); ?>
+                                    <span class="dashicons dashicons-lock plugincy_lock-icon"></span>
                                 </td>
                             </tr>
                         </table>
@@ -3936,7 +3946,8 @@ function onepaquc_cart_dashboard()
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <h3><?php esc_html_e('One Page Checkout', 'one-page-quick-checkout-for-woocommerce'); ?></h3>
+                    <h3><?php esc_html_e('One Page Checkout (Pro)', 'one-page-quick-checkout-for-woocommerce'); ?></h3>
+                    <?php onepaquc_render_floating_cart_pro_badge(); ?>
                     <p>
                         <?php
                         echo wp_kses_post(

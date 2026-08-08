@@ -4,6 +4,8 @@ if (! defined('ABSPATH')) exit; // Exit if accessed directly
 // shortcode to display one page checkout [plugincy_one_page_checkout product_ids="" category="" tags="" attribute="" terms="" template="" allow_empty_query="no"]
 function onepaquc_one_page_checkout_shortcode($atts)
 {
+    return '';
+
     $atts = is_array($atts) ? $atts : array();
     $atts = shortcode_atts(array(
         'product_ids' => '',
@@ -158,6 +160,7 @@ add_shortcode('plugincy_one_page_checkout', 'onepaquc_one_page_checkout_shortcod
 // Register: [onepaquc_checkout product_id="123" variation_id="456" qty="2" clear_cart="yes" auto_add="yes"]
 add_action('init', function () {
     add_shortcode('onepaquc_checkout', function ($atts = []) {
+        return '';
 
         // --- Shortcode attributes ---
         $atts = shortcode_atts([

@@ -5,7 +5,7 @@
     const el = element.createElement;
     
     blocks.registerBlockType('plugincy/one-page-checkout', {
-        title: 'Multi Product One Page Checkout',
+        title: 'Multi Product One Page Checkout (Pro)',
         icon: 'onepaquc_one_page_cart',
         category: 'plugincy',
         keywords: [
@@ -83,6 +83,21 @@
                 buttonStyle, 
                 spacing 
             } = attributes;
+
+            return el(
+                'div',
+                {
+                    className: 'plugincy-block-preview onepaquc-pro-only-block',
+                    style: {
+                        border: '1px dashed #d63638',
+                        padding: '16px',
+                        borderRadius: '6px',
+                        background: '#fff7f7'
+                    }
+                },
+                el('strong', null, 'Multi Product One Page Checkout is a Pro feature'),
+                el('p', { style: { marginBottom: 0, color: '#555' } }, 'Upgrade to Pro to use this block.')
+            );
 
             // Template options
             const templateOptions = [

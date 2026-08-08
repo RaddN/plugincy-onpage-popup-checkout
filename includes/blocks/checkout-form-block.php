@@ -51,6 +51,12 @@ add_action( 'init', 'onepaquc_checkout_form_block_register', 10 );
  * @return string HTML
  */
 function onepaquc_checkout_form_block_render( $attributes = array() ) {
+	if ( ! is_admin() ) {
+		return '';
+	}
+
+	return '<div class="onepaquc-checkout-placeholder onepaquc-pro-only-block" style="border:1px dashed #d63638;padding:12px;border-radius:6px;background:#fff7f7;"><strong>' . esc_html__( 'One-Page Checkout is a Pro feature.', 'one-page-quick-checkout-for-woocommerce' ) . '</strong></div>';
+
 	// If the shortcode renderer is missing, show an informative placeholder (editor only).
 	if ( ! function_exists( 'onepaquc_display_one_page_checkout_form' ) ) {
 		if ( is_admin() ) {

@@ -15,7 +15,7 @@ class Plugincy_OPQC_Checkout_Widget extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'One-Page Checkout', 'one-page-quick-checkout-for-woocommerce' );
+		return esc_html__( 'One-Page Checkout (Pro)', 'one-page-quick-checkout-for-woocommerce' );
 	}
 
 	public function get_icon() {
@@ -106,6 +106,17 @@ class Plugincy_OPQC_Checkout_Widget extends Widget_Base {
 	}
 
 	protected function render() {
+		$is_editor = isset( \Elementor\Plugin::$instance )
+			&& \Elementor\Plugin::$instance->editor
+			&& \Elementor\Plugin::$instance->editor->is_edit_mode();
+
+		if ( $is_editor ) {
+			echo '<div class="elementor-alert elementor-alert-warning">' .
+				esc_html__( 'One-Page Checkout is a Pro feature.', 'one-page-quick-checkout-for-woocommerce' ) .
+				'</div>';
+		}
+		return;
+
 		// If shortcode renderer is missing, show an informative notice in the editor/front-end.
 		if ( ! function_exists( 'onepaquc_display_one_page_checkout_form' ) ) {
 			echo '<div class="elementor-alert elementor-alert-warning">' .
@@ -147,10 +158,6 @@ class Plugincy_OPQC_Checkout_Widget extends Widget_Base {
 		$html = do_shortcode( $shortcode );
 
 		// If nothing is output (e.g. empty cart), show a clear editor-only placeholder.
-		$is_editor = isset( \Elementor\Plugin::$instance )
-			&& \Elementor\Plugin::$instance->editor
-			&& \Elementor\Plugin::$instance->editor->is_edit_mode();
-
 		if ( '' === trim( (string) $html ) ) {
 			if ( $is_editor ) {
 				$esc_sc = esc_html( $shortcode );
