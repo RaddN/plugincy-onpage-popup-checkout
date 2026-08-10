@@ -5,7 +5,7 @@ Tags: direct checkout, one page checkout, quick checkout, quick view, woocommerc
 Requires at least: 5.3
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -417,10 +417,10 @@ The plugin is translation-ready and uses WordPress internationalization function
 
 == Changelog ==
 
-= 1.3.8 =
+= 1.3.9 =
 * Fixed: floating cart recommendation“You may also like” now renders only when valid related simple, purchasable, in-stock products exist.
 * Added: Large Cart Recovery addition/refactor Cart Recovery admin submenu/page, hidden template edit page, free-mode constants, tracker/admin classes, DB schema/cron/cart tracking, locked/pro-gated email automation/actions, cart/activity/settings/admin UI, charts/modals/responsive admin JS/CSS, and minor admin/license/trust-badge class cleanup.
-* Added: Version 1.3.8 plus Floating Cart Pro UI in free disabled Pro-only Floating Cart settings UI, including Floating Cart Icon, Empty Cart Icon, Hide If Cart Empty, Drawer Elements, Cart Item Data & Grouping, Drawer Text, Drawer Notices & Feedback Text, meta include/grouping builders, and the Visual Cart Editor preview UI. Also added admin CSS for the editor/preview and bumped plugin/readme/assets/license/block/docs/slider/cart-recovery schema versions to 1.3.8
+* Added: Version 1.3.9 plus Floating Cart Pro UI in free disabled Pro-only Floating Cart settings UI, including Floating Cart Icon, Empty Cart Icon, Hide If Cart Empty, Drawer Elements, Cart Item Data & Grouping, Drawer Text, Drawer Notices & Feedback Text, meta include/grouping builders, and the Visual Cart Editor preview UI. Also added admin CSS for the editor/preview and bumped plugin/readme/assets/license/block/docs/slider/cart-recovery schema versions to 1.3.9
 
 = 1.3.7 =
 * Fixed: an issue with the floating cart description
